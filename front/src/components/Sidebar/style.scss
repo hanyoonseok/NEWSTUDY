@@ -1,0 +1,30 @@
+@import "variables.scss";
+
+.sidebar-nav {
+  min-width: 80px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: red;
+  display: flex;
+  .sidebar-contents {
+    width: 80px;
+    position: relative;
+    .content {
+      z-index: 10;
+    }
+  }
+}
+
+.sidebar-div {
+  width: 200px;
+  height: 100vh;
+  background-color: blue;
+  transition: 0.5s ease;
+  z-index: 9;
+  position: absolute;
+  top: 0;
+  left: -120px;
+  opacity: 0;
+}

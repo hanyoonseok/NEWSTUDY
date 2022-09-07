@@ -1,0 +1,71 @@
+$blue: #6d84ff;
+$soft-blue: #96b2ff;
+$light-blue: #bbcbfa;
+$lightx2-blue: #f6faff;
+
+$green: #88c848;
+$soft-green: #a9dd75;
+$light-green: #dbfeb7;
+
+$dark-grey: #3e3e3e;
+$grey: #a9a9a9;
+$soft-grey: #cbcbcb;
+$light-grey: #f1f1f1;
+$white: #fbfbfb;
+
+$kor-title-font: "S-CoreDream-5Medium"; //한글 큰 제목(거의 온보딩)
+$kor-light-font: "S-CoreDream-1Thin"; //한글 큰 제목중에서 얇은거
+$kor-font: "AppleSDGothicNeoM"; // 한글 디폴트 (제목 제외)
+
+$eng-title-font: "Montserrat"; //영어 큰 제목
+$eng-font: "Arial"; //영어 본문
+
+@function rem($px) {
+  @return #{$px/16}rem;
+}
+
+@mixin FLEX-CENTER() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin FLEX-AROUND() {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@mixin FLEX-COLUMN() {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin FLEX-BETWEEN() {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin FLEX-ALIGN-CENTER() {
+  display: flex;
+  align-items: center;
+}
+
+@mixin STRETCH() {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin BTN-COLOR($bgcolor) {
+  background-color: $bgcolor;
+  &:hover {
+    background-color: darken($bgcolor, 10%);
+  }
+}
+
+@mixin BACKGROUND-IMAGE($url) {
+  background-image: url($url);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
