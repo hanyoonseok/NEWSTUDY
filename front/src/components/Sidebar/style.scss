@@ -6,8 +6,9 @@
   position: fixed;
   left: 0;
   top: 0;
-  background-color: red;
+  background-color: #3f414b;
   display: flex;
+  z-index: 100;
   .sidebar-contents {
     width: 80px;
     position: relative;
@@ -20,7 +21,7 @@
 .sidebar-div {
   width: 200px;
   height: 100vh;
-  background-color: blue;
+  background-color: #3f414b;
   transition: 0.5s ease;
   z-index: 9;
   position: absolute;

@@ -1,17 +1,30 @@
 @import "variables.scss";
 
-.kor-title {
-  font-family: $kor-title-font;
+.main-div {
+  width: 100%;
+  height: 100%;
+
+  .login-btn {
+    position: fixed;
+    top: 50px;
+    right: 80px;
+    @include MAIN-BTN(true);
+    border-radius: 17px;
+    font-size: 20px;
+  }
 }
-.kor-light {
-  font-family: $kor-light-font;
+
+.main-wrapper {
+  overflow-y: hidden;
+  height: 100vh;
 }
-.kor {
-  font-family: $kor-font;
+
+.main-item {
+  height: 100vh;
+  position: relative;
 }
-.eng-title {
-  font-family: $eng-title-font;
-}
-.eng {
-  font-family: $eng-font;
+
+.divider {
+  width: 100%;
+  height: 5px;
 }

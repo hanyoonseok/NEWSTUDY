@@ -68,4 +68,15 @@ $eng-font: "Arial"; //영어 본문
   background-image: url($url);
   background-size: cover;
   background-repeat: no-repeat;
+  @include STRETCH;
+}
+
+@mixin MAIN-BTN($light) {
+  @if ($light) {
+    background-color: $light-blue;
+  } @else {
+    background-color: $soft-grey;
+  }
+  padding: 4px 30px;
+  @include FLEX-CENTER();
 }

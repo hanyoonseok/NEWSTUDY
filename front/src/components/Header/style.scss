@@ -9,4 +9,11 @@
   padding-left: 80px;
   background-color: transparent;
   @include FLEX-BETWEEN;
+
+  .login-btn {
+    @include MAIN-BTN(true);
+    border-radius: 17px;
+    font-family: $kor-font;
+    font-size: 20px;
+  }
 }

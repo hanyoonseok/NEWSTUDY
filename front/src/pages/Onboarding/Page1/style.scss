@@ -1,0 +1,15 @@
+@import "variables.scss";
+
+.page-div {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  @include FLEX-CENTER;
+}
+
+.background-div {
+  @include BACKGROUND-IMAGE("assets/onboarding-background.jpg");
+  position: absolute;
+  top: 0;
+  left: 0;
+}
