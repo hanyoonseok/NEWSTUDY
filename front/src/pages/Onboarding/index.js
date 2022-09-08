@@ -5,10 +5,12 @@ import Page1 from "./Page1";
 import Page2 from "./Page2";
 import Page3 from "./Page3";
 import Dots from "./Dots";
+import TEMP from "assets/temp.jpg";
 
 export default function Onboarding() {
   const [scrollIdx, setScrollIdx] = useState(1);
   const mainWrapperRef = useRef();
+  const globe = useRef();
   const DIVIDER_HEIGHT = 5;
 
   useEffect(() => {
@@ -30,6 +32,9 @@ export default function Onboarding() {
             behavior: "smooth",
           });
           setScrollIdx(2);
+          globe.current.style.bottom = "50%";
+          globe.current.style.transform = "translate(-50%, 50%) scale(0.75)";
+          globe.current.style.left = "70%";
         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
           //현재 2페이지
           console.log("현재 2페이지, down");
@@ -39,6 +44,7 @@ export default function Onboarding() {
             behavior: "smooth",
           });
           setScrollIdx(3);
+          globe.current.style.opacity = "0";
         } else {
           // 현재 3페이지
           console.log("현재 3페이지, down");
@@ -69,6 +75,9 @@ export default function Onboarding() {
             behavior: "smooth",
           });
           setScrollIdx(1);
+          globe.current.style.bottom = "-60vh";
+          globe.current.style.transform = "translate(-50%, 0) scale(1.5)";
+          globe.current.style.left = "50%";
         } else {
           // 현재 3페이지
           console.log("현재 3페이지, up");
@@ -78,6 +87,7 @@ export default function Onboarding() {
             behavior: "smooth",
           });
           setScrollIdx(2);
+          globe.current.style.opacity = "1";
         }
       }
     };
@@ -93,8 +103,9 @@ export default function Onboarding() {
   return (
     <div className="main-wrapper" ref={mainWrapperRef}>
       <Dots scrollIdx={scrollIdx} />
+      <img src={TEMP} alt="" className="globe" ref={globe} />
       <div className="main-item">
-        <Page1 />
+        <Page1 scrollIdx={scrollIdx} />
       </div>
       <div className="divider"></div>
       <div className="main-item">

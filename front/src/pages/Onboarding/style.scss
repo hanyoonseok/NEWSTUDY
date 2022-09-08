@@ -28,3 +28,25 @@
   width: 100%;
   height: 5px;
 }
+
+@keyframes goPage2 {
+  from {
+  }
+  to {
+    bottom: 50%;
+    transform: translate(-50%, 50%);
+    width: 30%;
+    height: auto;
+    left: 70%;
+  }
+}
+.globe {
+  position: fixed;
+  bottom: -60vh;
+  left: 50%;
+  transform: translate(-50%, 0) scale(1.5);
+  transition: 0.7s ease;
+  &.page2 {
+    animation: goPage2 0.7s forwards;
+  }
+}

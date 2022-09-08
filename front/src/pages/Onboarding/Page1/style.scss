@@ -5,11 +5,39 @@
   height: 100%;
   position: relative;
   @include FLEX-CENTER;
-}
+  flex-direction: column;
 
-.background-div {
-  @include BACKGROUND-IMAGE("assets/onboarding-background.jpg");
-  position: absolute;
-  top: 0;
-  left: 0;
+  .background-div {
+    @include BACKGROUND-IMAGE("assets/onboarding-background.jpg");
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .title-img {
+    width: 50%;
+    height: auto;
+  }
+
+  .subtitle-h3 {
+    font-family: $kor-light-font;
+    color: $default-grey;
+    width: 100%;
+    @include FLEX-CENTER;
+  }
+
+  .subdescription-h4 {
+    font-size: rem(22);
+    color: $default-grey;
+    font-family: $kor-light-font;
+    width: 100%;
+    @include FLEX-CENTER;
+    b {
+      color: #7da0ff;
+      font-family: $kor-title-font;
+    }
+    &:last-child {
+      margin-bottom: 10%;
+    }
+  }
 }
