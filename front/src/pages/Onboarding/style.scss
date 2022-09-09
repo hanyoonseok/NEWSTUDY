@@ -46,6 +46,7 @@
   left: 50%;
   transform: translate(-50%, 0) scale(1.5);
   transition: 0.7s ease;
+  z-index: 100;
   &.page2 {
     animation: goPage2 0.7s forwards;
   }
@@ -56,6 +57,7 @@
   right: 16%;
   opacity: 0;
   transition: 0.5s ease;
+  z-index: 100;
 }
 .countrycard {
   position: fixed;
@@ -63,4 +65,5 @@
   right: 18%;
   opacity: 0;
   transition: 0.5s ease;
+  z-index: 100;
 }

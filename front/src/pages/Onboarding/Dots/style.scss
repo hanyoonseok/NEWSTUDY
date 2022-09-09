@@ -10,6 +10,7 @@
   background-color: transparent;
   background-color: $soft-blue;
   position: relative;
+  z-index: 100;
   &.on {
     width: 33px;
     height: 33px;
@@ -31,6 +32,7 @@
   top: 50%;
   right: 100px;
   transform: translate(0, -50%);
+  z-index: 100;
 
   .dot-list {
     @include FLEX-BETWEEN;
