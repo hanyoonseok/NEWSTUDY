@@ -10,6 +10,8 @@
     width: 100%;
     height: 100%;
     padding-left: 10%;
+    @include FLEX-AROUND;
+    flex-direction: column;
 
     .title-h1 {
       width: 100%;
@@ -18,6 +20,13 @@
       b {
         color: $soft-blue;
       }
+    }
+
+    .subdescription-h3 {
+      width: 100%;
+      font-size: rem(22);
+      font-family: $kor-light-font;
+      color: #585858;
     }
   }
 

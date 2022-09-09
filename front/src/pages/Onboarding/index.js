@@ -114,6 +114,7 @@ export default function Onboarding() {
 
   return (
     <div className="main-wrapper" ref={mainWrapperRef}>
+      <button className="login-btn">로그인</button>
       <Dots scrollIdx={scrollIdx} />
       <img src={TEMP} alt="" className="globe" ref={globe} />
       <img src={Marker} alt="marker" className="marker" ref={marker} />
@@ -128,10 +129,12 @@ export default function Onboarding() {
         <Page1 scrollIdx={scrollIdx} />
       </div>
       <div className="divider"></div>
+
       <div className="main-item">
         <Page2 />
       </div>
       <div className="divider"></div>
+
       <div className="main-item">
         <Page3 />
       </div>

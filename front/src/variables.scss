@@ -60,6 +60,7 @@ $eng-font: "Helvetica"; //영어 본문
 
 @mixin BTN-COLOR($bgcolor) {
   background-color: $bgcolor;
+  transition: 0.5s ease;
   &:hover {
     background-color: darken($bgcolor, 10%);
   }

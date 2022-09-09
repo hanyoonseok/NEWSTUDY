@@ -31,6 +31,7 @@
     color: $default-grey;
     font-family: $kor-light-font;
     width: 100%;
+    z-index: 101;
     @include FLEX-CENTER;
     b {
       color: #7da0ff;
