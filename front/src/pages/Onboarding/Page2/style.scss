@@ -3,13 +3,53 @@
 .page-div {
   width: 100%;
   height: 100%;
-  position: relative;
-  @include FLEX-CENTER;
-}
 
-.background-div {
-  @include BACKGROUND-IMAGE("assets/onboarding-background.jpg");
-  position: absolute;
-  top: 0;
-  left: 0;
+  .contents-div {
+    width: 100%;
+    height: 100%;
+    padding-left: 10%;
+    @include FLEX-COLUMN;
+    justify-content: space-around;
+
+    .title-h1 {
+      width: 100%;
+      font-size: rem(40);
+      font-family: $kor-title-font;
+      b {
+        color: $soft-blue;
+      }
+    }
+
+    .subtitle-h3 {
+      width: 100%;
+      font-size: rem(22);
+      font-family: $kor-light-font;
+      display: flex;
+      justify-content: flex-start;
+      line-height: 2;
+    }
+
+    .country-wrapper {
+      @include FLEX-COLUMN;
+      align-items: center;
+      width: 100%;
+
+      .country-row {
+        width: 100%;
+        .country-img {
+          border-radius: 12px;
+          width: rem(90);
+          height: rem(52);
+        }
+
+        .country-img + .country-img {
+          margin-left: rem(12);
+        }
+      }
+
+      .country-row + .country-row {
+        margin-top: rem(23);
+      }
+    }
+  }
 }

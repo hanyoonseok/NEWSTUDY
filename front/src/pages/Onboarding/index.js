@@ -6,11 +6,15 @@ import Page2 from "./Page2";
 import Page3 from "./Page3";
 import Dots from "./Dots";
 import TEMP from "assets/temp.jpg";
+import Marker from "assets/marker.jpg";
+import Countrycard from "assets/country-card.jpg";
 
 export default function Onboarding() {
   const [scrollIdx, setScrollIdx] = useState(1);
   const mainWrapperRef = useRef();
   const globe = useRef();
+  const marker = useRef();
+  const countrycard = useRef();
   const DIVIDER_HEIGHT = 5;
 
   useEffect(() => {
@@ -35,6 +39,8 @@ export default function Onboarding() {
           globe.current.style.bottom = "50%";
           globe.current.style.transform = "translate(-50%, 50%) scale(0.75)";
           globe.current.style.left = "70%";
+          marker.current.style.opacity = 1;
+          countrycard.current.style.opacity = 1;
         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
           //현재 2페이지
           console.log("현재 2페이지, down");
@@ -45,6 +51,8 @@ export default function Onboarding() {
           });
           setScrollIdx(3);
           globe.current.style.opacity = "0";
+          marker.current.style.opacity = 0;
+          countrycard.current.style.opacity = 0;
         } else {
           // 현재 3페이지
           console.log("현재 3페이지, down");
@@ -78,6 +86,8 @@ export default function Onboarding() {
           globe.current.style.bottom = "-60vh";
           globe.current.style.transform = "translate(-50%, 0) scale(1.5)";
           globe.current.style.left = "50%";
+          marker.current.style.opacity = 0;
+          countrycard.current.style.opacity = 0;
         } else {
           // 현재 3페이지
           console.log("현재 3페이지, up");
@@ -88,6 +98,8 @@ export default function Onboarding() {
           });
           setScrollIdx(2);
           globe.current.style.opacity = "1";
+          marker.current.style.opacity = 1;
+          countrycard.current.style.opacity = 1;
         }
       }
     };
@@ -104,6 +116,14 @@ export default function Onboarding() {
     <div className="main-wrapper" ref={mainWrapperRef}>
       <Dots scrollIdx={scrollIdx} />
       <img src={TEMP} alt="" className="globe" ref={globe} />
+      <img src={Marker} alt="marker" className="marker" ref={marker} />
+      <img
+        src={Countrycard}
+        alt="countrycard"
+        className="countrycard"
+        ref={countrycard}
+      />
+
       <div className="main-item">
         <Page1 scrollIdx={scrollIdx} />
       </div>

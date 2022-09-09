@@ -50,3 +50,17 @@
     animation: goPage2 0.7s forwards;
   }
 }
+.marker {
+  position: fixed;
+  bottom: 60%;
+  right: 16%;
+  opacity: 0;
+  transition: 0.5s ease;
+}
+.countrycard {
+  position: fixed;
+  bottom: 30%;
+  right: 18%;
+  opacity: 0;
+  transition: 0.5s ease;
+}

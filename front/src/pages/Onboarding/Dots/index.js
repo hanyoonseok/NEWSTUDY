@@ -2,8 +2,8 @@ import "./style.scss";
 
 const Dot = ({ num, scrollIdx }) => {
   return (
-    <div className={`dot ${scrollIdx === num && "on"}`}>
-      <div className={scrollIdx === num && "boundary"}></div>
+    <div className={`dot ${scrollIdx === num ? "on" : ""}`}>
+      <div className={scrollIdx === num ? "boundary" : ""}></div>
     </div>
   );
 };
