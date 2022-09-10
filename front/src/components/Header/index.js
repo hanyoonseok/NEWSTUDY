@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./style.scss";
 
 export default function Header() {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
   return (
     <nav className="header-nav">
       {isLogin ? (

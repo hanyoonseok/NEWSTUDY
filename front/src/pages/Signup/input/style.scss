@@ -1,0 +1,35 @@
+@import "variables.scss";
+.input-div {
+  display: flex;
+  border-bottom: 1px solid #4d4d4db7;
+  padding-bottom: 3%;
+  margin-bottom: 9%;
+
+  .box {
+    width: 25px;
+    height: 25px;
+    background-color: $soft-grey;
+    margin-right: 5%;
+    & .focus-in {
+      background-color: $blue;
+    }
+  }
+
+  input {
+    width: 100%;
+    border: 0;
+    color: $grey;
+    background: transparent;
+    font-size: rem(19);
+    font-family: $kor-font;
+  }
+
+  button {
+    @include BTN-COLOR($soft-grey);
+
+    padding: 2% 5%;
+    font-size: rem(16);
+    font-family: $kor-font;
+    border-radius: 10px 10px 0 0;
+  }
+}

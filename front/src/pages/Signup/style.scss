@@ -1,0 +1,105 @@
+@import "variables.scss";
+
+.background-div {
+  @include BACKGROUND-IMAGE("assets/background.png");
+  @include FLEX-BETWEEN;
+  width: 100%;
+  height: 100vh;
+  background-color: #f3f5ff;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  > div {
+    width: 50%;
+    height: 100%;
+    margin: auto;
+    @include FLEX-CENTER;
+    flex-direction: column;
+  }
+
+  .left-div {
+    > div {
+      @include FLEX-CENTER;
+      justify-content: flex-end;
+    }
+    .logo-img {
+      width: 90%;
+      padding-top: 4%;
+      img {
+        width: 80%;
+      }
+    }
+
+    .earth-img {
+      width: 90%;
+
+      img {
+        width: 85%;
+      }
+    }
+  }
+
+  .right-div {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    .tab {
+      width: 100%;
+      height: 10%;
+      display: flex;
+      align-items: end;
+
+      button {
+        @include BTN-COLOR($soft-grey);
+
+        padding: 2% 5%;
+        font-size: rem(16);
+        font-family: $kor-font;
+        border-radius: 10px 10px 0 0;
+        margin-right: 3%;
+
+        &.active {
+          background-color: $soft-blue;
+        }
+      }
+    }
+    .content {
+      width: 100%;
+      height: 90%;
+      @include BACKGROUND-IMAGE("assets/paper-background.png");
+      background-size: contain;
+      padding: 9% 35% 9% 7%;
+      @include FLEX-ALIGN-CENTER;
+
+      .email-box {
+        position: relative;
+        button {
+          position: absolute;
+          right: 0;
+          top: -15%;
+          padding: 2% 4%;
+        }
+      }
+
+      button {
+        @include BTN-COLOR($soft-blue);
+        padding: 3% 9%;
+        font-size: rem(16);
+        font-family: $kor-font;
+        border-radius: 10px;
+      }
+
+      .signup-btn {
+        float: right;
+      }
+
+      .login-btn {
+        width: 100%;
+      }
+
+      > div {
+        width: 100%;
+      }
+    }
+  }
+}
