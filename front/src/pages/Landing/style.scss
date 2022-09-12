@@ -1,0 +1,72 @@
+@import "variables.scss";
+
+.landing-wrapper {
+  background-color: $white;
+  height: 100vh;
+  width: 100%;
+  padding: 0 3%;
+  .landing-header {
+    border-bottom: 1px solid $soft-grey;
+    font-family: $eng-font;
+    padding: 10px;
+    .logo-img {
+      @include FLEX-CENTER;
+      > img {
+        width: 25%;
+        height: auto;
+      }
+    }
+  }
+  section {
+    @include FLEX-COLUMN;
+    align-items: center;
+    padding: 3vh;
+    .section-title {
+      font-family: $eng-title-font;
+      padding: 3vh;
+    }
+  }
+  .userfit-articles {
+    margin: 17%;
+  }
+}
+
+.carousel {
+  position: relative;
+  @include FLEX-CENTER;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.card-container {
+  position: absolute;
+  transform: rotateY(calc(var(--offset) * 50deg))
+    scaleY(calc(1 + var(--abs-offset) * -0.4))
+    translateZ(calc(var(--abs-offset) * -30rem))
+    translateX(calc(var(--direction) * -5rem));
+  filter: blur(calc(var(--abs-offset) * 1rem));
+  transition: all 0.3s ease-out;
+}
+
+.nav {
+  color: rgba($color: $white, $alpha: 0.7);
+  font-size: 4.5rem;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  cursor: pointer;
+  user-select: none;
+  background: unset;
+  border: unset;
+
+  &.left {
+    transform: translateX(-600%) translatey(-50%);
+  }
+
+  &.right {
+    right: 0;
+    transform: translateX(600%) translatey(-50%);
+  }
+}

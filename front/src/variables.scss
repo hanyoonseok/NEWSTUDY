@@ -7,10 +7,10 @@ $green: #88c848;
 $soft-green: #a9dd75;
 $light-green: #dbfeb7;
 
-$dark-grey: #3e3e3e;
-$grey: #a9a9a9;
-$soft-grey: #cbcbcb;
-$light-grey: #f1f1f1;
+$dark-grey: #3f414b;
+$grey: #85899f;
+$soft-grey: #cccedb;
+$light-grey: #e8e9ef;
 $white: #fbfbfb;
 
 $kor-title-font: "S-CoreDream-5Medium"; //한글 큰 제목(거의 온보딩)
@@ -18,7 +18,8 @@ $kor-light-font: "S-CoreDream-1Thin"; //한글 큰 제목중에서 얇은거
 $kor-font: "AppleSDGothicNeoM"; // 한글 디폴트 (제목 제외)
 
 $eng-title-font: "Montserrat"; //영어 큰 제목
-$eng-font: "Arial"; //영어 본문
+$eng-font: "Helvetica"; //영어 본문
+$eng-fontB: "HelveticaB"; //영어 본문
 
 @function rem($px) {
   @return #{$px/16}rem;

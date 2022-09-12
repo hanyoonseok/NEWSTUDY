@@ -1,0 +1,50 @@
+@import "variables.scss";
+
+.article-wrapper {
+  position: relative;
+  .article-img {
+    > img {
+      width: auto;
+      height: 28vw;
+      border-radius: 25px;
+    }
+  }
+  .article-level {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 2.7vw;
+    height: 2.7vw;
+    font-size: 1.3rem;
+    background-color: $blue;
+    color: white;
+    @include FLEX-CENTER;
+    border-radius: 30px;
+  }
+  .article-category {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+    color: #ff7a7a;
+    background-color: rgba($color: #ffd0d0, $alpha: 0.3);
+    padding: 1%;
+    border-radius: 10px;
+    border: 1px solid #ff7171;
+  }
+  .article-info {
+    position: absolute;
+    bottom: 0%;
+    padding: 40px;
+    width: 100%;
+
+    .article-title {
+      color: $white;
+      font-family: $eng-fontB;
+      margin-bottom: 3%;
+    }
+    .article-content {
+      color: rgba($color: $white, $alpha: 0.5);
+      font-family: $eng-font;
+    }
+  }
+}

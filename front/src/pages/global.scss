@@ -100,6 +100,10 @@ input:focus {
   outline: none;
 }
 
+.text-spotlight {
+  color: $blue;
+}
+
 @font-face {
   font-family: "S-CoreDream-5Medium";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff")
@@ -119,6 +123,20 @@ input:focus {
 @font-face {
   font-family: "AppleSDGothicNeoM";
   src: url("../fonts/AppleSDGothicNeoM.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("../fonts/Helvetica.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "HelveticaB";
+  src: url("../fonts/HelveticaLTStd-FractionsBd.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
