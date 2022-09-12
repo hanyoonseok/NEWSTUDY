@@ -41,11 +41,8 @@
   }
 
   .right-div {
-    padding-top: 5%;
-    padding-bottom: 5%;
     .tab {
       width: 100%;
-      height: 10%;
       display: flex;
       align-items: end;
 
@@ -65,10 +62,9 @@
     }
     .content {
       width: 100%;
-      height: 90%;
       @include BACKGROUND-IMAGE("assets/paper-background.png");
       background-size: contain;
-      padding: 9% 35% 9% 7%;
+      padding: 9% 40% 9% 7%;
       @include FLEX-ALIGN-CENTER;
 
       .email-box {

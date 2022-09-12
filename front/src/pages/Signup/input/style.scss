@@ -5,14 +5,17 @@
   padding-bottom: 3%;
   margin-bottom: 9%;
 
+  &:focus-within {
+    .box {
+      background-color: $soft-blue;
+    }
+  }
+
   .box {
     width: 25px;
     height: 25px;
     background-color: $soft-grey;
     margin-right: 5%;
-    & .focus-in {
-      background-color: $blue;
-    }
   }
 
   input {

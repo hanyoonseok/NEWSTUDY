@@ -15,6 +15,7 @@ export default function Signup() {
         <Input placeholder="이메일을 입력하세요." />
         <Input placeholder="비밀번호를 입력하세요." />
         <button className="login-btn">로그인</button>
+        <></>
       </div>
     ),
     1: (
