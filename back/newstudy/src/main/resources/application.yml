@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/newstudy?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+    username: newstudy
+    password: dhdwhf7xladb!
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher  # swagger ?? ? ? ?? ?? ?????
+
+#  mail:
+#    host: smtp.naver.com
+#    port: 465
+#    username:
+#    password:
+#    properties:
+#      mail.smtp.auth: true
+#      mail.smtp.ssl.enable: true
+  profiles:
+    include: API-KEY
+
+server:
+  servlet:
+    context-path: /api
+  encoding:
+    charset: UTF-8
+  port: 8080
