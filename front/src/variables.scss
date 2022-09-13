@@ -82,5 +82,6 @@ $eng-font: "Helvetica"; //영어 본문
     background-color: $soft-grey;
   }
   padding: 4px 30px;
+  transition: 0.3s ease;
   @include FLEX-CENTER();
 }
