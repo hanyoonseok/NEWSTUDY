@@ -4,16 +4,31 @@ import {
   faGlobe,
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { useMediaQuery } from "react-responsive";
+
 import "pages/Onboarding/Page5/style.scss";
 import Page5Img from "assets/page5-img.png";
+import Page5ImgMobile from "assets/page5-img-mobile.png";
 
 export default function Page5() {
+  const isMobile = useMediaQuery({
+    query: "(max-width:480px)",
+  });
   return (
     <div className="page-color-div">
-      <div className="contents-div">
+      <div className="page5-contents-div">
         <h1 className="title-h1">
-          <b>핵심단어, TTS, 번역</b>기능을 이용해서
-          <br /> 기사를 쉽게 읽어보세요.
+          <b>핵심단어, TTS, 번역</b>
+          {isMobile ? (
+            <>
+              <br /> 기능을 이용해보세요
+            </>
+          ) : (
+            <>
+              기능을 이용해서 <br />
+              기사를 쉽게 읽어보세요.
+            </>
+          )}
         </h1>
         <h3 className="subdescription-h3">
           기사의 빈출 단어를 제공해드려요
@@ -42,7 +57,11 @@ export default function Page5() {
           </div>
         </div>
       </div>
-      <img src={Page5Img} alt="" className="main-img" />
+      {isMobile ? (
+        <img src={Page5ImgMobile} alt="" className="main-img" />
+      ) : (
+        <img src={Page5Img} alt="" className="main-img" />
+      )}
     </div>
   );
 }
