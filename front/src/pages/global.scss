@@ -103,7 +103,28 @@ input:focus {
 .text-spotlight {
   color: $blue;
 }
-
+.article-category {
+  color: #ff7a7a;
+  font-size: 0.8rem;
+  background-color: rgba($color: #ffd0d0, $alpha: 0.3);
+  padding: 1% 2%;
+  border-radius: 5px;
+  border: 1px solid #ff8f8f;
+  font-family: $eng-fontB;
+  font-weight: bold;
+}
+.article-level {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 2.7vw;
+  height: 2.7vw;
+  font-size: 1.3rem;
+  background-color: $blue;
+  color: white;
+  @include FLEX-CENTER;
+  border-radius: 30px;
+}
 @font-face {
   font-family: "S-CoreDream-5Medium";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff")
@@ -128,7 +149,7 @@ input:focus {
 }
 
 @font-face {
-  font-family: "Helvetica";
+  font-family: "HelveticaM";
   src: url("../fonts/Helvetica.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;

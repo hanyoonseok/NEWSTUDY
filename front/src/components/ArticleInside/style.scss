@@ -9,18 +9,6 @@
       border-radius: 25px;
     }
   }
-  .article-level {
-    position: absolute;
-    top: 5%;
-    left: 5%;
-    width: 2.7vw;
-    height: 2.7vw;
-    font-size: 1.3rem;
-    background-color: $blue;
-    color: white;
-    @include FLEX-CENTER;
-    border-radius: 30px;
-  }
   .article-category {
     position: absolute;
     top: 5%;
@@ -41,10 +29,13 @@
       color: $white;
       font-family: $eng-fontB;
       margin-bottom: 3%;
+      text-shadow: $shadow;
+      @include TEXT-OVERFLOW;
     }
     .article-content {
       color: rgba($color: $white, $alpha: 0.5);
       font-family: $eng-font;
+      @include TEXT-OVERFLOW;
     }
   }
 }

@@ -2,13 +2,33 @@ import React from "react";
 import { useState } from "react";
 import "./style.scss";
 import ArticleInside from "components/ArticleInside";
-
 import {
   TiChevronLeftOutline,
   TiChevronRightOutline,
 } from "https://cdn.skypack.dev/react-icons/ti";
+import ArticleOutside from "components/ArticleOutside";
 
 const MAX_VISIBILITY = 3;
+
+function SectionTitle({ sectionTitle }) {
+  const { blueTitle, blackTitle, desc } = sectionTitle;
+  return (
+    <div className="section">
+      <h1 className="section-title">
+        <span className="text-spotlight">{blueTitle}</span> {blackTitle}
+      </h1>
+      <div className="section-desc">
+        {desc}
+        <img
+          className="check-img"
+          src={require("assets/check.png")}
+          alt="check"
+        ></img>
+      </div>
+    </div>
+  );
+}
+
 function UserfitArticle({ children }) {
   const [active, setActive] = useState(2);
   const count = React.Children.count(children);
@@ -109,6 +129,24 @@ function Landing() {
     },
   ];
 
+  const sectionTitle = [
+    {
+      blueTitle: "USER FIT",
+      blackTitle: "NEWS",
+      desc: "사용자의 관심사에 맞춘 기사입니다.",
+    },
+    {
+      blueTitle: "HOT",
+      blackTitle: "TOPIC",
+      desc: "현재 HOT TOPIC인 주제 ‘SUBINI’에 대한 기사입니다.",
+    },
+    {
+      blueTitle: "DAILY",
+      blackTitle: "KEYWORD",
+      desc: "사용자의 관심사에 맞춘 기사입니다.",
+    },
+  ];
+
   return (
     <div className="landing-wrapper">
       <div className="landing-header">
@@ -119,9 +157,8 @@ function Landing() {
       </div>
       {/* 사용자 맞춤 기사 */}
       <section className="userfit">
-        <h1 className="section-title">
-          USER <span className="text-spotlight">FIT</span> NEWS
-        </h1>
+        <SectionTitle sectionTitle={sectionTitle[0]}></SectionTitle>
+
         <div className="userfit-articles">
           <UserfitArticle>
             {fitArticles.map((fitArticle, index) => (
@@ -132,13 +169,27 @@ function Landing() {
       </section>
       {/* 핫토픽 */}
       <section className="hottopic">
-        <h1 className="section-title">
-          <span className="text-spotlight">HOT</span> TOPIC
-        </h1>
+        <SectionTitle sectionTitle={sectionTitle[1]}></SectionTitle>
         <div className="hottopic-articles">
-          <div className="hottopic-left"></div>
-          <div className="hottopic-right"></div>
+          <div className="hottopic-left">
+            <div className="hottopic-img">
+              <img src={require("assets/article2.png")} alt="article"></img>
+              <span className="article-level">C</span>
+            </div>
+            <h3 className="hottopic-title">
+              Two in flooded basement parking lot found aliveasdsad dasdasd
+            </h3>
+            <span className="article-category">SPORTS</span>
+          </div>
+          <div className="hottopic-right">
+            <ArticleOutside Article={fitArticles[0]}></ArticleOutside>
+            <ArticleOutside Article={fitArticles[1]}></ArticleOutside>
+            <ArticleOutside Article={fitArticles[2]}></ArticleOutside>
+          </div>
         </div>
+      </section>
+      <section className="daily-keyword">
+        <SectionTitle sectionTitle={sectionTitle[2]}></SectionTitle>
       </section>
     </div>
   );

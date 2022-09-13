@@ -18,8 +18,13 @@ $kor-light-font: "S-CoreDream-1Thin"; //한글 큰 제목중에서 얇은거
 $kor-font: "AppleSDGothicNeoM"; // 한글 디폴트 (제목 제외)
 
 $eng-title-font: "Montserrat"; //영어 큰 제목
-$eng-font: "Helvetica"; //영어 본문
+$eng-font: "HelveticaM"; //영어 본문
 $eng-fontB: "HelveticaB"; //영어 본문
+
+// 그림자
+$shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+$light-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+$drop-shadow: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.1));
 
 @function rem($px) {
   @return #{$px/16}rem;
@@ -69,4 +74,13 @@ $eng-fontB: "HelveticaB"; //영어 본문
   background-image: url($url);
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+@mixin TEXT-OVERFLOW() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
