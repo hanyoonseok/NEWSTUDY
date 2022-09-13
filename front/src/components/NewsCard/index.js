@@ -19,7 +19,7 @@ export default function NewsCard({ news }) {
             {news.category}
           </div>
           <div className="newscard-footer-right">
-            {news.date} <FontAwesomeIcon icon={faBookmark} />
+            <i>{news.date}</i> <FontAwesomeIcon icon={faBookmark} />
           </div>
         </div>
       </div>

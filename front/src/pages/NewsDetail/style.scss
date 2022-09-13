@@ -6,6 +6,11 @@
   background-color: #fbfbfb;
   display: flex;
 
+  @media (max-width: 480px) {
+    padding: 80px 13px;
+    flex-direction: column;
+  }
+
   .back-btn-wrapper {
     margin-right: rem(25);
     .back-btn {
@@ -19,6 +24,10 @@
       border-color: $dark-grey;
       border-radius: 2px;
     }
+
+    @media (max-width: 480px) {
+      margin-bottom: rem(25);
+    }
   }
 
   .newsdetail-content-div {
@@ -31,6 +40,14 @@
       color: $default-grey;
       font-family: $eng-title-font;
       margin-top: rem(60);
+      width: 100%;
+
+      @media (max-width: 480px) {
+        background-color: $lightx2-blue;
+        padding: 10px 0;
+        text-align: center;
+        margin-top: rem(40);
+      }
     }
 
     .news-section {
@@ -43,6 +60,7 @@
 
       .news-title {
         text-align: center;
+        font-size: rem(32);
       }
 
       .news-date {
@@ -50,6 +68,12 @@
         color: #b7b7b7;
         text-align: center;
         margin-top: rem(8);
+
+        @media (max-width: 480px) {
+          text-align: initial;
+          @include FLEX-ALIGN-CENTER;
+          justify-content: flex-end;
+        }
       }
 
       .news-hot-word {
@@ -72,40 +96,10 @@
             margin-right: 15px;
             margin-top: 10px;
           }
-        }
 
-        .functions-container {
-          @include FLEX-ALIGN-CENTER;
-          justify-content: flex-end;
-          width: 25%;
-
-          .icon-row {
-            @include FLEX-COLUMN;
-            align-items: center;
-            color: $default-grey;
-            i {
-              background-color: $white;
-              box-shadow: $light-shadow;
-              width: rem(60);
-              height: rem(60);
-              border-radius: 100px;
-              @include FLEX-CENTER;
-              font-size: rem(25);
-            }
-            .icon-desc {
-              color: #585858;
-              font-size: rem(22);
-              font-family: $kor-font;
-              font-size: 10px;
-              margin-top: rem(10);
-            }
-
-            @media (max-width: 480px) {
-              margin-left: 75px;
-            }
-          }
-          .icon-row + .icon-row {
-            margin-left: rem(15);
+          @media (max-width: 480px) {
+            width: 100%;
+            justify-content: space-around;
           }
         }
       }
@@ -130,5 +124,49 @@
         flex-wrap: wrap;
       }
     }
+  }
+}
+
+.functions-container {
+  @include FLEX-ALIGN-CENTER;
+  justify-content: flex-end;
+  width: 25%;
+
+  .icon-row {
+    @include FLEX-COLUMN;
+    align-items: center;
+    color: $default-grey;
+    i {
+      background-color: $white;
+      box-shadow: $light-shadow;
+      width: rem(60);
+      height: rem(60);
+      border-radius: 100px;
+      @include FLEX-CENTER;
+      font-size: rem(25);
+    }
+    .icon-desc {
+      color: #585858;
+      font-size: rem(22);
+      font-family: $kor-font;
+      font-size: 10px;
+      margin-top: rem(10);
+
+      @media (max-width: 480px) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      margin-left: 75px;
+    }
+  }
+  .icon-row + .icon-row {
+    margin-left: rem(15);
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    margin-top: rem(30);
   }
 }

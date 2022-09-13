@@ -35,20 +35,7 @@ export default function NewsDetail() {
             An Overseas news story that fits the difficulty
           </h1>
           <p className="news-date">Wed, September 7, 2022</p>
-          <h3 className="news-subtitle">VOCABULARY</h3>
-          <div className="news-hot-word">
-            <section className="words-container">
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-            </section>
+          {isMobile && (
             <section className="functions-container">
               <div className="icon-row">
                 <i>
@@ -69,7 +56,45 @@ export default function NewsDetail() {
                 <div className="icon-desc">스크랩</div>
               </div>
             </section>
+          )}
+          <h3 className="news-subtitle">VOCABULARY</h3>
+          <div className="news-hot-word">
+            <section className="words-container">
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+            </section>
+            {!isMobile && (
+              <section className="functions-container">
+                <div className="icon-row">
+                  <i>
+                    <FontAwesomeIcon icon={faVolumeUp} />
+                  </i>
+                  <div className="icon-desc">발음듣기</div>
+                </div>
+                <div className="icon-row">
+                  <i>
+                    <FontAwesomeIcon icon={faGlobe} />
+                  </i>
+                  <div className="icon-desc">번역보기</div>
+                </div>
+                <div className="icon-row">
+                  <i>
+                    <FontAwesomeIcon icon={faBookmark} />
+                  </i>
+                  <div className="icon-desc">스크랩</div>
+                </div>
+              </section>
+            )}
           </div>
+          {isMobile && <h3 className="news-subtitle">ARTICLE</h3>}
           <p className="news-article">
             This weekend, we’ll be back at STAPLES Center going against Samsung
             Galaxy in the world championship final. As always, we expect to win.
