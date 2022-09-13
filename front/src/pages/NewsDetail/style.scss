@@ -1,1 +1,20 @@
 @import "variables.scss";
+
+.newsdetail-container {
+  padding: 120px 80px 0 160px;
+  @include STRETCH;
+
+  .back-btn-wrapper {
+    .back-btn {
+      width: 20px;
+      height: 20px;
+      border-top: 4px solid $dark-grey;
+      border-left: 4px solid $dark-grey;
+      transform: rotate(-45deg);
+      content: "";
+      background-color: transparent;
+      border-color: $dark-grey;
+      border-radius: 2px;
+    }
+  }
+}
