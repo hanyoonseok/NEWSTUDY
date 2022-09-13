@@ -17,6 +17,14 @@
     @include FLEX-ALIGN-CENTER;
     color: $default-grey;
     i {
+      background-color: $white;
+      box-shadow: $light-shadow;
+      width: rem(60);
+      height: rem(60);
+      border-radius: 100px;
+      @include FLEX-CENTER;
+      margin-right: rem(30);
+      font-size: rem(25);
     }
     .icon-desc {
       color: #585858;

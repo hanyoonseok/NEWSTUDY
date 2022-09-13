@@ -1,5 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faVolumeUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faVolumeUp,
+  faGlobe,
+  faBookmark,
+} from "@fortawesome/free-solid-svg-icons";
 import "pages/Onboarding/Page5/style.scss";
 import Page5Img from "assets/page5-img.png";
 
@@ -23,6 +27,18 @@ export default function Page5() {
               <FontAwesomeIcon icon={faVolumeUp} />
             </i>
             <div className="icon-desc">영문장을 읽어주는 TTS</div>
+          </div>
+          <div className="icon-row">
+            <i>
+              <FontAwesomeIcon icon={faGlobe} />
+            </i>
+            <div className="icon-desc">빠른 영-한 번역</div>
+          </div>
+          <div className="icon-row">
+            <i>
+              <FontAwesomeIcon icon={faBookmark} />
+            </i>
+            <div className="icon-desc">나만의 영단어 스크랩</div>
           </div>
         </div>
       </div>
