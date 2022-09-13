@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useMediaQuery } from "react-responsive";
 
 import "pages/Onboarding/style.scss";
 import Page1 from "./Page1";
@@ -18,6 +19,9 @@ export default function Onboarding() {
   const marker = useRef();
   const countrycard = useRef();
   const DIVIDER_HEIGHT = 5;
+  const isMobile = useMediaQuery({
+    query: "(max-width:480px)",
+  });
 
   useEffect(() => {
     const wheelHandler = (e) => {
@@ -36,9 +40,15 @@ export default function Onboarding() {
             behavior: "smooth",
           });
           setScrollIdx(2);
+
+          if (isMobile) {
+            globe.current.style.transform = "translate(-50%, 50%) scale(0.5)";
+            globe.current.style.left = "50%";
+          } else {
+            globe.current.style.left = "70%";
+            globe.current.style.transform = "translate(-50%, 50%) scale(0.75)";
+          }
           globe.current.style.bottom = "50%";
-          globe.current.style.transform = "translate(-50%, 50%) scale(0.75)";
-          globe.current.style.left = "70%";
           marker.current.style.opacity = 1;
           countrycard.current.style.opacity = 1;
         } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
@@ -93,7 +103,11 @@ export default function Onboarding() {
             behavior: "smooth",
           });
           setScrollIdx(1);
-          globe.current.style.bottom = "-60vh";
+          if (isMobile) {
+            globe.current.style.bottom = "-50vh";
+          } else {
+            globe.current.style.bottom = "-60vh";
+          }
           globe.current.style.transform = "translate(-50%, 0) scale(1.5)";
           globe.current.style.left = "50%";
           marker.current.style.opacity = 0;

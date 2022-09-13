@@ -7,7 +7,10 @@ export default function Page2() {
     <div className="page-div">
       <div className="contents-div">
         <h1 className="title-h1">
-          <b>세계 각지의 뉴스</b>를 <br /> 한 눈에 볼 수 있습니다.
+          <span>
+            <b>세계 각지의 뉴스</b>를{" "}
+          </span>
+          <br /> 한 눈에 볼 수 있습니다.
         </h1>
         <h3 className="subtitle-h3">
           소식이 궁금한 나라가 있나요? <br />
