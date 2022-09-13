@@ -11,6 +11,10 @@
     @include FLEX-AROUND;
     flex-direction: column;
 
+    @media (max-width: 480px) {
+      justify-content: initial;
+    }
+
     .title-h1 {
       text-align: center;
       width: 100%;
@@ -26,10 +30,16 @@
       width: 100%;
       font-size: rem(22);
       font-family: $kor-light-font;
+      @media (max-width: 480px) {
+        display: none;
+      }
     }
 
     .progress-img {
       width: 80%;
+      @media (max-width: 480px) {
+        margin-top: 120px;
+      }
     }
 
     .progress-desc {
@@ -41,6 +51,11 @@
         font-size: rem(16);
         font-family: $kor-font;
         color: #585858;
+      }
+
+      @media (max-width: 480px) {
+        margin-left: 0;
+        margin-top: 50px;
       }
     }
   }

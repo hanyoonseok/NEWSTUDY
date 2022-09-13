@@ -1,7 +1,14 @@
+import { useMediaQuery } from "react-responsive";
+
 import "pages/Onboarding/Page4/style.scss";
 import LevelProgress from "assets/level-progress.png";
+import LevelProgressMobile from "assets/level-progress-mobile.png";
 
 export default function Page4() {
+  const isMobile = useMediaQuery({
+    query: "(max-width:480px)",
+  });
+
   return (
     <div className="page4-div">
       <div className="contents-div">
@@ -13,7 +20,11 @@ export default function Page4() {
           <br />
           난이도에 맞게 제공되는 영어 기사를 학습해보세요!
         </h3>
-        <img src={LevelProgress} alt="" className="progress-img" />
+        {isMobile ? (
+          <img src={LevelProgressMobile} alt="" className="progress-img" />
+        ) : (
+          <img src={LevelProgress} alt="" className="progress-img" />
+        )}
         <div className="progress-desc">
           <article className="desc">
             A1-A2 단계는 EF-SET 1~40까지의 <br />
