@@ -1,10 +1,13 @@
 @import "variables.scss";
 
 .newsdetail-container {
-  padding: 120px 80px 0 160px;
+  padding: 120px 80px 80px 160px;
   @include STRETCH;
+  background-color: #fbfbfb;
+  display: flex;
 
   .back-btn-wrapper {
+    margin-right: rem(25);
     .back-btn {
       width: 20px;
       height: 20px;
@@ -15,6 +18,108 @@
       background-color: transparent;
       border-color: $dark-grey;
       border-radius: 2px;
+    }
+  }
+
+  .newsdetail-content-div {
+    @include FLEX-COLUMN;
+    width: 100%;
+    font-family: $eng-font;
+
+    .news-section {
+      border-radius: 20px;
+      width: 100%;
+      @include FLEX-COLUMN;
+      background-color: #fff;
+      box-shadow: $light-shadow;
+      padding: rem(25) rem(40);
+    }
+
+    .news-title {
+      text-align: center;
+    }
+
+    .news-date {
+      font-size: rem(14);
+      color: #b7b7b7;
+      text-align: center;
+      margin-top: rem(8);
+    }
+
+    .news-subtitle {
+      font-size: rem(20);
+      color: $default-grey;
+      font-family: $eng-title-font;
+      margin-top: rem(60);
+    }
+
+    .news-hot-word {
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      .words-container {
+        width: 75%;
+        @include FLEX-ALIGN-CENTER;
+        flex-wrap: wrap;
+        margin-top: rem(10);
+
+        .word-drug {
+          font-size: rem(20);
+          font-family: $eng-font;
+          padding: rem(10) rem(30);
+          border-radius: 10px;
+          background-color: $light-blue;
+          margin-right: 15px;
+          margin-top: 10px;
+        }
+      }
+
+      .functions-container {
+        @include FLEX-ALIGN-CENTER;
+        justify-content: flex-end;
+        width: 25%;
+
+        .icon-row {
+          @include FLEX-COLUMN;
+          align-items: center;
+          color: $default-grey;
+          i {
+            background-color: $white;
+            box-shadow: $light-shadow;
+            width: rem(60);
+            height: rem(60);
+            border-radius: 100px;
+            @include FLEX-CENTER;
+            font-size: rem(25);
+          }
+          .icon-desc {
+            color: #585858;
+            font-size: rem(22);
+            font-family: $kor-font;
+            font-size: 10px;
+            margin-top: rem(10);
+          }
+
+          @media (max-width: 480px) {
+            margin-left: 75px;
+          }
+        }
+        .icon-row + .icon-row {
+          margin-left: rem(15);
+        }
+      }
+    }
+
+    .news-article {
+      margin-top: rem(60);
+      font-family: $eng-font;
+      font-size: rem(20);
+      line-height: 2;
+
+      .important-word {
+        color: $light-blue;
+      }
     }
   }
 }

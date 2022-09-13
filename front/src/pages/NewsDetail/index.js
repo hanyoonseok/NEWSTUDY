@@ -1,12 +1,85 @@
+import { useMediaQuery } from "react-responsive";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faVolumeUp,
+  faGlobe,
+  faBookmark,
+} from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
 
 export default function NewsDetail() {
+  const isMobile = useMediaQuery({
+    query: "(max-width:480px)",
+  });
+
   return (
     <div className="newsdetail-container">
-      <article className="back-btn-wrapper">
+      <div className="back-btn-wrapper">
         <button className="back-btn"></button>
-      </article>
-      <article className="newsdetail-content-article"></article>
+      </div>
+      <div className="newsdetail-content-div">
+        <section className="news-section">
+          <h1 className="news-title">
+            An Overseas news story that fits the difficulty
+          </h1>
+          <p className="news-date">Wed, September 7, 2022</p>
+          <h3 className="news-subtitle">VOCABULARY</h3>
+          <div className="news-hot-word">
+            <section className="words-container">
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+              <div className="word-drug">word</div>
+            </section>
+            <section className="functions-container">
+              <div className="icon-row">
+                <i>
+                  <FontAwesomeIcon icon={faVolumeUp} />
+                </i>
+                <div className="icon-desc">발음듣기</div>
+              </div>
+              <div className="icon-row">
+                <i>
+                  <FontAwesomeIcon icon={faGlobe} />
+                </i>
+                <div className="icon-desc">번역보기</div>
+              </div>
+              <div className="icon-row">
+                <i>
+                  <FontAwesomeIcon icon={faBookmark} />
+                </i>
+                <div className="icon-desc">스크랩</div>
+              </div>
+            </section>
+          </div>
+          <p className="news-article">
+            This weekend, we’ll be back at STAPLES Center going against Samsung
+            Galaxy in the world championship final. As always, we expect to win.
+            <br />
+            My time with SKT has already been such an amazing journey, and I’m
+            thankful for every day of it. Earlier this year, I felt myself
+            gradually getting weaker. It was like my skills were getting worse
+            and the rest of the world was gaining on me. I’ve often wondered
+            what makes me great at League of Legends, and the best way I can
+            describe it is that I structure my playstyle through calculation and
+            intuition. I’m always learning new things. I can predict events
+            before they happen, and that helps me to be in the right place and
+            make the right play a step sooner than everyone else. For a while
+            there it felt like my intuition was off, and I didn’t know if I
+            could recover. But right now I feel like I can play forever. At the
+          </p>
+        </section>
+        <section className="related-article-section">
+          {" "}
+          <h3 className="news-subtitle">Related Articles</h3>
+        </section>
+      </div>
     </div>
   );
 }
