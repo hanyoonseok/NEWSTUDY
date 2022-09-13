@@ -29,6 +29,28 @@ function SectionTitle({ sectionTitle }) {
   );
 }
 
+function KeywordRanking({ keyword }) {
+  const { word, rank, rankChange } = keyword;
+  return (
+    <>
+      <div className="key-ranking">
+        <div className="rank">{rank}</div>
+        <div className="rank-content">
+          <div className="keyword">{word}</div>
+          <div
+            className="rank-change"
+            style={{
+              "--color": rankChange >= 0 ? "#88C848" : "#FF7777",
+            }}
+          >
+            {rankChange}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
 function UserfitArticle({ children }) {
   const [active, setActive] = useState(2);
   const count = React.Children.count(children);
@@ -131,19 +153,46 @@ function Landing() {
 
   const sectionTitle = [
     {
-      blueTitle: "USER FIT",
+      blueTitle: "USER FIT ",
       blackTitle: "NEWS",
       desc: "사용자의 관심사에 맞춘 기사입니다.",
     },
     {
-      blueTitle: "HOT",
+      blueTitle: "HOT ",
       blackTitle: "TOPIC",
       desc: "현재 HOT TOPIC인 주제 ‘SUBINI’에 대한 기사입니다.",
     },
     {
-      blueTitle: "DAILY",
+      blueTitle: "DAILY ",
       blackTitle: "KEYWORD",
-      desc: "사용자의 관심사에 맞춘 기사입니다.",
+      desc: "매일 수집된 뉴스를 바탕으로 많이 언급된 키워드들을 보여줍니다.",
+    },
+  ];
+  const keywords = [
+    {
+      word: "subini",
+      rank: 1,
+      rankChange: 0,
+    },
+    {
+      word: "subini",
+      rank: 2,
+      rankChange: 0,
+    },
+    {
+      word: "subini",
+      rank: 3,
+      rankChange: 2,
+    },
+    {
+      word: "subini",
+      rank: 4,
+      rankChange: -2,
+    },
+    {
+      word: "subini",
+      rank: 5,
+      rankChange: -2,
     },
   ];
 
@@ -190,6 +239,14 @@ function Landing() {
       </section>
       <section className="daily-keyword">
         <SectionTitle sectionTitle={sectionTitle[2]}></SectionTitle>
+        <div className="daily-wrapper">
+          <div className="daily-left">
+            {keywords.map((keyword, index) => (
+              <KeywordRanking keyword={keyword} key={index}></KeywordRanking>
+            ))}
+          </div>
+          <div className="daily-right">ss</div>
+        </div>
       </section>
     </div>
   );

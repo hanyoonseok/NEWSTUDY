@@ -26,6 +26,7 @@
     margin: 17%;
   }
 
+  // 핫토픽
   .hottopic {
     .hottopic-articles {
       @include FLEX-CENTER;
@@ -71,6 +72,52 @@
       }
     }
   }
+
+  // 데일리 키워드
+  .daily-keyword {
+    .daily-wrapper {
+      @include FLEX-CENTER;
+      justify-content: flex-start;
+      .daily-left {
+        .key-ranking {
+          @include FLEX-CENTER;
+          transition: all 300ms ease;
+          margin: 2% 0;
+          padding: 5px;
+          &:hover {
+            transform: scale(1.05);
+            background-color: white;
+            border-radius: 20px;
+            filter: $drop-shadow;
+          }
+          .rank {
+            @include FLEX-CENTER;
+            width: 2em;
+            color: $white;
+            height: 2em;
+            border-radius: 20px;
+            background-color: $blue;
+            font-size: 1.2rem;
+            font-weight: bold;
+          }
+          .rank-content {
+            font-size: 1.5rem;
+            width: 17vw;
+            @include FLEX-BETWEEN;
+            padding: 5px 1.5vw;
+            .keyword {
+            }
+            .rank-change {
+              color: var(--color);
+            }
+          }
+        }
+      }
+      .daily-right {
+        background-color: red;
+      }
+    }
+  }
 }
 
 .carousel {
@@ -85,7 +132,7 @@
   transform: rotateY(calc(var(--offset) * 50deg))
     scaleY(calc(1 + var(--abs-offset) * -0.4))
     translateZ(calc(var(--abs-offset) * -30rem))
-    translateX(calc(var(--direction) * -5rem));
+    translateX(calc(var(--direction) * -8rem));
   filter: blur(calc(var(--abs-offset) * 0.7rem));
   transition: all 0.3s ease-out;
 }
@@ -123,8 +170,9 @@
   margin: 3vw 0;
   .section-title {
     font-family: $eng-title-font;
-    padding: 3vh;
+    padding: 2vh;
     margin-top: 5vh;
+    @include FLEX-CENTER;
   }
 
   .section-desc {
@@ -133,6 +181,7 @@
     color: $grey;
     @include FLEX-CENTER;
     .check-img {
+      margin-left: 5px;
       width: 1rem;
       height: 1rem;
     }
