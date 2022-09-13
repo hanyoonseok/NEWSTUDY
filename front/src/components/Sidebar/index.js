@@ -4,7 +4,7 @@ import "./style.scss";
 
 export default function Sidebar() {
   const sidebar = useRef();
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   useEffect(() => {
     const localStorageItem = localStorage.getItem("isLogin");

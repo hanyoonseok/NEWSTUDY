@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./style.scss";
 
 export default function Header() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   useEffect(() => {
     const localStorageItem = localStorage.getItem("isLogin");

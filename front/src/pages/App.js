@@ -4,6 +4,7 @@ import "pages/global.scss";
 import Onboarding from "pages/Onboarding";
 import Layout from "components/Layout";
 import Signup from "./Signup";
+import Mypage from "./Mypage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Onboarding />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/mypage" element={<Mypage />}></Route>
         </Routes>
       </Layout>
     </BrowserRouter>
