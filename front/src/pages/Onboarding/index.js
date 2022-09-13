@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 
-import "./style.scss";
+import "pages/Onboarding/style.scss";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
 import Page3 from "./Page3";
 import Page4 from "./Page4";
+import Page5 from "./Page5";
 import Dots from "./Dots";
 import TEMP from "assets/temp.jpg";
 import Marker from "assets/marker.jpg";
@@ -58,14 +59,21 @@ export default function Onboarding() {
             left: 0,
             behavior: "smooth",
           });
-          setScrollIdx(3);
-        } else {
+          setScrollIdx(4);
+        } else if (scrollTop >= pageHeight * 3 && scrollTop < pageHeight * 4) {
           mainWrapperRef.current.scrollTo({
             top: pageHeight * 4 + DIVIDER_HEIGHT * 4,
             left: 0,
             behavior: "smooth",
           });
-          setScrollIdx(4);
+          setScrollIdx(5);
+        } else {
+          mainWrapperRef.current.scrollTo({
+            top: pageHeight * 5 + DIVIDER_HEIGHT * 5,
+            left: 0,
+            behavior: "smooth",
+          });
+          setScrollIdx(5);
         }
       } else {
         // 스크롤 올릴 때
@@ -101,13 +109,20 @@ export default function Onboarding() {
           globe.current.style.opacity = "1";
           marker.current.style.opacity = 1;
           countrycard.current.style.opacity = 1;
-        } else {
+        } else if (scrollTop >= pageHeight * 3 && scrollTop < pageHeight * 4) {
           mainWrapperRef.current.scrollTo({
             top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
             left: 0,
             behavior: "smooth",
           });
           setScrollIdx(3);
+        } else {
+          mainWrapperRef.current.scrollTo({
+            top: pageHeight * 3 + DIVIDER_HEIGHT * 3,
+            left: 0,
+            behavior: "smooth",
+          });
+          setScrollIdx(4);
         }
       }
     };
@@ -146,9 +161,15 @@ export default function Onboarding() {
       <div className="main-item">
         <Page3 />
       </div>
+      <div className="divider"></div>
 
       <div className="main-item">
         <Page4 />
+      </div>
+      <div className="divider"></div>
+
+      <div className="main-item">
+        <Page5 />
       </div>
     </div>
   );

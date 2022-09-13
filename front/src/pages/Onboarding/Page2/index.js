@@ -1,4 +1,4 @@
-import "./style.scss";
+import "pages/Onboarding/Page2/style.scss";
 import usa from "assets/usa.jpg";
 import kor from "assets/kor.jpg";
 

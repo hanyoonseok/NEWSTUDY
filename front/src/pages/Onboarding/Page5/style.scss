@@ -1,0 +1,30 @@
+@import "variables.scss";
+
+.main-img {
+  position: absolute;
+  top: 60%;
+  right: 12%;
+  transform: translate(0, -50%);
+  width: rem(650);
+  height: rem(454);
+}
+
+.iconset-div {
+  width: 100%;
+  margin-top: 60px;
+  @include FLEX-COLUMN;
+  .icon-row {
+    @include FLEX-ALIGN-CENTER;
+    color: $default-grey;
+    i {
+    }
+    .icon-desc {
+      color: #585858;
+      font-size: rem(22);
+      font-family: $kor-font;
+    }
+  }
+  .icon-row + .icon-row {
+    margin-top: rem(25);
+  }
+}

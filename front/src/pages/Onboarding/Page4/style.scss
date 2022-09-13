@@ -1,17 +1,18 @@
 @import "variables.scss";
 
-.page-div {
+.page4-div {
   width: 100%;
   height: 100%;
 
   .contents-div {
     width: 100%;
     height: 100%;
-    padding-left: 10%;
-    @include FLEX-COLUMN;
-    justify-content: space-around;
+    padding: 100px 0;
+    @include FLEX-AROUND;
+    flex-direction: column;
 
     .title-h1 {
+      text-align: center;
       width: 100%;
       font-size: rem(40);
       font-family: $kor-title-font;
@@ -20,13 +21,27 @@
       }
     }
 
-    .subtitle-h3 {
+    .subtit-h3 {
+      @include FLEX-CENTER;
       width: 100%;
       font-size: rem(22);
       font-family: $kor-light-font;
-      display: flex;
-      justify-content: flex-start;
-      line-height: 2;
+    }
+
+    .progress-img {
+      width: 80%;
+    }
+
+    .progress-desc {
+      margin-left: 15%;
+      width: 80%;
+      @include FLEX-AROUND;
+
+      .desc {
+        font-size: rem(16);
+        font-family: $kor-font;
+        color: #585858;
+      }
     }
   }
 }

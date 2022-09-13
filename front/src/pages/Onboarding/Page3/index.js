@@ -7,10 +7,13 @@ export default function Page3() {
       <div className="contents-div">
         <h1 className="title-h1">
           데일리 콘텐츠를 통해
-          <br /> <b>오늘의 단어</b>를 공부할 수 있습니다.sdasd
+          <br /> <b>오늘의 단어</b>를 공부할 수 있습니다.
         </h1>
         <h3 className="subdescription-h3">
-          매일매일 새로운 단어를 배워봐용 <br /> 너무 좋을 것 같아용
+          매일 게시되는 기사들에서 나오는 <br /> 빈출 단어들을 외워보아요.
+        </h3>
+        <h3 className="subdescription-h3">
+          나만의 단어장을 만들어 <br /> 매일 매일 학습해보세요.
         </h3>
       </div>
       <img src={Dailyword} alt="" className="dailyword-img" />
