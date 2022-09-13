@@ -11,16 +11,16 @@ export default function Signup() {
 
   const tabContent = {
     0: (
-      <div className="login">
+      <form className="login">
         <p></p>
         <Input type="email" placeholder="이메일을 입력하세요." />
         <Input type="password" placeholder="비밀번호를 입력하세요." />
         <button className="login-btn">로그인</button>
         <p></p>
-      </div>
+      </form>
     ),
     1: (
-      <div className="signup">
+      <form className="signup">
         <div className="email-box">
           <Input type="email" placeholder="이메일을 입력하세요." />
           <button>인증</button>
@@ -30,7 +30,7 @@ export default function Signup() {
         <Input type="password" placeholder="비밀번호를 다시 입력하세요." />
         <Input type="text" placeholder="닉네임을 입력하세요." />
         <button className="signup-btn">가입하기</button>
-      </div>
+      </form>
     ),
   };
 

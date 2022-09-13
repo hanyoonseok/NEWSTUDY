@@ -51,6 +51,7 @@
   width: 100%;
   display: flex;
   align-items: end;
+  padding-top: 8%;
 
   button {
     @include BTN-COLOR($soft-grey);
@@ -68,11 +69,14 @@
 }
 
 .content {
-  width: 100%;
+  width: 65%;
+  height: 72%;
+  margin: 0 auto 0 0;
   @include BACKGROUND-IMAGE("assets/paper-background.png");
   background-size: contain;
-  padding: 9% 40% 9% 7%;
+  padding: 5%;
   @include FLEX-ALIGN-CENTER;
+  align-items: normal;
 
   .email-box {
     position: relative;
@@ -105,8 +109,9 @@
     width: 100%;
   }
 
-  > div {
+  > form {
     width: 100%;
+    height: 100%;
   }
 }
 
@@ -152,7 +157,7 @@
         width: 100%;
         height: 80%;
         display: block;
-        padding: 0;
+        padding: 8%;
 
         > div {
           width: 95%;
@@ -160,6 +165,7 @@
         }
 
         .input-div {
+          margin-bottom: 7%;
           .box {
             width: 20px;
             height: 20px;
