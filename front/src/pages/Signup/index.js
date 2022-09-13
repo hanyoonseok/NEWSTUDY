@@ -1,6 +1,6 @@
 import "./style.scss";
 import Input from "./input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Signup() {
   const [activeId, setActiveId] = useState(0);
@@ -12,22 +12,23 @@ export default function Signup() {
   const tabContent = {
     0: (
       <div className="login">
-        <Input placeholder="이메일을 입력하세요." />
-        <Input placeholder="비밀번호를 입력하세요." />
+        <p></p>
+        <Input type="email" placeholder="이메일을 입력하세요." />
+        <Input type="password" placeholder="비밀번호를 입력하세요." />
         <button className="login-btn">로그인</button>
-        <></>
+        <p></p>
       </div>
     ),
     1: (
       <div className="signup">
         <div className="email-box">
-          <Input placeholder="이메일을 입력하세요." />
+          <Input type="email" placeholder="이메일을 입력하세요." />
           <button>인증</button>
         </div>
-        <Input placeholder="인증키를 입력하세요." />
-        <Input placeholder="비밀번호를 입력하세요." />
-        <Input placeholder="비밀번호를 다시 입력하세요." />
-        <Input placeholder="닉네임을 입력하세요." />
+        <Input type="text" placeholder="인증키를 입력하세요." />
+        <Input type="password" placeholder="비밀번호를 입력하세요." />
+        <Input type="password" placeholder="비밀번호를 다시 입력하세요." />
+        <Input type="text" placeholder="닉네임을 입력하세요." />
         <button className="signup-btn">가입하기</button>
       </div>
     ),
@@ -38,10 +39,13 @@ export default function Signup() {
       <div className="background-div">
         <div className="left-div">
           <div className="logo-img">
-            <img src={require("assets/logo.png")}></img>
+            <img src={require("assets/logo.png")} alt="로고이미지"></img>
           </div>
           <div className="earth-img">
-            <img src={require("assets/earth-component.png")}></img>
+            <img
+              src={require("assets/earth-component.png")}
+              alt="지구 컴포넌트 이미지"
+            ></img>
           </div>
         </div>
         <div className="right-div">

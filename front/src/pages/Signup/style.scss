@@ -41,6 +41,7 @@
   }
 
   .right-div {
+    margin-left: 1%;
     .tab {
       width: 100%;
       display: flex;
@@ -75,6 +76,11 @@
           top: -15%;
           padding: 2% 4%;
         }
+      }
+
+      p {
+        width: 100%;
+        padding: 14%;
       }
 
       button {

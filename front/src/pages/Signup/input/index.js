@@ -1,10 +1,10 @@
 import "./style.scss";
 
-export default function Input({ placeholder }) {
+export default function Input({ type, placeholder }) {
   return (
     <div className="input-div">
       <div className="box"></div>
-      <input placeholder={placeholder}></input>
+      <input type={type} placeholder={placeholder}></input>
     </div>
   );
 }

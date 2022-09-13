@@ -25,6 +25,10 @@
     background: transparent;
     font-size: rem(19);
     font-family: $kor-font;
+
+    &::placeholder {
+      font-size: rem(19);
+    }
   }
 
   button {
