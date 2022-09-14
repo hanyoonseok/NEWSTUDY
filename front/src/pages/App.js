@@ -5,6 +5,7 @@ import Onboarding from "pages/Onboarding";
 import Landing from "pages/Landing";
 import NewsDetail from "pages/NewsDetail";
 import NationsNewsList from "pages/NationsNewsList";
+import NewsList from "pages/NewsList";
 import Layout from "components/Layout";
 import Signup from "./Signup";
 import Mypage from "./Mypage";
@@ -23,6 +24,7 @@ function App() {
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/mypage" element={<Mypage />}></Route>
           <Route path="/nationsnews" element={<NationsNewsList />}></Route>
+          <Route path="/news/list" element={<NewsList />}></Route>
         </Routes>
       </Layout>
     </BrowserRouter>
