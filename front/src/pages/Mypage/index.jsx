@@ -4,8 +4,13 @@ import {
   faEnvelope,
   faThumbTack,
   faPencil,
+  faNewspaper,
+  faFileWord,
+  faCertificate,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import Attendance1 from "assets/1attendance_badge.png";
+import DefaultUserImage from "assets/user_globe.png";
 
 export default function Mypage() {
   const user = {
@@ -13,10 +18,33 @@ export default function Mypage() {
     email: "kimssafy@ssafy.com",
   };
 
+  const [userImage, setUserImage] = useState(DefaultUserImage);
+  const fileInput = useRef(null);
+
+  const onChange = (e) => {
+    if (e.target.files[0]) {
+      // setFile(e.target.files[0]);
+    } else {
+      //업로드 취소할 시
+      setUserImage(DefaultUserImage);
+      return;
+    }
+    //화면에 프로필 사진 표시
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        //이미지 정상적으로 불러오면 변경하기
+        setUserImage(reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  };
+
   const articles = [
     {
       img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
+      title:
+        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
       level: "c",
     },
     {
@@ -86,35 +114,84 @@ export default function Mypage() {
     },
   ];
 
-  const file = (url) => {
-    return 'require("' + url + '")';
-  };
-
   const vocas = [
     {
-      word: "Subini",
-      mean: "수콩수콩수콩수콩",
-      part: 0,
+      word: "Administration",
+      part: [
+        {
+          id: 0,
+          mean: "수콩수콩수콩",
+        },
+        {
+          id: 3,
+          mean: "화연연ㅇ여연",
+        },
+      ],
     },
     {
-      word: "Subini",
-      mean: "Not having to follow or be affected by a rule, obligation, etc.",
-      part: 1,
+      word: "SubiniSubiniSi",
+      part: [
+        {
+          id: 0,
+          mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩",
+        },
+        {
+          id: 3,
+          mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩",
+        },
+      ],
     },
     {
-      word: "Subini",
-      mean: "Not having to follow or be affected by a rule, obligation, etc.",
-      part: 2,
+      word: "SubiniSubiniSi",
+      part: [
+        {
+          id: 0,
+          mean: "수콩수콩수콩",
+        },
+        {
+          id: 3,
+          mean: "화연연ㅇ여연",
+        },
+      ],
     },
     {
-      word: "Subini",
-      mean: "Not having to follow or be affected by a rule, obligation, etc.",
-      part: 3,
+      word: "SubiniSubiniSi",
+      part: [
+        {
+          id: 0,
+          mean: "수콩수콩수콩",
+        },
+        {
+          id: 3,
+          mean: "화연연ㅇ여연",
+        },
+      ],
     },
     {
-      word: "Subini",
-      mean: "Not having to follow or be affected by a rule, obligation, etc.",
-      part: 1,
+      word: "SubiniSubiniSi",
+      part: [
+        {
+          id: 0,
+          mean: "수콩수콩수콩",
+        },
+        {
+          id: 3,
+          mean: "화연연ㅇ여연",
+        },
+      ],
+    },
+    {
+      word: "SubiniSubiniSi",
+      part: [
+        {
+          id: 0,
+          mean: "수콩수콩수콩",
+        },
+        {
+          id: 3,
+          mean: "화연연ㅇ여연",
+        },
+      ],
     },
   ];
 
@@ -122,7 +199,7 @@ export default function Mypage() {
     {
       id: 0,
       name: "1일 출석 배지",
-      img: "assets/1attendance_badge.png",
+      img: Attendance1,
       isAchieve: false,
     },
     {
@@ -241,14 +318,18 @@ export default function Mypage() {
       <div className="voca-box">
         {vocas.map((voca, index) => (
           <div className="voca" key={index}>
-            <div className="word">
-              {voca.word}
-              {voca.part === 0 && <p className="blue">형</p>}
-              {voca.part === 1 && <p className="orange">명</p>}
-              {voca.part === 2 && <p className="pink">부</p>}
-              {voca.part === 3 && <p className="green">동</p>}
+            <div className="word">{voca.word}</div>
+            <div className="mean">
+              {voca.part.map((item, index) => (
+                <div key={index}>
+                  {item.id === 0 && <p className="tag blue">형</p>}
+                  {item.id === 1 && <p className="tag orange">명</p>}
+                  {item.id === 2 && <p className="tag pink">부</p>}
+                  {item.id === 3 && <p className="tag green">동</p>}
+                  <p className="kor-mean">{item.mean}</p>
+                </div>
+              ))}
             </div>
-            <div className="mean">{voca.mean}</div>
           </div>
         ))}
       </div>
@@ -276,11 +357,23 @@ export default function Mypage() {
         <div className="info-box">
           <div className="profile-img">
             <div className="img-box">
-              <img
-                src={require("assets/user_globe.png")}
-                alt="사용자 프로필 지구본"
-              ></img>
-              <div className="img-hover">이미지 수정</div>
+              <img src={userImage} alt="사용자 프로필 지구본"></img>
+              <div
+                className="img-hover"
+                onClick={() => {
+                  fileInput.current.click();
+                }}
+              >
+                이미지 수정
+              </div>
+              <input
+                type="file"
+                style={{ display: "none" }}
+                accept="image/jpg,impge/png,image/jpeg"
+                name="profile_img"
+                onChange={onChange}
+                ref={fileInput}
+              />
             </div>
           </div>
           <p className="name">{user.name}</p>
@@ -311,19 +404,22 @@ export default function Mypage() {
             className={`${activeId === 0 ? "active" : ""}`}
             onClick={() => onClickSwitchTab(0)}
           >
-            MY ARTICLE
+            <FontAwesomeIcon icon={faNewspaper} />
+            MY <span>ARTICLE</span>
           </button>
           <button
             className={`${activeId === 1 ? "active" : ""}`}
             onClick={() => onClickSwitchTab(1)}
           >
-            MY VOCA
+            <FontAwesomeIcon icon={faFileWord} />
+            MY <span>VOCA</span>
           </button>
           <button
             className={`${activeId === 2 ? "active" : ""}`}
             onClick={() => onClickSwitchTab(2)}
           >
-            MY BADGE
+            <FontAwesomeIcon icon={faCertificate} />
+            MY <span>BADGE</span>
           </button>
         </div>
         <div className="content">{tabContent[activeId]}</div>
