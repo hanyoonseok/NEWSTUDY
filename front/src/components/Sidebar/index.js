@@ -1,9 +1,17 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import "./style.scss";
 
 export default function Sidebar() {
   const sidebar = useRef();
+  const [isLogin, setIsLogin] = useState(true);
+
+  useEffect(() => {
+    const localStorageItem = localStorage.getItem("isLogin");
+    if (localStorageItem === null || localStorageItem === "false")
+      setIsLogin(false);
+    else setIsLogin(true);
+  }, []);
 
   const hoverHandler = () => {
     console.log("sadf");
