@@ -2,7 +2,8 @@
 
 .newscard-container {
   @include FLEX-ALIGN-CENTER;
-  width: rem(560);
+  max-width: rem(560);
+  width: 100%;
   height: rem(160);
   margin-top: rem(20);
 
