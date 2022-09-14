@@ -81,7 +81,7 @@
       filter: blur(calc(var(--abs-offset) * 0.7rem));
       transition: all 0.3s ease-out;
       @media (max-width: 480px) {
-        transform: rotateX(calc(var(--offset) * 50deg))
+        transform: rotateX(calc(var(--offset) * 30deg))
           scaleY(calc(1 + var(--abs-offset) * -0.4))
           translateZ(calc(var(--abs-offset) * -20rem))
           translateY(calc(var(--direction) * -10rem));
@@ -103,22 +103,22 @@
       transition: all 200ms ease;
 
       &.left {
-        transform: translateX(-25vw) translatey(-50%);
+        transform: translateX(-25vw) translateY(0);
         filter: $drop-shadow;
         &:hover {
           color: $white;
         }
         @media (max-width: 480px) {
-          transform: translateX(-40vw) translatey(0);
+          transform: translateX(0) translateY(-28vw) rotate(90deg);
         }
       }
 
       &.right {
         filter: $drop-shadow;
         right: 0;
-        transform: translateX(25vw) translatey(-50%);
+        transform: translateX(25vw) translateY(-0%);
         @media (max-width: 480px) {
-          transform: translateX(40vw) translatey(0);
+          transform: translateX(50%) translateY(28vw) rotate(90deg);
         }
         &:hover {
           color: $white;
