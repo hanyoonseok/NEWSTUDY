@@ -1,0 +1,184 @@
+@import "variables.scss";
+
+.newslist-container {
+  padding: 120px 80px 80px 160px;
+  @include STRETCH;
+  background-color: #fbfbfb;
+  @include FLEX-COLUMN;
+
+  @media (max-width: 480px) {
+    padding: 100px 12px;
+    background-color: #fff;
+  }
+
+  .mobile-level-title {
+    width: 100%;
+    @include FLEX-BETWEEN;
+
+    .LEVEL-title {
+      color: $blue;
+      font-family: $eng-title-font;
+      font-size: 24px;
+    }
+  }
+
+  .newslist-body-container {
+    margin-top: rem(25);
+    background-color: #fff;
+    @include STRETCH;
+    @include FLEX-COLUMN;
+    border-radius: 20px;
+    box-shadow: $light-shadow;
+    padding: rem(25);
+
+    @media (max-width: 480px) {
+      padding: 0;
+      box-shadow: none;
+    }
+
+    .newslist-top-area {
+      width: 100%;
+      @include FLEX-BETWEEN;
+
+      .hottest-article-depth {
+        font-size: rem(18);
+        font-family: $eng-font;
+        font-weight: bold;
+        color: #454545;
+
+        b {
+          color: #c5c5c5;
+        }
+      }
+    }
+
+    .newslist-mid-area {
+      margin-top: rem(30);
+      width: 100%;
+      @include FLEX-ALIGN-CENTER;
+
+      .hottest-article {
+        width: 100%;
+        height: rem(360);
+        @include FLEX-COLUMN;
+        position: relative;
+
+        .hottest-article-img {
+          width: 100%;
+          height: 100%;
+          background-color: black;
+          border-radius: 18px;
+        }
+
+        .hottest-article-level {
+          width: rem(30);
+          height: rem(30);
+          border-radius: 30px;
+          color: #fff;
+          font-size: rem(16);
+          font-family: $eng-title-font;
+          font-style: initial;
+          position: absolute;
+          @include FLEX-CENTER;
+          top: 20px;
+          left: 20px;
+
+          &.Alv {
+            background-color: $Alv;
+          }
+          &.Blv {
+            background-color: $Blv;
+          }
+          &.Clv {
+            background-color: $Clv;
+          }
+        }
+
+        .hottest-article-title {
+          color: $default-grey;
+          font-size: rem(24);
+          font-family: $eng-font;
+          margin-top: rem(10);
+          flex-shrink: 0;
+          @include ELLIPSIS-LINE(2);
+        }
+
+        .hottest-article-footer {
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          margin-top: rem(10);
+
+          .hottest-article-bookmark {
+            font-size: 20px;
+            margin-left: 10px;
+          }
+        }
+        .hottest-article-category {
+          padding: 4px 8px;
+          border-radius: 8px;
+          font-size: rem(14);
+          font-family: $eng-font;
+          border: 1px solid #ff7171;
+          background-color: rgba(255, 185, 185, 0.4);
+          color: #ff7a7a;
+          @include FLEX-CENTER;
+
+          svg {
+            margin-right: 4px;
+          }
+
+          &.mobile {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+          }
+        }
+      }
+
+      .sub-article-container {
+        width: 100%;
+        margin-left: rem(50);
+        @include FLEX-COLUMN;
+      }
+    }
+
+    .newslist-bot-area {
+      @include FLEX-COLUMN;
+      width: 100%;
+    }
+
+    .newslist-morebtn-container {
+      @include FLEX-CENTER;
+      width: 100%;
+      margin-top: rem(30);
+      .newslist-morebtn {
+        width: rem(175);
+        height: rem(42);
+        border-radius: 15px;
+        @include FLEX-CENTER;
+        border: 1px solid #a0b8ff;
+        background-color: #fff;
+        font-size: rem(20);
+        font-family: $kor-font;
+        color: #6a6a6a;
+        transition: 0.3s ease;
+        font-weight: bold;
+
+        &:hover {
+          background-color: #a0b8ff;
+          color: #fff;
+        }
+
+        @media (max-width: 480px) {
+          background-color: $lightx2-blue;
+          width: 100%;
+          border-radius: 0;
+          border: none;
+          padding: 8px 0;
+        }
+      }
+    }
+  }
+}
