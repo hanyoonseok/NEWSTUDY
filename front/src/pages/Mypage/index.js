@@ -44,15 +44,28 @@ export default function Mypage() {
   const vocas = [
     {
       word: "Subini",
-      mean: "Not having to follow or be affected by a rule, obligation, etc.",
+      mean: "수콩수콩수콩수콩",
+      part: 0,
     },
     {
       word: "Subini",
       mean: "Not having to follow or be affected by a rule, obligation, etc.",
+      part: 1,
     },
     {
       word: "Subini",
       mean: "Not having to follow or be affected by a rule, obligation, etc.",
+      part: 2,
+    },
+    {
+      word: "Subini",
+      mean: "Not having to follow or be affected by a rule, obligation, etc.",
+      part: 3,
+    },
+    {
+      word: "Subini",
+      mean: "Not having to follow or be affected by a rule, obligation, etc.",
+      part: 1,
     },
   ];
 
@@ -89,13 +102,30 @@ export default function Mypage() {
         {articles.map((article, index) => (
           <div className="article" key={index}>
             <span>{article.level}</span>
-            <img src={require("assets/test.png")} alt="기사 이미지"></img>
+            <div className="img-box">
+              <img src={require("assets/test.png")} alt="기사 이미지"></img>
+            </div>
             <p>{article.title}</p>
           </div>
         ))}
       </div>
     ),
-    1: <>voca</>,
+    1: (
+      <div className="voca-box">
+        {vocas.map((voca, index) => (
+          <div className="voca" key={index}>
+            <div className="word">
+              {voca.word}
+              {voca.part === 0 && <p className="blue">형</p>}
+              {voca.part === 1 && <p className="orange">명</p>}
+              {voca.part === 2 && <p className="pink">부</p>}
+              {voca.part === 3 && <p className="green">동</p>}
+            </div>
+            <div className="mean">{voca.mean}</div>
+          </div>
+        ))}
+      </div>
+    ),
   };
 
   return (

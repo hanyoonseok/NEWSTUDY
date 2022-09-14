@@ -71,7 +71,7 @@
 
     .left-box {
       width: 25%;
-      margin-right: 2%;
+      margin-right: 4%;
       .current {
         > div {
           @include FLEX-BETWEEN;
@@ -140,24 +140,25 @@
 
       .content {
         height: 325px;
-        padding: 2% 5%;
+        padding: 2% 6%;
         overflow-y: auto;
+        box-shadow: 5px 5px 5px $light-grey;
 
         .article-box {
           width: 100%;
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
-          gap: 1rem;
+          gap: 2rem;
 
           > div {
             width: 100%;
-            height: 150px;
+            height: 170px;
             position: relative;
 
             span {
               position: absolute;
-              left: 0;
-              top: 0;
+              left: 10px;
+              top: 10px;
               width: 21px;
               height: 21px;
               background-color: $dark-grey;
@@ -166,10 +167,70 @@
               text-align: center;
               line-height: 21px;
             }
-            img {
+            .img-box {
               width: 100%;
-              height: 80%;
-              object-fit: cover;
+              height: 77%;
+              margin-bottom: 2%;
+              img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 14px;
+              }
+            }
+
+            p {
+              font-weight: bold;
+            }
+          }
+        }
+
+        .voca-box {
+          > div {
+            @include FLEX-BETWEEN;
+            border-bottom: 1px solid $soft-grey;
+
+            > div {
+              padding: 2%;
+            }
+            .word {
+              width: 20%;
+              border-right: 1px solid #ff9f9f;
+              font-family: Arial;
+              font-size: rem(24);
+              font-weight: bold;
+              p {
+                font-size: rem(13);
+                font-family: $kor-font;
+                padding: 1%;
+                width: 21px;
+                height: 21px;
+                @include FLEX-CENTER;
+                border-radius: 5px;
+                font-weight: normal;
+                color: $white;
+                margin-top: 2%;
+              }
+
+              .blue {
+                background-color: $light-blue;
+              }
+
+              .orange {
+                background-color: #ffc9aa;
+              }
+
+              .pink {
+                background-color: #ffbbd8;
+              }
+
+              .green {
+                background-color: #b6ffaa;
+              }
+            }
+
+            .mean {
+              width: 80%;
             }
           }
         }

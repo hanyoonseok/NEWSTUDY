@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
 import "./style.scss";
-
+import { useEffect, useState } from "react";
 export default function Header() {
   const [isLogin, setIsLogin] = useState(true);
 
@@ -12,13 +11,9 @@ export default function Header() {
   }, []);
 
   return (
-    <>
-      {isLogin && (
-        <nav className="header-nav">
-          <input />
-          <button>login 되어잇음</button>
-        </nav>
-      )}
-    </>
+    <nav className="header-nav">
+      <input />
+      <button>login 되어잇음</button>
+    </nav>
   );
 }
