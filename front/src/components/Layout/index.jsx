@@ -22,7 +22,6 @@ export default function Layout({ children }) {
           <Sidebar />
         </>
       )}
-
       {children}
     </div>
   );
