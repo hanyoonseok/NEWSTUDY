@@ -50,7 +50,6 @@ export default function NewsDetail() {
       if (!selectedWord) setSelectedWord(word);
       else if (word.eng === selectedWord.eng) setSelectedWord(null);
       else setSelectedWord(word);
-      console.log(word);
     },
     [isMobile, selectedWord],
   );
