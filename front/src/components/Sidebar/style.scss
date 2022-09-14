@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .sidebar-nav {
-  min-width: 70px;
+  min-width: 65px;
   height: 100vh;
   position: fixed;
   left: 0;
@@ -19,7 +19,7 @@
   }
   .sidebar-contents {
     height: 100%;
-    width: 70px;
+    width: 65px;
     position: relative;
 
     @media (max-width: 480px) {
@@ -57,11 +57,11 @@
         height: 50px;
         color: white;
         @include FLEX-CENTER;
-        padding: 30px 40px;
         @media (max-width: 480px) {
           width: 100%;
           font-size: 1.5rem;
           @include FLEX-BETWEEN;
+          padding: 30px 40px;
           > i {
             font-size: 2rem;
           }

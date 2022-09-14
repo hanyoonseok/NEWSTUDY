@@ -21,6 +21,7 @@
   .title-img {
     width: 50%;
     height: auto;
+    z-index: 101;
 
     @media (max-width: 480px) {
       width: 90%;

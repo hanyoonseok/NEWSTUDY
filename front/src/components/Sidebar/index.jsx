@@ -36,7 +36,7 @@ export default function Sidebar() {
       setIsMobileMenuOpen(true);
       console.log(isMobileMenuOpen);
     } else {
-      sidebar.current.style.left = "70px";
+      sidebar.current.style.left = "65px";
       sidebar.current.style.opacity = "1";
     }
   };

@@ -147,7 +147,7 @@ export default function Onboarding() {
     return () => {
       wrapperRefCurrent.removeEventListener("wheel", wheelHandler);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div className="main-wrapper" ref={mainWrapperRef}>
