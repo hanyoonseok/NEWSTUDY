@@ -6,6 +6,21 @@
   background-color: #fbfbfb;
   @include FLEX-COLUMN;
 
+  @media (max-width: 480px) {
+    padding: 100px 12px;
+  }
+
+  .mobile-level-title {
+    width: 100%;
+    @include FLEX-BETWEEN;
+
+    .LEVEL-title {
+      color: $blue;
+      font-family: $eng-title-font;
+      font-size: 24px;
+    }
+  }
+
   .newslist-body-container {
     margin-top: rem(25);
     background-color: #fff;
@@ -86,6 +101,11 @@
         margin-left: rem(50);
         @include FLEX-COLUMN;
       }
+    }
+
+    .newslist-bot-area {
+      @include FLEX-COLUMN;
+      width: 100%;
     }
   }
 }

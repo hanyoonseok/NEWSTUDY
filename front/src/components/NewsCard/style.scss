@@ -12,6 +12,17 @@
   &:hover {
     background-color: rgba(180, 201, 254, 0.15);
   }
+  &.stretch {
+    max-width: 100%;
+
+    .newscard-img-container {
+      width: 25%;
+    }
+
+    .newscard-contents-container {
+      width: 75%;
+    }
+  }
 
   .newscard-img-container {
     width: 40%;
@@ -28,7 +39,6 @@
       width: rem(30);
       height: rem(30);
       border-radius: 30px;
-      background-color: #575757;
       color: #fff;
       font-size: rem(16);
       font-family: $eng-title-font;
@@ -37,6 +47,16 @@
       @include FLEX-CENTER;
       top: 20px;
       left: 20px;
+
+      &.Alv {
+        background-color: $Alv;
+      }
+      &.Blv {
+        background-color: $Blv;
+      }
+      &.Clv {
+        background-color: $Clv;
+      }
     }
   }
 

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faStar } from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
 
-export default function LevelContainer() {
+export default function LevelContainer({ isMobile }) {
   const drawStar = (cnt, color) => {
     const rendering = () => {
       const result = [];
@@ -28,44 +28,56 @@ export default function LevelContainer() {
       <div className="newslist-level">
         <h1 className="level-title Alv">
           <FontAwesomeIcon icon={faCircle} />
-          &nbsp; A1 LV
+          &nbsp; A1 {!isMobile && "LV"}
         </h1>
-        <span className="star-container">{drawStar(1, "#a9dd75")}</span>
+        {!isMobile && (
+          <span className="star-container">{drawStar(1, "#a9dd75")}</span>
+        )}
       </div>
       <div className="newslist-level">
         <h1 className="level-title Alv">
           <FontAwesomeIcon icon={faCircle} />
-          &nbsp; A2 LV
+          &nbsp; A2 {!isMobile && "LV"}
         </h1>
-        <span className="star-container">{drawStar(2, "#a9dd75")}</span>
+        {!isMobile && (
+          <span className="star-container">{drawStar(2, "#a9dd75")}</span>
+        )}
       </div>
       <div className="newslist-level">
         <h1 className="level-title Blv">
           <FontAwesomeIcon icon={faCircle} />
-          &nbsp; B1 LV
+          &nbsp; B1 {!isMobile && "LV"}
         </h1>
-        <span className="star-container">{drawStar(3, "#96b2ff")}</span>
+        {!isMobile && (
+          <span className="star-container">{drawStar(3, "#96b2ff")}</span>
+        )}
       </div>
       <div className="newslist-level">
         <h1 className="level-title Blv">
           <FontAwesomeIcon icon={faCircle} />
-          &nbsp; B2 LV
+          &nbsp; B2 {!isMobile && "LV"}
         </h1>
-        <span className="star-container">{drawStar(4, "#96b2ff")}</span>
+        {!isMobile && (
+          <span className="star-container">{drawStar(4, "#96b2ff")}</span>
+        )}
       </div>
       <div className="newslist-level">
         <h1 className="level-title Clv">
           <FontAwesomeIcon icon={faCircle} />
-          &nbsp; C1 LV
+          &nbsp; C1 {!isMobile && "LV"}
         </h1>
-        <span className="star-container">{drawStar(5, "#debbff")}</span>
+        {!isMobile && (
+          <span className="star-container">{drawStar(5, "#debbff")}</span>
+        )}
       </div>
       <div className="newslist-level">
         <h1 className="level-title Clv">
           <FontAwesomeIcon icon={faCircle} />
-          &nbsp; C2 LV
+          &nbsp; C2 {!isMobile && "LV"}
         </h1>
-        <span className="star-container">{drawStar(6, "#debbff")}</span>
+        {!isMobile && (
+          <span className="star-container">{drawStar(6, "#debbff")}</span>
+        )}
       </div>
     </div>
   );

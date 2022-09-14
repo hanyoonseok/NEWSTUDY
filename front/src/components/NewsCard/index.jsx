@@ -3,12 +3,22 @@ import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 import "./style.scss";
 
-export default function NewsCard({ news }) {
+export default function NewsCard({ news, stretch }) {
   return (
-    <div className="newscard-container">
+    <div className={`newscard-container ${stretch ? "stretch" : ""}`}>
       <div className="newscard-img-container">
         <img src={news.img} alt="" className="newscard-img" />
-        <i className="newscard-level">{news.level}</i>
+        <i
+          className={`newscard-level ${
+            news.level.includes("A")
+              ? "Alv"
+              : news.level.includes("B")
+              ? "Blv"
+              : "Clv"
+          }`}
+        >
+          {news.level}
+        </i>
       </div>
       <div className="newscard-contents-container">
         <h1 className="newscard-title">{news.title}</h1>

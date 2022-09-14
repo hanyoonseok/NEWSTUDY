@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { useMediaQuery } from "react-responsive";
 
 import "./style.scss";
 import LevelContainer from "./LevelContainer";
@@ -7,6 +8,10 @@ import Filter from "components/Filter";
 import NewsCard from "components/NewsCard";
 
 export default function NewsList() {
+  const isMobile = useMediaQuery({
+    query: "(max-width:480px)",
+  });
+
   const news = {
     img: "",
     title:
@@ -16,9 +21,90 @@ export default function NewsList() {
     category: "SPORTS",
     level: "c",
   };
+
+  const newses = [
+    {
+      img: "",
+      title:
+        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
+      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
+      date: "Wed, September 7, 2022",
+      category: "SPORTS",
+      level: "A1",
+    },
+    {
+      img: "",
+      title:
+        "An Overseas news story that fits the diffiA1ulty An Overseas news story that fits the diffiA1ulty",
+      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
+      date: "Wed, September 7, 2022",
+      category: "SPORTS",
+      level: "A1",
+    },
+    {
+      img: "",
+      title:
+        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
+      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
+      date: "Wed, September 7, 2022",
+      category: "SPORTS",
+      level: "B2",
+    },
+    {
+      img: "",
+      title:
+        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
+      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
+      date: "Wed, September 7, 2022",
+      category: "SPORTS",
+      level: "B2",
+    },
+    {
+      img: "",
+      title:
+        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
+      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
+      date: "Wed, September 7, 2022",
+      category: "SPORTS",
+      level: "C1",
+    },
+    {
+      img: "",
+      title:
+        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
+      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
+      date: "Wed, September 7, 2022",
+      category: "SPORTS",
+      level: "C1",
+    },
+    {
+      img: "",
+      title:
+        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
+      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
+      date: "Wed, September 7, 2022",
+      category: "SPORTS",
+      level: "A2",
+    },
+    {
+      img: "",
+      title:
+        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
+      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
+      date: "Wed, September 7, 2022",
+      category: "SPORTS",
+      level: "A2",
+    },
+  ];
   return (
     <section className="newslist-container">
-      <LevelContainer />
+      {isMobile && (
+        <div className="mobile-level-title">
+          <h1 className="LEVEL-title">LEVEL</h1>
+          <Filter />
+        </div>
+      )}
+      <LevelContainer isMobile={isMobile} />
       <article className="newslist-body-container">
         <div className="newslist-top-area">
           <h3 className="hottest-article-depth">
@@ -46,7 +132,11 @@ export default function NewsList() {
             <NewsCard news={news} />
           </div>
         </div>
-        <div className="newslist-bot-area"></div>
+        <div className="newslist-bot-area">
+          {newses.map((e, i) => (
+            <NewsCard news={e} stretch key={i} />
+          ))}
+        </div>
       </article>
     </section>
   );
