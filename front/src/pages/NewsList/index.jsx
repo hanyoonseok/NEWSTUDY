@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
+import { useState, useCallback } from "react";
 
 import "./style.scss";
 import LevelContainer from "./LevelContainer";
@@ -8,6 +9,8 @@ import Filter from "components/Filter";
 import NewsCard from "components/NewsCard";
 
 export default function NewsList() {
+  const [selectedLevel, setSelectedLevel] = useState("A1");
+
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
@@ -96,6 +99,15 @@ export default function NewsList() {
       level: "A2",
     },
   ];
+
+  const onLevelClick = useCallback(
+    (lv) => () => {
+      if (lv === selectedLevel) return;
+      setSelectedLevel(lv);
+    },
+    [selectedLevel],
+  );
+
   return (
     <section className="newslist-container">
       {isMobile && (
@@ -104,7 +116,11 @@ export default function NewsList() {
           <Filter />
         </div>
       )}
-      <LevelContainer isMobile={isMobile} />
+      <LevelContainer
+        isMobile={isMobile}
+        onLevelClick={onLevelClick}
+        selectedLevel={selectedLevel}
+      />
       <article className="newslist-body-container">
         <div className="newslist-top-area">
           <h3 className="hottest-article-depth">

@@ -12,7 +12,20 @@
     justify-content: center;
     align-items: flex-start;
     height: 100%;
+    cursor: pointer;
     &:hover {
+      .star-container {
+        opacity: 1;
+      }
+      .level-title {
+        color: #000000;
+      }
+    }
+
+    &.active {
+      .level-title {
+        color: #000000;
+      }
       .star-container {
         opacity: 1;
       }
@@ -21,6 +34,7 @@
     .level-title {
       font-size: rem(20);
       font-family: $eng-font;
+      color: #cccccc;
       @include FLEX-ALIGN-CENTER;
 
       svg {
