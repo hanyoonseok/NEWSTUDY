@@ -3,8 +3,7 @@
 .newslist-level-container {
   width: 100%;
   height: rem(70);
-  border-top: 1px solid rgba(182, 182, 182, 0.8);
-  border-bottom: 1px solid rgba(182, 182, 182, 0.8);
+
   @include FLEX-AROUND;
 
   .newslist-level {
@@ -12,7 +11,11 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+    width: 100%;
+    border-top: 1px solid rgba(182, 182, 182, 0.8);
+    border-bottom: 1px solid rgba(182, 182, 182, 0.8);
     cursor: pointer;
+
     &:hover {
       .star-container {
         opacity: 1;
@@ -29,6 +32,7 @@
       .star-container {
         opacity: 1;
       }
+      border-bottom: 3px solid #173042;
     }
 
     .level-title {
