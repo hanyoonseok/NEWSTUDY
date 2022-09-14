@@ -1,0 +1,94 @@
+@import "variables.scss";
+
+.main-img {
+  position: absolute;
+  top: 60%;
+  right: 12%;
+  transform: translate(0, -50%);
+  width: rem(650);
+  height: rem(454);
+
+  @media (max-width: 480px) {
+    top: 42%;
+    right: auto;
+    left: 52%;
+    transform: translate(-50%, -50%);
+    width: rem(450);
+    height: rem(370);
+  }
+}
+
+.page5-contents-div {
+  width: 100%;
+  height: 100%;
+  padding-left: 10%;
+  @include FLEX-COLUMN;
+  @media (max-width: 480px) {
+    justify-content: space-between;
+    padding: 80px 0 150px 0;
+    padding-left: 0;
+    align-items: center;
+  }
+
+  .title-h1 {
+    margin-top: 100px;
+    width: 100%;
+    font-size: rem(40);
+    font-family: $kor-title-font;
+    b {
+      color: $soft-blue;
+    }
+    @media (max-width: 480px) {
+      margin-top: 0;
+      text-align: center;
+    }
+  }
+
+  .subdescription-h3 {
+    width: 100%;
+    margin-top: 60px;
+    font-size: rem(22);
+    font-family: $kor-light-font;
+    color: #585858;
+
+    @media (max-width: 480px) {
+      display: none;
+    }
+  }
+}
+
+.iconset-div {
+  width: 100%;
+  margin-top: 60px;
+  @include FLEX-COLUMN;
+  .icon-row {
+    @include FLEX-ALIGN-CENTER;
+    color: $default-grey;
+    i {
+      background-color: $white;
+      box-shadow: $light-shadow;
+      width: rem(60);
+      height: rem(60);
+      border-radius: 100px;
+      @include FLEX-CENTER;
+      margin-right: rem(30);
+      font-size: rem(25);
+    }
+    .icon-desc {
+      color: #585858;
+      font-size: rem(22);
+      font-family: $kor-font;
+    }
+
+    @media (max-width: 480px) {
+      margin-left: 75px;
+    }
+  }
+  .icon-row + .icon-row {
+    margin-top: rem(25);
+  }
+
+  @media (max-width: 480px) {
+    margin: 0;
+  }
+}

@@ -11,7 +11,10 @@ $dark-grey: #3f414b;
 $grey: #85899f;
 $soft-grey: #cccedb;
 $light-grey: #e8e9ef;
+$default-grey: #3f414b;
 $white: #fbfbfb;
+
+$light-shadow: 0 4px 4px rgba(63, 65, 75, 0.1);
 
 $kor-title-font: "S-CoreDream-5Medium"; //한글 큰 제목(거의 온보딩)
 $kor-light-font: "S-CoreDream-1Thin"; //한글 큰 제목중에서 얇은거
@@ -25,6 +28,7 @@ $eng-fontB: "HelveticaB"; //영어 본문
 $shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 $light-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 $drop-shadow: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.1));
+$drop-shadow-dark: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3));
 
 @function rem($px) {
   @return #{$px/16}rem;
@@ -65,6 +69,7 @@ $drop-shadow: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.1));
 
 @mixin BTN-COLOR($bgcolor) {
   background-color: $bgcolor;
+  transition: 0.5s ease;
   &:hover {
     background-color: darken($bgcolor, 10%);
   }
@@ -74,6 +79,18 @@ $drop-shadow: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.1));
   background-image: url($url);
   background-size: cover;
   background-repeat: no-repeat;
+  @include STRETCH;
+}
+
+@mixin MAIN-BTN($light) {
+  @if ($light) {
+    background-color: $light-blue;
+  } @else {
+    background-color: $soft-grey;
+  }
+  padding: 4px 30px;
+  transition: 0.3s ease;
+  @include FLEX-CENTER();
 }
 
 @mixin TEXT-OVERFLOW() {

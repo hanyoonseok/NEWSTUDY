@@ -4,6 +4,7 @@
   @include FLEX-CENTER;
   padding: 0.5vw;
   margin: 10px 0;
+
   cursor: pointer;
   transition: all 300ms ease;
   border-radius: 20px;
@@ -15,17 +16,23 @@
   .article-img {
     position: relative;
     > img {
-      width: auto;
-      height: 8.5vw;
-      width: 13vw;
-      border-radius: 20px;
+      height: 9vw;
+      border-radius: 1.5em;
+      @media (max-width: 1000px) {
+        width: 15rem;
+        height: 9rem;
+      }
+      @media (max-width: 480px) {
+        width: 12rem;
+        height: 8rem;
+      }
     }
   }
   .article-level {
     top: 7%;
     left: 5%;
-    width: 1.5vw;
-    height: 1.5vw;
+    width: 1.7rem;
+    height: 1.7rem;
     font-size: 1rem;
   }
   .article-category {
@@ -33,13 +40,23 @@
   }
   .article-info-desc {
     margin: 0 4%;
-    width: 22vw;
+    width: 25vw;
+    @media (max-width: 1000px) {
+      width: 50%;
+    }
+    @media (max-width: 480px) {
+      width: 100%;
+    }
     .article-title {
       font-family: $eng-fontB;
       font-weight: 800;
       font-size: 1.3rem;
       margin-bottom: 3%;
       @include TEXT-OVERFLOW;
+      @media (max-width: 480px) {
+        -webkit-line-clamp: 1;
+        font-size: 1.1rem;
+      }
     }
     .article-content {
       font-family: $eng-font;

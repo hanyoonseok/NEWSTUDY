@@ -1,0 +1,39 @@
+@import "variables.scss";
+
+.mypage {
+  @include FLEX-COLUMN;
+  width: 100%;
+  padding: 1% 3%;
+
+  .top-box {
+    width: 100%;
+    background-color: #fff;
+    @include FLEX-BETWEEN;
+    justify-content: start;
+    box-shadow: 5px 5px 5px $light-grey;
+    border-radius: 36px;
+    position: relative;
+
+    .badge {
+      width: 14%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      position: relative;
+      img {
+        width: 100%;
+      }
+      p {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .info-box {
+      margin: auto 0 0 0;
+    }
+  }
+}

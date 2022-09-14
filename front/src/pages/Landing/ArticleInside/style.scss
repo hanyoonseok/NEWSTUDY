@@ -2,11 +2,16 @@
 
 .article-wrapper {
   position: relative;
+
   .article-img {
     > img {
       width: auto;
       height: 28vw;
       border-radius: 25px;
+      @media (max-width: 480px) {
+        width: 82vw;
+        height: 47vw;
+      }
     }
   }
   .article-category {
@@ -24,6 +29,9 @@
     bottom: 0%;
     padding: 40px;
     width: 100%;
+    @media (max-width: 480px) {
+      padding: 2rem;
+    }
 
     .article-title {
       color: $white;
@@ -31,6 +39,10 @@
       margin-bottom: 3%;
       text-shadow: $shadow;
       @include TEXT-OVERFLOW;
+      @media (max-width: 480px) {
+        -webkit-line-clamp: 1;
+        font-size: 1.5rem;
+      }
     }
     .article-content {
       color: rgba($color: $white, $alpha: 0.5);
