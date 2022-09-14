@@ -27,6 +27,13 @@
     }
   }
 
+  .filter-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
   .nationsnews-list-container {
     width: 45%;
     height: 100%;

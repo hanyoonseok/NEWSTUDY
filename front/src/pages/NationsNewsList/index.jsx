@@ -2,9 +2,14 @@ import { useCallback, useState } from "react";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";
+import Filter from "components/Filter";
+import FilterModal from "components/FilterModal";
 import Temp from "assets/temp.jpg";
 
 export default function NationsNewsList() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedIdx, setSelectedIdx] = useState(0);
+
   const nations = [
     {
       eng: "SOUTH KOREA",
@@ -27,7 +32,6 @@ export default function NationsNewsList() {
       kor: "대만",
     },
   ];
-  const [selectedIdx, setSelectedIdx] = useState(0);
 
   let news = [
     {
@@ -112,6 +116,14 @@ export default function NationsNewsList() {
     setSelectedIdx((prev) => (prev === nations.length - 1 ? 0 : prev + 1));
   }, []);
 
+  const onFilterClick = useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const onCloseClick = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
   return (
     <section className="nationsnews-container">
       <article className="nationsnews-globe-container">
@@ -130,12 +142,16 @@ export default function NationsNewsList() {
             <button className="right-arrow-btn"></button>
           </div>
         </div>
+        <div className="filter-container">
+          <Filter clickHandler={onFilterClick} />
+        </div>
         <div className="nationsnews-list">
           {news.map((e, i) => {
             return <NewsCard news={e} key={i} />;
           })}
         </div>
       </article>
+      {isModalOpen && <FilterModal closeHandler={onCloseClick} />}
     </section>
   );
 }

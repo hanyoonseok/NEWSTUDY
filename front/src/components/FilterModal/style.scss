@@ -1,0 +1,82 @@
+@import "variables.scss";
+
+.outside-area {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(133, 137, 159, 0.3);
+  @include FLEX-CENTER;
+}
+
+.modal-container {
+  width: rem(400);
+  height: rem(600);
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 18px;
+  @include FLEX-COLUMN;
+  justify-content: space-between;
+
+  .filter-modal-title {
+    font-size: rem(20);
+    font-family: $eng-title-font;
+    width: 100%;
+    border-bottom: 1px solid rgba(176, 176, 176, 0.2);
+    line-height: 2;
+  }
+
+  .category-area {
+    width: 100%;
+    height: 100%;
+    @include FLEX-COLUMN;
+
+    .main-category-container {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-row-gap: 16px;
+
+      .main-category-btn {
+        background-color: $lightx2-blue;
+        border-radius: 7px;
+        width: rem(172);
+        height: rem(36);
+        @include FLEX-CENTER;
+      }
+    }
+
+    .sub-category-container {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .modal-submit-btn {
+    background-color: $light-blue;
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: $kor-font;
+    font-weight: bold;
+    @include BTN-COLOR($light-blue);
+    @include FLEX-CENTER;
+    .arrow-btn-wrapper {
+      .right-arrow-btn {
+        width: 12px;
+        height: 12px;
+        border-top: 4px solid #dbe1ff;
+        border-left: 4px solid #dbe1ff;
+        transform: rotate(135deg);
+        content: "";
+        background-color: transparent;
+        border-color: #dbe1ff;
+        border-radius: 2px;
+        transition: 0.3s ease;
+      }
+    }
+  }
+}
