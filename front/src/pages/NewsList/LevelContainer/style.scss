@@ -10,7 +10,7 @@
   .newslist-level {
     @include FLEX-COLUMN;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     height: 100%;
     cursor: pointer;
     &:hover {
