@@ -110,32 +110,56 @@ export default function NewsList() {
           <h3 className="hottest-article-depth">
             A1 Level <b>&gt;</b> SPORTS <b>&gt;</b> LOL
           </h3>
-          <Filter />
+          {!isMobile && <Filter />}
         </div>
         <div className="newslist-mid-area">
           <div className="hottest-article">
-            <span className="hottest-article-img">d</span>
-            <h1 className="hottest-article-title">{news.title}</h1>
-            <div className="hottest-article-footer">
-              <div className="hottest-article-category">
+            <i
+              className={`hottest-article-level ${
+                news.level.includes("A")
+                  ? "Alv"
+                  : news.level.includes("B")
+                  ? "Blv"
+                  : "Clv"
+              }`}
+            >
+              {news.level}
+            </i>
+            {isMobile && (
+              <div className="hottest-article-category mobile">
                 <FontAwesomeIcon icon={faCircle} />
                 {news.category}
               </div>
-              <FontAwesomeIcon
-                icon={faBookmark}
-                className="hottest-article-bookmark"
-              />
+            )}
+            <span className="hottest-article-img">d</span>
+            <h1 className="hottest-article-title">{news.title}</h1>
+            {!isMobile && (
+              <div className="hottest-article-footer">
+                <div className="hottest-article-category">
+                  <FontAwesomeIcon icon={faCircle} />
+                  {news.category}
+                </div>
+                <FontAwesomeIcon
+                  icon={faBookmark}
+                  className="hottest-article-bookmark"
+                />
+              </div>
+            )}
+          </div>
+          {!isMobile && (
+            <div className="sub-article-container">
+              <NewsCard news={news} />
+              <NewsCard news={news} />
             </div>
-          </div>
-          <div className="sub-article-container">
-            <NewsCard news={news} />
-            <NewsCard news={news} />
-          </div>
+          )}
         </div>
         <div className="newslist-bot-area">
           {newses.map((e, i) => (
-            <NewsCard news={e} stretch key={i} />
+            <NewsCard news={e} stretch={!isMobile} key={i} />
           ))}
+        </div>
+        <div className="newslist-morebtn-container">
+          <button className="newslist-morebtn">더보기</button>
         </div>
       </article>
     </section>
