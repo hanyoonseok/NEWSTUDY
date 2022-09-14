@@ -1,0 +1,72 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle, faStar } from "@fortawesome/free-solid-svg-icons";
+import "./style.scss";
+
+export default function LevelContainer() {
+  const drawStar = (cnt, color) => {
+    const rendering = () => {
+      const result = [];
+      for (let i = 0; i < 6; i++) {
+        i < cnt
+          ? result.push(
+              <FontAwesomeIcon
+                icon={faStar}
+                style={{ color: color }}
+                key={`${color}${i}`}
+              />,
+            )
+          : result.push(<FontAwesomeIcon icon={faStar} key={`${color}${i}`} />);
+      }
+      return result;
+    };
+
+    return rendering();
+  };
+
+  return (
+    <div className="newslist-level-container">
+      <div className="newslist-level">
+        <h1 className="level-title Alv">
+          <FontAwesomeIcon icon={faCircle} />
+          &nbsp; A1 LV
+        </h1>
+        <span className="star-container">{drawStar(1, "#a9dd75")}</span>
+      </div>
+      <div className="newslist-level">
+        <h1 className="level-title Alv">
+          <FontAwesomeIcon icon={faCircle} />
+          &nbsp; A2 LV
+        </h1>
+        <span className="star-container">{drawStar(2, "#a9dd75")}</span>
+      </div>
+      <div className="newslist-level">
+        <h1 className="level-title Blv">
+          <FontAwesomeIcon icon={faCircle} />
+          &nbsp; B1 LV
+        </h1>
+        <span className="star-container">{drawStar(3, "#96b2ff")}</span>
+      </div>
+      <div className="newslist-level">
+        <h1 className="level-title Blv">
+          <FontAwesomeIcon icon={faCircle} />
+          &nbsp; B2 LV
+        </h1>
+        <span className="star-container">{drawStar(4, "#96b2ff")}</span>
+      </div>
+      <div className="newslist-level">
+        <h1 className="level-title Clv">
+          <FontAwesomeIcon icon={faCircle} />
+          &nbsp; C1 LV
+        </h1>
+        <span className="star-container">{drawStar(5, "#debbff")}</span>
+      </div>
+      <div className="newslist-level">
+        <h1 className="level-title Clv">
+          <FontAwesomeIcon icon={faCircle} />
+          &nbsp; C2 LV
+        </h1>
+        <span className="star-container">{drawStar(6, "#debbff")}</span>
+      </div>
+    </div>
+  );
+}
