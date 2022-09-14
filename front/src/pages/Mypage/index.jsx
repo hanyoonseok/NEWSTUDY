@@ -44,7 +44,7 @@ export default function Mypage() {
     {
       img: "assets/test.png",
       title:
-        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
+        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
       level: "c",
     },
     {
