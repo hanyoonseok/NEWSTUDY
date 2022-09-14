@@ -10,8 +10,8 @@ export default function Layout({ children }) {
   useEffect(() => {
     const localStorageItem = localStorage.getItem("isLogin");
     if (localStorageItem === null || localStorageItem === "false")
-      setIsLogin(true);
-    else setIsLogin(false);
+      setIsLogin(false);
+    else setIsLogin(true);
   }, []);
 
   return (

@@ -7,6 +7,7 @@ import NewsDetail from "pages/NewsDetail";
 import NationsNewsList from "pages/NationsNewsList";
 import Layout from "components/Layout";
 import Signup from "./Signup";
+import Mypage from "./Mypage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/landing" element={<Landing />}></Route>
           <Route path="/news/:id" element={<NewsDetail />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/mypage" element={<Mypage />}></Route>
           <Route path="/nationsnews" element={<NationsNewsList />}></Route>
         </Routes>
       </Layout>
