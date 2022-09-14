@@ -1,237 +1,304 @@
 @import "variables.scss";
 
 .mypage {
-  @include FLEX-COLUMN;
-  padding: 0 3% 1%;
-  margin-top: 80px;
-  margin-left: 80px;
+  @include FLEX-BETWEEN;
+  height: 100vh;
+  padding: 80px 3% 1% 130px;
+  background-color: #fafafa;
 
-  .top-box {
-    width: 100%;
-    height: 180px;
-    background-color: #fff;
-    @include FLEX-BETWEEN;
-    justify-content: flex-start;
-    box-shadow: 5px 5px 5px $light-grey;
+  > div {
+    height: 100%;
+  }
+
+  .left-box {
+    width: 25%;
     border-radius: 36px;
     position: relative;
 
-    .badge {
-      width: 14%;
-      transform: translateY(30%);
-      margin-left: 6%;
-      margin-right: 1%;
-      position: relative;
-      transition: all 1s;
-
-      img {
-        width: 100%;
-      }
-      p {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        color: $white;
-        opacity: 0;
-      }
-
-      &:hover {
-        p {
-          opacity: 1;
-        }
-      }
-    }
-
     .info-box {
+      height: 45%;
       margin: auto 0 0 0;
       font-size: rem(20);
+      text-align: center;
+
+      .profile-img {
+        background-color: #fff;
+        border-radius: 35px;
+
+        .img-box {
+          width: 50%;
+          height: 169px;
+          transform: translateY(10%);
+          margin: auto;
+          position: relative;
+          transition: all 1s;
+          img {
+            // transform: rotate(15deg);
+            width: 100%;
+            height: 100%;
+          }
+
+          .img-hover {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: $white;
+            opacity: 0;
+            font-size: rem(16);
+            @include FLEX-CENTER;
+            border-radius: 50%;
+            background-color: darken(rgba(0, 0, 0, 0.447), 10%);
+          }
+        }
+
+        &:hover {
+          .img-hover {
+            opacity: 1;
+          }
+        }
+      }
 
       .name {
         font-size: rem(24);
         font-family: $kor-font;
         font-weight: bold;
         margin-bottom: 2%;
+        margin-top: 8%;
       }
 
       .email {
         font-family: Arial;
-        padding-bottom: 4%;
         .fa-envelope {
           color: #3f414b;
         }
       }
     }
-  }
 
-  .bottom-box {
-    @include FLEX-BETWEEN;
-    margin-top: 3.5%;
-    height: 100%;
+    .current {
+      height: 20%;
+      background-color: $lightx2-blue;
+      border-radius: 30px;
+      box-shadow: $light-shadow;
+      padding: 2% 10%;
+      margin-bottom: 3%;
+      > div {
+        @include FLEX-BETWEEN;
+        width: 100%;
+        padding: 1% 6%;
+        margin-bottom: 3%;
 
-    .left-box {
-      width: 25%;
-      margin-right: 4%;
-      .current {
-        > div {
-          @include FLEX-BETWEEN;
-          width: 100%;
-          padding: 4% 6%;
-          background-color: #fff;
-          border-radius: 43px;
-          box-shadow: 5px 5px 5px $light-grey;
-          margin-bottom: 3%;
+        .fa-thumbtack {
+          transform: rotate(-45deg);
+          color: $blue;
+        }
 
-          .fa-thumbtack {
-            transform: rotate(-45deg);
-            color: $blue;
+        p {
+          font-size: rem(18);
+          &:nth-of-type(1) {
+            width: 60%;
           }
-
-          p {
-            font-size: rem(18);
-            &:nth-of-type(1) {
-              width: 60%;
-            }
-            &:nth-of-type(2) {
-              font-weight: bold;
-              color: $grey;
-            }
+          &:nth-of-type(2) {
+            font-weight: bold;
+            color: $grey;
           }
         }
-      }
-
-      .interest {
-        width: 100%;
-        height: 200px;
-        background-color: #fff;
-        border-radius: 30px;
-        box-shadow: 5px 5px 5px $light-grey;
       }
     }
 
-    .right-box {
-      @include FLEX-COLUMN;
-      align-self: baseline;
-      width: 75%;
-      height: 100%;
+    .interest {
+      height: 33%;
+      margin-top: 3%;
+      width: 100%;
+      background-color: #fff;
+      border-radius: 30px;
+      box-shadow: $light-shadow;
 
-      .tab {
-        > button {
-          padding: 2% 4%;
-          font-size: rem(18);
+      .title {
+        width: 100%;
+        height: 25%;
+        margin: auto;
+        font-family: $eng-title-font;
+        font-size: rem(20);
+        font-weight: bold;
+        @include FLEX-CENTER;
+        position: relative;
+
+        b {
+          color: $soft-blue;
+        }
+
+        .fa-pencil {
+          position: absolute;
+          right: 20px;
+          top: 20px;
+          font-size: rem(14);
+          color: #173042;
+        }
+      }
+
+      .list {
+        height: 75%;
+      }
+    }
+  }
+
+  .right-box {
+    @include FLEX-COLUMN;
+    align-self: baseline;
+    width: 75%;
+    height: 100%;
+    margin-left: 3%;
+
+    .tab {
+      > button {
+        padding: 2% 4%;
+        font-size: rem(18);
+        position: relative;
+        background-color: #fafafa;
+
+        &.active {
+          font-weight: bold;
           background-color: #fff;
-          position: relative;
-          &.active {
-            font-weight: bold;
 
-            &::after {
-              content: "";
-              display: block;
-              background-color: $dark-grey;
+          &::after {
+            content: "";
+            display: block;
+            background-color: $dark-grey;
+            width: 100%;
+            height: 15%;
+            position: absolute;
+            left: 0;
+            top: 0;
+          }
+        }
+      }
+    }
+
+    .content {
+      height: 100%;
+      padding: 3% 5%;
+      overflow-y: auto;
+      box-shadow: $light-shadow;
+      background-color: #fff;
+      border-radius: 0 30px 30px 30px;
+
+      .article-box {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 2rem;
+
+        > div {
+          width: 225px;
+          height: 190px;
+          margin: auto;
+          position: relative;
+
+          span {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            width: 21px;
+            height: 21px;
+            background-color: $dark-grey;
+            color: $white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 21px;
+          }
+          .img-box {
+            width: 100%;
+            height: 145px;
+            margin-bottom: 2%;
+            img {
               width: 100%;
-              height: 15%;
-              position: absolute;
-              left: 0;
-              top: 0;
+              height: 100%;
+              object-fit: cover;
+              border-radius: 14px;
             }
+          }
+
+          p {
+            font-weight: bold;
           }
         }
       }
 
-      .content {
-        height: 325px;
-        padding: 2% 6%;
-        overflow-y: auto;
-        box-shadow: 5px 5px 5px $light-grey;
-
-        .article-box {
-          width: 100%;
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 2rem;
+      .voca-box {
+        > div {
+          @include FLEX-BETWEEN;
+          border-bottom: 1px solid $soft-grey;
 
           > div {
-            width: 100%;
-            height: 170px;
-            position: relative;
-
-            span {
-              position: absolute;
-              left: 10px;
-              top: 10px;
+            padding: 2%;
+          }
+          .word {
+            width: 20%;
+            border-right: 1px solid #ff9f9f;
+            font-family: Arial;
+            font-size: rem(24);
+            font-weight: bold;
+            p {
+              font-size: rem(13);
+              font-family: $kor-font;
+              padding: 1%;
               width: 21px;
               height: 21px;
-              background-color: $dark-grey;
+              @include FLEX-CENTER;
+              border-radius: 5px;
+              font-weight: normal;
               color: $white;
-              border-radius: 50%;
-              text-align: center;
-              line-height: 21px;
-            }
-            .img-box {
-              width: 100%;
-              height: 77%;
-              margin-bottom: 2%;
-              img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 14px;
-              }
+              margin-top: 2%;
             }
 
-            p {
-              font-weight: bold;
+            .blue {
+              background-color: $light-blue;
+            }
+
+            .orange {
+              background-color: #ffc9aa;
+            }
+
+            .pink {
+              background-color: #ffbbd8;
+            }
+
+            .green {
+              background-color: #b6ffaa;
             }
           }
+
+          .mean {
+            width: 80%;
+          }
         }
+      }
 
-        .voca-box {
-          > div {
-            @include FLEX-BETWEEN;
-            border-bottom: 1px solid $soft-grey;
+      .badge-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 3rem 2rem;
+        margin: 2% 6%;
+        text-align: center;
 
-            > div {
-              padding: 2%;
-            }
-            .word {
-              width: 20%;
-              border-right: 1px solid #ff9f9f;
-              font-family: Arial;
-              font-size: rem(24);
-              font-weight: bold;
-              p {
-                font-size: rem(13);
-                font-family: $kor-font;
-                padding: 1%;
-                width: 21px;
-                height: 21px;
-                @include FLEX-CENTER;
-                border-radius: 5px;
-                font-weight: normal;
-                color: $white;
-                margin-top: 2%;
-              }
+        > div {
+          width: 100%;
+          // height: 160px;
+          margin: auto;
 
-              .blue {
-                background-color: $light-blue;
-              }
+          img {
+            display: block;
+            width: 150px;
+            height: 90%;
+            margin: auto;
+          }
 
-              .orange {
-                background-color: #ffc9aa;
-              }
-
-              .pink {
-                background-color: #ffbbd8;
-              }
-
-              .green {
-                background-color: #b6ffaa;
-              }
-            }
-
-            .mean {
-              width: 80%;
-            }
+          p {
+            height: 10%;
+            margin-top: 2%;
           }
         }
       }
