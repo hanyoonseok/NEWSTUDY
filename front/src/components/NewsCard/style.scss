@@ -2,9 +2,16 @@
 
 .newscard-container {
   @include FLEX-ALIGN-CENTER;
-  width: rem(560);
-  height: rem(160);
+  max-width: rem(584);
+  width: 100%;
+  height: rem(180);
   margin-top: rem(20);
+  transition: 0.3s ease;
+  padding: rem(14) rem(10);
+  border-radius: 20px;
+  &:hover {
+    background-color: rgba(180, 201, 254, 0.15);
+  }
 
   .newscard-img-container {
     width: 40%;
@@ -59,8 +66,12 @@
       overflow: hidden;
       text-overflow: ellipsis;
       display: -webkit-box;
-      -webkit-line-clamp: 3; //라인수 정함
+      -webkit-line-clamp: 2; //라인수 정함
       -webkit-box-orient: vertical;
+
+      @media (max-width: 480px) {
+        -webkit-line-clamp: 3; //라인수 정함
+      }
     }
 
     .newscard-footer {
