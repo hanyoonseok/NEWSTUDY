@@ -1,3 +1,4 @@
+import { useCallback, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,6 +11,8 @@ import "./style.scss";
 import NewsCard from "components/NewsCard";
 
 export default function NewsDetail() {
+  const [selectedWord, setSelectedWord] = useState(null);
+
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
@@ -23,6 +26,34 @@ export default function NewsDetail() {
     category: "SPORTS",
     level: "c",
   };
+
+  const words = [
+    {
+      id: 1,
+      eng: "ant",
+      mean: "개미",
+    },
+    { id: 2, eng: "champion", mean: "탬피언" },
+    { id: 3, eng: "world biggest fan", mean: "세계 제일 큰 팬" },
+    { id: 4, eng: "ant1", mean: "개미1" },
+    { id: 5, eng: "champion1", mean: "탬피언1" },
+    { id: 6, eng: "world biggest fan1", mean: "세계 제일 큰 팬1" },
+    { id: 7, eng: "ant2", mean: "개미2" },
+    { id: 8, eng: "champion2", mean: "탬피언2" },
+    { id: 9, eng: "world biggest fan2", mean: "세계 제일 큰 팬2" },
+  ];
+
+  const onWordDrugClick = useCallback(
+    (word) => {
+      if (!isMobile) return;
+
+      if (!selectedWord) setSelectedWord(word);
+      else if (word.eng === selectedWord.eng) setSelectedWord(null);
+      else setSelectedWord(word);
+      console.log(word);
+    },
+    [isMobile, selectedWord],
+  );
 
   return (
     <div className="newsdetail-container">
@@ -57,19 +88,22 @@ export default function NewsDetail() {
               </div>
             </section>
           )}
-          <h3 className="news-subtitle">VOCABULARY</h3>
+          <h3 className="news-subtitle change">VOCABULARY</h3>
           <div className="news-hot-word">
             <section className="words-container">
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
-              <div className="word-drug">word</div>
+              {words.map((e) => {
+                return (
+                  <div
+                    className={`word-drug ${
+                      selectedWord && selectedWord.eng === e.eng ? "on" : ""
+                    }`}
+                    onClick={() => onWordDrugClick(e)}
+                    key={e.id}
+                  >
+                    {e.eng}
+                  </div>
+                );
+              })}
             </section>
             {!isMobile && (
               <section className="functions-container">
@@ -93,8 +127,14 @@ export default function NewsDetail() {
                 </div>
               </section>
             )}
+            {selectedWord && (
+              <div className="word-mean-container">
+                <h3 className="word-mean-title">{selectedWord.eng}</h3>
+                <h4 className="word-mean">{selectedWord.mean}</h4>
+              </div>
+            )}
           </div>
-          {isMobile && <h3 className="news-subtitle">ARTICLE</h3>}
+          {isMobile && <h3 className="news-subtitle change">ARTICLE</h3>}
           <p className="news-article">
             This weekend, we’ll be back at STAPLES Center going against Samsung
             Galaxy in the world championship final. As always, we expect to win.
