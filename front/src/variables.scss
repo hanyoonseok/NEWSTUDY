@@ -7,10 +7,10 @@ $green: #88c848;
 $soft-green: #a9dd75;
 $light-green: #dbfeb7;
 
-$dark-grey: #3e3e3e;
-$grey: #a9a9a9;
-$soft-grey: #cbcbcb;
-$light-grey: #f1f1f1;
+$dark-grey: #3f414b;
+$grey: #85899f;
+$soft-grey: #cccedb;
+$light-grey: #e8e9ef;
 $default-grey: #3f414b;
 $white: #fbfbfb;
 
@@ -21,7 +21,14 @@ $kor-light-font: "S-CoreDream-1Thin"; //한글 큰 제목중에서 얇은거
 $kor-font: "AppleSDGothicNeoM"; // 한글 디폴트 (제목 제외)
 
 $eng-title-font: "Montserrat"; //영어 큰 제목
-$eng-font: "Helvetica"; //영어 본문
+$eng-font: "HelveticaM"; //영어 본문
+$eng-fontB: "HelveticaB"; //영어 본문
+
+// 그림자
+$shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+$light-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+$drop-shadow: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.1));
+$drop-shadow-dark: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3));
 
 @function rem($px) {
   @return #{$px/16}rem;
@@ -84,4 +91,13 @@ $eng-font: "Helvetica"; //영어 본문
   padding: 4px 30px;
   transition: 0.3s ease;
   @include FLEX-CENTER();
+}
+
+@mixin TEXT-OVERFLOW() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
