@@ -16,7 +16,98 @@
   .nationsnews-globe-container {
     width: 55%;
     height: 100%;
+    position: relative;
     @include FLEX-CENTER;
+
+    .nation-info-card {
+      position: absolute;
+      top: 30%;
+      left: 20%;
+      width: rem(390);
+      height: rem(325);
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 30px;
+      padding: rem(20) rem(20);
+      @include FLEX-COLUMN;
+
+      @media (max-width: 480px) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .nation-info-flag {
+        width: rem(106);
+        height: rem(62);
+      }
+
+      .nation-info-name {
+        font-size: rem(15);
+        font-family: $eng-title-font;
+        margin-top: rem(5);
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .nation-info-taglist {
+        margin-top: rem(18);
+        width: 100%;
+        @include FLEX-ALIGN-CENTER;
+
+        .nation-info-tag {
+          padding: rem(6);
+          background-color: rgba(195, 230, 255, 0.45);
+          border-radius: 6px;
+          b {
+            color: #7cb8ff;
+          }
+        }
+        .nation-info-tag + .nation-info-tag {
+          margin-left: 6px;
+        }
+      }
+
+      .nation-info-trendlist {
+        @include FLEX-BETWEEN;
+        width: 100%;
+        margin-top: rem(30);
+
+        .nation-info-trend {
+          @include FLEX-COLUMN;
+
+          .trend-circle {
+            width: rem(90);
+            height: rem(90);
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 999px;
+
+            .trend-circle-design {
+              position: absolute;
+              top: rem(4.45);
+              left: rem(4.45);
+              width: rem(69.68);
+              height: rem(82.34);
+            }
+          }
+
+          .trend-amount {
+            font-family: $kor-font;
+            font-size: rem(12);
+            color: #c5ffb6;
+            @include FLEX-CENTER;
+            b {
+              color: #000;
+            }
+            svg {
+              color: #b2c3ff;
+            }
+          }
+        }
+      }
+    }
 
     .globe-img {
       width: 80%;
