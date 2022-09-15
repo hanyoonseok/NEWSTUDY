@@ -14,6 +14,7 @@
     margin-bottom: 20px;
     @media (max-width: 480px) {
       margin-top: 30px;
+      margin-bottom: 0;
     }
     > h1 {
       font-family: $eng-title-font;
@@ -53,7 +54,7 @@
         grid-gap: 3vw;
       }
       @media (max-width: 480px) {
-        grid-template-rows: repeat(5, 7vh);
+        grid-template-rows: repeat(5, 6vh);
         grid-template-columns: repeat(3, 1fr);
         grid-gap: 3vh;
         height: 50vh;
@@ -141,6 +142,48 @@
       }
     }
   }
+  .prev-btn {
+    margin-top: 20px;
+    position: absolute;
+    bottom: 10%;
+    left: 10%;
+    i {
+      font-size: 4.5vw;
+      color: $dark-grey;
+      transition: all 300ms ease;
+      &:hover {
+        font-size: 4.3rem;
+      }
+      @media (max-width: 480px) {
+        font-size: 5.5vh;
+      }
+    }
+  }
+  .submit-btn {
+    margin-top: 20px;
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    background-color: $light-blue;
+    color: $dark-grey;
+    padding: 7px 40px;
+    border-radius: 10px;
+    font-family: $kor-font;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 300ms ease;
+    &:hover {
+      transform: scale(1.05);
+      background-color: $soft-blue;
+    }
+    @media (max-width: 480px) {
+      margin-top: 0;
+      bottom: 12%;
+      right: 7%;
+      padding: 10px;
+      width: 30%;
+    }
+  }
   .page-wrapper {
     @include FLEX-CENTER;
     font-size: 0.9vw;
@@ -156,7 +199,7 @@
       color: $soft-blue;
     }
     @media (max-width: 480px) {
-      margin-top: 20px;
+      margin-top: 0;
       font-size: 15px;
     }
   }

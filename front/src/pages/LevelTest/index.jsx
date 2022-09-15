@@ -4,8 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
   faCircleChevronRight,
+  faCircleChevronLeft,
   faCircle,
   faSquare,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 function LevelTest(props) {
   const leveltestWord = [
@@ -75,7 +77,7 @@ function LevelTest(props) {
           </div>
           <div className="page-wrapper">
             <div className={`${pageState === 0 ? "page1 active" : "page1"}`}>
-              <i>
+              <i onClick={() => setPageState(0)}>
                 <FontAwesomeIcon icon={faCircle} />
               </i>
             </div>
@@ -92,6 +94,21 @@ function LevelTest(props) {
               <FontAwesomeIcon icon={faCircleChevronRight} />
             </i>
           </div>
+        )}
+        {pageState === 1 && (
+          <>
+            <div className="prev-btn">
+              <i onClick={() => setPageState(0)}>
+                <FontAwesomeIcon icon={faCircleChevronLeft} />
+              </i>
+            </div>
+            <button className="submit-btn">
+              제출
+              <i>
+                <FontAwesomeIcon icon={faChevronRight} />
+              </i>
+            </button>
+          </>
         )}
       </div>
     </div>
