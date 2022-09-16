@@ -1,0 +1,176 @@
+@import "variables.scss";
+
+/* *************** Web View ********************* */
+.background-div {
+  @include BACKGROUND-IMAGE("assets/background.png");
+  @include FLEX-BETWEEN;
+  width: 100%;
+  height: 100vh;
+  background-color: #f3f5ff;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  > div {
+    width: 50%;
+    height: 100%;
+    margin: auto;
+    @include FLEX-CENTER;
+    flex-direction: column;
+  }
+
+  .left-div {
+    > div {
+      @include FLEX-CENTER;
+      justify-content: flex-end;
+    }
+    .logo-img {
+      width: 90%;
+      padding-top: 4%;
+      img {
+        width: 80%;
+      }
+    }
+
+    .earth-img {
+      width: 90%;
+
+      img {
+        width: 85%;
+      }
+    }
+  }
+
+  .right-div {
+    margin-left: 1%;
+
+    .tab {
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+      padding-top: 8%;
+
+      button {
+        @include BTN-COLOR($soft-grey);
+
+        padding: 2% 5%;
+        font-size: rem(16);
+        font-family: $kor-font;
+        border-radius: 10px 10px 0 0;
+        margin-right: 3%;
+
+        &.active {
+          background-color: $soft-blue;
+        }
+      }
+    }
+
+    .content {
+      @include BACKGROUND-IMAGE("assets/paper-background.png");
+      @include FLEX-ALIGN-CENTER;
+      width: 65%;
+      height: 72%;
+      margin: 0 auto 0 0;
+      background-size: contain;
+      padding: 5%;
+      align-items: normal;
+
+      .email-box {
+        position: relative;
+        button {
+          position: absolute;
+          right: 0;
+          top: -15%;
+          padding: 2% 4%;
+        }
+      }
+
+      p {
+        width: 100%;
+        padding: 14%;
+      }
+
+      button {
+        @include BTN-COLOR($soft-blue);
+        padding: 3% 9%;
+        font-size: rem(16);
+        font-family: $kor-font;
+        border-radius: 10px;
+      }
+
+      .signup-btn {
+        float: right;
+      }
+
+      .login-btn {
+        width: 100%;
+      }
+
+      > form {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+/* *************** Mobile View ********************* */
+@media only screen and (max-width: 480px) {
+  .background-div {
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+
+    > div {
+      height: auto;
+    }
+
+    .left-div {
+      width: 100%;
+      flex-direction: column-reverse;
+      .earth-img {
+        margin-left: 25%;
+        width: 75%;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .logo-img {
+        width: 90%;
+        margin: auto;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    .right-div {
+      width: 90%;
+      height: 90%;
+      margin: auto;
+
+      .content {
+        width: 100%;
+        height: 80%;
+        display: block;
+        padding: 8%;
+
+        > div {
+          width: 95%;
+          padding: 8% 5% 8% 8%;
+        }
+
+        .input-div {
+          margin-bottom: 7%;
+          .box {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+}
