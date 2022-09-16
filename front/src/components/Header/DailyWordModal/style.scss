@@ -7,7 +7,7 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
   @include FLEX-CENTER;
-  transition: all 1s;
+  z-index: 200;
 
   .daily-word-modal-body {
     width: 40%;
@@ -51,5 +51,47 @@
   }
 }
 
-@media (width: 480px) {
+/* *************** Mobile View ********************* */
+@media only screen and (max-width: 480px) {
+  .daily-word-modal {
+    .daily-word-modal-body {
+      width: 90%;
+      padding: rem(35) rem(30);
+
+      .modal-header {
+        @include FLEX-BETWEEN;
+        text-align: center;
+        padding-top: rem(10);
+        margin-bottom: rem(30);
+
+        h2 {
+          position: relative;
+          width: 90%;
+          font-family: $eng-title-font;
+          font-size: 24px;
+
+          span::after {
+            content: "";
+            display: block;
+            width: rem(100);
+            height: rem(20);
+            background-color: $soft-blue;
+            opacity: 0.3;
+            position: absolute;
+            right: rem(60);
+            top: rem(8);
+          }
+        }
+        .close {
+          width: 10%;
+          background-color: transparent;
+
+          svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
 }

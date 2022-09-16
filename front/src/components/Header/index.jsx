@@ -32,7 +32,6 @@ export default function Header() {
           <button className="daily-word" onClick={openModal}>
             오늘의 단어
           </button>
-          {modalOpen && <DailyWordModal close={closeModal} />}
           <div className="profile-img">
             <img src={require("assets/profile.png")} alt="article"></img>
           </div>
@@ -45,13 +44,13 @@ export default function Header() {
             <div className="mobileHeader-dailyword" onClick={openModal}>
               오늘의단어
             </div>
-            {modalOpen && <DailyWordModal close={closeModal} />}
             <div className="earth-img">
               <img src={require("assets/user_globe.png")} alt="article"></img>
             </div>
           </div>
         </>
       )}
+      {modalOpen && <DailyWordModal close={closeModal} />}
     </>
   );
 }

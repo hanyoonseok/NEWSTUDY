@@ -90,7 +90,7 @@ export default function DailyWordModal({ close }) {
     document.body.style.cssText = `
       position: fixed; 
       top: -${window.scrollY}px;
-      overflow-y: scroll;
+      overflow-y: none;
       width: 100%;`;
     return () => {
       const scrollY = document.body.style.top;
