@@ -1,0 +1,55 @@
+@import "variables.scss";
+.daily-word-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  @include FLEX-CENTER;
+  transition: all 1s;
+
+  .daily-word-modal-body {
+    width: 40%;
+    background-color: $white;
+    border-radius: 25px;
+    padding: rem(40) rem(50);
+
+    .modal-header {
+      @include FLEX-BETWEEN;
+      text-align: center;
+      padding-top: rem(10);
+      margin-bottom: rem(30);
+
+      h2 {
+        position: relative;
+        width: 90%;
+        font-family: $eng-title-font;
+
+        span::after {
+          content: "";
+          display: block;
+          width: rem(100);
+          height: rem(20);
+          background-color: $soft-blue;
+          opacity: 0.3;
+          position: absolute;
+          right: rem(130);
+          top: rem(8);
+        }
+      }
+      .close {
+        width: 10%;
+        background-color: transparent;
+
+        svg {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+  }
+}
+
+@media (width: 480px) {
+}
