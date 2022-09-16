@@ -1,25 +1,31 @@
 import React, { useState } from "react";
 import ReactGlobe from "react-globe";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 // import optional tippy styles for tooltip support
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 
 import GlobeImg from "assets/globe_diffuse.jpg";
 import Earth from "assets/earthmap.jpg";
+import Kor from "assets/kor.jpg";
+import TrendDesign from "assets/trend-circle-design.png";
 
 function markerTooltipRenderer(marker) {
-  return `CITY: ${marker.city} (Value: ${marker.value})`;
+  return `CITY: ${marker.city}`;
 }
 
 const options = {
   markerTooltipRenderer,
+  enableCameraZoom: false,
 };
 
 export default function Globe() {
   const [event, setEvent] = useState(null);
   const [details, setDetails] = useState(null);
-  function onClickMarker(marker, markerObject, event) {
+
+  const onClickMarker = (marker, markerObject, event) => {
+    console.log("event", event);
     setEvent({
       type: "CLICK",
       marker,
@@ -27,14 +33,15 @@ export default function Globe() {
       pointerEventPosition: { x: event.clientX, y: event.clientY },
     });
     setDetails(markerTooltipRenderer(marker));
-  }
-  function onDefocus(previousFocus) {
+  };
+
+  const onDefocus = (previousFocus) => {
     setEvent({
       type: "DEFOCUS",
       previousFocus,
     });
     setDetails(null);
-  }
+  };
 
   const markers = [
     {
@@ -77,22 +84,83 @@ export default function Globe() {
   return (
     <div className="globe-box">
       {details && (
-        <div
-          style={{
-            background: "white",
-            position: "absolute",
-            fontSize: 20,
-            bottom: 0,
-            right: 0,
-            padding: 12,
-          }}
-        >
-          <p>{details}</p>
-          <p>
-            EVENT: type={event.type}, position=
-            {JSON.stringify(event.pointerEventPosition)})
-          </p>
-        </div>
+        <>
+          {/* <div
+            style={{
+              background: "white",
+              position: "absolute",
+              fontSize: 20,
+              bottom: 0,
+              right: 0,
+              padding: 12,
+            }}
+          >
+            <p>{details}</p>
+            <p>
+              EVENT: type={event.type}, position=
+              {JSON.stringify(event.pointerEventPosition)})
+            </p>
+          </div> */}
+          <div className="nation-info-card">
+            <img src={Kor} alt="" className="nation-info-flag" />
+            <h1 className="nation-info-name">SOUTH KOREA, 대한민국</h1>
+            <div className="nation-info-taglist">
+              <div className="nation-info-tag">
+                <b>#</b> &nbsp;수빈
+              </div>
+              <div className="nation-info-tag">
+                <b>#</b> &nbsp;수빈
+              </div>
+              <div className="nation-info-tag">
+                <b>#</b> &nbsp;수빈
+              </div>
+              <div className="nation-info-tag">
+                <b>#</b> &nbsp;수빈
+              </div>
+            </div>
+            <div className="nation-info-trendlist">
+              <div className="nation-info-trend">
+                <div className="trend-circle">
+                  <img
+                    src={TrendDesign}
+                    alt=""
+                    className="trend-circle-design"
+                  />
+                </div>
+                <div className="trend-amount">
+                  <FontAwesomeIcon icon={faCircle} /> &nbsp;&nbsp; <b>60 </b>
+                  &nbsp; ▲
+                </div>
+              </div>
+              <div className="nation-info-trend">
+                <div className="trend-circle">
+                  <img
+                    src={TrendDesign}
+                    alt=""
+                    className="trend-circle-design"
+                  />
+                </div>
+                <div className="trend-amount">
+                  <FontAwesomeIcon icon={faCircle} /> &nbsp;&nbsp; <b>60 </b>
+                  &nbsp; ▲
+                </div>
+              </div>
+              <div className="nation-info-trend">
+                <div className="trend-circle">
+                  <img
+                    src={TrendDesign}
+                    alt=""
+                    className="trend-circle-design"
+                  />
+                </div>
+                <div className="trend-amount">
+                  <FontAwesomeIcon icon={faCircle} /> &nbsp;&nbsp; <b>60 </b>
+                  &nbsp; ▲
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       )}
       <ReactGlobe
         height="100%"

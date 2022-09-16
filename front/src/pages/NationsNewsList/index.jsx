@@ -1,17 +1,12 @@
 import { useCallback, useState } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
-// import Temp from "assets/temp.jpg";
 import Kor from "assets/kor.jpg";
-// import TrendDesign from "assets/trend-circle-design.png";
 
 import Globe from "./Globe";
-import GlobeBorder from "assets/globe-border.png";
 
 export default function NationsNewsList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -134,55 +129,7 @@ export default function NationsNewsList() {
   return (
     <section className="nationsnews-container">
       <article className="nationsnews-globe-container">
-        {/* <img src={GlobeBorder} alt="지구본 테두리" /> */}
         <Globe className="globe"></Globe>
-        {/* <div className="nation-info-card">
-          <img src={Kor} alt="" className="nation-info-flag" />
-          <h1 className="nation-info-name">SOUTH KOREA, 대한민국</h1>
-          <div className="nation-info-taglist">
-            <div className="nation-info-tag">
-              <b>#</b> &nbsp;수빈
-            </div>
-            <div className="nation-info-tag">
-              <b>#</b> &nbsp;수빈
-            </div>
-            <div className="nation-info-tag">
-              <b>#</b> &nbsp;수빈
-            </div>
-            <div className="nation-info-tag">
-              <b>#</b> &nbsp;수빈
-            </div>
-          </div>
-          <div className="nation-info-trendlist">
-            <div className="nation-info-trend">
-              <div className="trend-circle">
-                <img src={TrendDesign} alt="" className="trend-circle-design" />
-              </div>
-              <div className="trend-amount">
-                <FontAwesomeIcon icon={faCircle} /> &nbsp;&nbsp; <b>60 </b>
-                &nbsp; ▲
-              </div>
-            </div>
-            <div className="nation-info-trend">
-              <div className="trend-circle">
-                <img src={TrendDesign} alt="" className="trend-circle-design" />
-              </div>
-              <div className="trend-amount">
-                <FontAwesomeIcon icon={faCircle} /> &nbsp;&nbsp; <b>60 </b>
-                &nbsp; ▲
-              </div>
-            </div>
-            <div className="nation-info-trend">
-              <div className="trend-circle">
-                <img src={TrendDesign} alt="" className="trend-circle-design" />
-              </div>
-              <div className="trend-amount">
-                <FontAwesomeIcon icon={faCircle} /> &nbsp;&nbsp; <b>60 </b>
-                &nbsp; ▲
-              </div>
-            </div>
-          </div>
-        </div> */}
       </article>
       <article className="nationsnews-list-container">
         <div className="list-title-container">
