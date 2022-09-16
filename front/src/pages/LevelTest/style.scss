@@ -7,13 +7,12 @@
   @include FLEX-COLUMN;
   align-items: center;
   @media (max-width: 480px) {
-    padding: 65px 20px;
+    padding: 100px 12px;
   }
   .leveltest-info {
     padding: 20px 0;
     margin-bottom: 20px;
     @media (max-width: 480px) {
-      margin-top: 30px;
       margin-bottom: 0;
     }
     > h1 {
@@ -36,6 +35,11 @@
   .test-wrapper {
     height: 100%;
     margin-top: 20px;
+
+    @media (max-width: 480px) {
+      width: 100%;
+    }
+
     .word-wrapper {
       border-radius: 20px;
       width: 65vw;
@@ -54,15 +58,15 @@
         grid-gap: 3vw;
       }
       @media (max-width: 480px) {
-        grid-template-rows: repeat(5, 6vh);
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: initial;
+        grid-template-columns: repeat(2, 1fr);
         grid-gap: 3vh;
-        height: 50vh;
-        width: 80vw;
+        height: 100%;
+        width: 100%;
       }
 
       .word {
-        @include FLEX-CENTER;
+        @include FLEX-ALIGN-CENTER;
         background-color: white;
         border-radius: 18px;
         filter: $drop-shadow;
@@ -70,10 +74,11 @@
         cursor: pointer;
         transition: all 300ms ease;
         color: $dark-grey;
+        height: rem(80);
         &:hover {
           background-color: $lightx2-blue;
           border: 4px solid $light-blue;
-          transform: scale(1.1);
+          transform: scale(1.05);
           @media (max-width: 480px) {
             border: 2px solid $light-blue;
           }
@@ -104,8 +109,8 @@
           height: 100%;
           border-radius: 18px;
           margin-right: 5px;
-          @include FLEX-BETWEEN;
-          padding: 0 2.5vw;
+          padding-left: rem(10);
+          @include FLEX-ALIGN-CENTER;
           @media (max-width: 480px) {
             font-size: 1.5rem;
             padding: 0 4vw;
@@ -117,6 +122,8 @@
           .test-word {
             font-size: 1.2rem;
             font-weight: bold;
+            width: 100%;
+            text-align: center;
             @media (max-width: 480px) {
               font-size: 1.4rem;
             }
@@ -126,9 +133,8 @@
     }
   }
   .next-btn {
-    margin-top: 20px;
-    position: absolute;
-    bottom: 10%;
+    position: fixed;
+    bottom: 8%;
     right: 10%;
     i {
       font-size: 4.5vw;
@@ -141,11 +147,23 @@
         font-size: 5.5vh;
       }
     }
+
+    @media (max-width: 480px) {
+      position: static;
+      width: 90%;
+      display: flex;
+      justify-content: flex-end;
+    }
   }
+
+  .submit-container {
+    @include FLEX-BETWEEN;
+    width: 90%;
+  }
+
   .prev-btn {
-    margin-top: 20px;
-    position: absolute;
-    bottom: 10%;
+    position: fixed;
+    bottom: 8%;
     left: 10%;
     i {
       font-size: 4.5vw;
@@ -158,11 +176,13 @@
         font-size: 5.5vh;
       }
     }
+    @media (max-width: 480px) {
+      position: static;
+    }
   }
   .submit-btn {
-    margin-top: 20px;
-    position: absolute;
-    bottom: 10%;
+    position: fixed;
+    bottom: 8%;
     right: 10%;
     background-color: $light-blue;
     color: $dark-grey;
@@ -173,10 +193,11 @@
     font-size: 1rem;
     transition: all 300ms ease;
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.025);
       background-color: $soft-blue;
     }
     @media (max-width: 480px) {
+      position: static;
       margin-top: 0;
       bottom: 12%;
       right: 7%;
@@ -189,9 +210,12 @@
     font-size: 0.9vw;
     color: $soft-grey;
     margin-top: 40px;
-    &:hover {
-      color: $soft-blue;
+    .pagedot {
+      &:hover {
+        color: $soft-blue;
+      }
     }
+
     :nth-child(1) {
       margin-left: 3px;
     }
