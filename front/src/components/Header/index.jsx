@@ -1,6 +1,7 @@
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
 
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 export default function Header() {
@@ -19,9 +20,9 @@ export default function Header() {
         </div>
         <div className="header-right">
           <button className="daily-word">오늘의 단어</button>
-          <div className="profile-img">
+          <Link to="/mypage" className="profile-img">
             <img src={require("assets/profile.png")} alt="article"></img>
-          </div>
+          </Link>
         </div>
       </nav>
 
@@ -29,9 +30,9 @@ export default function Header() {
         <>
           <div className="mobileHeader-wrapper">
             <div className="mobileHeader-dailyword">오늘의단어</div>
-            <div className="earth-img">
+            <Link to="/mypage" className="earth-img">
               <img src={require("assets/user_globe.png")} alt="article"></img>
-            </div>
+            </Link>
           </div>
         </>
       )}
