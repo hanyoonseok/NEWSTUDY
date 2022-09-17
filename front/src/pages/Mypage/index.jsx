@@ -17,6 +17,7 @@ export default function Mypage() {
   const user = {
     name: "김싸피",
     email: "kimssafy@ssafy.com",
+    level: "B1",
   };
 
   const [userImage, setUserImage] = useState(DefaultUserImage);
@@ -358,7 +359,9 @@ export default function Mypage() {
               />
             </div>
           </div>
-          <p className="name">{user.name}</p>
+          <p className="name">
+            {user.name} <span>({user.level})</span>
+          </p>
           <p className="email">
             <FontAwesomeIcon icon={faEnvelope} /> {user.email}
           </p>

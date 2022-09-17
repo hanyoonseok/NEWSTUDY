@@ -70,6 +70,10 @@
         font-weight: bold;
         margin-bottom: 2%;
         margin-top: 8%;
+
+        span {
+          color: $blue;
+        }
       }
 
       .email {
