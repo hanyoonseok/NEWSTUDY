@@ -10,6 +10,7 @@ import GlobeImg from "assets/globe_diffuse.jpg";
 import Earth from "assets/earthmap.jpg";
 import Kor from "assets/kor.jpg";
 import TrendDesign from "assets/trend-circle-design.png";
+import { useEffect } from "react";
 
 function markerTooltipRenderer(marker) {
   return `CITY: ${marker.city}`;
@@ -18,14 +19,24 @@ function markerTooltipRenderer(marker) {
 const options = {
   markerTooltipRenderer,
   enableCameraZoom: false,
+  focusDistanceRadiusScale: 3,
 };
 
-export default function Globe() {
+export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
   const [event, setEvent] = useState(null);
   const [details, setDetails] = useState(null);
+  const [focus, setFocus] = useState([37.541, 126.986]);
+
+  useEffect(() => {
+    setFocus(markers[selectedIdx].coordinates);
+    setDetails(markerTooltipRenderer(markers[selectedIdx]));
+    return () => {};
+  }, [selectedIdx]);
 
   const onClickMarker = (marker, markerObject, event) => {
-    console.log("event", event);
+    // console.log("event", event);
+    // console.log("marker", marker.id);
+    // console.log("markerObject", markerObject);
     setEvent({
       type: "CLICK",
       marker,
@@ -33,6 +44,7 @@ export default function Globe() {
       pointerEventPosition: { x: event.clientX, y: event.clientY },
     });
     setDetails(markerTooltipRenderer(marker));
+    setReceiveIdx(marker.id);
   };
 
   const onDefocus = (previousFocus) => {
@@ -43,67 +55,15 @@ export default function Globe() {
     setDetails(null);
   };
 
-  const markers = [
-    {
-      id: 1,
-      city: "Singapore",
-      color: "red",
-      coordinates: [1.3521, 103.8198],
-      value: 50,
-    },
-    {
-      id: 2,
-      city: "New York",
-      color: "blue",
-      coordinates: [40.73061, -73.935242],
-      value: 25,
-    },
-    {
-      id: 3,
-      city: "San Francisco",
-      color: "orange",
-      coordinates: [37.773972, -122.431297],
-      value: 35,
-    },
-    {
-      id: 4,
-      city: "Beijing",
-      color: "gold",
-      coordinates: [39.9042, 116.4074],
-      value: 0,
-    },
-    {
-      id: 5,
-      city: "London",
-      color: "green",
-      coordinates: [51.5074, 0.1278],
-      value: 80,
-    },
-  ];
-
   return (
     <div className="globe-box">
       {details && (
         <>
-          {/* <div
-            style={{
-              background: "white",
-              position: "absolute",
-              fontSize: 20,
-              bottom: 0,
-              right: 0,
-              padding: 12,
-            }}
-          >
-            <p>{details}</p>
-            <p>
-              EVENT: type={event.type}, position=
-              {JSON.stringify(event.pointerEventPosition)})
-            </p>
-          </div> */}
           <div className="nation-info-card">
             <img src={Kor} alt="" className="nation-info-flag" />
-            <h1 className="nation-info-name">SOUTH KOREA, 대한민국</h1>
+            <h1 className="nation-info-name">
+              {markers[selectedIdx].city}, {markers[selectedIdx].kor}{" "}
+            </h1>
             <div className="nation-info-taglist">
               <div className="nation-info-tag">
                 <b>#</b> &nbsp;수빈
@@ -171,6 +131,7 @@ export default function Globe() {
         options={options}
         onClickMarker={onClickMarker}
         onDefocus={onDefocus}
+        focus={focus}
       />
     </div>
   );

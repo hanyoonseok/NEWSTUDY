@@ -7,31 +7,74 @@ import FilterModal from "components/FilterModal";
 import Kor from "assets/kor.jpg";
 
 import Globe from "./Globe";
+import { useEffect } from "react";
 
 export default function NationsNewsList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(0);
+  const [receiveIdx, setReceiveIdx] = useState(0); //globe에서 마커 클릭했을 때 클릭한 나라 id 값 받을 변수
+
+  useEffect(() => {
+    setSelectedIdx(receiveIdx);
+    return () => {};
+  }, [receiveIdx]);
 
   const nations = [
     {
-      eng: "SOUTH KOREA",
+      id: 0,
       kor: "대한민국",
+      city: "SOUTH KOREA",
+      color: "green",
+      coordinates: [37.541, 126.986],
+      value: 200,
     },
     {
-      eng: "JAPAN",
+      id: 1,
       kor: "일본",
+      city: "JAPAN",
+      color: "blue",
+      coordinates: [35.6894, 139.692],
+      value: 50,
     },
     {
-      eng: "SINGAPORE",
+      id: 2,
       kor: "싱가포르",
+      city: "Singapore",
+      color: "red",
+      coordinates: [1.3521, 103.8198],
+      value: 50,
     },
     {
-      eng: "UNITEDSTATE KINGDOM",
-      kor: "영국",
+      id: 3,
+      kor: "뉴욕",
+      city: "New York",
+      color: "blue",
+      coordinates: [40.73061, -73.935242],
+      value: 25,
     },
     {
-      eng: "TAIWAN",
-      kor: "대만",
+      id: 4,
+      kor: "샌 프란시스코",
+      city: "San Francisco",
+      color: "orange",
+      coordinates: [37.773972, -122.431297],
+      value: 35,
+    },
+    {
+      id: 5,
+      kor: "베이징",
+      city: "Beijing",
+      color: "gold",
+      coordinates: [39.9042, 116.4074],
+      value: 0,
+    },
+    {
+      id: 6,
+      kor: "런던",
+      city: "London",
+      color: "green",
+      coordinates: [51.5074, 0.1278],
+      value: 80,
     },
   ];
 
@@ -129,7 +172,12 @@ export default function NationsNewsList() {
   return (
     <section className="nationsnews-container">
       <article className="nationsnews-globe-container">
-        <Globe className="globe"></Globe>
+        <Globe
+          className="globe"
+          markers={nations}
+          selectedIdx={selectedIdx}
+          setReceiveIdx={setReceiveIdx}
+        ></Globe>
       </article>
       <article className="nationsnews-list-container">
         <div className="list-title-container">
@@ -137,7 +185,7 @@ export default function NationsNewsList() {
             <button className="left-arrow-btn"></button>
           </div>
           <div className="nations-name-container">
-            <h1 className="nation-eng-name">{nations[selectedIdx].eng}</h1>
+            <h1 className="nation-eng-name">{nations[selectedIdx].city}</h1>
             <h4 className="nation-kor-name">{nations[selectedIdx].kor}</h4>
           </div>
           <div className="arrow-btn-wrapper" onClick={onNextClick}>
