@@ -11,11 +11,13 @@ import {
 import { useEffect, useState, useRef } from "react";
 import Attendance1 from "assets/1attendance_badge.png";
 import DefaultUserImage from "assets/user_globe.png";
+import Word from "components/Word";
 
 export default function Mypage() {
   const user = {
     name: "김싸피",
     email: "kimssafy@ssafy.com",
+    level: "B1",
   };
 
   const [userImage, setUserImage] = useState(DefaultUserImage);
@@ -314,26 +316,7 @@ export default function Mypage() {
         ))}
       </div>
     ),
-    1: (
-      <div className="voca-box">
-        {vocas.map((voca, index) => (
-          <div className="voca" key={index}>
-            <div className="word">{voca.word}</div>
-            <div className="mean">
-              {voca.part.map((item, index) => (
-                <div key={index}>
-                  {item.id === 0 && <p className="tag blue">형</p>}
-                  {item.id === 1 && <p className="tag orange">명</p>}
-                  {item.id === 2 && <p className="tag pink">부</p>}
-                  {item.id === 3 && <p className="tag green">동</p>}
-                  <p className="kor-mean">{item.mean}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    ),
+    1: <Word vocas={vocas} />,
     2: (
       <div className="badge-box">
         {userBadges &&
@@ -376,7 +359,9 @@ export default function Mypage() {
               />
             </div>
           </div>
-          <p className="name">{user.name}</p>
+          <p className="name">
+            {user.name} <span>({user.level})</span>
+          </p>
           <p className="email">
             <FontAwesomeIcon icon={faEnvelope} /> {user.email}
           </p>
