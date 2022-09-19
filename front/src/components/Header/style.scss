@@ -56,6 +56,7 @@
     }
     .profile-img {
       margin-left: 20px;
+      cursor: pointer;
       > img {
         width: 45px;
         height: 45px;
@@ -80,6 +81,7 @@
   .earth-img {
     > img {
       width: 30px;
+      cursor: pointer;
     }
   }
 }

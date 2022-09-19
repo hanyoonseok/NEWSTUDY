@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useNavigate } from "react-router-dom";
 
 import "pages/Onboarding/style.scss";
 import Page1 from "./Page1";
@@ -19,6 +20,7 @@ export default function Onboarding() {
   const marker = useRef();
   const countrycard = useRef();
   const DIVIDER_HEIGHT = 5;
+  const navigate = useNavigate();
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
@@ -149,9 +151,15 @@ export default function Onboarding() {
     };
   }, [isMobile]);
 
+  const onLoginClick = () => {
+    navigate("/signup");
+  };
+
   return (
     <div className="main-wrapper" ref={mainWrapperRef}>
-      <button className="login-btn">로그인</button>
+      <button className="login-btn" onClick={onLoginClick}>
+        로그인
+      </button>
       <Dots scrollIdx={scrollIdx} />
       <img src={TEMP} alt="" className="globe" ref={globe} />
       <img src={Marker} alt="marker" className="marker" ref={marker} />
