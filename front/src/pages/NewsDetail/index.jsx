@@ -122,19 +122,52 @@ export default function NewsDetail() {
                   <div className="icon-desc">발음듣기</div>
                 </div>
               ) : (
-                <div
-                  className="icon-row"
-                  onClick={(e) => {
-                    setIsPauseStatus(true);
-                    speechPause();
-                  }}
-                >
-                  <i>
-                    <FontAwesomeIcon icon={faPause} />
-                  </i>
-                  <div className="icon-desc">일시정지</div>
-                </div>
+                <>
+                  <>
+                    {!isPauseStatus ? (
+                      <div
+                        className="icon-row"
+                        onClick={(e) => {
+                          setIsPauseStatus(true);
+                          speechPause(e);
+                        }}
+                      >
+                        <i>
+                          <FontAwesomeIcon icon={faPause} />
+                        </i>
+                        <div className="icon-desc">일시정지</div>
+                      </div>
+                    ) : (
+                      <div
+                        className="icon-row"
+                        onClick={(e) => {
+                          setIsPauseStatus(false);
+                          speechResume(e);
+                        }}
+                      >
+                        <i>
+                          <FontAwesomeIcon icon={faPlay} />
+                        </i>
+                        <div className="icon-desc">이어서</div>
+                      </div>
+                    )}
+                  </>
+                  <div
+                    className="icon-row"
+                    onClick={(e) => {
+                      setIsPauseStatus(false);
+                      setIsTextToSpeechStatus(false);
+                      speechStop();
+                    }}
+                  >
+                    <i>
+                      <FontAwesomeIcon icon={faStop} />
+                    </i>
+                    <div className="icon-desc">정지</div>
+                  </div>
+                </>
               )}
+
               <div className="icon-row">
                 <i>
                   <FontAwesomeIcon icon={faGlobe} />
@@ -215,6 +248,7 @@ export default function NewsDetail() {
                     <div
                       className="icon-row"
                       onClick={(e) => {
+                        setIsPauseStatus(false);
                         setIsTextToSpeechStatus(false);
                         speechStop();
                       }}
