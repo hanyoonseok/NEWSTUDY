@@ -1,6 +1,7 @@
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
 
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
@@ -32,9 +33,9 @@ export default function Header() {
           <button className="daily-word" onClick={openModal}>
             오늘의 단어
           </button>
-          <div className="profile-img">
+          <Link to="/mypage" className="profile-img">
             <img src={require("assets/profile.png")} alt="article"></img>
-          </div>
+          </Link>
         </div>
       </nav>
 
@@ -44,9 +45,9 @@ export default function Header() {
             <div className="mobileHeader-dailyword" onClick={openModal}>
               오늘의단어
             </div>
-            <div className="earth-img">
+            <Link to="/mypage" className="earth-img">
               <img src={require("assets/user_globe.png")} alt="article"></img>
-            </div>
+            </Link>
           </div>
         </>
       )}

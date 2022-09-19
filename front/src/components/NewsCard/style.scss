@@ -11,6 +11,8 @@
   border-radius: 20px;
   &:hover {
     background-color: rgba(180, 201, 254, 0.15);
+    transform: scale(1.02);
+    box-shadow: $light-shadow;
   }
   &.stretch {
     max-width: 100%;

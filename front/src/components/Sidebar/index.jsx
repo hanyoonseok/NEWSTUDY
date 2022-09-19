@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./style.scss";
 import { useMediaQuery } from "react-responsive";
+import { Link } from "react-router-dom";
+
+import "./style.scss";
 
 import {
   faHome,
@@ -78,25 +80,25 @@ export default function Sidebar() {
                       <i>
                         <FontAwesomeIcon icon={faHome} />
                       </i>
-                      <div>HOME</div>
+                      <Link to="/landing">HOME</Link>
                     </div>
                     <div className="nav-content nav-desc">
                       <i>
                         <FontAwesomeIcon icon={faSpellCheck} />
                       </i>
-                      <div>단어테스트</div>
+                      <Link to="/leveltest">단어테스트</Link>
                     </div>
                     <div className="nav-content nav-desc">
                       <i>
                         <FontAwesomeIcon icon={faRectangleList} />
                       </i>
-                      <div>기사목록</div>
+                      <Link to="/news/list">기사목록</Link>
                     </div>
                     <div className="nav-content nav-desc">
                       <i>
                         <FontAwesomeIcon icon={faGlobe} />
                       </i>
-                      <div>나라별 기사목록</div>
+                      <Link to="nationsnews">나라별 기사목록</Link>
                     </div>
                   </div>
                   <div className="nav-content nav-desc">
@@ -133,10 +135,18 @@ export default function Sidebar() {
               </div>
               <div className="sidebar-div sidebar" ref={sidebar}>
                 <div>
-                  <div className="nav-content nav-desc">HOME</div>
-                  <div className="nav-content nav-desc">단어테스트</div>
-                  <div className="nav-content nav-desc">기사목록</div>
-                  <div className="nav-content nav-desc">나라별 기사목록</div>
+                  <Link className="nav-content nav-desc" to="/landing">
+                    HOME
+                  </Link>
+                  <Link className="nav-content nav-desc" to="/leveltest">
+                    단어테스트
+                  </Link>
+                  <Link className="nav-content nav-desc" to="/news/list">
+                    기사목록
+                  </Link>
+                  <Link className="nav-content nav-desc" to="nationsnews">
+                    나라별 기사목록
+                  </Link>
                 </div>
                 <div className="nav-content nav-desc">로그아웃</div>
               </div>
