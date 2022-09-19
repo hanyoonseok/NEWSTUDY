@@ -84,6 +84,45 @@ export default function DailyWordModal({ close }) {
         },
       ],
     },
+    {
+      word: "SubiniSubiniSi",
+      part: [
+        {
+          id: 0,
+          mean: "수콩수콩수콩",
+        },
+        {
+          id: 3,
+          mean: "화연연ㅇ여연",
+        },
+      ],
+    },
+    {
+      word: "SubiniSubiniSi",
+      part: [
+        {
+          id: 0,
+          mean: "수콩수콩수콩",
+        },
+        {
+          id: 3,
+          mean: "화연연ㅇ여연",
+        },
+      ],
+    },
+    {
+      word: "SubiniSubiniSi",
+      part: [
+        {
+          id: 0,
+          mean: "수콩수콩수콩",
+        },
+        {
+          id: 3,
+          mean: "화연연ㅇ여연",
+        },
+      ],
+    },
   ];
 
   useEffect(() => {

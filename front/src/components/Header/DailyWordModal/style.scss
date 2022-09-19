@@ -11,6 +11,10 @@
 
   .daily-word-modal-body {
     width: 40%;
+    height: rem(530);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     background-color: $white;
     border-radius: 25px;
     padding: rem(40) rem(50);
@@ -19,7 +23,6 @@
       @include FLEX-BETWEEN;
       text-align: center;
       padding-top: rem(10);
-      margin-bottom: rem(30);
 
       h2 {
         position: relative;
@@ -47,6 +50,13 @@
           height: 30px;
         }
       }
+    }
+
+    .voca-box {
+      width: 100%;
+      margin-top: rem(30);
+      height: 100%;
+      overflow-y: auto;
     }
   }
 }
