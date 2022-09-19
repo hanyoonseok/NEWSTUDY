@@ -5,10 +5,14 @@ import {
   faVolumeUp,
   faGlobe,
   faBookmark,
+  faPause,
+  faStop,
+  faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";
+import { useEffect } from "react";
 
 export default function NewsDetail() {
   const [selectedWord, setSelectedWord] = useState(null);
@@ -54,6 +58,43 @@ export default function NewsDetail() {
     [isMobile, selectedWord],
   );
 
+  const synth = window.speechSynthesis;
+  const utterThis = new SpeechSynthesisUtterance(news.body);
+
+  const textToSpeech = () => {
+    console.log("textToSpeech");
+    if (
+      typeof SpeechSynthesisUtterance === "undefined" ||
+      typeof synth === "undefined"
+    ) {
+      console.log("이 브라우저는 음성 합성을 지원하지 않습니다.");
+      return;
+    }
+    // utterThis.voice = voices[0];
+    utterThis.lang = "en-US";
+    utterThis.pitch = 1;
+    utterThis.rate = 1;
+    synth.speak(utterThis);
+  };
+
+  const speechPause = () => {
+    console.log("일시 정지");
+    synth.pause();
+  };
+
+  const speechStop = () => {
+    console.log("정지");
+    synth.cancel();
+  };
+
+  const speechResume = () => {
+    console.log("이어서 시작");
+    synth.resume();
+  };
+
+  const [isTextToSpeechStatus, setIsTextToSpeechStatus] = useState(false); //발음듣기 상태 여부
+  const [isPauseStatus, setIsPauseStatus] = useState(false);
+
   return (
     <div className="newsdetail-container">
       <div className="back-btn-wrapper">
@@ -67,12 +108,33 @@ export default function NewsDetail() {
           <p className="news-date">Wed, September 7, 2022</p>
           {isMobile && (
             <section className="functions-container">
-              <div className="icon-row">
-                <i>
-                  <FontAwesomeIcon icon={faVolumeUp} />
-                </i>
-                <div className="icon-desc">발음듣기</div>
-              </div>
+              {!isTextToSpeechStatus ? (
+                <div
+                  className="icon-row"
+                  onClick={() => {
+                    setIsTextToSpeechStatus(true);
+                    textToSpeech();
+                  }}
+                >
+                  <i>
+                    <FontAwesomeIcon icon={faVolumeUp} />
+                  </i>
+                  <div className="icon-desc">발음듣기</div>
+                </div>
+              ) : (
+                <div
+                  className="icon-row"
+                  onClick={(e) => {
+                    setIsPauseStatus(true);
+                    speechPause();
+                  }}
+                >
+                  <i>
+                    <FontAwesomeIcon icon={faPause} />
+                  </i>
+                  <div className="icon-desc">일시정지</div>
+                </div>
+              )}
               <div className="icon-row">
                 <i>
                   <FontAwesomeIcon icon={faGlobe} />
@@ -106,12 +168,65 @@ export default function NewsDetail() {
             </section>
             {!isMobile && (
               <section className="functions-container">
-                <div className="icon-row">
-                  <i>
-                    <FontAwesomeIcon icon={faVolumeUp} />
-                  </i>
-                  <div className="icon-desc">발음듣기</div>
-                </div>
+                {!isTextToSpeechStatus ? (
+                  <div
+                    className="icon-row"
+                    onClick={() => {
+                      setIsTextToSpeechStatus(true);
+                      textToSpeech();
+                    }}
+                  >
+                    <i>
+                      <FontAwesomeIcon icon={faVolumeUp} />
+                    </i>
+                    <div className="icon-desc">발음듣기</div>
+                  </div>
+                ) : (
+                  <>
+                    <>
+                      {!isPauseStatus ? (
+                        <div
+                          className="icon-row"
+                          onClick={(e) => {
+                            setIsPauseStatus(true);
+                            speechPause(e);
+                          }}
+                        >
+                          <i>
+                            <FontAwesomeIcon icon={faPause} />
+                          </i>
+                          <div className="icon-desc">일시정지</div>
+                        </div>
+                      ) : (
+                        <div
+                          className="icon-row"
+                          onClick={(e) => {
+                            setIsPauseStatus(false);
+                            speechResume(e);
+                          }}
+                        >
+                          <i>
+                            <FontAwesomeIcon icon={faPlay} />
+                          </i>
+                          <div className="icon-desc">이어서</div>
+                        </div>
+                      )}
+                    </>
+                    <div
+                      className="icon-row"
+                      onClick={(e) => {
+                        setIsTextToSpeechStatus(false);
+                        speechStop();
+                      }}
+                    >
+                      <i>
+                        <FontAwesomeIcon icon={faStop} />
+                      </i>
+                      <div className="icon-desc">정지</div>
+                    </div>
+                  </>
+                )}
+
                 <div className="icon-row">
                   <i>
                     <FontAwesomeIcon icon={faGlobe} />
