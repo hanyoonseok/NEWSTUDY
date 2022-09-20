@@ -7,7 +7,6 @@ import com.ssafy.newstudy.model.service.UserService;
 import com.ssafy.newstudy.util.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,7 +27,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
 	private final UserService userService;
     private static final Logger logger= LoggerFactory.getLogger(JwtAuthenticationFilter.class);
-	
+
 	public JwtAuthenticationFilter(AuthenticationManager authenticationManager, UserService userService) {
 		super(authenticationManager);
 		this.userService = userService;

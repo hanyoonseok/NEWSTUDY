@@ -1,25 +1,19 @@
 package com.ssafy.newstudy.controller;
 
-//import com.ssafy.api.dto.*;
-import com.ssafy.newstudy.model.dao.UserDao;
 import com.ssafy.newstudy.model.dto.ImageDto;
-import com.ssafy.newstudy.model.dto.JWTokenDto;
 import com.ssafy.newstudy.model.dto.UserDto;
 import com.ssafy.newstudy.model.response.Response;
 import com.ssafy.newstudy.model.service.UserService;
-import com.ssafy.newstudy.util.JWToken;
 import com.ssafy.newstudy.util.JwtTokenUtil;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,49 +34,6 @@ public class UserController {
 //    @Value("${spring.servlet.multipart.location}")
 //    private String root;
 
-
-
-    @PostMapping("/login")
-    @ApiOperation(value = "로그인", notes = "<strong>아이디와 패스워드</strong>를 통해 로그인 한다.")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공", response = UserDao.class),
-            @ApiResponse(code = 401, message = "인증 실패", response = Response.class),
-            @ApiResponse(code = 404, message = "사용자 없음", response = Response.class),
-            @ApiResponse(code = 500, message = "서버 오류", response = Response.class)
-    })
-    public ResponseEntity<?> login(@RequestBody @ApiParam(value = "로그인 정보", required = true) UserDto userDto, HttpServletResponse resp) {
-
-        JWToken jwt = userService.login(userDto);
-
-        ResponseCookie cookie = ResponseCookie.from("refresh-token", jwt.getRefreshToken())
-                .maxAge(60*60*24*15)
-                .httpOnly(true)
-                .secure(true)
-                .domain("")
-                .path("/")
-                .sameSite("None")
-                .build();
-
-        resp.setHeader("Set-Cookie", cookie.toString());
-        return response.success(JWTokenDto.of(jwt));
-    }
-
-    @GetMapping("/logout")
-    public ResponseEntity<?> logout(@CookieValue(value="refresh-token", required = false) String refreshToken, HttpServletResponse resp){
-        userService.logout(refreshToken);
-
-        ResponseCookie cookie = ResponseCookie.from("refresh-token",null)
-                .maxAge(0)
-                .httpOnly(true)
-                .secure(true)
-                .domain("")
-                .path("/")
-                .sameSite("None")
-                .build();
-
-        resp.setHeader("Set-Cookie",cookie.toString());
-        return response.success("logout success");
-    }
 
     @PostMapping("signup")
     @ApiOperation(value = "회원 가입", notes = "<strong>이메일와 패스워드</strong>를 통해 회원가입 한다.")
@@ -117,14 +68,6 @@ public class UserController {
                 ,"user information success"
                 ,HttpStatus.OK);
     }
-
-    //api docs에 추가해야겠다.
-    @GetMapping("/reissue")
-    public ResponseEntity<?> reissue(@CookieValue(value="refresh-token", required = false) String refreshToken){
-        JWToken jwt = userService.reissue(refreshToken);
-        return response.success(JWTokenDto.of(jwt));
-    }
-
 
     /**
      *
