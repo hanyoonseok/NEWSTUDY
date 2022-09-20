@@ -43,7 +43,6 @@
     .game-menu-btn-container {
       width: 100%;
       height: 100%;
-      margin-top: rem(40);
       @include FLEX-CENTER;
 
       @media (max-width: 480px) {
@@ -56,7 +55,7 @@
         transition: 0.2s ease;
         cursor: pointer;
         width: rem(460);
-        height: rem(400);
+
         @include FLEX-COLUMN;
 
         @media (max-width: 480px) {
