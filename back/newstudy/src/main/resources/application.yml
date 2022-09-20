@@ -18,6 +18,10 @@ spring:
 #      mail.smtp.ssl.enable: true
   profiles:
     include: API-KEY
+# mybatis setting
+mybatis:
+  type-aliases-package: com.ssafy.newstudy.model.dao
+  mapper-locations: classpath:/mapper/*Mapper.xml
 
 server:
   servlet:
