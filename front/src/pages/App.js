@@ -9,6 +9,7 @@ import NewsList from "pages/NewsList";
 import Layout from "components/Layout";
 import Signup from "./Signup";
 import Mypage from "./Mypage";
+import Game from "./Game";
 
 import LevelTest from "pages/LevelTest";
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/mypage" element={<Mypage />}></Route>
           <Route path="/nationsnews" element={<NationsNewsList />}></Route>
           <Route path="/news/list" element={<NewsList />}></Route>
+          <Route path="/game" element={<Game />}></Route>
         </Routes>
       </Layout>
     </BrowserRouter>
