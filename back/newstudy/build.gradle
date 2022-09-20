@@ -21,14 +21,20 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation("org.springframework.boot:spring-boot-starter-security")
+	testImplementation("org.springframework.security:spring-security-test")
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 	implementation "io.springfox:springfox-boot-starter:3.0.0"
+
+	implementation('commons-io:commons-io:2.6')
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	implementation("com.auth0:java-jwt:3.10.3")
 }
 
 tasks.named('test') {

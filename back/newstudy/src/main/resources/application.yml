@@ -1,12 +1,21 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/newstudy?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://j7b207.p.ssafy.io:3306/newstudy?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
     username: newstudy
     password: dhdwhf7xladb!
-#  mvc:
+
+
+
+  #  mvc:
 #    pathmatch:
 #      matching-strategy: ant_path_matcher  # swagger ?? ? ? ?? ?? ?????
+
+  #redis
+  #spring.redis.host= 172.17.0.3ss
+  redis:
+    host=127.0.0.1
+    port=6379
 
 #  mail:
 #    host: smtp.naver.com
