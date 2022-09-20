@@ -313,6 +313,14 @@
               height: 350px;
               border-radius: 20px;
             }
+
+            > div {
+              @include FLEX-CENTER;
+
+              svg > g > text:focus {
+                outline: none;
+              }
+            }
           }
         }
       }

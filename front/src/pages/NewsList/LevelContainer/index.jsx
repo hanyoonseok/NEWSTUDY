@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faStar } from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
+import React from "react";
 
 export default function LevelContainer({
   isMobile,

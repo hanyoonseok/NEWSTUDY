@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -59,7 +59,6 @@ export default function NewsDetail() {
   );
 
   const synth = window.speechSynthesis;
-  const utterThis = new SpeechSynthesisUtterance(news.body);
 
   const textToSpeech = () => {
     console.log("textToSpeech");
@@ -70,30 +69,30 @@ export default function NewsDetail() {
       console.log("이 브라우저는 음성 합성을 지원하지 않습니다.");
       return;
     }
-    // utterThis.voice = voices[0];
-    utterThis.lang = "en-US";
-    utterThis.pitch = 1;
-    utterThis.rate = 1;
+    const utterThis = new SpeechSynthesisUtterance(news.body);
+    utterThis.lang = "en-US"; //언어설정
+    utterThis.pitch = 1; //피치
+    utterThis.rate = 1; //속도
     synth.speak(utterThis);
   };
 
   const speechPause = () => {
-    console.log("일시 정지");
+    //일시정지
     synth.pause();
   };
 
   const speechStop = () => {
-    console.log("정지");
+    //정지
     synth.cancel();
   };
 
   const speechResume = () => {
-    console.log("이어서 시작");
+    //이어서 시작
     synth.resume();
   };
 
   const [isTextToSpeechStatus, setIsTextToSpeechStatus] = useState(false); //발음듣기 상태 여부
-  const [isPauseStatus, setIsPauseStatus] = useState(false);
+  const [isPauseStatus, setIsPauseStatus] = useState(false); //일시정지 버튼 누른 여부
 
   return (
     <div className="newsdetail-container">

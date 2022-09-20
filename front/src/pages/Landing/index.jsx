@@ -18,6 +18,7 @@ import {
   faFaceGrin,
   faSackDollar,
 } from "@fortawesome/free-solid-svg-icons";
+import Wordcloud from "./WordCloud";
 const MAX_VISIBILITY = 3;
 
 function SectionTitle({ sectionTitle }) {
@@ -245,6 +246,427 @@ function Landing() {
     },
   ];
 
+  const wordcloud = {
+    all: [
+      {
+        text: "all",
+        value: 64,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 16,
+      },
+      {
+        text: "bad",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 16,
+      },
+      {
+        text: "bad",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 60,
+      },
+      {
+        text: "thought",
+        value: 6,
+      },
+      {
+        text: "bad",
+        value: 19,
+      },
+      {
+        text: "HwaYeon",
+        value: 25,
+      },
+      {
+        text: "DaBin",
+        value: 54,
+      },
+      {
+        text: "thought",
+        value: 100,
+      },
+      {
+        text: "bad",
+        value: 90,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 40,
+      },
+      {
+        text: "bad",
+        value: 10,
+      },
+    ],
+    politics: [
+      {
+        text: "politics",
+        value: 64,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 16,
+      },
+      {
+        text: "bad",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 16,
+      },
+      {
+        text: "bad",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 60,
+      },
+      {
+        text: "thought",
+        value: 6,
+      },
+      {
+        text: "bad",
+        value: 19,
+      },
+      {
+        text: "HwaYeon",
+        value: 25,
+      },
+      {
+        text: "DaBin",
+        value: 54,
+      },
+      {
+        text: "thought",
+        value: 100,
+      },
+      {
+        text: "bad",
+        value: 90,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 40,
+      },
+      {
+        text: "bad",
+        value: 10,
+      },
+    ],
+    economy: [
+      {
+        text: "economy",
+        value: 64,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 16,
+      },
+      {
+        text: "bad",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 16,
+      },
+      {
+        text: "bad",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 60,
+      },
+      {
+        text: "thought",
+        value: 6,
+      },
+      {
+        text: "bad",
+        value: 19,
+      },
+      {
+        text: "HwaYeon",
+        value: 25,
+      },
+      {
+        text: "DaBin",
+        value: 54,
+      },
+      {
+        text: "thought",
+        value: 100,
+      },
+      {
+        text: "bad",
+        value: 90,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 40,
+      },
+      {
+        text: "bad",
+        value: 10,
+      },
+    ],
+    entertain: [
+      {
+        text: "entertain",
+        value: 64,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 16,
+      },
+      {
+        text: "bad",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 16,
+      },
+      {
+        text: "bad",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 60,
+      },
+      {
+        text: "thought",
+        value: 6,
+      },
+      {
+        text: "bad",
+        value: 19,
+      },
+      {
+        text: "HwaYeon",
+        value: 25,
+      },
+      {
+        text: "DaBin",
+        value: 54,
+      },
+      {
+        text: "thought",
+        value: 100,
+      },
+      {
+        text: "bad",
+        value: 90,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 40,
+      },
+      {
+        text: "bad",
+        value: 10,
+      },
+    ],
+    sports: [
+      {
+        text: "sports",
+        value: 64,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 16,
+      },
+      {
+        text: "bad",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 16,
+      },
+      {
+        text: "bad",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 60,
+      },
+      {
+        text: "thought",
+        value: 6,
+      },
+      {
+        text: "bad",
+        value: 19,
+      },
+      {
+        text: "HwaYeon",
+        value: 25,
+      },
+      {
+        text: "DaBin",
+        value: 54,
+      },
+      {
+        text: "thought",
+        value: 100,
+      },
+      {
+        text: "bad",
+        value: 90,
+      },
+      {
+        text: "HwaYeon",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        value: 50,
+      },
+      {
+        text: "thought",
+        value: 40,
+      },
+      {
+        text: "bad",
+        value: 10,
+      },
+    ],
+  };
+
+  const tabContent = {
+    0: <Wordcloud words={wordcloud.all}></Wordcloud>,
+    1: <Wordcloud words={wordcloud.politics}></Wordcloud>,
+    2: <Wordcloud words={wordcloud.economy}></Wordcloud>,
+    3: <Wordcloud words={wordcloud.entertain}></Wordcloud>,
+    4: <Wordcloud words={wordcloud.sports}></Wordcloud>,
+  };
+
   return (
     <div className="landing-wrapper">
       <div className="landing-header">
@@ -360,7 +782,7 @@ function Landing() {
                   <span className="category-name">&nbsp;SPORTS</span>
                 </li>
               </ul>
-              <div className="wordcloud"></div>
+              <div className="wordcloud">{tabContent[activeId]}</div>
             </div>
           </div>
         </div>

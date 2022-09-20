@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
-import { useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 
 import "./style.scss";
 import LevelContainer from "./LevelContainer";
