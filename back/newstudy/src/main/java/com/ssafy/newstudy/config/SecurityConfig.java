@@ -35,7 +35,7 @@ public class SecurityConfig{
 
     // Password 인코딩 방식에 BCrypt 암호화 방식 사용
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public static PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
@@ -94,6 +94,9 @@ public class SecurityConfig{
                 .anyRequest().authenticated()//인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
                 .and().cors();
 
-        return http.build();
+        // 원래 빌드해서 리턴해줘야하는데...
+        // 이미 두번 빌드하지말라는 에러가 뜨네.. 일단 null로 반환하면 해결되긴 하는데 좀 더 봐야겠다.
+//        return http.build();
+        return null;
     }
 }

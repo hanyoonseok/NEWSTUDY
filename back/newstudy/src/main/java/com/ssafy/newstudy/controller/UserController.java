@@ -11,6 +11,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,18 +25,19 @@ import java.io.InputStream;
 @Api(value = "유저 API", tags = {"User"})
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
     private final Response response;
     private final JwtTokenUtil jwtTokenUtil;
+    private final PasswordEncoder passwordEncoder;
 
 //    @Value("${spring.servlet.multipart.location}")
 //    private String root;
 
 
-    @PostMapping("signup")
+    @PostMapping("/signup")
     @ApiOperation(value = "회원 가입", notes = "<strong>이메일와 패스워드</strong>를 통해 회원가입 한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -45,11 +47,12 @@ public class UserController {
     })
     public ResponseEntity<?> signup(
             @RequestBody @ApiParam(value="회원가입 정보", required = true) UserDto userDto) {
+        userDto.setPw(passwordEncoder.encode(userDto.getPw()));
         userService.createUser(userDto);
         return response.success("signup success");
     }
 
-    @PutMapping("level")
+    @PutMapping("/level")
     @ApiOperation(value = "레벨 변경", notes = "레벨테스트 결과에 따라 레벨을 변경한다.")
     public ResponseEntity<?> updateLevel(@RequestHeader("Authorization") String bearerToken, @RequestBody int level) {
         userService.updateLevel(jwtTokenUtil.getEmailFromBearerToken(bearerToken), level);

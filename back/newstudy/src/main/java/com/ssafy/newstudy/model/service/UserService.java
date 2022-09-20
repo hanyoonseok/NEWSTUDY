@@ -2,12 +2,9 @@ package com.ssafy.newstudy.model.service;
 
 import com.ssafy.newstudy.model.dao.UserDao;
 import com.ssafy.newstudy.model.dto.UserDto;
-import com.ssafy.newstudy.util.JwtTokenUtil;
-import com.ssafy.newstudy.util.RedisUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,20 +21,19 @@ import java.util.*;
 @Service("userService")
 @RequiredArgsConstructor
 public class UserService {
-    public static final String INFO = "INFO::";
-    private static final String HEART = "HEART";
+//    public static final String INFO = "INFO::";
+//    private static final String HEART = "HEART";
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserDao userDao;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenUtil jwtTokenUtil;
-    private final RedisUtil redisUtil;
 
-    @Value("${spring.servlet.multipart.location}")
-    private String root;
+//    private final JwtTokenUtil jwtTokenUtil;
+//    private final RedisUtil redisUtil;
+
+//    @Value("${spring.servlet.multipart.location}")
+//    private String root;
 
     public void createUser(UserDto userDto){
-        userDto.setPw(passwordEncoder.encode(userDto.getPw()));
         userDao.insertUser(userDto);
     }
 
@@ -53,7 +49,6 @@ public class UserService {
         userDto.setLevel(level);
         userDao.updateUser(userDto);
     }
-
 
 //    public User getUserById(Long id) {
 //        Optional<User> user = userRepository.findUserById(id);
