@@ -25,6 +25,20 @@
         background-color: #fff;
         border-radius: 35px;
 
+        .level-box {
+          position: absolute;
+          left: 80px;
+          top: 20px;
+          width: rem(50);
+          height: rem(65);
+          z-index: 10;
+
+          > img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
         .img-box {
           width: 50%;
           height: 169px;
@@ -70,10 +84,6 @@
         font-weight: bold;
         margin-bottom: 2%;
         margin-top: 8%;
-
-        span {
-          color: $blue;
-        }
       }
 
       .email {
@@ -112,6 +122,13 @@
             color: $grey;
           }
         }
+      }
+
+      div:first-of-type {
+        margin-top: 3%;
+      }
+      div:last-of-type {
+        margin-bottom: 0;
       }
     }
 
@@ -258,6 +275,70 @@
         }
       }
 
+      .voca-box {
+        .voca {
+          .memorize {
+            width: 22px;
+            height: 22px;
+            margin-right: 2%;
+            cursor: pointer;
+          }
+
+          .blue {
+            background-color: $soft-blue;
+          }
+
+          .grey {
+            background-color: $soft-grey;
+          }
+        }
+      }
+
+      .wrap {
+        @include FLEX-ALIGN-CENTER;
+        flex-direction: row-reverse;
+        input[type="checkbox"] {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          border: 0;
+
+          & + label {
+            display: inline-block;
+            position: relative;
+            padding-left: 26px;
+            cursor: pointer;
+
+            &::before {
+              content: "";
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 18px;
+              height: 18px;
+              text-align: center;
+              background: #fff;
+              border: 1px solid #ccc;
+              box-sizing: border-box;
+            }
+          }
+
+          &:checked + label:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 18px;
+            height: 18px;
+            background-color: $soft-blue;
+          }
+        }
+      }
+
       .badge-box {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
@@ -311,6 +392,14 @@
 
         .profile-img {
           height: 130px;
+
+          .level-box {
+            width: rem(34);
+            height: rem(45);
+            left: 120px;
+            top: 30px;
+          }
+
           .img-box {
             width: 35%;
             height: 120px;

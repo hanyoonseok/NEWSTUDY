@@ -10,7 +10,6 @@ import Page3 from "./Page3";
 import Page4 from "./Page4";
 import Page5 from "./Page5";
 import Dots from "./Dots";
-import TEMP from "assets/temp.jpg";
 import Marker from "assets/marker.jpg";
 import Countrycard from "assets/country-card.jpg";
 import Earth from "assets/earthmap.jpg";
@@ -163,7 +162,6 @@ export default function Onboarding() {
         로그인
       </button>
       <Dots scrollIdx={scrollIdx} />
-      {/* <img src={TEMP} alt="" className="globe" ref={globe} /> */}
       <div className="globe" ref={globe}>
         <ReactGlobe
           height="90vh"
