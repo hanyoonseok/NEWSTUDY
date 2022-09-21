@@ -1,11 +1,10 @@
 @import "variables.scss";
 
 .test-wrapper {
-  height: 100%;
-  margin-top: 20px;
-
+  margin-top: 8vh;
   @media (max-width: 480px) {
     width: 100%;
+    margin-top: 2px;
   }
 
   .word-wrapper {
@@ -18,7 +17,8 @@
       @include FLEX-COLUMN;
       align-items: center;
       @media (max-width: 480px) {
-        padding: 100px 12px;
+        padding: 70px 20px;
+        height: 100%;
       }
       width: 65vw;
       display: grid;
@@ -40,7 +40,7 @@
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 3vh;
         height: 100%;
-        width: 100%;
+        width: 95%;
       }
 
       .word {
@@ -175,6 +175,7 @@
       background-color: $soft-blue;
     }
     @media (max-width: 480px) {
+      font-size: 1.3rem;
       position: static;
       margin-top: 0;
       bottom: 12%;

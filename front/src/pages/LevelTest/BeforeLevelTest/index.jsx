@@ -34,6 +34,9 @@ function BeforeLevelTest({ getLeveltestState }) {
     const conRect = containerRef.current.getBoundingClientRect();
     if (isMobile) {
       console.log("오면 출력해랑");
+      console.log(conRect.top);
+      console.log(rect.top);
+      console.log(rect.height);
       setArrowPosMobile(`${conRect.top - rect.top - rect.height / 2}px`);
     } else {
       setArrowPos(`${rect.left - conRect.left + rect.width / 2}px`);
@@ -175,7 +178,6 @@ function BeforeLevelTest({ getLeveltestState }) {
                 </i>
               </>
             )}
-
             <div className="arrow-bar"></div>
           </div>
         </div>
@@ -191,14 +193,15 @@ function BeforeLevelTest({ getLeveltestState }) {
           ? levelDesc[activeLevelId]
           : levelDesc[activeLevelId + 1]}
       </div>
-
-      <button className="start-leveltest" onClick={goLeveltest}>
-        레벨테스트 시작하기
-        <span>&nbsp;Go!</span>
-        <i>
-          <FontAwesomeIcon icon={faAnglesRight} />
-        </i>
-      </button>
+      <div className="start-leveltest-wrapper">
+        <button className="start-leveltest" onClick={goLeveltest}>
+          레벨테스트 시작하기
+          <span>&nbsp;Go!</span>
+          <i>
+            <FontAwesomeIcon icon={faAnglesRight} />
+          </i>
+        </button>
+      </div>
     </>
   );
 }

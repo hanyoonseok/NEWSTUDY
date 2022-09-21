@@ -25,47 +25,53 @@ function LevelTest(props) {
   };
   return (
     <div className="leveltest-wrapper">
-      <div className="leveltest-info">
-        <h1>
-          <span className="text-spotlight">LEVEL</span> TEST
-        </h1>
-        <div className="leveltest-desc">
-          {levelTestState === 0 ? levelTestDesc[0] : levelTestDesc[1]}
-          <img
-            className="check-img"
-            src={require("assets/check.png")}
-            alt="check"
-          ></img>
-        </div>
-      </div>
-      {levelTestState === 0 ? (
-        <BeforeLevelTest getLeveltestState={getLeveltestState} />
-      ) : (
-        <DoLevelTest getResult={getResult} />
-      )}
-      {activeResult && (
-        <div className="result-notice-back">
-          {/*onClick={() => getResult(false)} 이거는 끄면 안되겠지?*/}
-          <div className="result-notice-wrapper">
-            <div className="level-img">
-              <img src={require("assets/level_B2.png")} alt="check"></img>
-            </div>
-            <div className="result-word">레벨테스트 결과,</div>
-            <div className="result-desc">
-              OO님은 <span className="text-spotlight">B1등급</span>입니다!
-            </div>
-
-            <Link to="/landing">
-              <button className="result-check">
-                확인
-                <i>
-                  <FontAwesomeIcon icon={faAnglesRight} />
-                </i>
-              </button>
-            </Link>
+      <div class="leveltest-area">
+        <div className="leveltest-info">
+          <h1>
+            <span className="text-spotlight">LEVEL</span> TEST
+          </h1>
+          <div className="leveltest-desc">
+            {levelTestState === 0
+              ? !isMobile && levelTestDesc[0]
+              : levelTestDesc[1]}
+            {levelTestState === 0 && !isMobile && (
+              <img
+                className="check-img"
+                src={require("assets/check.png")}
+                alt="check"
+              ></img>
+            )}
           </div>
         </div>
-      )}
+        {levelTestState === 0 ? (
+          <BeforeLevelTest getLeveltestState={getLeveltestState} />
+        ) : (
+          <DoLevelTest getResult={getResult} />
+        )}
+        {activeResult && (
+          <div className="result-notice-back">
+            {/*onClick={() => getResult(false)} 이거는 끄면 안되겠지?*/}
+            <div className="result-notice-wrapper">
+              <div className="level-img">
+                <img src={require("assets/level_B2.png")} alt="check"></img>
+              </div>
+              <div className="result-word">레벨테스트 결과,</div>
+              <div className="result-desc">
+                OO님은 <span className="text-spotlight">B1등급</span>입니다!
+              </div>
+
+              <Link to="/landing">
+                <button className="result-check">
+                  확인
+                  <i>
+                    <FontAwesomeIcon icon={faAnglesRight} />
+                  </i>
+                </button>
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
