@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./style.scss";
 
 import GameMenu from "./GameMenu";
-import CrossWord from "./CrossWord";
+import Crossword from "./CrossWordGame";
 import SpeedQuiz from "./SpeedQuiz";
 
 export default function Game() {
@@ -12,7 +12,7 @@ export default function Game() {
       {step === 0 ? (
         <GameMenu setStep={setStep} />
       ) : step === 1 ? (
-        <CrossWord setStep={setStep} />
+        <Crossword setStep={setStep} />
       ) : (
         <SpeedQuiz setStep={setStep} />
       )}

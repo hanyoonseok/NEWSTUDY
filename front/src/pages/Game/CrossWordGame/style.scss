@@ -1,0 +1,124 @@
+@import "variables.scss";
+
+.crossword-container {
+  @include STRETCH;
+  display: flex;
+  padding: rem(20);
+
+  .crossword-game-section {
+    @include BACKGROUND-IMAGE("assets/crossword-background.png");
+    @include FLEX-COLUMN;
+    max-width: rem(824);
+    border-radius: 25px;
+    padding: rem(10);
+    .crossword-game-title {
+      @include FLEX-CENTER;
+      font-size: rem(40);
+      font-family: $eng-title-font;
+      font-weight: bold;
+      color: $dark-grey;
+      b {
+        color: $soft-blue;
+      }
+      .crossword-title-globe {
+        width: rem(32);
+        height: rem(32);
+      }
+    }
+
+    .crossword-game-field {
+      width: 100%;
+      height: 100%;
+      position: relative;
+
+      //   display: grid;
+      //   justify-content: center;
+      //   align-items: center;
+      //   grid-column-gap: 4px;
+      //   grid-row-gap: 4px;
+
+      .crossword-one-word {
+        position: absolute;
+        cursor: pointer;
+
+        .relative-area {
+          position: relative;
+          display: flex;
+
+          &.across {
+            flex-direction: row;
+
+            &:hover {
+              .crossword-one-space {
+                background-color: $light-grey;
+                z-index: 3;
+              }
+            }
+          }
+          &.down {
+            flex-direction: column;
+
+            &:hover {
+              .crossword-one-space {
+                background-color: $light-blue;
+                z-index: 3;
+              }
+            }
+          }
+
+          .hint-dot {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            z-index: 2;
+
+            &.across {
+              background-color: #000;
+            }
+            &.down {
+              background-color: $blue;
+            }
+          }
+        }
+
+        .hidden-input {
+          text-align: center;
+          font-family: $eng-title-font;
+          font-size: rem(20);
+          font-weight: bold;
+          color: #000;
+          background-color: transparent;
+          border: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+          z-index: 4;
+
+          &.active {
+            z-index: 5;
+          }
+        }
+      }
+      .crossword-one-space {
+        transition: 0.3s ease;
+        width: rem(36);
+        height: rem(36);
+        border-radius: 10px;
+        filter: $drop-shadow;
+        background-color: #fff;
+        z-index: 1;
+      }
+    }
+  }
+
+  .crossword-hint-section {
+    width: 30%;
+    height: 100%;
+  }
+}
