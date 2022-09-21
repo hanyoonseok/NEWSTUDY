@@ -6,8 +6,6 @@ import "tippy.js/animations/scale.css";
 export default function Wordcloud({ words }) {
   const options = {
     deterministic: false,
-    enableTooltip: true,
-    deterministic: false,
     rotations: 2,
     rotationAngles: [0, 0],
     fontFamily: "Montserrat",
