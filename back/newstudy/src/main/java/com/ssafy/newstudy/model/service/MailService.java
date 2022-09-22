@@ -13,13 +13,13 @@ public class MailService {
     private JavaMailSender mailSender;
     private static final String FROM_ADDRESS="newstudy.corporation@gmail.com";
 
-    public MailDto createMailAndChangePassword(String userEmail, String userName) {
+    public MailDto createMailAndChangePassword(String userEmail) {
         String str = getTempPassword();
         MailDto dto = new MailDto();
         dto.setAddress(userEmail);
-        dto.setTitle(userName + "님의 [NEWSTUDY] 인증번호 안내 이메일 입니다.");
+        dto.setTitle("[NEWSTUDY] 인증번호 안내 이메일 입니다.");
         dto.setMessage("안녕하세요 :) \n[NEWSTUDY] 인증번호 안내 관련 이메일 입니다. \n"
-                + "[" + userName + "]" + "님의  인증번호는 " + str + " 입니다. ");
+                +" 인증번호는 " + str + " 입니다. ");
         dto.setTmpPassword(str);
         return dto;
     }

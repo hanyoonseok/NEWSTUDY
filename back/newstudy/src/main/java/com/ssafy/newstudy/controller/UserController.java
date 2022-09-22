@@ -56,14 +56,17 @@ public class UserController {
     @PostMapping("/mail")
     @ApiOperation(value ="인증 메일 발송")
     public ResponseEntity<?> mail(@RequestBody UserDto userDto){
-        MailDto mail = mailService.createMailAndChangePassword(userDto.getEmail(), userDto.getNickname());
+        //존재한다면 ExistingEmailException 예외 발생
+        userService.checkExistingEmail(userDto.getEmail());
+
+        MailDto mail = mailService.createMailAndChangePassword(userDto.getEmail());
         mailService.mailSend(mail);
         return response.success(mail.getTmpPassword(), "메일 발송 성공", HttpStatus.OK);
     }
 
-    @PutMapping("/level")
+    @PutMapping("/level/{level}")
     @ApiOperation(value = "레벨 변경", notes = "레벨테스트 결과에 따라 레벨을 변경한다.")
-    public ResponseEntity<?> updateLevel(@RequestHeader("Authorization") String bearerToken, @RequestBody int level) {
+    public ResponseEntity<?> updateLevel(@RequestHeader("Authorization") String bearerToken, @PathVariable int level) {
         userService.updateLevel(jwtTokenUtil.getEmailFromBearerToken(bearerToken), level);
         return response.success("updateLevel success");
     }
