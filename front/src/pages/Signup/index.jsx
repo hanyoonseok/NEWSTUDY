@@ -1,35 +1,206 @@
 import "./style.scss";
-import Input from "./input";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { signupUser } from "modules/user/user";
+import { authEmail } from "modules/user/user";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 export default function Signup() {
+  const dispatch = useDispatch();
   const [activeId, setActiveId] = useState(0);
 
   const onClickSwitchTab = (id) => {
     setActiveId(id);
   };
 
+  const [Email, setEmail] = useState("");
+  const [isDuplicateEmail, setIsDuplicateEmail] = useState(false); //이메일 중복 여부
+  const [AuthKey, setAuthKey] = useState("");
+  const [receiveAuthKey, setReceiveAuthKey] = useState("ddd"); //백에서 보내줄 인증키
+  const [isAuthKey, setIsAuthKey] = useState(true); //인증키 일치 여부
+  const [Password, setPassword] = useState("");
+  const [ConfirmPw, setConfirmPw] = useState("");
+  const [isConfirmed, setIsConfirmed] = useState(true); //비밀번호 일치 여부
+  const [Nickname, setNickname] = useState("");
+
+  const onEmailHandler = (e) => {
+    console.log(e.currentTarget.value);
+    // 이메일 중복검사 api 받아오고 난 후
+    // 여기서 넘어오는 key를 receiveAuthKey에 저장
+    if (true) {
+      setIsDuplicateEmail(true);
+    }
+    setEmail(e.currentTarget.value);
+  };
+  const onAuthKeyHandler = (e) => {
+    setAuthKey(e.currentTarget.value);
+  };
+  const onAuthKeyUp = () => {
+    // 인증키 일치 검사
+    if (receiveAuthKey === AuthKey) {
+      setIsAuthKey(true);
+    } else {
+      setIsAuthKey(false);
+    }
+  };
+  const onPasswordHandler = (e) => {
+    setPassword(e.currentTarget.value);
+  };
+  const onConfirmPwHandler = (e) => {
+    setConfirmPw(e.currentTarget.value);
+  };
+  const onConfirmPwKeyup = (e) => {
+    console.log(Password, ConfirmPw);
+    //비밀번호 일치 검사
+    if (Password !== ConfirmPw) {
+      setIsConfirmed(false);
+    } else {
+      setIsConfirmed(true);
+    }
+    setConfirmPw(e.currentTarget.value);
+  };
+  const onNicknameHandler = (e) => {
+    setNickname(e.currentTarget.value);
+  };
+
+  const vaildEmailCheck = (obj) => {
+    var pattern =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    return pattern.test(obj);
+  };
+
+  const onAuthEmail = () => {
+    if (!vaildEmailCheck(Email)) {
+      alert("올바른 이메일 주소를 입력해주세요.");
+    } else {
+      dispatch(
+        authEmail({
+          email: Email,
+        }),
+      );
+    }
+  };
+
+  const onLoginHandler = (e) => {
+    e.preventDefault();
+  };
+  const onSignupHandler = (e) => {
+    e.preventDefault();
+    if (isConfirmed) {
+      const user = {
+        email: Email,
+        pw: Password,
+        nickname: Nickname,
+      };
+    }
+  };
+
   const tabContent = {
     0: (
-      <form className="login">
+      <form className="login" onSubmit={onLoginHandler}>
         <p></p>
-        <Input type="email" placeholder="이메일을 입력하세요." />
-        <Input type="password" placeholder="비밀번호를 입력하세요." />
+        <div className="input-div">
+          <div className="box"></div>
+          <input
+            type="email"
+            placeholder="이메일을 입력하세요."
+            value={Email}
+            onChange={onEmailHandler}
+          />
+        </div>
+        <div className="input-div">
+          <div className="box"></div>
+          <input
+            type="password"
+            placeholder="비밀번호를 입력하세요."
+            value={Password}
+            onChange={onPasswordHandler}
+          />
+        </div>
         <button className="login-btn">로그인</button>
         <p></p>
       </form>
     ),
     1: (
-      <form className="signup">
+      <form className="signup" onSubmit={onSignupHandler}>
         <div className="email-box">
-          <Input type="email" placeholder="이메일을 입력하세요." />
-          <button>인증</button>
+          <div className="input-div">
+            <div className="box"></div>
+            <input
+              type="email"
+              placeholder="이메일을 입력하세요."
+              value={Email}
+              onChange={onEmailHandler}
+            />
+          </div>
+          <button onClick={onAuthEmail}>인증</button>
         </div>
-        <Input type="text" placeholder="인증키를 입력하세요." />
-        <Input type="password" placeholder="비밀번호를 입력하세요." />
-        <Input type="password" placeholder="비밀번호를 다시 입력하세요." />
-        <Input type="text" placeholder="닉네임을 입력하세요." />
-        <button className="signup-btn">가입하기</button>
+        {isDuplicateEmail ? (
+          <p className="error">
+            <FontAwesomeIcon icon={faTriangleExclamation} /> 중복된
+            이메일입니다.
+          </p>
+        ) : (
+          <p>&nbsp;</p>
+        )}
+        <div className="input-div">
+          <div className="box"></div>
+          <input
+            type="text"
+            placeholder="인증키를 입력하세요."
+            value={AuthKey}
+            onChange={onAuthKeyHandler}
+            onKeyUp={onAuthKeyUp}
+          />
+        </div>
+        {!isAuthKey ? (
+          <p className="error">
+            <FontAwesomeIcon icon={faTriangleExclamation} /> 인증키가 맞지
+            않습니다.
+          </p>
+        ) : (
+          <p>&nbsp;</p>
+        )}
+        <div className="input-div">
+          <div className="box"></div>
+          <input
+            type="password"
+            placeholder="비밀번호를 입력하세요."
+            value={Password}
+            onChange={onPasswordHandler}
+          />
+        </div>
+        <div className="input-div">
+          <div className="box"></div>
+          <input
+            type="password"
+            placeholder="비밀번호를 다시 입력하세요."
+            value={ConfirmPw}
+            onChange={onConfirmPwHandler}
+            onKeyUp={onConfirmPwKeyup}
+          />
+        </div>
+        {!isConfirmed ? (
+          <p className="error">
+            <FontAwesomeIcon icon={faTriangleExclamation} /> 비밀번호가 일치하지
+            않습니다.
+          </p>
+        ) : (
+          <p>&nbsp;</p>
+        )}
+        <div className="input-div">
+          <div className="box"></div>
+          <input
+            type="text"
+            placeholder="닉네임을 입력하세요."
+            value={Nickname}
+            onChange={onNicknameHandler}
+          />
+        </div>
+        <button type="submit" className="signup-btn">
+          가입하기
+        </button>
       </form>
     ),
   };
