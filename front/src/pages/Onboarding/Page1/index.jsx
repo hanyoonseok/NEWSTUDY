@@ -1,5 +1,6 @@
 import "./style.scss";
 import NEWSTUDY from "assets/NEWSTUDY.jpg";
+import React from "react";
 
 export default function Page1() {
   return (

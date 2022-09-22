@@ -2,7 +2,7 @@
 
 .header-nav {
   width: 100%;
-  height: 80px;
+  height: 70px;
   position: fixed;
   top: 0;
   left: 0;
@@ -13,6 +13,12 @@
   @media (max-width: 480px) {
     display: none;
   }
+  &.active-search {
+    transition: all 300ms ease;
+    background-color: white;
+    filter: $drop-shadow;
+  }
+
   @include FLEX-BETWEEN;
 
   .login-btn {
@@ -21,22 +27,26 @@
     font-family: $kor-font;
     font-size: 20px;
   }
-  .header-search {
-    padding: 5px 15px;
-    border-radius: 10px;
-    background-color: rgba($color: $white, $alpha: 0.6);
-    border: 2px solid $soft-grey;
-    width: 30vw;
-    @include FLEX-BETWEEN;
-    .input-search {
-      font-family: $kor-font;
-      color: $grey;
-      background-color: transparent;
-      border: none;
-      width: 24vw;
-    }
+  .search-icon-wrapper {
+    width: 45px;
+    height: 45px;
+    border-radius: 20px;
+    background-color: white;
+    filter: $drop-shadow;
+    @include FLEX-CENTER;
     .search-icon {
-      color: $grey;
+      color: $dark-grey;
+    }
+    transition: all 300ms ease;
+    &:hover {
+      transform: scale(1.1);
+      border: 3px solid $light-blue;
+    }
+    &.hidden {
+      animation-name: specialFadeOut;
+      animation-delay: 245ms;
+      animation-duration: 400ms;
+      animation-fill-mode: both;
     }
   }
   .header-right {
@@ -62,6 +72,18 @@
         height: 45px;
       }
     }
+    &.hidden {
+      animation-name: specialFadeOut;
+      animation-delay: 245ms;
+      animation-duration: 400ms;
+      animation-fill-mode: both;
+    }
+    &.visible {
+      animation-name: specialFadeIn;
+      animation-delay: 70ms;
+      animation-duration: 400ms;
+      animation-fill-mode: both;
+    }
   }
 }
 
@@ -84,4 +106,114 @@
       cursor: pointer;
     }
   }
+}
+
+.search-container {
+  position: absolute;
+  top: 30%;
+  display: none;
+  left: 15%;
+  width: 70%;
+  z-index: 2;
+  &.active {
+    display: block;
+  }
+  .header-search {
+    width: 100%;
+    .input-search {
+      border: none;
+      width: 100%;
+      font-size: 16px;
+      font-family: $kor-font;
+      color: $dark-grey;
+      outline: none;
+      color: $dark-grey;
+      animation-name: specialFadeInLeft;
+      animation-duration: 600ms;
+      animation-fill-mode: both;
+      transition: all ease;
+      animation-delay: 350ms;
+      padding: 0 20px;
+      &::placeholder {
+        color: $soft-grey;
+      }
+    }
+  }
+  .search {
+    width: 100%;
+    @include FLEX-CENTER;
+    .header-icon {
+      animation-name: specialFadeInLeft;
+      animation-duration: 600ms;
+      animation-fill-mode: both;
+      animation-delay: 800ms;
+      transition: all 200ms ease;
+      &:hover {
+        font-size: rem(18);
+      }
+    }
+  }
+}
+@keyframes specialFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-20%, 0, 0);
+    display: none;
+    pointer-events: none;
+  }
+}
+
+@keyframes specialSlideInRight {
+  from {
+    transform: translate3d(-30%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    pointer-events: all;
+  }
+}
+
+@keyframes specialFadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(20%, 0, 0) scale(1.3);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes specialFadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-50px, 0, 0) scale(1.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes specialFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fade-screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 5;
+  background-color: rgba($color: $dark-grey, $alpha: 0.2);
 }

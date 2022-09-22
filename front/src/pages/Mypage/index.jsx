@@ -8,7 +8,7 @@ import {
   faFileWord,
   faCertificate,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Attendance1 from "assets/1attendance_badge.png";
 import DefaultUserImage from "assets/user_globe.png";
 import Word from "components/Word";

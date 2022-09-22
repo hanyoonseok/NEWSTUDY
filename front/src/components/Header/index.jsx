@@ -3,14 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
 
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { faSearch, faXmark } from "@fortawesome/free-solid-svg-icons";
+import React, { useState } from "react";
 import DailyWordModal from "./DailyWordModal";
 export default function Header() {
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
-
+  const [activeSearch, setActiveSearch] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
@@ -22,14 +22,26 @@ export default function Header() {
 
   return (
     <>
-      <nav className="header-nav">
-        <div className="header-search">
-          <input className="input-search" placeholder="검색어를 입력하세요." />
+      <nav className={activeSearch ? "header-nav active-search" : "header-nav"}>
+        {/* <div className="header-search">
+          <input className="input-search" placeholder="검색어를 입력하세요." /> */}
+        <div
+          className={
+            activeSearch ? "search-icon-wrapper hidden" : "search-icon-wrapper"
+          }
+          onClick={() => setActiveSearch(true)}
+        >
           <i className="search-icon">
             <FontAwesomeIcon icon={faSearch} />
           </i>
         </div>
-        <div className="header-right">
+        {/* </div> */}
+
+        <div
+          className={
+            activeSearch ? "header-right hidden" : "header-right visible"
+          }
+        >
           <button className="daily-word" onClick={openModal}>
             오늘의 단어
           </button>
@@ -37,8 +49,39 @@ export default function Header() {
             <img src={require("assets/profile.png")} alt="article"></img>
           </Link>
         </div>
+        <div
+          className={
+            activeSearch
+              ? "search-container active"
+              : "search-container visible"
+          }
+        >
+          <div className="search">
+            <i className="search-icon header-icon">
+              <FontAwesomeIcon icon={faSearch} />
+            </i>
+            <div className="header-search">
+              <input
+                className="input-search"
+                placeholder="검색어를 입력하세요."
+              />
+            </div>
+            <i
+              className="header-icon"
+              onClick={() => {
+                setActiveSearch(false);
+              }}
+            >
+              <FontAwesomeIcon icon={faXmark} />
+            </i>
+          </div>
+        </div>
       </nav>
 
+      <div
+        className={activeSearch ? "fade-screen" : "screen"}
+        onClick={() => setActiveSearch(false)}
+      ></div>
       {isMobile && (
         <>
           <div className="mobileHeader-wrapper">
