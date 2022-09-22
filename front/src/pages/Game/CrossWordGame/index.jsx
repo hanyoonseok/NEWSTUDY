@@ -13,60 +13,70 @@ export default function CrossWordGame({ setStep }) {
       c: 0,
       d: 1,
       name: "squid",
+      hint: "hinthinthi nthint ginthintgint hinthint hinthintgint hintgint hinthinthin thintginthintg int",
     },
     {
       r: 0,
       c: 3,
       d: -1,
       name: "index",
+      hint: "hinthinthinthintginthintgint",
     },
     {
       r: 2,
       c: 3,
       d: 1,
       name: "discord",
+      hint: "hinthinthinthintginthintgint",
     },
     {
       r: 0,
       c: 7,
       d: -1,
       name: "globe",
+      hint: "hinthinthinthintginthintgint",
     },
     {
       r: 0,
       c: 7,
       d: 1,
       name: "gather",
+      hint: "hinthinthinthintginthintgint",
     },
     {
       r: 6,
       c: 0,
       d: 1,
       name: "banana",
+      hint: "hinthinthinthintginthintgint",
     },
     {
       r: 5,
       c: 0,
       d: -1,
       name: "absolute",
+      hint: "hinthinthinthintginthintgint",
     },
     {
       r: 6,
       c: 3,
       d: -1,
       name: "apple",
+      hint: "hinthinthinthintginthintgint",
     },
     {
       r: 5,
       c: 5,
       d: -1,
       name: "parent",
+      hint: "hinthinthinthintginthintgint",
     },
     {
       r: 0,
       c: 14,
       d: -1,
       name: "puzzle",
+      hint: "hinthinthinthintginthintgint",
     },
   ]);
 
@@ -209,6 +219,7 @@ export default function CrossWordGame({ setStep }) {
 
   const focusOutActive = useCallback((isIncluded) => {
     if (isIncluded) return;
+
     document.querySelectorAll(`[data-word]`).forEach((el) => {
       el.className = "crossword-input";
     });
@@ -228,7 +239,32 @@ export default function CrossWordGame({ setStep }) {
         </h1>
         <div className="crossword-game-field">{drawCrossword()}</div>
       </section>
-      <section className="crossword-hint-section"></section>
+      <section className="crossword-hint-section">
+        <article className="crossword-hint-article">
+          <h1 className="hint-article-title">ROW</h1>
+          <div className="hint-article-list">
+            {wordArr.map((e, i) => (
+              <div className="hint-card row" key={i}>
+                <i className="hint-card-index">{i + 1}</i>
+                <p className="hint-card-desc">{e.hint}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+
+        <article className="crossword-hint-article">
+          <h1 className="hint-article-title">COLUMN</h1>
+          <div className="hint-article-list">
+            {wordArr.map((e, i) => (
+              <div className="hint-card col" key={i}>
+                <i className="hint-card-index">{i + 1}</i>
+                <p className="hint-card-desc">{e.hint}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+        <button className="crossword-submit-btn">제출하기</button>
+      </section>
     </div>
   );
 }
