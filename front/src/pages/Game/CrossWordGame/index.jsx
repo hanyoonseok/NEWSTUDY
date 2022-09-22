@@ -99,6 +99,13 @@ export default function CrossWordGame({ setStep }) {
     const words = e.target.dataset.word.split(" ");
     const word = words.length > 1 ? words[1] : words[0];
     const dir = e.target.dataset.dir;
+
+    focusOutActive(false);
+    highlightInput(word, dir);
+    highlightHint(word, dir);
+  }, []);
+
+  const highlightInput = (word, dir) => {
     const resultArr = [];
     const inputArr = document.querySelectorAll(`[data-word]`);
 
@@ -108,12 +115,17 @@ export default function CrossWordGame({ setStep }) {
       else if (el.dataset.word.indexOf(word) >= 0) resultArr.push(el);
     });
 
-    console.log(resultArr);
-
     resultArr.forEach((el) =>
-      dir === "1" ? (el.className += " across") : (el.className += " down"),
+      parseInt(dir) === 1
+        ? (el.className += " across")
+        : (el.className += " down"),
     );
-  }, []);
+  };
+
+  const highlightHint = (word, dir) => {
+    const hintCard = document.querySelector(`[data-hint=${word}]`);
+    hintCard.className += " active";
+  };
 
   const drawCrossword = () => {
     const result = [];
@@ -223,7 +235,20 @@ export default function CrossWordGame({ setStep }) {
     document.querySelectorAll(`[data-word]`).forEach((el) => {
       el.className = "crossword-input";
     });
+
+    document.querySelectorAll(`[data-hint]`).forEach((el) => {
+      el.className = el.className.slice(0, 13);
+    });
   }, []);
+
+  const onHintClick = useCallback(
+    (hint, dir) => {
+      focusOutActive(false);
+      highlightInput(hint, dir);
+      highlightHint(hint, dir);
+    },
+    [focusOutActive],
+  );
 
   return (
     <div className="crossword-container">
@@ -243,24 +268,38 @@ export default function CrossWordGame({ setStep }) {
         <article className="crossword-hint-article">
           <h1 className="hint-article-title">ROW</h1>
           <div className="hint-article-list">
-            {wordArr.map((e, i) => (
-              <div className="hint-card row" key={i}>
-                <i className="hint-card-index">{i + 1}</i>
-                <p className="hint-card-desc">{e.hint}</p>
-              </div>
-            ))}
+            {wordArr
+              .filter((e) => e.d === 1)
+              .map((e, i) => (
+                <div
+                  className="hint-card row"
+                  key={i}
+                  data-hint={e.name}
+                  onClick={() => onHintClick(e.name, 1)}
+                >
+                  <i className="hint-card-index">{i + 1}</i>
+                  <p className="hint-card-desc">{e.hint}</p>
+                </div>
+              ))}
           </div>
         </article>
 
         <article className="crossword-hint-article">
           <h1 className="hint-article-title">COLUMN</h1>
           <div className="hint-article-list">
-            {wordArr.map((e, i) => (
-              <div className="hint-card col" key={i}>
-                <i className="hint-card-index">{i + 1}</i>
-                <p className="hint-card-desc">{e.hint}</p>
-              </div>
-            ))}
+            {wordArr
+              .filter((e) => e.d === -1)
+              .map((e, i) => (
+                <div
+                  className="hint-card col"
+                  key={i}
+                  data-hint={e.name}
+                  onClick={() => onHintClick(e.name, -1)}
+                >
+                  <i className="hint-card-index">{i + 1}</i>
+                  <p className="hint-card-desc">{e.hint}</p>
+                </div>
+              ))}
           </div>
         </article>
         <button className="crossword-submit-btn">제출하기</button>
