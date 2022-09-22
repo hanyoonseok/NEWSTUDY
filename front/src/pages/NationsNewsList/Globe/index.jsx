@@ -7,7 +7,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 
 import GlobeImg from "assets/globe_diffuse.jpg";
-import Earth from "assets/earthmap.jpg";
+import Earth from "assets/earthmap_color.png";
 import Kor from "assets/kor.jpg";
 import TrendDesign from "assets/trend-circle-design.png";
 import { useEffect } from "react";
