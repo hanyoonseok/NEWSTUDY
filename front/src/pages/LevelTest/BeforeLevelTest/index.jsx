@@ -7,11 +7,13 @@ function BeforeLevelTest({ getLeveltestState }) {
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
-  const myLevelId = 0;
+  // 내 레벨 id값
+  const myLevelId = 5;
   const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
   const [arrowPos, setArrowPos] = useState("0px");
   const [arrowPosMobile, setArrowPosMobile] = useState("0px");
-  const [activeLevelId, setActvieLevelId] = useState(0);
+  const [activeLevelId, setActvieLevelId] = useState(myLevelId);
+  const [activeHoverlId, setActiveHoverlId] = useState(myLevelId);
   const [arrowColor, setArrowColor] = useState("#D9FEBA");
   const containerRef = useRef();
   const imgRef = [];
@@ -27,16 +29,13 @@ function BeforeLevelTest({ getLeveltestState }) {
     5: <div>C1~C2레벨은EF-SET 61~100까지의 고급 단어 수준의 레벨입니다.</div>,
   };
   const changePosArrow = (pos, e) => {
+    setActiveHoverlId(pos);
     if (e === "click") {
       setActvieLevelId(pos);
     }
     const rect = imgRef[pos].current.getBoundingClientRect();
     const conRect = containerRef.current.getBoundingClientRect();
     if (isMobile) {
-      console.log("오면 출력해랑");
-      console.log(conRect.top);
-      console.log(rect.top);
-      console.log(rect.height);
       setArrowPosMobile(`${conRect.top - rect.top - rect.height / 2}px`);
     } else {
       setArrowPos(`${rect.left - conRect.left + rect.width / 2}px`);
@@ -52,6 +51,7 @@ function BeforeLevelTest({ getLeveltestState }) {
   };
 
   useEffect(() => {
+    changePosArrow(myLevelId, "click");
     console.log("gpgp");
   }, []);
 
@@ -189,9 +189,12 @@ function BeforeLevelTest({ getLeveltestState }) {
           src={require("assets/circle-question.png")}
           alt="check"
         ></img>
-        {activeLevelId % 2 === 1
-          ? levelDesc[activeLevelId]
-          : levelDesc[activeLevelId + 1]}
+        {activeHoverlId === myLevelId && (
+          <span className="mylevel">[나의 레벨] &nbsp;</span>
+        )}
+        {activeHoverlId % 2 === 1
+          ? levelDesc[activeHoverlId]
+          : levelDesc[activeHoverlId + 1]}
       </div>
       <div className="start-leveltest-wrapper">
         <button className="start-leveltest" onClick={goLeveltest}>
