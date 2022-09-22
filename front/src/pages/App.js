@@ -9,7 +9,9 @@ import NewsList from "pages/NewsList";
 import Layout from "components/Layout";
 import Signup from "./Signup";
 import Mypage from "./Mypage";
-import Game from "./Game";
+import GameMenu from "./GameMenu";
+import CrossWord from "./CrossWord";
+import SpeedQuiz from "./SpeedQuiz";
 
 import LevelTest from "pages/LevelTest";
 
@@ -26,7 +28,9 @@ function App() {
           <Route path="/mypage" element={<Mypage />}></Route>
           <Route path="/nationsnews" element={<NationsNewsList />}></Route>
           <Route path="/news/list" element={<NewsList />}></Route>
-          <Route path="/game" element={<Game />}></Route>
+          <Route path="/game/menu" element={<GameMenu />}></Route>
+          <Route path="/game/crossword" element={<CrossWord />}></Route>
+          <Route path="/game/speedquiz" element={<SpeedQuiz />}></Route>
         </Routes>
       </Layout>
     </BrowserRouter>

@@ -1,10 +1,11 @@
 import { useEffect, useState, useCallback } from "react";
+import { useMediaQuery } from "react-responsive";
 
 import "./style.scss";
-import BackBtn from "../BackBtn";
+import BackBtn from "components/BackBtn";
 import Globe from "assets/user_globe.png";
 
-export default function CrossWordGame({ setStep }) {
+export default function CrossWord() {
   const [maxR, setMaxR] = useState(0);
   const [maxC, setMaxC] = useState(0);
   const [wordArr, setWordArr] = useState([
@@ -79,6 +80,9 @@ export default function CrossWordGame({ setStep }) {
       hint: "hinthinthinthintginthintgint",
     },
   ]);
+  const isMobile = useMediaQuery({
+    query: "(max-width:480px)",
+  });
 
   useEffect(() => {
     let curr = 0;
@@ -102,7 +106,7 @@ export default function CrossWordGame({ setStep }) {
 
     focusOutActive(false);
     highlightInput(word, dir);
-    highlightHint(word, dir);
+    highlightHint(word);
   }, []);
 
   const highlightInput = (word, dir) => {
@@ -122,9 +126,11 @@ export default function CrossWordGame({ setStep }) {
     );
   };
 
-  const highlightHint = (word, dir) => {
+  const highlightHint = (word) => {
     const hintCard = document.querySelector(`[data-hint=${word}]`);
-    hintCard.className += " active";
+    isMobile
+      ? (hintCard.style.display = "flex")
+      : (hintCard.className += " active");
   };
 
   const drawCrossword = () => {
@@ -237,7 +243,9 @@ export default function CrossWordGame({ setStep }) {
     });
 
     document.querySelectorAll(`[data-hint]`).forEach((el) => {
-      el.className = el.className.slice(0, 13);
+      isMobile
+        ? (el.style.display = "none")
+        : (el.className = el.className.slice(0, 13));
     });
   }, []);
 
@@ -245,14 +253,14 @@ export default function CrossWordGame({ setStep }) {
     (hint, dir) => {
       focusOutActive(false);
       highlightInput(hint, dir);
-      highlightHint(hint, dir);
+      highlightHint(hint);
     },
     [focusOutActive],
   );
 
   return (
     <div className="crossword-container">
-      <BackBtn setStep={setStep} />
+      <BackBtn />
       <section className="crossword-game-section">
         <h1 className="crossword-game-title">
           <b>CROSS</b>&nbsp;WORD&nbsp;

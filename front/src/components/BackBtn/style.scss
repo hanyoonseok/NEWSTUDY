@@ -13,4 +13,9 @@
     border-color: $dark-grey;
     border-radius: 2px;
   }
+
+  @media (max-width: 480px) {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 }
