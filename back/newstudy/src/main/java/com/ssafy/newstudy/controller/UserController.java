@@ -1,5 +1,6 @@
 package com.ssafy.newstudy.controller;
 
+import com.ssafy.newstudy.exception.ExistingEmailException;
 import com.ssafy.newstudy.model.dto.ImageDto;
 import com.ssafy.newstudy.model.dto.MailDto;
 import com.ssafy.newstudy.model.dto.UserDto;
@@ -56,8 +57,12 @@ public class UserController {
     @PostMapping("/mail")
     @ApiOperation(value ="인증 메일 발송")
     public ResponseEntity<?> mail(@RequestBody UserDto userDto){
-        //존재한다면 ExistingEmailException 예외 발생
-        userService.checkExistingEmail(userDto.getEmail());
+        try{
+            //존재한다면 ExistingEmailException 예외 발생
+            userService.checkExistingEmail(userDto.getEmail());
+        }catch (ExistingEmailException e){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
 
         MailDto mail = mailService.createMailAndChangePassword(userDto.getEmail());
         mailService.mailSend(mail);
