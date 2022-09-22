@@ -26,6 +26,7 @@ public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
 //    private final JwtTokenUtil jwtTokenUtil;
 //    private final RedisUtil redisUtil;
@@ -34,6 +35,7 @@ public class UserService {
 //    private String root;
 
     public void createUser(UserDto userDto){
+        userDto.setPw(passwordEncoder.encode(userDto.getPw()));
         userDao.insertUser(userDto);
     }
 

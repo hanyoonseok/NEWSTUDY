@@ -29,7 +29,7 @@ import java.io.IOException;
 @Api(value = "인증 API", tags = {"Auth."})
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -80,6 +80,7 @@ public class AuthController {
     }
 
     //api docs에 추가해야겠다.
+    //프론트에서 access token 확인한 뒤에 만료됐다면 다시 신청해줘야함.
     @GetMapping("/reissue")
     public ResponseEntity<?> reissue(@CookieValue(value="refresh-token", required = false) String refreshToken){
         JWToken jwt = authService.reissue(refreshToken);

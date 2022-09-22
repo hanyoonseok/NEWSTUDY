@@ -37,8 +37,10 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain)
 			throws ServletException, IOException {
 		// Read the Authorization header, where the JWT Token should be
+        //Authorization으로 등록된 해더 가져오기
         String header = req.getHeader(JwtTokenUtil.HEADER_STRING);
         // If header does not contain BEARER or is null delegate to Spring impl and exit
+        // 헤더가 없거나 "Bearer "로 시작하지 않으면 종료
         if (header == null || !header.startsWith(JwtTokenUtil.TOKEN_PREFIX)) {
             filterChain.doFilter(req, resp);
             return;

@@ -25,13 +25,12 @@ import java.io.InputStream;
 @Api(value = "유저 API", tags = {"User"})
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
     private final Response response;
     private final JwtTokenUtil jwtTokenUtil;
-    private final PasswordEncoder passwordEncoder;
 
 //    @Value("${spring.servlet.multipart.location}")
 //    private String root;
@@ -47,7 +46,6 @@ public class UserController {
     })
     public ResponseEntity<?> signup(
             @RequestBody @ApiParam(value="회원가입 정보", required = true) UserDto userDto) {
-        userDto.setPw(passwordEncoder.encode(userDto.getPw()));
         userService.createUser(userDto);
         return response.success("signup success");
     }
@@ -77,18 +75,18 @@ public class UserController {
      * 이 아래부터는 일단 가지고 있다가 필요할 때 올려서 사용할게요!
      */
 
-
-    @PostMapping("/image")
-    public ResponseEntity<?> addImage(@RequestPart MultipartFile file)throws IOException{
-
-        return response.success(ImageDto.builder().src(userService.saveImage(file)).build());
-    }
-    @GetMapping(value = "/image/{src}", produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_GIF_VALUE,MediaType.IMAGE_PNG_VALUE})
-    public byte[] getImage(@PathVariable String src) throws IOException {
-        String[] split = src.split("`");
-        InputStream in = new FileInputStream(System.getProperty("user.dir")+"/"+split[0]+"/"+split[1]);
-        byte[] bytes = IOUtils.toByteArray(in);
-        in.close();
-        return bytes;
-    }
+//
+//    @PostMapping("/image")
+//    public ResponseEntity<?> addImage(@RequestPart MultipartFile file)throws IOException{
+//
+//        return response.success(ImageDto.builder().src(userService.saveImage(file)).build());
+//    }
+//    @GetMapping(value = "/image/{src}", produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_GIF_VALUE,MediaType.IMAGE_PNG_VALUE})
+//    public byte[] getImage(@PathVariable String src) throws IOException {
+//        String[] split = src.split("`");
+//        InputStream in = new FileInputStream(System.getProperty("user.dir")+"/"+split[0]+"/"+split[1]);
+//        byte[] bytes = IOUtils.toByteArray(in);
+//        in.close();
+//        return bytes;
+//    }
 }

@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.newstudy.model.dao.UserDao">
 
     <insert id="insertUser" parameterType="userDto">
-        insert into user
+        insert into user (email, pw, level, nickname, src)
         values (#{email}, #{pw}, #{level}, #{nickname}, #{src})
     </insert>
 

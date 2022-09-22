@@ -56,11 +56,13 @@ public class AuthService {
     public JWToken reissue(String refreshToken) {
         String email = jwtTokenUtil.getEmailFromRefreshToken(refreshToken);
 
+        // email이 없을때
         if(email==null){
             //예외처리
             return null;
         }
 
+        // 해당 리프레시 토큰으로 이메일을 뽑아왔는데 뽑아온 이메일로 다시 리프레시 토큰을 가져와서 비교하면 당연히 같지. 왜 있는 코드일까?
         if(!refreshToken.equals(redisUtil.get(email))){
             //예외처리
             return null;

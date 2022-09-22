@@ -58,8 +58,12 @@ jwt:
 
 server:
   servlet:
-    context-path: /
+    context-path: /api
   encoding:
     charset: UTF-8
   port: 8080
 
+# mybatis setting
+mybatis:
+  type-aliases-package: com.ssafy.newstudy.model.dto
+  mapper-locations: classpath:/mappers/*Mapper.xml

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +20,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 /**
  * 인증(authentication) 와 인가(authorization) 처리를 위한 스프링 시큐리티 설정 정의.
@@ -55,7 +58,8 @@ public class SecurityConfig{
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer(){
         return (web) -> web.ignoring()
-                            .antMatchers("/",
+                            .antMatchers(
+                                    "/",
                                     "/swagger-ui/**",
                                     "/swagger-resources/**",
                                     "/v2/api-docs/**",
@@ -63,14 +67,13 @@ public class SecurityConfig{
                                     "/h2-console/**",
                                     "/favicon.com");
     }
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(authenticationProvider());
-
-        AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
         http
                 .httpBasic().disable()
@@ -88,15 +91,11 @@ public class SecurityConfig{
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 사용 하지않음
                 .and()
 
-                .addFilter(new JwtAuthenticationFilter(authenticationManager, userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
                 .authorizeRequests()
-                .antMatchers("/","/api/v1/auth/signin", "/api/v1/auth/oauth2/**","/api/v1/user", "/api/v1/user/image/**").permitAll()
+                .antMatchers("/","/auth/login","/user/signup").permitAll()
                 .anyRequest().authenticated()//인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
                 .and().cors();
-
-        // 원래 빌드해서 리턴해줘야하는데...
-        // 이미 두번 빌드하지말라는 에러가 뜨네.. 일단 null로 반환하면 해결되긴 하는데 좀 더 봐야겠다.
-//        return http.build();
-        return null;
+        return http.build();
     }
 }

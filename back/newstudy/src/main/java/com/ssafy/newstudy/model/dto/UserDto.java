@@ -2,6 +2,8 @@ package com.ssafy.newstudy.model.dto;
 
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Builder
@@ -15,5 +17,5 @@ public class UserDto {
     private int level;
     private String nickname;
     private String src;
-    private Set<Authority> authorities;
+    private List<Authority> authorities = new ArrayList<>();
 }
