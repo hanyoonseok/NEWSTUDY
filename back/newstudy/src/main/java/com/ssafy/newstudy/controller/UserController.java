@@ -1,5 +1,6 @@
 package com.ssafy.newstudy.controller;
 
+import com.ssafy.newstudy.exception.ExistingEmailException;
 import com.ssafy.newstudy.model.dto.ImageDto;
 import com.ssafy.newstudy.model.dto.MailDto;
 import com.ssafy.newstudy.model.dto.UserDto;
@@ -8,6 +9,7 @@ import com.ssafy.newstudy.model.service.MailService;
 import com.ssafy.newstudy.model.service.UserService;
 import com.ssafy.newstudy.util.JwtTokenUtil;
 import io.swagger.annotations.*;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
@@ -56,14 +58,32 @@ public class UserController {
     @PostMapping("/mail")
     @ApiOperation(value ="인증 메일 발송")
     public ResponseEntity<?> mail(@RequestBody UserDto userDto){
-        MailDto mail = mailService.createMailAndChangePassword(userDto.getEmail(), userDto.getNickname());
+        try{
+            //존재한다면 ExistingEmailException 예외 발생
+            userService.checkExistingEmail(userDto.getEmail());
+        }catch (ExistingEmailException e){
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+        }
+
+        MailDto mail = mailService.createMailAndChangePassword(userDto.getEmail());
         mailService.mailSend(mail);
-        return response.success(mail.getTmpPassword(), "메일 발송 성공", HttpStatus.OK);
+
+        class Mail{
+            String email;
+            String tempPassword;
+
+            Mail(String email, String tempPassword){
+                this.email = email;
+                this.tempPassword = tempPassword;
+            }
+        }
+
+        return response.success(new Mail(userDto.getEmail(), mail.getTmpPassword()), "메일 발송 성공", HttpStatus.OK);
     }
 
-    @PutMapping("/level")
+    @PutMapping("/level/{level}")
     @ApiOperation(value = "레벨 변경", notes = "레벨테스트 결과에 따라 레벨을 변경한다.")
-    public ResponseEntity<?> updateLevel(@RequestHeader("Authorization") String bearerToken, @RequestBody int level) {
+    public ResponseEntity<?> updateLevel(@RequestHeader("Authorization") String bearerToken, @PathVariable int level) {
         userService.updateLevel(jwtTokenUtil.getEmailFromBearerToken(bearerToken), level);
         return response.success("updateLevel success");
     }

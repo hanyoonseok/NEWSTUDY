@@ -1,5 +1,6 @@
 package com.ssafy.newstudy.model.service;
 
+import com.ssafy.newstudy.exception.ExistingEmailException;
 import com.ssafy.newstudy.model.dao.UserDao;
 import com.ssafy.newstudy.model.dto.UserDto;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,13 @@ public class UserService {
         UserDto userDto = userDao.selectUserByEmail(email);
         userDto.setLevel(level);
         userDao.updateUser(userDto);
+    }
+
+    public void checkExistingEmail(String email) throws ExistingEmailException{
+        UserDto userDto = userDao.selectUserByEmail(email);
+        if(userDto != null){
+            throw new ExistingEmailException();
+        }
     }
 
 //    public User getUserById(Long id) {
