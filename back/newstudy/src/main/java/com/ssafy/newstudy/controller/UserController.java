@@ -1,8 +1,10 @@
 package com.ssafy.newstudy.controller;
 
 import com.ssafy.newstudy.model.dto.ImageDto;
+import com.ssafy.newstudy.model.dto.MailDto;
 import com.ssafy.newstudy.model.dto.UserDto;
 import com.ssafy.newstudy.model.response.Response;
+import com.ssafy.newstudy.model.service.MailService;
 import com.ssafy.newstudy.model.service.UserService;
 import com.ssafy.newstudy.util.JwtTokenUtil;
 import io.swagger.annotations.*;
@@ -29,6 +31,7 @@ import java.io.InputStream;
 public class UserController {
 
     private final UserService userService;
+    private final MailService mailService;
     private final Response response;
     private final JwtTokenUtil jwtTokenUtil;
 
@@ -48,6 +51,14 @@ public class UserController {
             @RequestBody @ApiParam(value="회원가입 정보", required = true) UserDto userDto) {
         userService.createUser(userDto);
         return response.success("signup success");
+    }
+
+    @PostMapping("/mail")
+    @ApiOperation(value ="인증 메일 발송")
+    public ResponseEntity<?> mail(@RequestBody UserDto userDto){
+        MailDto mail = mailService.createMailAndChangePassword(userDto.getEmail(), userDto.getNickname());
+        mailService.mailSend(mail);
+        return response.success(mail.getTmpPassword(), "메일 발송 성공", HttpStatus.OK);
     }
 
     @PutMapping("/level")

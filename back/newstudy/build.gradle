@@ -44,6 +44,10 @@ dependencies {
 
 	implementation("com.google.guava:guava:29.0-jre")
 	annotationProcessor("com.google.guava:guava:29.0-jre")
+
+	// https://mvnrepository.com/artifact/javax.mail/mail
+	implementation 'javax.mail:mail:1.4'
+
 }
 
 tasks.named('test') {

@@ -93,7 +93,7 @@ public class SecurityConfig{
 
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
                 .authorizeRequests()
-                .antMatchers("/","/auth/login","/user/signup").permitAll()
+                .antMatchers("/","/auth/login","/user/signup","/user/mail").permitAll()
                 .anyRequest().authenticated()//인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
                 .and().cors();
         return http.build();
