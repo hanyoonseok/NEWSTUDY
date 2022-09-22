@@ -25,12 +25,6 @@ export default function Signup() {
   const [Nickname, setNickname] = useState("");
 
   const onEmailHandler = (e) => {
-    console.log(e.currentTarget.value);
-    // 이메일 중복검사 api 받아오고 난 후
-    // 여기서 넘어오는 key를 receiveAuthKey에 저장
-    if (true) {
-      setIsDuplicateEmail(true);
-    }
     setEmail(e.currentTarget.value);
   };
   const onAuthKeyHandler = (e) => {
@@ -64,16 +58,13 @@ export default function Signup() {
     setNickname(e.currentTarget.value);
   };
 
-  const vaildEmailCheck = (obj) => {
-    var pattern =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    return pattern.test(obj);
-  };
-
-  const onAuthEmail = () => {
-    if (!vaildEmailCheck(Email)) {
-      alert("올바른 이메일 주소를 입력해주세요.");
+  const onClickAuthEmail = () => {
+    // 중복검사 했는데 중복 이메일일 경우
+    if (true) {
+      setIsDuplicateEmail(false);
     } else {
+      setIsDuplicateEmail(true); // 여기서 넘어오는 key를 receiveAuthKey에 저장
+      // 중복 이메일도 아님
       dispatch(
         authEmail({
           email: Email,
@@ -93,6 +84,7 @@ export default function Signup() {
         pw: Password,
         nickname: Nickname,
       };
+      //회원가입 성공하면 레벨테스트로 보내야함
     }
   };
 
@@ -107,6 +99,7 @@ export default function Signup() {
             placeholder="이메일을 입력하세요."
             value={Email}
             onChange={onEmailHandler}
+            required
           />
         </div>
         <div className="input-div">
@@ -116,6 +109,7 @@ export default function Signup() {
             placeholder="비밀번호를 입력하세요."
             value={Password}
             onChange={onPasswordHandler}
+            required
           />
         </div>
         <button className="login-btn">로그인</button>
@@ -132,9 +126,10 @@ export default function Signup() {
               placeholder="이메일을 입력하세요."
               value={Email}
               onChange={onEmailHandler}
+              required
             />
           </div>
-          <button onClick={onAuthEmail}>인증</button>
+          <button onClick={onClickAuthEmail}>인증</button>
         </div>
         {isDuplicateEmail ? (
           <p className="error">
@@ -152,6 +147,7 @@ export default function Signup() {
             value={AuthKey}
             onChange={onAuthKeyHandler}
             onKeyUp={onAuthKeyUp}
+            required
           />
         </div>
         {!isAuthKey ? (
@@ -169,6 +165,7 @@ export default function Signup() {
             placeholder="비밀번호를 입력하세요."
             value={Password}
             onChange={onPasswordHandler}
+            required
           />
         </div>
         <div className="input-div">
@@ -179,6 +176,7 @@ export default function Signup() {
             value={ConfirmPw}
             onChange={onConfirmPwHandler}
             onKeyUp={onConfirmPwKeyup}
+            required
           />
         </div>
         {!isConfirmed ? (
@@ -196,6 +194,7 @@ export default function Signup() {
             placeholder="닉네임을 입력하세요."
             value={Nickname}
             onChange={onNicknameHandler}
+            required
           />
         </div>
         <button type="submit" className="signup-btn">
