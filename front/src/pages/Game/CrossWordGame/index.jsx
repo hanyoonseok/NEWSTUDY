@@ -69,7 +69,6 @@ export default function CrossWordGame({ setStep }) {
       name: "puzzle",
     },
   ]);
-  let mapInfo;
 
   useEffect(() => {
     let curr = 0;
@@ -84,72 +83,136 @@ export default function CrossWordGame({ setStep }) {
 
     setMaxR(curr);
     setMaxC(curc);
-    const mapArray = new Array(curr);
-    for (let i = 0; i < curr; i++) mapArray[i] = new Array(curc);
-    mapInfo = mapArray;
   }, [maxC, maxR, wordArr]);
 
-  const typeWord = useCallback((e, r, c) => {
-    const value = e.target.value;
-    if (mapInfo[r][c] === value) return;
-    mapInfo[r][c] = value;
-    if (mapInfo[r][c]) e.target.style.zIndex = 5;
-    console.log(mapInfo);
+  const onInputFocus = useCallback((e) => {
+    const words = e.target.dataset.word.split(" ");
+    const word = words.length > 1 ? words[1] : words[0];
+    const dir = e.target.dataset.dir;
+    const resultArr = [];
+    const inputArr = document.querySelectorAll(`[data-word]`);
+
+    inputArr.forEach((el) => {
+      el.className = "crossword-input";
+      if (el.dataset.word === word) resultArr.push(el);
+      else if (el.dataset.word.indexOf(word) >= 0) resultArr.push(el);
+    });
+
+    console.log(resultArr);
+
+    resultArr.forEach((el) =>
+      dir === "1" ? (el.className += " across") : (el.className += " down"),
+    );
   }, []);
 
   const drawCrossword = () => {
     const result = [];
 
-    const addSpace = (i) => {
-      const word = [];
+    const makeCol = (
+      row,
+      activePos,
+      activeDirPos,
+      dotPos,
+      dotDirPos,
+      wordPos,
+    ) => {
+      const columns = [];
 
-      for (let j = 0; j < wordArr[i].name.length; j++) {
-        word.push(
-          <div className="crossword-one-space" key={`${i} ${j}`}>
-            <input
-              type="text"
-              className="hidden-input"
-              onChange={(e) =>
-                typeWord(
-                  e,
-                  wordArr[i].d === 1 ? wordArr[i].r : wordArr[i].r + j,
-                  wordArr[i].d === 1 ? wordArr[i].c + j : wordArr[i].c,
-                )
-              }
-              maxLength="1"
-            />
+      for (let i = 0; i < maxC; i++) {
+        const dotArr = [];
+        const isIncluded = activePos.includes(i);
+
+        for (let j = 0; j < dotPos.length; j++)
+          if (dotPos[j] === i) dotArr.push(j);
+
+        columns.push(
+          <div
+            className={"crossword-col"}
+            key={i}
+            onClick={() => focusOutActive(isIncluded)}
+          >
+            {isIncluded && (
+              <input
+                type="text"
+                className="crossword-input"
+                maxLength={1}
+                data-row={row}
+                data-col={i}
+                data-dir={activeDirPos[i]}
+                data-word={wordPos[i]}
+                onFocus={onInputFocus}
+              />
+            )}
+            {dotArr.map((e, j) =>
+              dotDirPos[e] > 0 ? (
+                <i className="hint-dot across" key={j}></i>
+              ) : (
+                <i className="hint-dot down" key={j}></i>
+              ),
+            )}
           </div>,
         );
       }
-
-      return word;
+      return columns;
     };
 
-    for (let i = 0; i < wordArr.length; i++) {
-      const top = `${wordArr[i].r * 36}px`;
-      const left = `${wordArr[i].c * 36}px`;
+    for (let i = 0; i < maxR; i++) {
+      const activePos = [];
+      const activeDirPos = new Array(maxC);
+      const dotPos = [];
+      const dotDirPos = [];
+      const wordPos = {};
 
+      for (let j = 0; j < maxC; j++) activeDirPos[j] = 0;
+
+      wordArr.forEach((e) => {
+        if (e.d === 1) {
+          if (e.r === i) {
+            for (let j = 0; j < e.name.length; j++) {
+              if (j === 0) {
+                dotPos.push(e.c);
+                dotDirPos.push(1);
+              }
+              activePos.push(e.c + j);
+              if (wordPos[e.c + j]) wordPos[e.c + j] += ` ${e.name}`;
+              else wordPos[e.c + j] = e.name;
+
+              activeDirPos[e.c + j] = 1;
+            }
+          }
+        } else {
+          if (i >= e.r && i < e.r + e.name.length) {
+            if (i === e.r) {
+              dotPos.push(e.c);
+              dotDirPos.push(-1);
+            }
+            activePos.push(e.c);
+
+            if (wordPos[e.c]) wordPos[e.c] += ` ${e.name}`;
+            else wordPos[e.c] = e.name;
+
+            activeDirPos[e.c] = -1;
+          }
+        }
+      });
       result.push(
-        <div
-          className="crossword-one-word"
-          key={i}
-          style={{ top: top, left: left }}
-        >
-          <div
-            className={`relative-area  ${
-              wordArr[i].d === 1 ? "across" : "down"
-            }`}
-          >
-            <i
-              className={`hint-dot ${wordArr[i].d === 1 ? "across" : "down"}`}
-            ></i>
-            {addSpace(i)}
-          </div>
+        <div className="crossword-row" key={i}>
+          {makeCol(i, activePos, activeDirPos, dotPos, dotDirPos, wordPos)}
         </div>,
       );
     }
+
+    if (!result || result.length === 0) return;
+
     return result;
   };
+
+  const focusOutActive = useCallback((isIncluded) => {
+    if (isIncluded) return;
+    document.querySelectorAll(`[data-word]`).forEach((el) => {
+      el.className = "crossword-input";
+    });
+  }, []);
 
   return (
     <div className="crossword-container">

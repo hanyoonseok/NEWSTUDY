@@ -29,91 +29,136 @@
     .crossword-game-field {
       width: 100%;
       height: 100%;
-      position: relative;
+      @include FLEX-CENTER;
+      flex-direction: column;
 
-      //   display: grid;
-      //   justify-content: center;
-      //   align-items: center;
-      //   grid-column-gap: 4px;
-      //   grid-row-gap: 4px;
-
-      .crossword-one-word {
-        position: absolute;
-        cursor: pointer;
-
-        .relative-area {
+      .crossword-row {
+        display: flex;
+        .crossword-col {
+          width: rem(36);
+          height: rem(36);
+          background-color: transparent;
+          margin: 1px;
           position: relative;
-          display: flex;
 
-          &.across {
-            flex-direction: row;
+          .crossword-input {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+            background-color: #fff;
+            text-align: center;
+            filter: $drop-shadow;
+            font-family: $eng-title-font;
+            font-size: rem(18);
+            font-weight: bold;
+            color: #000;
+            transition: 0.2s ease;
 
-            &:hover {
-              .crossword-one-space {
-                background-color: $light-grey;
-                z-index: 3;
-              }
+            &.across {
+              background-color: $soft-grey;
             }
-          }
-          &.down {
-            flex-direction: column;
-
-            &:hover {
-              .crossword-one-space {
-                background-color: $light-blue;
-                z-index: 3;
-              }
+            &.down {
+              background-color: $soft-blue;
             }
           }
 
           .hint-dot {
             position: absolute;
             top: 4px;
-            left: 4px;
             width: 10px;
             height: 10px;
             border-radius: 10px;
             z-index: 2;
 
             &.across {
-              background-color: #000;
+              left: 4px;
+              background-color: $grey;
             }
             &.down {
+              right: 4px;
               background-color: $blue;
             }
           }
         }
-
-        .hidden-input {
-          text-align: center;
-          font-family: $eng-title-font;
-          font-size: rem(20);
-          font-weight: bold;
-          color: #000;
-          background-color: transparent;
-          border: none;
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          cursor: pointer;
-          z-index: 4;
-
-          &.active {
-            z-index: 5;
-          }
-        }
       }
-      .crossword-one-space {
-        transition: 0.3s ease;
-        width: rem(36);
-        height: rem(36);
-        border-radius: 10px;
-        filter: $drop-shadow;
-        background-color: #fff;
-        z-index: 1;
-      }
+      // .crossword-one-word {
+      //   position: absolute;
+      //   cursor: pointer;
+
+      //   .relative-area {
+      //     position: relative;
+      //     display: flex;
+
+      //     &.across {
+      //       flex-direction: row;
+
+      //       &:hover {
+      //         .crossword-one-space {
+      //           background-color: $light-grey;
+      //           z-index: 3;
+      //         }
+      //       }
+      //     }
+      //     &.down {
+      //       flex-direction: column;
+
+      //       &:hover {
+      //         .crossword-one-space {
+      //           background-color: $light-blue;
+      //           z-index: 3;
+      //         }
+      //       }
+      //     }
+
+      //     .hint-dot {
+      //       position: absolute;
+      //       top: 4px;
+      //       left: 4px;
+      //       width: 10px;
+      //       height: 10px;
+      //       border-radius: 10px;
+      //       z-index: 2;
+
+      //       &.across {
+      //         background-color: #000;
+      //       }
+      //       &.down {
+      //         background-color: $blue;
+      //       }
+      //     }
+      //   }
+
+      //   .hidden-input {
+      //     text-align: center;
+      //     font-family: $eng-title-font;
+      //     font-size: rem(20);
+      //     font-weight: bold;
+      //     color: #000;
+      //     background-color: transparent;
+      //     border: none;
+      //     position: absolute;
+      //     top: 0;
+      //     left: 0;
+      //     width: 100%;
+      //     height: 100%;
+      //     cursor: pointer;
+      //     z-index: 4;
+
+      //     &.active {
+      //       z-index: 5;
+      //     }
+      //   }
+      // }
+      // .crossword-one-space {
+      //   transition: 0.3s ease;
+      //   width: rem(36);
+      //   height: rem(36);
+      //   border-radius: 10px;
+      //   filter: $drop-shadow;
+      //   background-color: #fff;
+      //   z-index: 1;
+      // }
     }
   }
 
