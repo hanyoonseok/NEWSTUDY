@@ -25,7 +25,7 @@ import Word from "components/Word";
 const user = {
   name: "김싸피",
   email: "kimssafy@ssafy.com",
-  level: "C2",
+  level: "A1",
 };
 
 export default function Mypage() {

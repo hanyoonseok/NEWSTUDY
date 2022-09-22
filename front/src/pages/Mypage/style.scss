@@ -29,7 +29,7 @@
           position: absolute;
           left: 80px;
           top: 20px;
-          width: rem(50);
+          width: rem(60);
           height: rem(65);
           z-index: 10;
 
@@ -241,8 +241,8 @@
 
           span {
             position: absolute;
-            left: 10px;
-            top: 10px;
+            left: 17px;
+            top: 15px;
             width: 21px;
             height: 21px;
             background-color: $dark-grey;
@@ -278,8 +278,8 @@
       .voca-box {
         .voca {
           .memorize {
-            width: 22px;
-            height: 22px;
+            width: rem(22);
+            height: rem(22);
             margin-right: 2%;
             cursor: pointer;
           }
@@ -394,7 +394,7 @@
           height: 130px;
 
           .level-box {
-            width: rem(34);
+            width: rem(45);
             height: rem(45);
             left: 120px;
             top: 30px;
@@ -499,8 +499,8 @@
             }
 
             .img-box {
-              width: 170px;
-              height: 103px;
+              width: 150px;
+              height: 95px;
             }
 
             p {
@@ -508,12 +508,17 @@
               font-size: rem(20);
               -webkit-line-clamp: 4;
             }
+
+            span {
+              left: 20px;
+              top: 9px;
+            }
           }
         }
 
         .voca-box {
           width: 100%;
-          > div {
+          .voca {
             > div {
               padding: 4% 2%;
             }
@@ -527,6 +532,10 @@
               .tag {
                 padding: 2% 2.5%;
               }
+            }
+
+            .memorize {
+              padding: 1%;
             }
           }
         }
