@@ -9,6 +9,7 @@ import com.ssafy.newstudy.model.service.MailService;
 import com.ssafy.newstudy.model.service.UserService;
 import com.ssafy.newstudy.util.JwtTokenUtil;
 import io.swagger.annotations.*;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
@@ -66,7 +67,18 @@ public class UserController {
 
         MailDto mail = mailService.createMailAndChangePassword(userDto.getEmail());
         mailService.mailSend(mail);
-        return response.success(mail.getTmpPassword(), "메일 발송 성공", HttpStatus.OK);
+
+        class Mail{
+            String email;
+            String tempPassword;
+
+            Mail(String email, String tempPassword){
+                this.email = email;
+                this.tempPassword = tempPassword;
+            }
+        }
+
+        return response.success(new Mail(userDto.getEmail(), mail.getTmpPassword()), "메일 발송 성공", HttpStatus.OK);
     }
 
     @PutMapping("/level/{level}")
