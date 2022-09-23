@@ -155,7 +155,7 @@ public class JwtTokenUtil {
                 .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
                 .sign(Algorithm.HMAC512(secretKey.getBytes()));
 
-        redisUtil.set(auth.getName(), refreshToken, refreshExpires);
+//        redisUtil.set(auth.getName(), refreshToken, refreshExpires);
 
         return JWToken.builder()
                 .accessToken(accessToken)
