@@ -1,25 +1,32 @@
 package com.ssafy.newstudy.model.service;
 
 import com.ssafy.newstudy.model.dao.BadgeDao;
-import com.ssafy.newstudy.model.dto.BadgeRequest;
-import com.ssafy.newstudy.model.dto.BadgeResponse;
-import com.ssafy.newstudy.model.dto.UserTmp;
+import com.ssafy.newstudy.model.dto.BadgeRequestDto;
+import com.ssafy.newstudy.model.dto.BadgeResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BadgeServiceImpl implements BadgeService{
+public class BadgeService{
     private final BadgeDao badgeDao;
 
-    @Override
-    public List<BadgeResponse> getBadge(UserTmp user) {
-        return badgeDao.getBadge(user.getU_id());
+    /**
+     * 유저를 받아서 해당 유저의 배지 리스트를 돌려줌
+     * @param u_id
+     * @return 유저의 배지 리스트
+     */
+    public List<BadgeResponseDto> getBadge(Integer u_id) {
+        return badgeDao.selectBadgeList(u_id);
     }
 
-    @Override
-    public int addBadge(BadgeRequest badge) {
-        return badgeDao.addBadge(badge);
+    /**
+     * 유저와 배지 넘버를 받아서 user-badge에 저장함
+     * @param badge
+     * @return성공 row 수
+     */
+    public int addBadge(BadgeRequestDto badge) {
+        return badgeDao.insertBadge(badge);
     }
 }

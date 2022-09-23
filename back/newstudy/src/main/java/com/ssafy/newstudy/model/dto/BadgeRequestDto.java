@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BadgeRequest {
+public class BadgeRequestDto {
     private Integer u_id;
     private Integer b_id;
 }
