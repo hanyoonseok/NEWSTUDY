@@ -1,5 +1,6 @@
 import "./style.scss";
 import Dailyword from "assets/dailyword.jpg";
+import React from "react";
 
 export default function Page3() {
   return (
