@@ -1,0 +1,337 @@
+@import "variables.scss";
+
+.landing-wrapper {
+  height: 100%;
+  width: 100%;
+  padding: 60px 3% 70px 80px;
+  overflow: hidden;
+  @media (max-width: 480px) {
+    padding: 65px 20px;
+  }
+
+  .landing-header {
+    border-bottom: 1px solid $soft-grey;
+    font-family: $eng-font;
+    padding: 10px;
+    .logo-img {
+      @include FLEX-CENTER;
+      > img {
+        width: 25%;
+        height: auto;
+      }
+    }
+  }
+  section {
+    @include FLEX-COLUMN;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 7%;
+    .section {
+      width: 100%;
+      margin-bottom: 3%;
+      .section-title {
+        font-family: $eng-title-font;
+        padding: 3vh;
+        margin-top: 5vh;
+        @include FLEX-CENTER;
+        @media (max-width: 480px) {
+          padding: 2% 0;
+          margin-top: 2%;
+          font-size: 2rem;
+          @include FLEX-CENTER;
+        }
+      }
+      .section-desc {
+        font-size: 1rem;
+        font-family: $kor-font;
+        color: $grey;
+        @include FLEX-CENTER;
+        .check-img {
+          margin-left: 5px;
+          width: 1rem;
+          height: 1rem;
+        }
+      }
+      @media (max-width: 480px) {
+        margin-bottom: 10%;
+      }
+    }
+  }
+  .userfit-articles {
+    margin: 17%;
+    @media (max-width: 480px) {
+    }
+    .carousel {
+      position: relative;
+      @include FLEX-CENTER;
+      perspective: 90vw;
+      transform-style: preserve-3d;
+      @media (max-width: 480px) {
+        height: 20vh;
+      }
+    }
+
+    .card-container {
+      position: absolute;
+      transform: rotateY(calc(var(--offset) * 50deg))
+        scaleY(calc(1 + var(--abs-offset) * -0.4))
+        translateZ(calc(var(--abs-offset) * -30rem))
+        translateX(calc(var(--direction) * -5rem));
+      filter: blur(calc(var(--abs-offset) * 0.7rem));
+      transition: all 0.3s ease-out;
+      @media (max-width: 480px) {
+        transform: rotateX(calc(var(--offset) * 30deg))
+          scaleY(calc(1 + var(--abs-offset) * -0.4))
+          translateZ(calc(var(--abs-offset) * -20rem))
+          translateY(calc(var(--direction) * -10rem));
+        filter: blur(calc(var(--abs-offset) * 0.9rem));
+        transition: all 0.3s ease-out;
+      }
+    }
+
+    .nav {
+      color: rgba($color: $white, $alpha: 0.7);
+      font-size: 3rem;
+      position: absolute;
+      @include FLEX-CENTER;
+      z-index: 2;
+      cursor: pointer;
+      user-select: none;
+      background: unset;
+      border: unset;
+      transition: all 200ms ease;
+
+      &.left {
+        transform: translateX(-25vw) translateY(0);
+        filter: $drop-shadow;
+        &:hover {
+          color: $white;
+        }
+        @media (max-width: 480px) {
+          transform: translateX(0) translateY(-28vw) rotate(90deg);
+        }
+      }
+
+      &.right {
+        filter: $drop-shadow;
+        right: 0;
+        transform: translateX(25vw) translateY(-0%);
+        @media (max-width: 480px) {
+          transform: translateX(50%) translateY(28vw) rotate(90deg);
+        }
+        &:hover {
+          color: $white;
+        }
+      }
+    }
+  }
+  .userfit-order {
+    background-color: rgba($color: $dark-grey, $alpha: 0.8);
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 0.7rem;
+  }
+
+  // 핫토픽
+  .hottopic {
+    .hottopic-articles {
+      @include FLEX-CENTER;
+      align-items: flex-start;
+      @media (max-width: 1000px) {
+        @include FLEX-COLUMN;
+      }
+      .hottopic-left {
+        width: 35vw;
+        transition: all 300ms ease;
+        @media (max-width: 1000px) {
+          width: 100%;
+        }
+        &:hover {
+          transform: scale(1.02);
+          filter: $drop-shadow;
+        }
+        .hottopic-img {
+          position: relative;
+          padding: 0.5vw;
+          cursor: pointer;
+          @include FLEX-CENTER;
+          > img {
+            width: 34vw;
+            height: 22vw;
+            overflow: hidden;
+            border-radius: 20px;
+            @media (max-width: 1000px) {
+              width: 85%;
+              height: 35vw;
+            }
+            @media (max-width: 480px) {
+              width: 100%;
+              height: 47vw;
+            }
+          }
+          .article-level {
+            position: absolute;
+            width: 2rem;
+            height: 2rem;
+            font-size: 1.3rem;
+            @media (max-width: 1000px) {
+              left: 15%;
+            }
+            @media (max-width: 480px) {
+              left: 5%;
+            }
+          }
+        }
+        .hottopic-title {
+          @include TEXT-OVERFLOW;
+          cursor: pointer;
+          @media (max-width: 1000px) {
+            text-align: center;
+            margin: 10px;
+          }
+          @media (max-width: 480px) {
+            -webkit-line-clamp: 1;
+            font-size: 1.5rem;
+          }
+        }
+        .article-category {
+          float: right;
+        }
+      }
+      .hottopic-right {
+        margin-left: 2.5vw;
+        @media (max-width: 480px) {
+          margin-top: 2%;
+        }
+      }
+    }
+  }
+
+  // 데일리 키워드
+  .daily-keyword {
+    .daily-wrapper {
+      @include FLEX-CENTER;
+      justify-content: flex-start;
+      @media (max-width: 480px) {
+        @include FLEX-COLUMN;
+        width: 100%;
+      }
+      .daily-left {
+        @media (max-width: 480px) {
+          width: 90%;
+        }
+        .key-ranking {
+          @include FLEX-CENTER;
+          transition: all 300ms ease;
+          margin: 3% 0;
+          padding: 0 1em;
+          &:hover {
+            transform: scale(1.05);
+            background-color: white;
+            border-radius: 30px;
+            filter: $drop-shadow;
+            .rank-content {
+              font-weight: bold;
+            }
+          }
+          @media (max-width: 480px) {
+            width: 100%;
+            padding: 0;
+          }
+          .rank {
+            @include FLEX-CENTER;
+            width: 2em;
+            height: 2em;
+            color: $white;
+            border-radius: 100%;
+            background-color: $blue;
+            font-size: 1rem;
+            font-weight: bold;
+          }
+          .rank-content {
+            font-family: $eng-font;
+            font-size: 1.3rem;
+            width: 20vw;
+            @include FLEX-BETWEEN;
+            padding: 10px 1.5vw;
+            @media (max-width: 480px) {
+              width: 70%;
+              font-size: 1.4rem;
+              padding: 2%;
+            }
+            .rank-change {
+              color: $soft-grey;
+            }
+          }
+        }
+      }
+      .daily-right {
+        margin-left: 3%;
+        @media (max-width: 480px) {
+          width: 100%;
+          margin-top: 5%;
+        }
+        .wordcloud-wrapper {
+          @include FLEX-COLUMN;
+          .wordcloud-nav {
+            @include FLEX-AROUND;
+            width: 50vw;
+            @media (max-width: 480px) {
+              width: 100%;
+            }
+
+            .word-category {
+              background-color: $lightx2-blue;
+              width: 100%;
+              margin: 0 1%;
+              padding: 1%;
+              font-weight: bold;
+              @include FLEX-CENTER;
+              border-radius: 10px 10px 0 0;
+              transition: all 300ms ease;
+              @media (max-width: 480px) {
+                font-size: 1.6rem;
+              }
+              &:hover {
+                background-color: $soft-blue;
+              }
+              .category-name {
+                @media (max-width: 1000px) {
+                  display: none;
+                }
+              }
+            }
+            .active.word-category {
+              background-color: $light-blue;
+            }
+          }
+          .wordcloud {
+            width: 50vw;
+            height: 400px;
+            background-color: white;
+            border-radius: 30px;
+            @media (max-width: 480px) {
+              width: 100%;
+              height: 350px;
+              border-radius: 20px;
+            }
+
+            > div {
+              @include FLEX-CENTER;
+
+              > g {
+                width: 100%;
+                height: 100%;
+              }
+
+              svg > g > text:focus {
+                outline: none;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

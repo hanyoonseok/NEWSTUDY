@@ -1,0 +1,62 @@
+@import "variables.scss";
+
+.page-div {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  @include FLEX-CENTER;
+  flex-direction: column;
+
+  @media (max-width: 480px) {
+    justify-content: initial;
+  }
+
+  .background-div {
+    @include BACKGROUND-IMAGE("assets/onboarding-background.jpg");
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .title-img {
+    width: 50%;
+    height: auto;
+    z-index: 101;
+
+    @media (max-width: 480px) {
+      width: 90%;
+      margin-top: 160px;
+    }
+  }
+
+  .subtitle-h3 {
+    font-family: $kor-light-font;
+    color: $default-grey;
+    width: 100%;
+    @include FLEX-CENTER;
+    z-index: 10;
+
+    @media (max-width: 480px) {
+      display: none;
+    }
+  }
+
+  .subdescription-h4 {
+    font-size: rem(22);
+    color: $default-grey;
+    font-family: $kor-light-font;
+    width: 100%;
+    z-index: 101;
+    @include FLEX-CENTER;
+    b {
+      color: #7da0ff;
+      font-family: $kor-title-font;
+    }
+    &:last-child {
+      margin-bottom: 10%;
+    }
+    @media (max-width: 480px) {
+      flex-direction: column;
+    }
+  }
+}

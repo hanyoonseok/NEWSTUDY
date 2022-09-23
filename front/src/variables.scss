@@ -1,0 +1,119 @@
+$blue: #6d84ff;
+$soft-blue: #96b2ff;
+$light-blue: #bbcbfa;
+$lightx2-blue: #f6faff;
+
+$green: #88c848;
+$soft-green: #a9dd75;
+$light-green: #dbfeb7;
+
+$dark-grey: #3f414b;
+$grey: #85899f;
+$soft-grey: #cccedb;
+$light-grey: #e8e9ef;
+$default-grey: #3f414b;
+$white: #fbfbfb;
+
+$Alv: #a9dd75;
+$Blv: #96b2ff;
+$Clv: #debbff;
+
+$kor-title-font: "S-CoreDream-5Medium"; //한글 큰 제목(거의 온보딩)
+$kor-light-font: "S-CoreDream-1Thin"; //한글 큰 제목중에서 얇은거
+$kor-font: "AppleSDGothicNeoM"; // 한글 디폴트 (제목 제외)
+
+$eng-title-font: "Montserrat"; //영어 큰 제목
+$eng-font: "Helvetica"; //영어 본문
+$eng-fontB: "HelveticaB"; //영어 본문
+
+// 그림자
+$shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+$light-shadow: 0 4px 4px rgba(63, 65, 75, 0.1);
+$drop-shadow-light: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.05));
+$drop-shadow: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.1));
+$drop-shadow-dark: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3));
+
+@function rem($px) {
+  @return #{$px/16}rem;
+}
+
+@mixin FLEX-CENTER() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin FLEX-AROUND() {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@mixin FLEX-COLUMN() {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin FLEX-BETWEEN() {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin FLEX-ALIGN-CENTER() {
+  display: flex;
+  align-items: center;
+}
+
+@mixin STRETCH() {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin BTN-COLOR($bgcolor) {
+  background-color: $bgcolor;
+  transition: 0.5s ease;
+  &:hover {
+    background-color: darken($bgcolor, 10%);
+  }
+}
+
+@mixin BACKGROUND-IMAGE($url) {
+  background-image: url($url);
+  background-size: cover;
+  background-repeat: no-repeat;
+  @include STRETCH;
+}
+
+@mixin MAIN-BTN($light) {
+  @if ($light) {
+    background-color: $light-blue;
+  } @else {
+    background-color: $soft-grey;
+  }
+  padding: 4px 30px;
+  transition: 0.3s ease;
+  @include FLEX-CENTER();
+}
+
+@mixin ELLIPSIS() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin ELLIPSIS-LINE($line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line; //라인수 정함
+}
+
+@mixin TEXT-OVERFLOW() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

@@ -1,0 +1,124 @@
+@import "variables.scss";
+
+.sidebar-nav {
+  min-width: 65px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  a {
+    color: #ffffff;
+  }
+
+  background-color: $dark-grey;
+  transition: all 300ms ease;
+  display: flex;
+  z-index: 100;
+  @media (max-width: 480px) {
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+  }
+  .sidebar-contents {
+    height: 100%;
+    width: 65px;
+    position: relative;
+
+    @media (max-width: 480px) {
+      justify-content: center;
+      width: 100%;
+      padding: 0 20px;
+      height: 60px;
+      @include FLEX-BETWEEN;
+    }
+    .sidebar-content {
+      z-index: 10;
+      height: 100%;
+      color: white;
+      font-size: 1.4rem;
+      @include FLEX-BETWEEN;
+      flex-direction: column;
+    }
+    .nav-btn {
+      color: white;
+      font-size: 2rem;
+    }
+    .logo-img {
+      > img {
+        width: 125px;
+      }
+    }
+    .sidebar {
+      align-items: center;
+      padding: 40px 0;
+      > div {
+        width: 100%;
+      }
+
+      .nav-content {
+        height: 50px;
+        color: white;
+        @include FLEX-CENTER;
+        @media (max-width: 480px) {
+          width: 100%;
+          font-size: 1.5rem;
+          @include FLEX-BETWEEN;
+          padding: 30px 40px;
+          > i {
+            font-size: 2rem;
+          }
+        }
+        > img {
+          margin: 0 auto;
+          margin-bottom: 50px;
+        }
+      }
+    }
+  }
+}
+
+.sidebar-div {
+  width: 250px;
+  height: 100vh;
+  transition: 0.5s ease;
+  z-index: 8;
+  background-color: $dark-grey;
+  position: absolute;
+  top: 0;
+  left: -185px;
+  opacity: 0;
+  padding: 0;
+
+  @include FLEX-BETWEEN;
+  flex-direction: column;
+  @media (max-width: 480px) {
+    left: -320px;
+    width: 320px;
+    opacity: 0;
+  }
+  .nav-desc {
+    width: 250px;
+    transition: all 300ms ease;
+    cursor: pointer;
+    @media (max-width: 480px) {
+      width: 320px;
+      font-size: 1.5rem;
+    }
+    > img {
+      width: 180px;
+    }
+    &:hover {
+      background-color: rgba($color: #ffffff, $alpha: 0.2);
+      font-weight: bold;
+    }
+  }
+}
+
+.screen-wrapper {
+  width: 100%;
+  position: fixed;
+  height: 100%;
+  background-color: rgba($color: #252525, $alpha: 0.4);
+  z-index: 2;
+}

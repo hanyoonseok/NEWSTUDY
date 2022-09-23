@@ -1,0 +1,84 @@
+@import "variables.scss";
+
+.main-wrapper {
+  overflow-y: hidden;
+  height: 100vh;
+
+  .login-btn {
+    position: fixed;
+    top: 50px;
+    right: 80px;
+    @include MAIN-BTN(true);
+    @include BTN-COLOR($light-blue);
+    border-radius: 17px;
+    font-size: 20px;
+    z-index: 101;
+    font-family: $kor-font;
+
+    @media (max-width: 480px) {
+      top: auto;
+      border-radius: 0;
+      bottom: 0;
+      width: 100%;
+      height: 75px;
+      right: 0;
+      font-size: 24px;
+    }
+  }
+}
+
+.main-item {
+  height: 100vh;
+  position: relative;
+}
+
+.divider {
+  width: 100%;
+  height: 5px;
+}
+
+.globe {
+  width: 100%;
+  height: auto;
+  position: fixed;
+  bottom: -60vh;
+  left: 50%;
+  transform: translate(-50%, 0) scale(1.5);
+  transition: 0.7s ease;
+  z-index: 100;
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  > div {
+    &:focus-visible {
+      outline: none;
+    }
+
+    canvas:focus-visible {
+      outline: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    width: 900px;
+    bottom: -50vh;
+  }
+}
+.marker {
+  position: fixed;
+  bottom: 60%;
+  right: 16%;
+  opacity: 0;
+  transition: 0.5s ease;
+  z-index: 100;
+}
+.countrycard {
+  position: fixed;
+  bottom: 30%;
+  right: 18%;
+  opacity: 0;
+  transition: 0.5s ease;
+  z-index: 100;
+}
