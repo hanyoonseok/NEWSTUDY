@@ -1,0 +1,187 @@
+@import "variables.scss";
+
+.before-leveltest-wrapper {
+  padding: 45px 60px;
+  overflow: hidden;
+  width: 80%;
+  background-color: #f7f8fc;
+  @include FLEX-COLUMN;
+  align-items: center;
+  border-radius: 20px;
+  filter: $drop-shadow-light;
+  @media (max-width: 480px) {
+    display: flex;
+    width: 90%;
+    flex-direction: row;
+    padding: 0px 12px;
+  }
+  .level-container {
+    width: 100%;
+    padding: 0 20px;
+    @media (max-width: 480px) {
+      @include FLEX-CENTER;
+      align-items: flex-start;
+      padding: 20px 0;
+      height: 100%;
+    }
+    .levels {
+      width: 100%;
+      @include FLEX-AROUND;
+      @media (max-width: 480px) {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      .level-img {
+        margin: 0 auto;
+        padding: 10px 20px;
+        > img {
+          width: 100%;
+          opacity: 0.65;
+          transition: all 300ms ease;
+          @media (max-width: 480px) {
+            width: 25vw;
+          }
+        }
+
+        &:hover {
+          > img {
+            opacity: 1;
+            transform: scale(1.3) translateY(-10px);
+            @media (max-width: 480px) {
+              opacity: 1;
+              transform: scale(1.1);
+            }
+          }
+        }
+        .active {
+          opacity: 1;
+          transform: scale(1.3) translateY(-10px);
+        }
+      }
+      .level-img.active {
+        background-color: #eff3ff;
+        border-radius: 15px;
+        padding: 10px 20px;
+      }
+    }
+    .arrow-active {
+      width: 100%;
+      @media (max-width: 480px) {
+        height: 100%;
+        width: 10%;
+      }
+      > i {
+        cursor: auto;
+        width: 100%;
+        .icon-triangle {
+          transition: all 500ms ease;
+          transform: rotate(-90deg) translateX(-5.5px)
+            translateY(var(--position));
+          color: var(--color);
+        }
+        .icon-triangle-mobile {
+          transition: all 300ms ease;
+          transform: rotate(180deg) translateX(-11px)
+            translateY(var(--positionM));
+          color: var(--color);
+        }
+      }
+      .arrow-bar {
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        background: rgb(218, 255, 186);
+        background: linear-gradient(
+          90deg,
+          rgba(218, 255, 186, 1) 0%,
+          rgba(188, 220, 177, 1) 18%,
+          rgba(150, 178, 255, 1) 44%,
+          rgba(150, 178, 255, 1) 57%,
+          rgba(219, 188, 255, 1) 72%,
+          rgba(219, 188, 255, 1) 100%
+        );
+        @media (max-width: 480px) {
+          height: 340px;
+          float: right;
+          width: 8px;
+          background: rgb(218, 255, 186);
+          background: linear-gradient(
+            180deg,
+            rgba(218, 255, 186, 1) 0%,
+            rgba(188, 220, 177, 1) 18%,
+            rgba(150, 178, 255, 1) 44%,
+            rgba(150, 178, 255, 1) 57%,
+            rgba(219, 188, 255, 1) 72%,
+            rgba(219, 188, 255, 1) 100%
+          );
+        }
+      }
+    }
+  }
+}
+
+.level-desc {
+  width: 80%;
+  padding: 15px 60px;
+  @include FLEX-CENTER;
+  justify-content: flex-start;
+  color: $grey;
+  margin-top: 10px;
+  .question-img {
+    margin-right: 10px;
+    width: 22px;
+  }
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 25px;
+
+    font-size: 1.2rem;
+  }
+}
+.start-leveltest-wrapper {
+  width: 90%;
+  text-align: center;
+  margin-top: 50px;
+  height: 40px;
+  .start-leveltest {
+    background-color: $light-blue;
+    padding: 1.5% 7%;
+    border-radius: 15px;
+    font-family: $kor-font;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 300ms ease;
+    @media (max-width: 480px) {
+      padding: 18px 70px;
+      font-size: 1.3rem;
+    }
+    &:hover {
+      transform: scale(1.02);
+      border: 4px solid $soft-blue;
+      background-color: #b1c4ff;
+      > i {
+        padding-left: 8px;
+        opacity: 0;
+      }
+      > span {
+        opacity: 1;
+      }
+    }
+    > i {
+      transition: all 300ms ease;
+      color: $blue;
+    }
+    > span {
+      margin-left: 2px;
+      opacity: 0;
+      transition: all 300ms ease;
+    }
+  }
+}
+
+.mylevel {
+  font-weight: bold;
+}
