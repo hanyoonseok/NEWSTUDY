@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.newstudy.model.dao.UserDao">
+
+    <insert id="insertUser" parameterType="userDto">
+        insert into user (email, pw, level, nickname, src)
+        values (#{email}, #{pw}, #{level}, #{nickname}, #{src})
+    </insert>
+
+    <select id="selectUserByEmail" resultType="userDto">
+        SELECT u_id, email, pw, level, nickname, src
+        FROM user
+        WHERE email = #{email}
+    </select>
+
+    <select id="selectUserByUid" resultType="userDto">
+        SELECT u_id, email, pw, level, nickname, src
+        FROM user
+        WHERE u_id = #{uId}
+    </select>
+
+    <select id="selectUidByEmail">
+        SELECT u_id
+        FROM user
+        WHERE email = #{email}
+    </select>
+
+    <update id="updateUser" parameterType="userDto">
+        UPDATE user
+        SET pw = #{pw}, level = #{level},  nickname = #{nickname}, src = #{src}
+        where email = #{email}
+    </update>
+
+<!--    <select id="selectUser" resultType="userDto">-->
+<!--        SELECT id, nickname, introduce-->
+<!--        FROM userDto-->
+<!--        WHERE id = #{id}-->
+<!--          AND password = #{password}-->
+<!--    </select>-->
+
+
+
+<!--    <delete id="deleteUser">-->
+<!--        DELETE FROM userDto-->
+<!--        WHERE id = #{id}-->
+<!--    </delete>-->
+
+</mapper>
