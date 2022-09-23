@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";
@@ -7,7 +7,6 @@ import FilterModal from "components/FilterModal";
 import Kor from "assets/kor.jpg";
 
 import Globe from "./Globe";
-import { useEffect } from "react";
 
 export default function NationsNewsList() {
   const [isModalOpen, setIsModalOpen] = useState(false);

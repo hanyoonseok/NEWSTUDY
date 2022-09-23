@@ -57,6 +57,12 @@
       margin-top: rem(30);
       height: 100%;
       overflow-y: auto;
+
+      .voca {
+        .memorize {
+          display: none;
+        }
+      }
     }
   }
 }
@@ -88,7 +94,7 @@
             background-color: $soft-blue;
             opacity: 0.3;
             position: absolute;
-            right: rem(60);
+            right: rem(80);
             top: rem(8);
           }
         }
