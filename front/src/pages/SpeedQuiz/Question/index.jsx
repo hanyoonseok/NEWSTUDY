@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import "./style.scss";
 
 export default function Question({ question, index }) {
@@ -12,6 +13,25 @@ export default function Question({ question, index }) {
 
     return inputs;
   };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      document.querySelector(".timer-gauge").style.display = "none";
+      document.querySelector(".timer-needle").style.display = "none";
+    }, 10000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    document.querySelector(".timer-gauge").style.display = "block";
+    document.querySelector(".timer-needle").style.display = "block";
+    document.querySelector(".timer-gauge").style.animation =
+      "start 10s forwards linear";
+    document.querySelector(".timer-needle").style.animation =
+      "startNeedle 10s forwards linear";
+  }, [index]);
+
   return (
     <div className="question-container">
       <p className="question-desc-container">

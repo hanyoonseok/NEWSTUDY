@@ -1,4 +1,4 @@
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from "react";
 import BackBtn from "components/BackBtn";
 import "./style.scss";
 
@@ -6,6 +6,7 @@ import Check from "assets/check.png";
 import Question from "./Question";
 
 export default function SpeedQuiz() {
+  const [index, setIndedx] = useState(0);
   const questions = [
     {
       desc: "Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
@@ -97,6 +98,16 @@ export default function SpeedQuiz() {
       correct: false,
     },
   ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndedx((prev) => prev + 1);
+    }, 10000);
+    if (index >= 10) clearInterval(timer);
+
+    return () => clearInterval(timer);
+  }, [index]);
+
   return (
     <div className="speedquiz-container">
       <BackBtn />
@@ -112,7 +123,9 @@ export default function SpeedQuiz() {
             className="speedquiz-subtitle-checkimg"
           />
         </h3>
-        <Question question={questions[0]} index={1} />
+        {index < 10 && (
+          <Question question={questions[index]} index={index + 1} />
+        )}
       </section>
     </div>
   );
