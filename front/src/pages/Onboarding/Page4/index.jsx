@@ -1,4 +1,5 @@
 import { useMediaQuery } from "react-responsive";
+import React from "react";
 
 import "pages/Onboarding/Page4/style.scss";
 import LevelProgress from "assets/level-progress.png";

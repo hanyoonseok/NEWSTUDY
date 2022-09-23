@@ -1,6 +1,7 @@
 import "pages/Onboarding/Page2/style.scss";
 import usa from "assets/usa.jpg";
 import kor from "assets/kor.jpg";
+import React from "react";
 
 export default function Page2() {
   return (

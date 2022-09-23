@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { faPlay, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
 import { useMediaQuery } from "react-responsive";

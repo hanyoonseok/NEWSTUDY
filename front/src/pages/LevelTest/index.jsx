@@ -1,5 +1,5 @@
+import React, { useState } from "react";
 import "./style.scss";
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
