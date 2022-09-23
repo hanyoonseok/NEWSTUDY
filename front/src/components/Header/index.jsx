@@ -2,10 +2,9 @@ import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
 import { Link } from "react-router-dom";
-import React from "react";
 
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import React, { useState } from "react";
 import DailyWordModal from "./DailyWordModal";
 export default function Header() {
   const isMobile = useMediaQuery({

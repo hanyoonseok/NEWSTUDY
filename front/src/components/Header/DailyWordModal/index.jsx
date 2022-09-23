@@ -1,9 +1,8 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Word from "components/Word";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "./style.scss";
-import React from "react";
 
 export default function DailyWordModal({ close }) {
   const vocas = [

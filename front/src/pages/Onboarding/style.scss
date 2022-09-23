@@ -38,6 +38,8 @@
 }
 
 .globe {
+  width: 100%;
+  height: auto;
   position: fixed;
   bottom: -60vh;
   left: 50%;
@@ -45,7 +47,22 @@
   transition: 0.7s ease;
   z-index: 100;
 
+  &:focus-visible {
+    outline: none;
+  }
+
+  > div {
+    &:focus-visible {
+      outline: none;
+    }
+
+    canvas:focus-visible {
+      outline: none;
+    }
+  }
+
   @media (max-width: 480px) {
+    width: 900px;
     bottom: -50vh;
   }
 }
