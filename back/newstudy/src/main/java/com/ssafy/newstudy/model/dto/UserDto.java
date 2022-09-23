@@ -12,6 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
+    private int uId;
     private String email;
     private String pw;
     private int level;
