@@ -1,0 +1,209 @@
+@import "variables.scss";
+
+.test-wrapper {
+  margin-top: 8vh;
+  @media (max-width: 480px) {
+    width: 100%;
+    margin-top: 2px;
+  }
+
+  .word-wrapper {
+    border-radius: 20px;
+    .leveltest-wrapper {
+      background-color: $white;
+      padding: 60px 40px;
+      width: 100%;
+      height: 100%;
+      @include FLEX-COLUMN;
+      align-items: center;
+      @media (max-width: 480px) {
+        padding: 70px 20px;
+        height: 100%;
+      }
+      width: 65vw;
+      display: grid;
+      grid-template-rows: repeat(3, 5vw);
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 3vw;
+      @media (max-width: 900px) {
+        grid-template-rows: repeat(4, 6vw);
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 3vw;
+      }
+      @media (max-width: 600px) {
+        grid-template-rows: repeat(5, 7vh);
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 3vw;
+      }
+      @media (max-width: 480px) {
+        grid-template-rows: initial;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 3vh;
+        height: 100%;
+        width: 95%;
+      }
+
+      .word {
+        @include FLEX-ALIGN-CENTER;
+        background-color: white;
+        border-radius: 18px;
+        filter: $drop-shadow;
+        border: 0px solid $light-blue;
+        cursor: pointer;
+        transition: all 300ms ease;
+        color: $dark-grey;
+        height: rem(80);
+        &:hover {
+          background-color: $lightx2-blue;
+          border: 4px solid $light-blue;
+          transform: scale(1.05);
+          @media (max-width: 480px) {
+            border: 2px solid $light-blue;
+          }
+          i {
+            .check-icon {
+              color: $soft-blue;
+            }
+          }
+        }
+        & input[type="checkbox"] {
+          opacity: 0;
+          &:checked ~ i {
+            .check-icon {
+              color: $soft-blue;
+            }
+            background-color: $lightx2-blue;
+            border: 4px solid $light-blue;
+            transform: scale(1.1);
+            @media (max-width: 480px) {
+              border: 2px solid $light-blue;
+            }
+          }
+        }
+
+        i {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 18px;
+          margin-right: 5px;
+          padding-left: rem(10);
+          @include FLEX-ALIGN-CENTER;
+          @media (max-width: 480px) {
+            font-size: 1.5rem;
+            padding: 0 4vw;
+          }
+          .check-icon {
+            color: $light-grey;
+            margin-right: 5px;
+          }
+          .test-word {
+            font-size: 1.2rem;
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+            @media (max-width: 480px) {
+              font-size: 1.4rem;
+            }
+          }
+        }
+      }
+    }
+  }
+  .next-btn {
+    position: fixed;
+    bottom: 8%;
+    right: 10%;
+    i {
+      font-size: 4.5vw;
+      color: $dark-grey;
+      transition: all 300ms ease;
+      &:hover {
+        font-size: 4.3rem;
+      }
+      @media (max-width: 480px) {
+        font-size: 5.5vh;
+      }
+    }
+
+    @media (max-width: 480px) {
+      position: static;
+      width: 90%;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .submit-container {
+    @include FLEX-BETWEEN;
+    width: 90%;
+  }
+
+  .prev-btn {
+    position: fixed;
+    bottom: 8%;
+    left: 10%;
+    i {
+      font-size: 4.5vw;
+      color: $dark-grey;
+      transition: all 300ms ease;
+      &:hover {
+        font-size: 4.3rem;
+      }
+      @media (max-width: 480px) {
+        font-size: 5.5vh;
+      }
+    }
+    @media (max-width: 480px) {
+      position: static;
+    }
+  }
+  .submit-btn {
+    position: fixed;
+    bottom: 8%;
+    right: 10%;
+    background-color: $light-blue;
+    color: $dark-grey;
+    padding: 7px 40px;
+    border-radius: 10px;
+    font-family: $kor-font;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 300ms ease;
+    &:hover {
+      transform: scale(1.025);
+      background-color: $soft-blue;
+    }
+    @media (max-width: 480px) {
+      font-size: 1.3rem;
+      position: static;
+      margin-top: 0;
+      bottom: 12%;
+      right: 7%;
+      padding: 10px;
+      width: 30%;
+    }
+  }
+  .page-wrapper {
+    @include FLEX-CENTER;
+    font-size: 0.9vw;
+    color: $soft-grey;
+    margin-top: 40px;
+    .pagedot {
+      &:hover {
+        color: $soft-blue;
+      }
+    }
+
+    :nth-child(1) {
+      margin-left: 3px;
+    }
+    .active {
+      color: $soft-blue;
+    }
+    @media (max-width: 480px) {
+      margin-top: rem(20);
+      font-size: 15px;
+    }
+  }
+}
