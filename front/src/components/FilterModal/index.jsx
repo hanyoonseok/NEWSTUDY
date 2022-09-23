@@ -1,5 +1,6 @@
 import "./style.scss";
 import { categoryFilter } from "constants";
+import React from "react";
 
 export default function FilterModal({ closeHandler }) {
   const mainCategory = Object.keys(categoryFilter);

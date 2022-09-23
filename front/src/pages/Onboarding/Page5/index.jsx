@@ -5,6 +5,7 @@ import {
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
+import React from "react";
 
 import "pages/Onboarding/Page5/style.scss";
 import Page5Img from "assets/page5-img.png";

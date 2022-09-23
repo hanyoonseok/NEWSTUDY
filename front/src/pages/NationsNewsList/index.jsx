@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import React from "react";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";

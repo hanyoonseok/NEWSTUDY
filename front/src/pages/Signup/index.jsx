@@ -5,6 +5,7 @@ import { signupUser } from "modules/user/user";
 import { authEmail } from "modules/user/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 
 export default function Signup() {
   const dispatch = useDispatch();

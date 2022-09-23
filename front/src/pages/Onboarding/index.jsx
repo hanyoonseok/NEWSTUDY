@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 import "pages/Onboarding/style.scss";
 import Page1 from "./Page1";

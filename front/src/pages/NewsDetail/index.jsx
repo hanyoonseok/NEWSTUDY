@@ -6,6 +6,7 @@ import {
   faGlobe,
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
+import React from "react";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";

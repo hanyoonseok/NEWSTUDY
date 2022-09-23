@@ -24,10 +24,10 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Onboarding />}></Route>
+            <Route path="/signup" element={<Signup />}></Route>
             <Route path="/leveltest" element={<LevelTest />}></Route>
             <Route path="/landing" element={<Landing />}></Route>
             <Route path="/news/:id" element={<NewsDetail />}></Route>
-            <Route path="/signup" element={<Signup />}></Route>
             <Route path="/mypage" element={<Mypage />}></Route>
             <Route path="/nationsnews" element={<NationsNewsList />}></Route>
             <Route path="/news/list" element={<NewsList />}></Route>
