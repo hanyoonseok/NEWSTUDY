@@ -10,7 +10,19 @@
     </insert>
 
     <select id="selectUserByEmail" resultType="userDto">
-        SELECT email, pw, level, nickname, src
+        SELECT u_id, email, pw, level, nickname, src
+        FROM user
+        WHERE email = #{email}
+    </select>
+
+    <select id="selectUserByUid" resultType="userDto">
+        SELECT u_id, email, pw, level, nickname, src
+        FROM user
+        WHERE u_id = #{uId}
+    </select>
+
+    <select id="selectUidByEmail">
+        SELECT u_id
         FROM user
         WHERE email = #{email}
     </select>

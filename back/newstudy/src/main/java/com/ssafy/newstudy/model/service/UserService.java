@@ -3,6 +3,7 @@ package com.ssafy.newstudy.model.service;
 import com.ssafy.newstudy.exception.ExistingEmailException;
 import com.ssafy.newstudy.model.dao.UserDao;
 import com.ssafy.newstudy.model.dto.UserDto;
+import com.ssafy.newstudy.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class UserService {
     private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
 
-//    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
 //    private final RedisUtil redisUtil;
 
 //    @Value("${spring.servlet.multipart.location}")
@@ -47,6 +48,14 @@ public class UserService {
         return userDto;
     }
 
+    public UserDto getUserByUid(int uId){
+        UserDto userDto = userDao.selectUserByUid(uId);
+        if(userDto == null){
+            throw new UsernameNotFoundException("존재하지 않는 u_id입니다.");
+        }
+        return userDto;
+    }
+
     public void updateLevel(String email, int level) {
         UserDto userDto = userDao.selectUserByEmail(email);
         userDto.setLevel(level);
@@ -58,6 +67,10 @@ public class UserService {
         if(userDto != null){
             throw new ExistingEmailException();
         }
+    }
+
+    public int getUidFromBearerToken(String BearerToken) {
+        return userDao.selectUidByEmail(jwtTokenUtil.getEmailFromBearerToken(BearerToken));
     }
 
 //    public User getUserById(Long id) {
