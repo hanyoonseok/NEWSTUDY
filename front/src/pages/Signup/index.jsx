@@ -85,6 +85,10 @@ export default function Signup() {
         pw: Password,
         nickname: Nickname,
       };
+      dispatch(signupUser(user)).then((res) => {
+        console.log("회원가입 성공 ");
+        console.log(res);
+      });
       //회원가입 성공하면 레벨테스트로 보내야함
     }
   };

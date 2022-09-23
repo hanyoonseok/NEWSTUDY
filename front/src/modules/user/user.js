@@ -12,7 +12,7 @@ export const authEmail = async (data) => {
   console.log("authemail");
   console.log(data);
   const request = await axios
-    .post(`${process.env.REACT_APP_URL}/user/mail`, data)
+    .post(`${process.env.REACT_APP_API_URL}/user/mail`, data)
     .then((res) => console.log(res));
   return {
     type: AUTH_EMAIL,
@@ -24,7 +24,7 @@ export const signupUser = async (data) => {
   console.log("signupuser");
   console.log(data);
   const request = await axios
-    .post(`${process.env.REACT_APP_URL}/user/signup`, data)
+    .post(`${process.env.REACT_APP_API_URL}/user/signup`, data)
     .then((res) => console.log(res));
   return {
     type: SIGNUP_USER,
@@ -36,7 +36,7 @@ export const loginUser = async (data) => {
   console.log("loginUser");
   console.log(data);
   const request = await axios
-    .post(`${process.env.REACT_APP_URL}/auth/login`, data)
+    .post(`${process.env.REACT_APP_API_URL}/auth/login`, data)
     .then((res) => {
       console.log(res);
 
@@ -55,7 +55,7 @@ export const loginUser = async (data) => {
 // accessToken 만료됐을 경우 호출
 export const requestAccessToken = async (refresh_token) => {
   return await axios
-    .post(`${process.env.REACT_APP_URL}/auth/reissue`, {
+    .post(`${process.env.REACT_APP_API_URL}/auth/reissue`, {
       refresh: refresh_token,
     })
     .then((response) => {

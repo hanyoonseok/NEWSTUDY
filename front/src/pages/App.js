@@ -12,15 +12,26 @@ import Signup from "./Signup";
 import Mypage from "./Mypage";
 import LevelTest from "pages/LevelTest";
 
-import rootReducer from "../modules/index";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
+import promiseMiddleware from "redux-promise";
+import ReduxThunk from "redux-thunk";
+import store from "../modules/index";
 
-const store = createStore(rootReducer);
+const createStoreWithMiddleware = applyMiddleware(
+  promiseMiddleware,
+  ReduxThunk,
+)(createStore);
 
 function App() {
   return (
-    <Provider store={store}>
+    <Provider
+      store={createStoreWithMiddleware(
+        store,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__(),
+      )}
+    >
       <BrowserRouter>
         <Layout>
           <Routes>
