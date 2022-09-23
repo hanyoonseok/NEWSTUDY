@@ -1,0 +1,80 @@
+@import "variables.scss";
+
+.speedquiz-result-container {
+  @include FLEX-COLUMN;
+  align-items: center;
+  @include STRETCH;
+
+  .speedquiz-result-title {
+    width: 100%;
+    @include FLEX-CENTER;
+    font-size: rem(50);
+    font-family: $eng-title-font;
+    color: $dark-grey;
+  }
+
+  .speedquiz-result-circle {
+    width: rem(120);
+    height: rem(120);
+    background-color: $light-grey;
+    border-radius: 150px;
+    margin-top: rem(30);
+    @include FLEX-CENTER;
+    font-size: rem(32);
+    font-family: $eng-title-font;
+    b {
+      font-size: rem(48);
+    }
+  }
+
+  .speedquiz-result-list {
+    width: 100%;
+    margin-top: rem(30);
+    .speedquiz-result-row {
+      width: 100%;
+      @include FLEX-AROUND;
+    }
+
+    .speedquiz-result-row + .speedquiz-result-row {
+      margin-top: rem(30);
+    }
+
+    .speedquiz-result-col {
+      width: rem(205);
+      height: rem(125);
+      border-radius: 30px;
+      position: relative;
+      @include FLEX-CENTER;
+      box-shadow: $light-shadow;
+      cursor: pointer;
+      transition: 0.3s ease;
+      color: $dark-grey;
+      font-family: $eng-title-font;
+      font-size: rem(24);
+      font-weight: bold;
+      transition: 0.2s ease;
+
+      &.right {
+        background-color: $lightx2-blue;
+        &:hover {
+          border: 4px solid $light-blue;
+          transform: scale(1.05);
+        }
+      }
+
+      &.wrong {
+        background-color: #fff2f2;
+        &:hover {
+          border: 4px solid #ffb2b2;
+          transform: scale(1.05);
+        }
+      }
+
+      .result-col-mark {
+        position: absolute;
+        top: rem(15);
+        left: rem(15);
+      }
+    }
+  }
+}

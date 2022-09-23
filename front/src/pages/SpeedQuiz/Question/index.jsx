@@ -21,7 +21,6 @@ export default function Question({ question, index, onNextClick, timer }) {
       "start 10s forwards linear";
     document.querySelector(".timer-needle").style.animation =
       "startNeedle 10s forwards linear";
-    console.log(index);
   }, [index]);
 
   return (

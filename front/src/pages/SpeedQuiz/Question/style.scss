@@ -103,7 +103,6 @@
         }
       }
       .timer-gauge {
-        animation: start 10s forwards linear;
         height: rem(20);
         border-radius: 20px;
         background: linear-gradient(to right, $light-blue, $soft-blue);
@@ -122,7 +121,6 @@
         top: -30px;
         width: 0px;
         height: 0px;
-        animation: startNeedle 10s forwards linear;
         border-top: 30px solid $soft-blue;
         border-left: 15px solid transparent;
         border-right: 15px solid transparent;
