@@ -7,19 +7,27 @@ import {
   faNewspaper,
   faFileWord,
   faCertificate,
+  faL,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState, useRef } from "react";
 import Attendance1 from "assets/1attendance_badge.png";
 import DefaultUserImage from "assets/user_globe.png";
+import A1 from "assets/A1.png";
+import A2 from "assets/A2.png";
+import B1 from "assets/B1.png";
+import B2 from "assets/B2.png";
+import C1 from "assets/C1.png";
+import C2 from "assets/C2.png";
+
 import Word from "components/Word";
 
-export default function Mypage() {
-  const user = {
-    name: "김싸피",
-    email: "kimssafy@ssafy.com",
-    level: "B1",
-  };
+const user = {
+  name: "김싸피",
+  email: "kimssafy@ssafy.com",
+  level: "A1",
+};
 
+export default function Mypage() {
   const [userImage, setUserImage] = useState(DefaultUserImage);
   const fileInput = useRef(null);
 
@@ -116,87 +124,6 @@ export default function Mypage() {
     },
   ];
 
-  const vocas = [
-    {
-      word: "Administration",
-      part: [
-        {
-          id: 0,
-          mean: "수콩수콩수콩",
-        },
-        {
-          id: 3,
-          mean: "화연연ㅇ여연",
-        },
-      ],
-    },
-    {
-      word: "SubiniSubiniSi",
-      part: [
-        {
-          id: 0,
-          mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩",
-        },
-        {
-          id: 3,
-          mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩",
-        },
-      ],
-    },
-    {
-      word: "SubiniSubiniSi",
-      part: [
-        {
-          id: 0,
-          mean: "수콩수콩수콩",
-        },
-        {
-          id: 3,
-          mean: "화연연ㅇ여연",
-        },
-      ],
-    },
-    {
-      word: "SubiniSubiniSi",
-      part: [
-        {
-          id: 0,
-          mean: "수콩수콩수콩",
-        },
-        {
-          id: 3,
-          mean: "화연연ㅇ여연",
-        },
-      ],
-    },
-    {
-      word: "SubiniSubiniSi",
-      part: [
-        {
-          id: 0,
-          mean: "수콩수콩수콩",
-        },
-        {
-          id: 3,
-          mean: "화연연ㅇ여연",
-        },
-      ],
-    },
-    {
-      word: "SubiniSubiniSi",
-      part: [
-        {
-          id: 0,
-          mean: "수콩수콩수콩",
-        },
-        {
-          id: 3,
-          mean: "화연연ㅇ여연",
-        },
-      ],
-    },
-  ];
-
   const badges = [
     {
       id: 0,
@@ -264,10 +191,35 @@ export default function Mypage() {
   ];
 
   const [userBadges, setUserBadges] = useState(null);
+  const [userVocas, setUserVocas] = useState([]);
+  const [filterVocas, setFilterVocas] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
+  const [wordMemorizeStatus, setWordMemorizeStatus] = useState(false); //단어 외움 상태 바꿨는지 감지할 변수
+
   useEffect(() => {
     getBadges();
+    getVocas();
     return () => {};
   }, []);
+
+  useEffect(() => {
+    changeFilterVocas();
+    return () => {};
+  }, [isChecked, userVocas]);
+
+  useEffect(() => {
+    changeFilterVocas();
+    setWordMemorizeStatus(false);
+    return () => {};
+  }, [wordMemorizeStatus]);
+
+  const changeFilterVocas = () => {
+    if (isChecked) {
+      setFilterVocas(userVocas.filter((voca) => voca.memorize));
+    } else {
+      setFilterVocas(userVocas.filter((voca) => !voca.memorize));
+    }
+  };
 
   const getBadges = () => {
     const data = [{ id: 0 }, { id: 9 }, { id: 2 }];
@@ -281,6 +233,110 @@ export default function Mypage() {
     setUserBadges(badges);
   };
 
+  const getVocas = () => {
+    const vocas = [
+      {
+        word: "Administration",
+        part: [
+          {
+            id: 0,
+            mean: "수콩수콩수콩",
+          },
+          {
+            id: 3,
+            mean: "화연연ㅇ여연",
+          },
+        ],
+        memorize: true,
+      },
+      {
+        word: "SubiniSubiniSi",
+        part: [
+          {
+            id: 0,
+            mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩",
+          },
+          {
+            id: 3,
+            mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩",
+          },
+        ],
+        memorize: true,
+      },
+      {
+        word: "SubiniSubiniSi",
+        part: [
+          {
+            id: 0,
+            mean: "수콩수콩수콩",
+          },
+          {
+            id: 3,
+            mean: "화연연ㅇ여연",
+          },
+        ],
+        memorize: false,
+      },
+      {
+        word: "SubiniSubiniSi",
+        part: [
+          {
+            id: 0,
+            mean: "수콩수콩수콩",
+          },
+          {
+            id: 3,
+            mean: "화연연ㅇ여연",
+          },
+        ],
+        memorize: true,
+      },
+      {
+        word: "SubiniSubiniSi",
+        part: [
+          {
+            id: 0,
+            mean: "수콩수콩수콩",
+          },
+          {
+            id: 3,
+            mean: "화연연ㅇ여연",
+          },
+        ],
+        memorize: false,
+      },
+      {
+        word: "SubiniSubiniSi",
+        part: [
+          {
+            id: 0,
+            mean: "수콩수콩수콩",
+          },
+          {
+            id: 3,
+            mean: "화연연ㅇ여연",
+          },
+        ],
+        memorize: false,
+      },
+      {
+        word: "SubiniSubiniSi",
+        part: [
+          {
+            id: 0,
+            mean: "수콩수콩수콩",
+          },
+          {
+            id: 3,
+            mean: "화연연ㅇ여연",
+          },
+        ],
+        memorize: false,
+      },
+    ];
+    setUserVocas(vocas);
+  };
+
   const myRecord = [
     {
       title: "스크랩한 기사",
@@ -288,7 +344,7 @@ export default function Mypage() {
     },
     {
       title: "내 단어",
-      count: vocas.length,
+      count: userVocas.length,
     },
     {
       title: "내 뱃지",
@@ -316,7 +372,27 @@ export default function Mypage() {
         ))}
       </div>
     ),
-    1: <Word vocas={vocas} />,
+    1: (
+      <>
+        <div className="wrap">
+          <input
+            type="checkbox"
+            id="memorize"
+            onChange={() => {
+              setIsChecked(!isChecked);
+            }}
+            checked={isChecked}
+          />
+          <label htmlFor="memorize">외운 단어 보기</label>
+        </div>
+        {filterVocas && (
+          <Word
+            vocas={filterVocas}
+            setWordMemorizeStatus={setWordMemorizeStatus}
+          />
+        )}
+      </>
+    ),
     2: (
       <div className="badge-box">
         {userBadges &&
@@ -339,6 +415,7 @@ export default function Mypage() {
       <div className="left-box">
         <div className="info-box">
           <div className="profile-img">
+            <div className="level-box">{level(user.level)}</div>
             <div className="img-box">
               <img src={userImage} alt="사용자 프로필 지구본"></img>
               <div
@@ -359,9 +436,7 @@ export default function Mypage() {
               />
             </div>
           </div>
-          <p className="name">
-            {user.name} <span>({user.level})</span>
-          </p>
+          <p className="name">{user.name}</p>
           <p className="email">
             <FontAwesomeIcon icon={faEnvelope} /> {user.email}
           </p>
@@ -411,4 +486,23 @@ export default function Mypage() {
       </div>
     </div>
   );
+}
+
+function level(level) {
+  switch (level) {
+    case "A1":
+      return <img src={A1} alt="A1"></img>;
+    case "A2":
+      return <img src={A2} alt="A2"></img>;
+    case "B1":
+      return <img src={B1} alt="B1"></img>;
+    case "B2":
+      return <img src={B2} alt="B2"></img>;
+    case "C1":
+      return <img src={C1} alt="C1"></img>;
+    case "C2":
+      return <img src={C2} alt="C2"></img>;
+    default:
+      break;
+  }
 }

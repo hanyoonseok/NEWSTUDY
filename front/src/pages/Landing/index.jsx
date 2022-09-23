@@ -1,22 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import "./style.scss";
 import ArticleInside from "./ArticleInside";
 import ArticleOutside from "./ArticleOutside";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
-  faCircleArrowUp,
-  faCircleArrowDown,
   faBorderAll,
   faHandshake,
   faBaseballBatBall,
   faChevronRight,
   faChevronLeft,
   faCircle,
-  faCircleMinus,
   faFaceGrin,
   faSackDollar,
 } from "@fortawesome/free-solid-svg-icons";
+import Wordcloud from "./WordCloud";
 const MAX_VISIBILITY = 3;
 
 function SectionTitle({ sectionTitle }) {
@@ -38,51 +37,15 @@ function SectionTitle({ sectionTitle }) {
   );
 }
 
-const rankingUpDown = {
-  up: (
-    <i>
-      <FontAwesomeIcon icon={faCircleArrowUp} />
-    </i>
-  ),
-  down: (
-    <i>
-      <FontAwesomeIcon icon={faCircleArrowDown} />
-    </i>
-  ),
-  zero: (
-    <i>
-      <FontAwesomeIcon icon={faCircleMinus} />
-    </i>
-  ),
-};
-
-function KeywordRanking({ keyword }) {
-  let { word, rank, rankChange } = keyword;
-  var nowRankingState = "zero";
-  var rankingChangeColor = "#3F414B";
-  if (rankChange > 0) {
-    nowRankingState = "up";
-    rankingChangeColor = "#88C848";
-  } else if (rankChange < 0) {
-    nowRankingState = "down";
-    rankingChangeColor = "#FF7777";
-    rankChange *= -1;
-  }
+function KeywordRanking({ item, rank }) {
   return (
     <>
       <div className="key-ranking">
         <div className="rank">{rank}</div>
         <div className="rank-content">
-          <div className="keyword">{word}</div>
-          <div
-            className="rank-change"
-            style={{
-              "--color": rankingChangeColor,
-            }}
-          >
-            {rankingUpDown[nowRankingState]} &nbsp;
-            {rankChange}
-          </div>
+          <div className="keyword">{item.text}</div>
+          {/* 지금은 빈도수로 해놨는데 만약 관련기사 수로 할거면 나중에 추가하셍요 */}
+          <div className="rank-change">{item.value}건</div>
         </div>
       </div>
     </>
@@ -212,37 +175,661 @@ function Landing() {
     },
     {
       blueTitle: "DAILY ",
-      blackTitle: "KEYWORD",
-      desc: "매일 수집된 뉴스를 바탕으로 많이 언급된 키워드들을 보여줍니다.",
+      blackTitle: "WORDCLOUD",
+      desc: "매일 수집된 뉴스를 바탕으로 많이 언급된 단어들을 보여줍니다.",
     },
   ];
-  const keywords = [
-    {
-      word: "subini",
-      rank: 1,
-      rankChange: 0,
-    },
-    {
-      word: "subini",
-      rank: 2,
-      rankChange: 0,
-    },
-    {
-      word: "subini",
-      rank: 3,
-      rankChange: 2,
-    },
-    {
-      word: "subini",
-      rank: 4,
-      rankChange: -2,
-    },
-    {
-      word: "subini",
-      rank: 5,
-      rankChange: -2,
-    },
-  ];
+
+  // 데일리 빈출단어는 DB에서 한꺼번에 가져옴
+  const [allRanking, setAllRanking] = useState([]);
+  const [politicsRanking, setPoliticsRanking] = useState([]);
+  const [economyRanking, setEconomyRanking] = useState([]);
+  const [entertainRanking, setEntertainRanking] = useState([]);
+  const [sportsRanking, setSportsRanking] = useState([]);
+
+  const getKeywordsRanking = () => {
+    // value 크기 따라 정렬
+    const sortValue = (a, b) => {
+      if (a.value > b.value) {
+        return -1;
+      }
+      if (a.value < b.value) {
+        return 1;
+      }
+      return 0;
+    };
+
+    // 카테고리별로 구분
+    const setCategory = (category) => {
+      let array = [];
+      wordcloud.forEach((word) => {
+        if (word.category === category) {
+          let temp = {
+            text: word.text,
+            value: word.value,
+          };
+          array.push(temp);
+        }
+      });
+      return array.sort(sortValue);
+    };
+
+    const wordcloud = [
+      {
+        text: "all",
+        category: "politics",
+        value: 64,
+      },
+      {
+        text: "DaBin",
+        category: "politics",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "politics",
+        value: 16,
+      },
+      {
+        text: "bad",
+        category: "politics",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        category: "politics",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "economy",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "economy",
+        value: 16,
+      },
+      {
+        text: "bad",
+        category: "economy",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        category: "economy",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "economy",
+        value: 60,
+      },
+      {
+        text: "thought",
+        category: "economy",
+        value: 6,
+      },
+      {
+        text: "bad",
+        category: "economy",
+        value: 19,
+      },
+      {
+        text: "HwaYeon",
+        category: "economy",
+        value: 25,
+      },
+      {
+        text: "DaBin",
+        category: "entertain",
+        value: 54,
+      },
+      {
+        text: "thought",
+        category: "entertain",
+        value: 100,
+      },
+      {
+        text: "bad",
+        category: "entertain",
+        value: 90,
+      },
+      {
+        text: "HwaYeon",
+        category: "entertain",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "entertain",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "entertain",
+        value: 40,
+      },
+      {
+        text: "bad",
+        category: "entertain",
+        value: 10,
+      },
+
+      {
+        text: "politics",
+        category: "entertain",
+        value: 64,
+      },
+      {
+        text: "DaBin",
+        category: "entertain",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "entertain",
+        value: 16,
+      },
+      {
+        text: "bad",
+        category: "entertain",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        category: "sports",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "sports",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "sports",
+        value: 16,
+      },
+      {
+        text: "bad",
+        category: "sports",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        category: "sports",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "sports",
+        value: 60,
+      },
+      {
+        text: "thought",
+        category: "sports",
+        value: 6,
+      },
+      {
+        text: "bad",
+        category: "sports",
+        value: 19,
+      },
+      {
+        text: "HwaYeon",
+        category: "sports",
+        value: 25,
+      },
+      {
+        text: "DaBin",
+        category: "sports",
+        value: 54,
+      },
+      {
+        text: "thought",
+        category: "sports",
+        value: 100,
+      },
+      {
+        text: "bad",
+        category: "sports",
+        value: 90,
+      },
+      {
+        text: "HwaYeon",
+        category: "sports",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "economy",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "economy",
+        value: 40,
+      },
+      {
+        text: "bad",
+        category: "economy",
+
+        value: 10,
+      },
+      {
+        text: "economy",
+        category: "economy",
+
+        value: 64,
+      },
+      {
+        text: "DaBin",
+        category: "entertain",
+
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "entertain",
+        value: 16,
+      },
+      {
+        text: "bad",
+        category: "entertain",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        category: "entertain",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "entertain",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "entertain",
+        value: 16,
+      },
+      {
+        text: "bad",
+        category: "entertain",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        category: "entertain",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "entertain",
+        value: 60,
+      },
+      {
+        text: "thought",
+        category: "entertain",
+        value: 6,
+      },
+      {
+        text: "bad",
+        category: "entertain",
+        value: 19,
+      },
+      {
+        text: "HwaYeon",
+        category: "entertain",
+        value: 25,
+      },
+      {
+        text: "DaBin",
+        category: "politics",
+        value: 54,
+      },
+      {
+        text: "thought",
+        category: "politics",
+        value: 100,
+      },
+      {
+        text: "bad",
+        category: "politics",
+        value: 90,
+      },
+      {
+        text: "HwaYeon",
+        category: "politics",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "politics",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "politics",
+        value: 40,
+      },
+      {
+        text: "bad",
+        category: "politics",
+        value: 10,
+      },
+
+      {
+        text: "entertain",
+        category: "politics",
+        value: 64,
+      },
+      {
+        text: "DaBin",
+        category: "politics",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "politics",
+        value: 16,
+      },
+      {
+        text: "bad",
+        category: "politics",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        category: "politics",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "politics",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "politics",
+        value: 16,
+      },
+      {
+        text: "bad",
+        category: "politics",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        category: "politics",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "politics",
+        value: 60,
+      },
+      {
+        text: "thought",
+        category: "politics",
+        value: 6,
+      },
+      {
+        text: "bad",
+        category: "politics",
+        value: 19,
+      },
+      {
+        text: "HwaYeon",
+        category: "politics",
+        value: 25,
+      },
+      {
+        text: "DaBin",
+        category: "politics",
+        value: 54,
+      },
+      {
+        text: "thought",
+        category: "politics",
+        value: 100,
+      },
+      {
+        text: "bad",
+        category: "politics",
+        value: 90,
+      },
+      {
+        text: "HwaYeon",
+        category: "politics",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "politics",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "politics",
+        value: 40,
+      },
+      {
+        text: "bad",
+        category: "politics",
+        value: 10,
+      },
+
+      {
+        text: "sports",
+        category: "politics",
+        value: 64,
+      },
+      {
+        text: "DaBin",
+        category: "politics",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "economy",
+        value: 16,
+      },
+      {
+        text: "bad",
+        category: "economy",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        category: "economy",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "economy",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "economy",
+        value: 16,
+      },
+      {
+        text: "bad",
+        category: "economy",
+        value: 17,
+      },
+      {
+        text: "HwaYeon",
+        category: "sports",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "sports",
+        value: 60,
+      },
+      {
+        text: "thought",
+        category: "sports",
+        value: 6,
+      },
+      {
+        text: "bad",
+        category: "sports",
+        value: 19,
+      },
+      {
+        text: "HwaYeon",
+        category: "sports",
+        value: 25,
+      },
+      {
+        text: "DaBin",
+        category: "sports",
+        value: 54,
+      },
+      {
+        text: "thought",
+        category: "sports",
+        value: 100,
+      },
+      {
+        text: "bad",
+        category: "sports",
+        value: 90,
+      },
+      {
+        text: "HwaYeon",
+        category: "sports",
+        value: 30,
+      },
+      {
+        text: "DaBin",
+        category: "sports",
+        value: 50,
+      },
+      {
+        text: "thought",
+        category: "sports",
+        value: 40,
+      },
+      {
+        text: "bad",
+        category: "sports",
+        value: 10,
+      },
+    ];
+
+    const setAll = () => {
+      let array = [];
+      const init = [...wordcloud.sort(sortValue)];
+      init.forEach((word, index) => {
+        if (index <= 25) {
+          let temp = {
+            text: word.text,
+            value: word.value,
+          };
+          array.push(temp);
+        }
+      });
+      return array;
+    };
+
+    setAllRanking(setAll);
+    setPoliticsRanking(setCategory("politics"));
+    setEconomyRanking(setCategory("economy"));
+    setEntertainRanking(setCategory("entertain"));
+    setSportsRanking(setCategory("sports"));
+  };
+
+  useEffect(() => {
+    getKeywordsRanking();
+    return () => {};
+  }, []);
+
+  const ranking = {
+    0: (
+      <>
+        {allRanking.slice(0, 5).map((item, index) => {
+          return (
+            <KeywordRanking
+              item={item}
+              rank={index + 1}
+              key={index}
+            ></KeywordRanking>
+          );
+        })}
+      </>
+    ),
+    1: (
+      <>
+        {politicsRanking.slice(0, 5).map((item, index) => {
+          return (
+            <KeywordRanking
+              item={item}
+              rank={index + 1}
+              key={index}
+            ></KeywordRanking>
+          );
+        })}
+      </>
+    ),
+    2: (
+      <>
+        {economyRanking.slice(0, 5).map((item, index) => {
+          return (
+            <KeywordRanking
+              item={item}
+              rank={index + 1}
+              key={index}
+            ></KeywordRanking>
+          );
+        })}
+      </>
+    ),
+    3: (
+      <>
+        {entertainRanking.slice(0, 5).map((item, index) => {
+          return (
+            <KeywordRanking
+              item={item}
+              rank={index + 1}
+              key={index}
+            ></KeywordRanking>
+          );
+        })}
+      </>
+    ),
+    4: (
+      <>
+        {sportsRanking.slice(0, 5).map((item, index) => {
+          return (
+            <KeywordRanking
+              item={item}
+              rank={index + 1}
+              key={index}
+            ></KeywordRanking>
+          );
+        })}
+      </>
+    ),
+  };
+  const tabContent = {
+    0: <>{allRanking && <Wordcloud words={allRanking}></Wordcloud>}</>,
+    1: (
+      <>{politicsRanking && <Wordcloud words={politicsRanking}></Wordcloud>}</>
+    ),
+    2: <>{economyRanking && <Wordcloud words={economyRanking}></Wordcloud>}</>,
+    3: (
+      <>
+        {entertainRanking && <Wordcloud words={entertainRanking}></Wordcloud>}
+      </>
+    ),
+    4: <>{sportsRanking && <Wordcloud words={sportsRanking}></Wordcloud>}</>,
+  };
 
   return (
     <div className="landing-wrapper">
@@ -294,11 +881,7 @@ function Landing() {
       <section className="daily-keyword">
         <SectionTitle sectionTitle={sectionTitle[2]}></SectionTitle>
         <div className="daily-wrapper">
-          <div className="daily-left">
-            {keywords.map((keyword, index) => (
-              <KeywordRanking keyword={keyword} key={index}></KeywordRanking>
-            ))}
-          </div>
+          <div className="daily-left">{ranking[activeId]}</div>
           <div className="daily-right">
             <div className="wordcloud-wrapper">
               <ul className="wordcloud-nav">
@@ -359,7 +942,7 @@ function Landing() {
                   <span className="category-name">&nbsp;SPORTS</span>
                 </li>
               </ul>
-              <div className="wordcloud"></div>
+              <div className="wordcloud">{tabContent[activeId]}</div>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useNavigate } from "react-router-dom";
+import ReactGlobe from "react-globe";
 
 import "pages/Onboarding/style.scss";
 import Page1 from "./Page1";
@@ -9,9 +10,9 @@ import Page3 from "./Page3";
 import Page4 from "./Page4";
 import Page5 from "./Page5";
 import Dots from "./Dots";
-import TEMP from "assets/temp.jpg";
 import Marker from "assets/marker.jpg";
 import Countrycard from "assets/country-card.jpg";
+import Earth from "assets/earthmap_color.png";
 
 export default function Onboarding() {
   const [scrollIdx, setScrollIdx] = useState(1);
@@ -161,7 +162,18 @@ export default function Onboarding() {
         로그인
       </button>
       <Dots scrollIdx={scrollIdx} />
-      <img src={TEMP} alt="" className="globe" ref={globe} />
+      <div className="globe" ref={globe}>
+        <ReactGlobe
+          height="90vh"
+          width="100%"
+          globeBackgroundTexture={null}
+          globeTexture={Earth}
+          options={{
+            enableCameraZoom: false,
+            focusDistanceRadiusScale: 3,
+          }}
+        />
+      </div>
       <img src={Marker} alt="marker" className="marker" ref={marker} />
       <img
         src={Countrycard}

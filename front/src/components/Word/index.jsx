@@ -1,11 +1,20 @@
 import "./style.scss";
-import React from "react";
+import React, { useEffect } from "react";
 
-export default function Word({ vocas }) {
+export default function Word({ vocas, setWordMemorizeStatus }) {
+  const changeMemorizeStatus = (status) => {
+    status.memorize = !status.memorize;
+    setWordMemorizeStatus(true);
+  };
+
   return (
     <div className="voca-box">
       {vocas.map((voca, index) => (
         <div className="voca" key={index}>
+          <div
+            onClick={() => changeMemorizeStatus(voca)}
+            className={"memorize " + (voca.memorize ? "blue" : "grey")}
+          ></div>
           <div className="word">{voca.word}</div>
           <div className="mean">
             {voca.part.map((item, index) => (
