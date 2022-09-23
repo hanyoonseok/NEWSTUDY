@@ -6,7 +6,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.*;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.ssafy.newstudy.model.dao.UserDao;
 import com.ssafy.newstudy.model.dto.UserDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -33,6 +35,7 @@ public class JwtTokenUtil {
     public static final String HEADER_STRING = "Authorization";
     public static final String ISSUER = "ssafy.com";
     private final RedisUtil redisUtil;
+
 
     @Autowired
     public JwtTokenUtil(@Value("${jwt.secret}") String secretKey, @Value("${jwt.expiration}") Integer expirationTime, RedisUtil redisUtil) {
