@@ -3,7 +3,7 @@
 .leveltest-wrapper {
   @include FLEX-CENTER;
   background-image: url("../../assets/background-level.png");
-  height: 100%;
+  height: 100vh;
 
   @media (max-width: 480px) {
     height: auto;

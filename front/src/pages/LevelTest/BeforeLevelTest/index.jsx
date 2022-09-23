@@ -145,7 +145,7 @@ function BeforeLevelTest({ getLeveltestState }) {
                     <img
                       ref={imgRef[index]}
                       src={require(`assets/level_${level}.png`)}
-                      className={activeLevelId === index && "active"}
+                      className={activeLevelId === index ? "active" : ""}
                       alt={`level-${level}`}
                     ></img>
                   </div>

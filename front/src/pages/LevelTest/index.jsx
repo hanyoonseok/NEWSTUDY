@@ -25,7 +25,7 @@ function LevelTest(props) {
   };
   return (
     <div className="leveltest-wrapper">
-      <div class="leveltest-area">
+      <div className="leveltest-area">
         <div className="leveltest-info">
           <h1>
             <span className="text-spotlight">LEVEL</span> TEST

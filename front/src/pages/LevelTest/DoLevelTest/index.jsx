@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
@@ -11,36 +11,36 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 function DoLevelTest({ getResult }) {
   const leveltestWord = [
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "word",
-    "subin",
-    "subin",
-    "word",
-    "subin",
-    "subin",
-    "word",
-    "subin",
-    "word",
-    "subin",
-    "subin",
-    "word",
-    "word",
+    { id: 0, data: "word" },
+    { id: 1, data: "word" },
+    { id: 2, data: "word" },
+    { id: 3, data: "word" },
+    { id: 4, data: "word" },
+    { id: 5, data: "word" },
+    { id: 6, data: "word" },
+    { id: 7, data: "word" },
+    { id: 8, data: "word" },
+    { id: 9, data: "word" },
+    { id: 10, data: "word" },
+    { id: 11, data: "word" },
+    { id: 12, data: "word" },
+    { id: 13, data: "word" },
+    { id: 14, data: "word" },
+    { id: 15, data: "word" },
+    { id: 16, data: "word" },
+    { id: 17, data: "subin" },
+    { id: 18, data: "word" },
+    { id: 19, data: "word" },
+    { id: 20, data: "word" },
+    { id: 21, data: "subin" },
+    { id: 22, data: "word" },
+    { id: 23, data: "word" },
+    { id: 24, data: "word" },
+    { id: 25, data: "word" },
+    { id: 26, data: "subin" },
+    { id: 27, data: "subin" },
+    { id: 28, data: "word" },
+    { id: 29, data: "word" },
   ];
   const [pageState, setPageState] = useState(0);
 
@@ -52,16 +52,33 @@ function DoLevelTest({ getResult }) {
   const showResult = () => {
     getResult(true);
   };
+
+  const [checkedList, setCheckedList] = useState([]);
+  const addCheckList = (checked, id) => {
+    if (checked) {
+      setCheckedList([...checkedList, id]);
+    } else {
+      setCheckedList(checkedList.filter((item) => item !== id));
+    }
+  };
+  useEffect(() => {
+    console.log("예");
+  }, []);
   return (
     <>
       <div className="test-wrapper">
         <div className="word-wrapper">
           {wordPage[pageState].map((word, index) => (
             <label className="word" key={`${index + pageState * 15}`}>
-              <input type="checkbox" name={index} />
+              <input
+                type="checkbox"
+                name={index}
+                checked={checkedList.includes(word.id) ? true : false}
+                onChange={(e) => addCheckList(e.target.checked, word.id)}
+              />
               <i>
                 <FontAwesomeIcon icon={faSquare} className="check-icon" />
-                <span className="test-word">{word}</span>
+                <span className="test-word">{word.data}</span>
               </i>
             </label>
           ))}
