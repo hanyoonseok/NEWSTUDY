@@ -1,14 +1,16 @@
 import "./style.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { signupUser } from "modules/user/user";
+import { loginUser, signupUser } from "modules/user/user";
 import { authEmail } from "modules/user/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [activeId, setActiveId] = useState(0);
 
   const onClickSwitchTab = (id) => {
@@ -76,7 +78,17 @@ export default function Signup() {
 
   const onLoginHandler = (e) => {
     e.preventDefault();
+    const user = {
+      email: Email,
+      pw: Password,
+    };
+    dispatch(loginUser(user)).then((res) => {
+      console.log("로그인 성공 ");
+      //회원가입 성공하면 레벨테스트로 보내야함
+      setTimeout(navigate("/landing"), 1000);
+    });
   };
+
   const onSignupHandler = (e) => {
     e.preventDefault();
     if (isConfirmed) {
@@ -87,9 +99,9 @@ export default function Signup() {
       };
       dispatch(signupUser(user)).then((res) => {
         console.log("회원가입 성공 ");
-        console.log(res);
+        //회원가입 성공하면 레벨테스트로 보내야함
+        setTimeout(navigate("/leveltest"), 1000);
       });
-      //회원가입 성공하면 레벨테스트로 보내야함
     }
   };
 

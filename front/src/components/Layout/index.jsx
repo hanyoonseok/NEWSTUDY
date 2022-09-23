@@ -6,13 +6,13 @@ import Header from "components/Header";
 
 export default function Layout({ children }) {
   const [isLogin, setIsLogin] = useState(false);
+  const localStorageItem = localStorage.getItem("isLogin");
 
   useEffect(() => {
-    const localStorageItem = localStorage.getItem("isLogin");
     if (localStorageItem === null || localStorageItem === "false")
       setIsLogin(false);
     else setIsLogin(true);
-  }, []);
+  }, [isLogin]);
 
   return (
     <div className="layout-div">

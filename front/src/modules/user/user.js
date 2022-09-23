@@ -6,6 +6,7 @@ import axios from "axios";
 const AUTH_EMAIL = "user/AUTH_EMAIL";
 const SIGNUP_USER = "user/SIGNUP_USER";
 const LOGIN_USER = "user/LOGIN_USER";
+const LOGOUT_USER = "user/LOGOUT_USER";
 
 /*********************** 액션 생성함수 만들기 ***********************/
 export const authEmail = async (data) => {
@@ -25,69 +26,107 @@ export const signupUser = async (data) => {
   console.log(data);
   const request = await axios
     .post(`${process.env.REACT_APP_API_URL}/user/signup`, data)
-    .then((res) => console.log(res));
+    .then((res) => {
+      console.log(res);
+      loginUser(data);
+    });
   return {
     type: SIGNUP_USER,
     payload: request,
   };
 };
 
+const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
+
 export const loginUser = async (data) => {
   console.log("loginUser");
   console.log(data);
-  const request = await axios
+  let userInfo = {
+    email: null,
+    level: null,
+    nickname: null,
+  };
+  // 로그인 처리
+  await axios
     .post(`${process.env.REACT_APP_API_URL}/auth/login`, data)
-    .then((res) => {
-      console.log(res);
-
-      const { accessToken } = res.data;
-      // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
-      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-
-      localStorage.setItem("isLogin", true);
-    });
+    .then(loginSuccess);
+  // 회원정보 조회
+  await axios.get(`${process.env.REACT_APP_API_URL}/user`).then((res) => {
+    console.log(res.data.data);
+    userInfo.email = res.data.data.email;
+    userInfo.level = res.data.data.level;
+    userInfo.nickname = res.data.data.nickname;
+  });
+  console.log(userInfo);
   return {
     type: LOGIN_USER,
+    payload: userInfo,
+  };
+};
+
+export const loginSuccess = (res) => {
+  console.log("loginSuccess");
+  const { accessToken } = res.data.data;
+  // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
+  axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+  // accessToken 만료하기 1분 전에 로그인 연장
+  setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
+  localStorage.setItem("isLogin", true);
+};
+
+export const onSilentRefresh = async (refresh_token) => {
+  console.log("onSilentRefresh");
+  axios
+    .post(`${process.env.REACT_APP_API_URL}/auth/reissue`, {
+      refresh: refresh_token,
+    })
+    .then(loginSuccess)
+    .catch((error) => {
+      // ... 로그인 실패 처리
+    });
+};
+
+export const logoutUser = async () => {
+  console.log("logoutUser");
+  const request = await axios
+    .get(`${process.env.REACT_APP_API_URL}/auth/logout`)
+    .then((res) => {
+      console.log(res);
+      localStorage.removeItem("isLogin");
+    });
+  return {
+    type: LOGOUT_USER,
     payload: request,
   };
 };
 
-// accessToken 만료됐을 경우 호출
-export const requestAccessToken = async (refresh_token) => {
-  return await axios
-    .post(`${process.env.REACT_APP_API_URL}/auth/reissue`, {
-      refresh: refresh_token,
-    })
-    .then((response) => {
-      return response.data.access;
-    })
-    .catch((e) => {
-      console.log(e.response.data);
-    });
-};
-
-// accessToken이 필요할 때 호출
-export const checkAccessToken = async (refresh_token) => {
-  // undefined일 경우 새로 불러서 설정
-  if (axios.defaults.headers.common["Authorization"] === undefined) {
-    return await requestAccessToken(refresh_token).then((response) => {
-      return response;
-    });
-  } else {
-    // 인증타입 떼고 반환하기 위해 split(" ")[1] 함
-    return axios.defaults.headers.common["Authorization"].split(" ")[1];
-  }
+/* 리덕스에서 관리 할 상태 정의 */
+const userState = {
+  currentUser: null,
 };
 
 /*********************** 리듀서 선언 ***********************/
-export default function user(state = {}, action) {
+export default function user(state = userState, action) {
   switch (action.type) {
     case AUTH_EMAIL:
-      return { ...state, emailSuccess: action.payload };
+      return {
+        ...state,
+        emailSuccess: action.payload,
+      };
     case SIGNUP_USER:
       return { ...state, signupSuccess: action.payload };
     case LOGIN_USER:
-      return { ...state, loginSuccess: action.payload };
+      return {
+        ...state,
+        currentUser: action.payload,
+        loginSuccess: action.payload,
+      };
+    case LOGOUT_USER:
+      return {
+        ...state,
+        currentUser: null,
+        logoutSuccess: action.payload,
+      };
     default:
       return state;
   }
