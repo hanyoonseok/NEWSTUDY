@@ -41,6 +41,7 @@ public class AuthService {
 
         // 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
 //        return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null));
+        System.out.println("userDto = " + userDto.getEmail() + " "  + userDto.getPw());
         throw new InvalidEmailAndPasswordException();
     }
 
@@ -50,7 +51,7 @@ public class AuthService {
     }
 
     public void logout(String refreshToken) {
-        redisUtil.delete(refreshToken);
+//        redisUtil.delete(refreshToken);
     }
 
     public JWToken reissue(String refreshToken) {
@@ -63,10 +64,10 @@ public class AuthService {
         }
 
         // 해당 리프레시 토큰으로 이메일을 뽑아왔는데 뽑아온 이메일로 다시 리프레시 토큰을 가져와서 비교하면 당연히 같지. 왜 있는 코드일까?
-        if(!refreshToken.equals(redisUtil.get(email))){
-            //예외처리
-            return null;
-        }
+//        if(!refreshToken.equals(redisUtil.get(email))){
+//            //예외처리
+//            return null;
+//        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         return jwtTokenUtil.reissueAccessToken(email, auth);
