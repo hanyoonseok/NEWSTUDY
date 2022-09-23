@@ -3,13 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.newstudy.model.dao.BadgeDao">
-    <select id="selectBadgeList" parameterType="int" resultType="BadgeResponseDto">
+    <select id="selectBadgeList" parameterType="int" resultType="badgeResponseDto">
         SELECT u_id,
                b_id
         FROM `USER_BADGE`
         WHERE u_id = #{u_id}
     </select>
-    <insert id="insertBadge" parameterType="BadgeRequestDto">
+    <insert id="insertBadge" parameterType="badgeRequestDto">
         INSERT INTO `USER_BADGE`(u_id, b_id)
         VALUES (#{u_id}, #{b_id})
     </insert>
