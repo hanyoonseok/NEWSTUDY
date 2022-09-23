@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import BackBtn from "components/BackBtn";
 import "./style.scss";
 
@@ -7,6 +7,7 @@ import Question from "./Question";
 
 export default function SpeedQuiz() {
   const [index, setIndedx] = useState(0);
+  const [timer, setTimer] = useState(null);
   const questions = [
     {
       desc: "Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
@@ -100,33 +101,56 @@ export default function SpeedQuiz() {
   ];
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIndedx((prev) => prev + 1);
-    }, 10000);
-    if (index >= 10) clearInterval(timer);
+    clearInterval(timer);
+    if (index > 10) {
+      return;
+    }
+    setTimer(
+      setInterval(() => {
+        if (index >= 10) return;
+        document.querySelector(".timer-gauge").style.display = "none";
+        document.querySelector(".timer-needle").style.display = "none";
+        setIndedx((prev) => prev + 1);
+      }, 10000),
+    );
 
     return () => clearInterval(timer);
+  }, [index]);
+
+  const onNextClick = useCallback(() => {
+    if (index < 10) {
+      document.querySelector(".timer-gauge").style.display = "none";
+      document.querySelector(".timer-needle").style.display = "none";
+      setIndedx((prev) => prev + 1);
+    }
+    clearInterval(timer);
   }, [index]);
 
   return (
     <div className="speedquiz-container">
       <BackBtn />
-      <section className="speedquiz-content-container">
-        <h1 className="speedquiz-title">
-          <b>SPEED</b> QUIZ
-        </h1>
-        <h3 className="speedquiz-subtitle">
-          단어의 뜻을 보고, 정확한 단어의 스펠링을 작성해주세요! &nbsp;{" "}
-          <img
-            src={Check}
-            alt="체크모양 이미지"
-            className="speedquiz-subtitle-checkimg"
+      {index < 10 && (
+        <section className="speedquiz-content-container">
+          <h1 className="speedquiz-title">
+            <b>SPEED</b> QUIZ
+          </h1>
+          <h3 className="speedquiz-subtitle">
+            단어의 뜻을 보고, 정확한 단어의 스펠링을 작성해주세요! &nbsp;{" "}
+            <img
+              src={Check}
+              alt="체크모양 이미지"
+              className="speedquiz-subtitle-checkimg"
+            />
+          </h3>
+
+          <Question
+            question={questions[index]}
+            index={index + 1}
+            onNextClick={onNextClick}
+            timer={timer}
           />
-        </h3>
-        {index < 10 && (
-          <Question question={questions[index]} index={index + 1} />
-        )}
-      </section>
+        </section>
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./style.scss";
 
-export default function Question({ question, index }) {
+export default function Question({ question, index, onNextClick, timer }) {
   const renderInput = () => {
     const inputs = [];
 
@@ -15,21 +15,13 @@ export default function Question({ question, index }) {
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      document.querySelector(".timer-gauge").style.display = "none";
-      document.querySelector(".timer-needle").style.display = "none";
-    }, 10000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
     document.querySelector(".timer-gauge").style.display = "block";
     document.querySelector(".timer-needle").style.display = "block";
     document.querySelector(".timer-gauge").style.animation =
       "start 10s forwards linear";
     document.querySelector(".timer-needle").style.animation =
       "startNeedle 10s forwards linear";
+    console.log(index);
   }, [index]);
 
   return (
@@ -54,7 +46,10 @@ export default function Question({ question, index }) {
           <span className="timer-needle"></span>
           <span className="timer-gauge"></span>
         </div>
-        <div className="question-btn-wrapper">
+        <div
+          className="question-btn-wrapper"
+          onClick={() => onNextClick(timer)}
+        >
           <button className="next-btn"></button>
         </div>
       </div>
