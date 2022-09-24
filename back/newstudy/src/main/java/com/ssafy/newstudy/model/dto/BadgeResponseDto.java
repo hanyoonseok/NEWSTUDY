@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BadgeResponse {
+public class BadgeResponseDto {
     private Integer b_id;
     private String name;
 }
