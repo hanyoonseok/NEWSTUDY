@@ -13,4 +13,6 @@ public interface CategoryDao {
     List<CategoryResponseDto> selectCategory(Integer u_id);
 
     int insertCategory(CategoryRequestDto categoryRequestDto);
+
+    int deleteCategory(CategoryRequestDto categoryRequestDto);
 }

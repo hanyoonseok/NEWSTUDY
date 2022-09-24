@@ -16,8 +16,13 @@
     </select>
 
     <insert id="insertCategory" parameterType="categoryRequestDto">
-        INSERT INTO `USER_CATEGORY`(u_id, c_id)
+        INSERT INTO `USER_CATEGORY`
         VALUES (#{u_id}, #{c_id})
     </insert>
+
+    <delete id="deleteCategory" parameterType="categoryRequestDto">
+        DELETE FROM `USER_CATEGORY`
+        WHERE u_id = #{u_id} and c_id = #{c_id}
+    </delete>
 
 </mapper>
