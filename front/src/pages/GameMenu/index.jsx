@@ -5,6 +5,7 @@ import "./style.scss";
 import GameMenuBackground from "assets/game-background.png";
 import Check from "assets/check.png";
 import Crossword from "assets/crossword.png";
+import SpeedQuiz from "assets/speedquiz.png";
 
 export default function GameMenu() {
   return (
@@ -43,7 +44,7 @@ export default function GameMenu() {
                 <b>SPEED</b>&nbsp;QUIZ
               </h1>
               <img
-                src={Crossword}
+                src={SpeedQuiz}
                 className="game-card-img"
                 alt="낱말퍼즐 이미지"
               />
