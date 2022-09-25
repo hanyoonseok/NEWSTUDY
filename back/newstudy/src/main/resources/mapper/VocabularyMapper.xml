@@ -21,4 +21,9 @@
         where u_id = #{u_id} and v_id = #{v_id}
     </update>
 
+    <delete id="deleteVocabulary" parameterType="vocabularyRequestDto">
+        DELETE FROM `USER_VOCA`
+        where u_id = #{u_id} and v_id = #{v_id}
+    </delete>
+
 </mapper>

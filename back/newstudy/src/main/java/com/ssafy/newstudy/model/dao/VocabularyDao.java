@@ -13,4 +13,6 @@ public interface VocabularyDao {
     int insertVocabulary(VocabularyRequestDto voca);
 
     int updateVocabulary(VocabularyRequestDto voca);
+
+    int deleteVocabulary(VocabularyRequestDto voca);
 }

@@ -58,7 +58,7 @@ public class VocaburalyController {
     }
 
     @PostMapping()
-    @ApiOperation(value = "단어 추가하기", notes = "입력된 단어를 회원의 단어장에 추가한다")
+    @ApiOperation(value = "단어 추가하기", notes = "입력된 단어를 회원의 단어장에 추가한다. \n 추가된 단어 수에 따라 단어 배지 자동 추가")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
             @ApiResponse(code = 401, message="로그인정보 없음"),
@@ -113,7 +113,7 @@ public class VocaburalyController {
     @PutMapping("/{id}")
     @ApiOperation(value = "단어 외움 여부 변경", notes = "외움 상태(true)이면 외우지 않음(false), 외우지 않은 경우(false) 외운상태(true)로 변경")
     @ApiResponses({
-            @ApiResponse(code = 200, message="성공", response = List.class),
+            @ApiResponse(code = 200, message="성공"),
             @ApiResponse(code = 401, message="로그인정보 없음"),
             @ApiResponse(code = 500, message="서버오류")
     })
@@ -124,7 +124,7 @@ public class VocaburalyController {
         try{
             u_id = userService.getUidFromBearerToken(bearerToken);
         }catch (Exception e){
-            return new ResponseEntity<>("유효하지 않은 토큰", HttpStatus.UNAUTHORIZED); // 유효하지 않은 토큰
+            return new ResponseEntity<>("유효하지 않은 토큰", HttpStatus.UNAUTHORIZED);
         }
 
         // 2. 단어 외움여부 변경
@@ -138,4 +138,34 @@ public class VocaburalyController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "단어 삭제하기", notes = "입력된 단어를 회원의 단어장에서 삭제한다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message="성공"),
+            @ApiResponse(code = 401, message="로그인정보 없음"),
+            @ApiResponse(code = 500, message="서버오류")
+    })
+    public ResponseEntity<?> deleteVocabulary(@ApiParam(value = "유저 토큰", required = true) @RequestHeader("Authorization") String bearerToken,
+                                              @ApiParam(value = "삭제할 단어 id", required = true) @PathVariable Integer id) {
+        // 1. 유저 정보 가져오기
+        Integer u_id;
+        try{
+            u_id = userService.getUidFromBearerToken(bearerToken);
+        }catch (Exception e){
+            return new ResponseEntity<>("유효하지 않은 토큰", HttpStatus.UNAUTHORIZED);
+        }
+
+        // 2. 단어 외움여부 변경
+        try{
+            if(vocabularyService.deleteVocabulary(new VocabularyRequestDto(u_id, id)) == 0){
+                throw new Exception();
+            }
+        }catch (Exception e){
+            return new ResponseEntity<>("단어 삭제 실패", HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

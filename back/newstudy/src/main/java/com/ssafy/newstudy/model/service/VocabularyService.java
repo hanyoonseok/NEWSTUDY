@@ -24,4 +24,8 @@ public class VocabularyService{
     public int updateVocabulary(VocabularyRequestDto voca) {
         return vocabularyDao.updateVocabulary(voca);
     }
+
+    public int deleteVocabulary(VocabularyRequestDto voca) {
+        return vocabularyDao.deleteVocabulary(voca);
+    }
 }
