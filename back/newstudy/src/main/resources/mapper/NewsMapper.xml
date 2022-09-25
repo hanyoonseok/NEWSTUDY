@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.newstudy.model.dao.NewsDao">
+    <select id="selectNews" parameterType="int" resultType="newsResponseDto">
+        SELECT n_id,
+               c_id,
+               title,
+               content,
+               origin,
+               url,
+               `level`,
+               cnt,
+               `date`,
+               thumbnail
+        FROM `NEWS`
+        WHERE n_id = #{n_id}
+    </select>
+    <select id="selectNewsList" parameterType="newsRequestDto" resultType="newsResponseDto">
+        SELECT n_id,
+               c_id,
+               title,
+               content,
+               origin,
+               url,
+               `level`,
+               cnt,
+               `date`,
+               thumbnail
+        FROM `NEWS`
+        WHERE level between #{startlevel} and #{endlevel}
+        <if test="categoryid != '' and categoryid != null">
+          AND c_id = #{categoryid}
+        </if>
+        <if test="search != '' and search != null">
+            AND
+            (
+                title like '%${search}%'
+                OR content like '%${search}%'
+            )
+        </if>
+        LIMIT #{start_no}, #{per_page}
+    </select>
+    <select id="getNewsKeyword" parameterType="int" resultType="string">
+        SELECT eng
+        FROM `KEYWORD`
+        WHERE n_id = #{n_id}
+    </select>
+    <select id="selectNewsListOrderByCnt" parameterType="newsRequestDto" resultType="newsResponseDto">
+        SELECT n_id,
+               c_id,
+               title,
+               content,
+               origin,
+               url,
+               `level`,
+               cnt,
+               `date`,
+               thumbnail
+        FROM `NEWS`
+        ORDER BY cnt DESC
+        LIMIT #{start_no}, #{per_page}
+    </select>
+    <select id="selectRelatedNewsList" parameterType="int" resultType="newsResponseDto">
+        SELECT n_id,
+               c_id,
+               title,
+               content,
+               origin,
+               url,
+               `level`,
+               cnt,
+               `date`,
+               thumbnail
+        FROM `NEWS`
+        WHERE c_id = (SELECT c_id FROM `NEWS` WHERE n_id = #{n_id})
+        LIMIT 0, 10
+    </select>
+</mapper>
