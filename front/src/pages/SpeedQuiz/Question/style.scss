@@ -6,6 +6,10 @@
   align-items: center;
   margin-top: rem(30);
 
+  @media (max-width: 480px) {
+    justify-content: space-around;
+  }
+
   .question-desc-container {
     width: 80%;
     padding: rem(23) rem(23);
@@ -30,6 +34,9 @@
       @include FLEX-CENTER;
       font-family: $eng-font;
       font-size: rem(26);
+    }
+    @media (max-width: 480px) {
+      width: 100%;
     }
   }
 
@@ -61,6 +68,7 @@
   .question-input-container {
     @include FLEX-CENTER;
     width: 100%;
+    flex-wrap: wrap;
     margin-top: rem(20);
 
     .question-input {
@@ -73,9 +81,18 @@
       font-family: $eng-title-font;
       font-size: rem(50);
       font-weight: bold;
+
+      @media (max-width: 480px) {
+        width: rem(50);
+        height: rem(50);
+        font-size: rem(40);
+      }
     }
     .question-input + .question-input {
       margin-left: rem(30);
+      @media (max-width: 480px) {
+        margin-left: rem(10);
+      }
     }
   }
 
@@ -85,6 +102,10 @@
     align-items: flex-end;
     margin-top: rem(10);
 
+    @media (max-width: 480px) {
+      flex-direction: column;
+    }
+
     .question-timer-container {
       position: relative;
       width: 80%;
@@ -93,6 +114,10 @@
       border-radius: 20px;
       content: "";
       display: flex;
+
+      @media (max-width: 480px) {
+        width: 100%;
+      }
 
       @keyframes start {
         0% {
@@ -135,6 +160,10 @@
       @include FLEX-CENTER;
       border-radius: 90px;
       cursor: pointer;
+
+      @media (max-width: 480px) {
+        margin-top: rem(30);
+      }
 
       &:hover {
         background-color: $grey;

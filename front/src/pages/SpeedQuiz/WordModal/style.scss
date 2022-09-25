@@ -1,12 +1,12 @@
 @import "variables.scss";
 
-.wordmodal-empty {
+.wordmodal-container {
   position: fixed;
   top: 0;
   left: 0;
   @include STRETCH;
-  @include FLEX-CENTER;
   background-color: rgba(63, 65, 75, 0.15);
+  @include FLEX-CENTER;
 
   .wordmodal-content-container {
     padding: rem(28);

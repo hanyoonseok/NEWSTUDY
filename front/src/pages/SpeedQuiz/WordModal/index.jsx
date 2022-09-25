@@ -45,7 +45,7 @@ export default function WordModal({ info, setSelectedModal }) {
   };
 
   return (
-    <div className="wordmodal-empty">
+    <div className="wordmodal-container">
       <div className="wordmodal-content-container">
         <article className="wordmodal-btn-wrapper">
           <FontAwesomeIcon

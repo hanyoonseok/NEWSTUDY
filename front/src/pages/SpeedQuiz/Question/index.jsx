@@ -2,16 +2,15 @@ import React, { useEffect } from "react";
 import "./style.scss";
 
 export default function Question({ question, index, onNextClick, timer }) {
+  let inputHTML = [];
   const renderInput = () => {
-    const inputs = [];
-
     for (let i = 0; i < question.answer.length; i++) {
-      inputs.push(
+      inputHTML.push(
         <input type="text" className="question-input" maxLength="1" key={i} />,
       );
     }
 
-    return inputs;
+    return inputHTML;
   };
 
   useEffect(() => {

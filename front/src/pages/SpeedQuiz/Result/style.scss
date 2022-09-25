@@ -30,13 +30,26 @@
   .speedquiz-result-list {
     width: 100%;
     margin-top: rem(30);
+    @include FLEX-COLUMN;
+
+    @media (max-width: 480px) {
+      flex-direction: row;
+    }
+
     .speedquiz-result-row {
       width: 100%;
       @include FLEX-AROUND;
+
+      @media (max-width: 480px) {
+        flex-direction: column;
+      }
     }
 
     .speedquiz-result-row + .speedquiz-result-row {
       margin-top: rem(30);
+      @media (max-width: 480px) {
+        margin-top: 0;
+      }
     }
 
     .speedquiz-result-col {
@@ -53,6 +66,10 @@
       font-size: rem(24);
       font-weight: bold;
       transition: 0.2s ease;
+
+      @media (max-width: 480px) {
+        margin-top: rem(20);
+      }
 
       &.right {
         background-color: $lightx2-blue;
