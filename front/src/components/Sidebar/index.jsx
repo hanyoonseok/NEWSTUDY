@@ -1,8 +1,7 @@
 import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import "./style.scss";
 
 import {
@@ -13,14 +12,19 @@ import {
   faRightFromBracket,
   faBars,
   faSearch,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import SearchResult from "components/Header/SearchResult";
 
 export default function Sidebar() {
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
-
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeSearch, setActiveSearch] = useState(false);
   const sidebar = useRef();
+  const searchInput = useRef();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const hoverHandler = () => {
@@ -45,6 +49,65 @@ export default function Sidebar() {
       sidebar.current.style.opacity = "0";
     }
   };
+  // 검색창 열엉
+  const onSearchBar = () => {
+    setActiveSearch(true);
+    searchInput.current.focus();
+    console.log("여기있다 출력해라");
+  };
+
+  // 검색창 닫엉
+
+  const closeSearchBar = () => {
+    setActiveSearch(false);
+    searchInput.current.value = "";
+  };
+  const searchArticle = (e) => {
+    console.log(e.target.value);
+    setSearchQuery(e.target.value);
+
+    // api불러와랑~
+  };
+  const onSubmitSearch = (e) => {
+    console.log("검색해라");
+    if (e.key === "Enter") {
+      navigate(`/search/${searchQuery}`);
+      setActiveSearch(false);
+    }
+  };
+
+  const searchArticles = [
+    {
+      title: "Faker win the world championship !! pleaseㅠㅠ",
+      thumbnail:
+        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
+      level: "A1",
+    },
+    {
+      title: "Faker win the world championship please pleaseㅠㅠ",
+      thumbnail:
+        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
+      level: "A1",
+    },
+    {
+      title: "Faker win the world championship",
+      thumbnail:
+        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
+      level: "A1",
+    },
+    {
+      title: "Faker win the world championship",
+      thumbnail:
+        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
+      level: "A1",
+    },
+    {
+      title: "Faker win the world championship",
+      thumbnail:
+        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
+      level: "A1",
+    },
+  ];
 
   return (
     <>
@@ -64,9 +127,56 @@ export default function Sidebar() {
               <div className="logo-img">
                 <img src={require("assets/logo_white.png")} alt="article"></img>
               </div>
-              <i className="nav-btn">
+              <i
+                className={`nav-btn ${activeSearch ? "hidden" : "visible"}`}
+                onClick={onSearchBar}
+              >
                 <FontAwesomeIcon icon={faSearch} />
               </i>
+              <div
+                className={`search-container ${
+                  activeSearch ? "visible" : "hidden"
+                }`}
+              >
+                <i>
+                  <FontAwesomeIcon icon={faSearch} />
+                </i>
+                <div className="header-search">
+                  <input
+                    className="input-search"
+                    ref={searchInput}
+                    placeholder="검색어를 입력하세요."
+                    onChange={(e) => searchArticle(e)}
+                    onKeyPress={onSubmitSearch}
+                  />
+                </div>
+                <i
+                  className="header-icon"
+                  onClick={() => {
+                    closeSearchBar();
+                  }}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </i>
+              </div>
+
+              <div
+                className={`search-list-mobile ${
+                  activeSearch ? "visible" : "hidden"
+                }`}
+              >
+                <ul>
+                  {searchArticles.map((article, index) => (
+                    <li>
+                      <SearchResult
+                        article={article}
+                        query={searchQuery}
+                        key={index}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
               <>
                 <div className="sidebar-div sidebar" ref={sidebar}>
                   <div>
@@ -157,6 +267,9 @@ export default function Sidebar() {
 
       {isMobile && isMobileMenuOpen && (
         <div className="screen-wrapper" onClick={outHandler}></div>
+      )}
+      {activeSearch && (
+        <div className="fade-screen" onClick={() => closeSearchBar()}></div>
       )}
     </>
   );
