@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.newstudy.model.dao.ScrapDao">
+    <select id="selectScrapList" parameterType="int" resultType="scrapResponseDto">
+        SELECT thumbnail,
+               title,
+               `level`,
+               n_id
+        FROM `NEWS_SCRAP`
+        LEFT JOIN `NEWS`
+        USING (n_id)
+        WHERE u_id = #{u_id}
+    </select>
+    <insert id="insertScrap" parameterType="scrapRequestDto">
+        INSERT INTO `NEWS_SCRAP`(u_id, n_id)
+        VALUES (#{u_id}, #{n_id})
+    </insert>
+    <delete id="deleteScrap" parameterType="scrapRequestDto">
+        DELETE FROM `NEWS_SCRAP`
+         WHERE u_id = #{u_id}
+           AND n_id = #{n_id}
+    </delete>
+</mapper>
