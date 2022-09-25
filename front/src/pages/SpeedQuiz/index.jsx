@@ -145,7 +145,10 @@ export default function SpeedQuiz() {
         {
           ...questions[index],
           user: curAnswer,
-          correct: curAnswer === questions[index].answer ? true : false,
+          correct:
+            curAnswer.toUpperCase() === questions[index].answer.toUpperCase()
+              ? true
+              : false,
         },
       ]);
     }

@@ -16,11 +16,14 @@ export default function WordModal({ info, setSelectedModal }) {
       const wordBlock = (
         <div
           className={`wordmodal-wordblock ${
-            info.answer.charAt(i) === info.user.charAt(i) ? "" : "wrong"
+            info.answer.toUpperCase().charAt(i) ===
+            info.user.toUpperCase().charAt(i)
+              ? ""
+              : "wrong"
           }`}
           key={i}
         >
-          {info.user.charAt(i)}
+          {info.user.toUpperCase().charAt(i)}
         </div>
       );
       result.push(wordBlock);
@@ -35,7 +38,7 @@ export default function WordModal({ info, setSelectedModal }) {
     for (let i = 0; i < info.answer.length; i++) {
       const wordBlock = (
         <div className={`wordmodal-wordblock`} key={i}>
-          {info.answer.charAt(i)}
+          {info.answer.toUpperCase().charAt(i)}
         </div>
       );
       result.push(wordBlock);
@@ -44,9 +47,17 @@ export default function WordModal({ info, setSelectedModal }) {
     return result;
   };
 
+  const closeModal = (e) => {
+    e.stopPropagation();
+    setSelectedModal(null);
+  };
+
   return (
-    <div className="wordmodal-container">
-      <div className="wordmodal-content-container">
+    <div className="wordmodal-container" onClick={closeModal}>
+      <div
+        className="wordmodal-content-container"
+        onClick={(e) => e.stopPropagation()}
+      >
         <article className="wordmodal-btn-wrapper">
           <FontAwesomeIcon
             icon={faClose}

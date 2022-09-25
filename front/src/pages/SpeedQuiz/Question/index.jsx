@@ -1,17 +1,43 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import "./style.scss";
 
 export default function Question({ question, index, onNextClick, timer }) {
-  let inputHTML = [];
+  let inputHTML;
+
+  const onInputChange = (e, idx) => {
+    if (e.target.value.length === 1) {
+      if (idx < question.answer.length - 1) {
+        inputHTML[idx + 1].focus();
+      }
+    }
+  };
+
   const renderInput = () => {
+    const input = [];
     for (let i = 0; i < question.answer.length; i++) {
-      inputHTML.push(
-        <input type="text" className="question-input" maxLength="1" key={i} />,
+      input.push(
+        <input
+          type="text"
+          className="question-input"
+          maxLength="1"
+          key={i}
+          onChange={(e) => onInputChange(e, i)}
+          onKeyPress={i === question.answer.length - 1 ? submitAnswer : null}
+        />,
       );
     }
 
-    return inputHTML;
+    inputHTML = document.querySelectorAll(".question-input");
+
+    return input;
   };
+
+  const submitAnswer = useCallback(
+    (e) => {
+      if (e.key === "Enter") onNextClick(timer);
+    },
+    [timer],
+  );
 
   useEffect(() => {
     document.querySelector(".timer-gauge").style.display = "block";
@@ -20,7 +46,9 @@ export default function Question({ question, index, onNextClick, timer }) {
       "start 10s forwards linear";
     document.querySelector(".timer-needle").style.animation =
       "startNeedle 10s forwards linear";
-  }, [index]);
+
+    inputHTML.length > 0 && inputHTML[0].focus();
+  }, [index, inputHTML]);
 
   return (
     <div className="question-container">
@@ -38,7 +66,7 @@ export default function Question({ question, index, onNextClick, timer }) {
           );
         })}
       </div>
-      <div className="question-input-container">{renderInput()}</div>
+      <form className="question-input-container">{renderInput()}</form>
       <div className="question-footer">
         <div className="question-timer-container">
           <span className="timer-needle"></span>
