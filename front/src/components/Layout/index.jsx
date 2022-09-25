@@ -5,14 +5,15 @@ import Sidebar from "components/Sidebar";
 import Header from "components/Header";
 
 export default function Layout({ children }) {
-  const [isLogin, setIsLogin] = useState(false);
   const localStorageItem = localStorage.getItem("isLogin");
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
+    console.log(localStorageItem);
     if (localStorageItem === null || localStorageItem === "false")
       setIsLogin(false);
     else setIsLogin(true);
-  }, [isLogin]);
+  }, [localStorageItem]);
 
   return (
     <div className="layout-div">

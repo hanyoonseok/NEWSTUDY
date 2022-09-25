@@ -26,10 +26,7 @@ export const signupUser = async (data) => {
   console.log(data);
   const request = await axios
     .post(`${process.env.REACT_APP_API_URL}/user/signup`, data)
-    .then((res) => {
-      console.log(res);
-      loginUser(data);
-    });
+    .then((res) => console.log(res));
   return {
     type: SIGNUP_USER,
     payload: request,
@@ -40,7 +37,6 @@ const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초�
 
 export const loginUser = async (data) => {
   console.log("loginUser");
-  console.log(data);
   let userInfo = {
     email: null,
     level: null,
@@ -57,7 +53,6 @@ export const loginUser = async (data) => {
     userInfo.level = res.data.data.level;
     userInfo.nickname = res.data.data.nickname;
   });
-  console.log(userInfo);
   return {
     type: LOGIN_USER,
     payload: userInfo,
@@ -102,7 +97,7 @@ export const logoutUser = async () => {
 
 /* 리덕스에서 관리 할 상태 정의 */
 const userState = {
-  currentUser: null,
+  currentUser: {},
 };
 
 /*********************** 리듀서 선언 ***********************/
@@ -111,21 +106,18 @@ export default function user(state = userState, action) {
     case AUTH_EMAIL:
       return {
         ...state,
-        emailSuccess: action.payload,
       };
     case SIGNUP_USER:
-      return { ...state, signupSuccess: action.payload };
+      return { ...state };
     case LOGIN_USER:
       return {
         ...state,
         currentUser: action.payload,
-        loginSuccess: action.payload,
       };
     case LOGOUT_USER:
       return {
         ...state,
-        currentUser: null,
-        logoutSuccess: action.payload,
+        currentUser: {},
       };
     default:
       return state;

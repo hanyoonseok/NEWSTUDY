@@ -22,6 +22,7 @@
     "react-scripts": "5.0.1",
     "react-wordcloud": "^1.2.7",
     "redux": "^4.2.0",
+    "redux-persist": "^6.0.0",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.4.1",
     "sass-loader": "^13.0.2",

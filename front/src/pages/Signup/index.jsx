@@ -6,11 +6,9 @@ import { authEmail } from "modules/user/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [activeId, setActiveId] = useState(0);
 
   const onClickSwitchTab = (id) => {
@@ -20,7 +18,7 @@ export default function Signup() {
   const [Email, setEmail] = useState("");
   const [isDuplicateEmail, setIsDuplicateEmail] = useState(false); //이메일 중복 여부
   const [AuthKey, setAuthKey] = useState("");
-  const [receiveAuthKey, setReceiveAuthKey] = useState("ddd"); //백에서 보내줄 인증키
+  const [receiveAuthKey, setReceiveAuthKey] = useState("1"); //백에서 보내줄 인증키
   const [isAuthKey, setIsAuthKey] = useState(true); //인증키 일치 여부
   const [Password, setPassword] = useState("");
   const [ConfirmPw, setConfirmPw] = useState("");
@@ -84,8 +82,7 @@ export default function Signup() {
     };
     dispatch(loginUser(user)).then((res) => {
       console.log("로그인 성공 ");
-      //회원가입 성공하면 레벨테스트로 보내야함
-      setTimeout(navigate("/landing"), 1000);
+      window.location.replace("/landing");
     });
   };
 
@@ -98,9 +95,12 @@ export default function Signup() {
         nickname: Nickname,
       };
       dispatch(signupUser(user)).then((res) => {
-        console.log("회원가입 성공 ");
-        //회원가입 성공하면 레벨테스트로 보내야함
-        setTimeout(navigate("/leveltest"), 1000);
+        console.log("회원가입 성공 ", res);
+        //회원가입 성공하면 바로 로그인처리
+        dispatch(loginUser(user)).then((res) => {
+          //로그인끝나면 레벨테스트로 이동
+          window.location.replace("/leveltest");
+        });
       });
     }
   };

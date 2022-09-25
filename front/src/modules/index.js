@@ -1,8 +1,15 @@
 import { combineReducers } from "redux";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import { persistReducer } from "redux-persist";
 import user from "./user/user";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   user,
 });
 
-export default rootReducer;
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+export default persistReducer(persistConfig, rootReducer);
