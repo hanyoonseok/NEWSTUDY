@@ -1,7 +1,6 @@
 package com.ssafy.newstudy.model.service;
 
 import com.ssafy.newstudy.model.dao.VocabularyDao;
-import com.ssafy.newstudy.model.dto.UserTmp;
 import com.ssafy.newstudy.model.dto.VocabularyRequestDto;
 import com.ssafy.newstudy.model.dto.VocabularyResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +13,12 @@ import java.util.List;
 public class VocabularyService{
     private final VocabularyDao vocabularyDao;
 
-    public List<VocabularyResponseDto> getVocabulary(String email) {
-        return vocabularyDao.getVocabulary(email);
+    public List<VocabularyResponseDto> getVocabulary(Integer u_id) {
+        return vocabularyDao.selectVocabulary(u_id);
     }
 
     public int addVocabulary(VocabularyRequestDto voca) {
-        return vocabularyDao.addVocabulary(voca);
+        return vocabularyDao.insertVocabulary(voca);
     }
 
     public int updateVocabulary(VocabularyRequestDto voca) {

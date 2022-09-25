@@ -8,9 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface VocabularyDao {
-    List<VocabularyResponseDto> getVocabulary(String email);
+    List<VocabularyResponseDto> selectVocabulary(Integer u_id);
 
-    int addVocabulary(VocabularyRequestDto voca);
+    int insertVocabulary(VocabularyRequestDto voca);
 
     int updateVocabulary(VocabularyRequestDto voca);
 }
