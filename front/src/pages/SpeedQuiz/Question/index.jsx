@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from "react";
 import "./style.scss";
 
-export default function Question({ question, index, onNextClick, timer }) {
+export default function Question({ question, index, onNextClick, initGauge }) {
   let inputHTML;
 
   const onInputChange = (e, idx) => {
@@ -32,14 +32,12 @@ export default function Question({ question, index, onNextClick, timer }) {
     return input;
   };
 
-  const submitAnswer = useCallback(
-    (e) => {
-      if (e.key === "Enter") onNextClick(timer);
-    },
-    [timer],
-  );
+  const submitAnswer = (e) => {
+    if (e.key === "Enter") onNextClick();
+  };
 
   useEffect(() => {
+    initGauge();
     document.querySelector(".timer-gauge").style.display = "block";
     document.querySelector(".timer-needle").style.display = "block";
     document.querySelector(".timer-gauge").style.animation =
@@ -72,10 +70,7 @@ export default function Question({ question, index, onNextClick, timer }) {
           <span className="timer-needle"></span>
           <span className="timer-gauge"></span>
         </div>
-        <div
-          className="question-btn-wrapper"
-          onClick={() => onNextClick(timer)}
-        >
+        <div className="question-btn-wrapper" onClick={onNextClick}>
           <button className="next-btn"></button>
         </div>
       </div>

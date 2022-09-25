@@ -114,25 +114,8 @@ export default function SpeedQuiz() {
 
   const [answer, setAnswer] = useState([]);
 
-  useEffect(() => {
-    clearInterval(timer);
-
-    if (index >= 10) return;
-
-    setTimer(
-      setInterval(() => {
-        if (index >= 10) return;
-        addValueToAnswer();
-        document.querySelector(".timer-gauge").style.display = "none";
-        document.querySelector(".timer-needle").style.display = "none";
-        setIndedx((prev) => prev + 1);
-      }, 10000),
-    );
-
-    return () => clearInterval(timer);
-  }, [index]);
-
   const addValueToAnswer = () => {
+    initGauge();
     if (index >= 0) {
       let curAnswer = "";
       document.querySelectorAll(".question-input").forEach((e) => {
@@ -154,13 +137,30 @@ export default function SpeedQuiz() {
     }
   };
 
-  const onNextClick = useCallback(() => {
-    addValueToAnswer();
+  useEffect(() => {
+    if (timer) clearTimeout(timer);
+
+    if (index >= 10) return;
+    setTimer(
+      setTimeout(() => {
+        if (index >= 10) return;
+        addValueToAnswer();
+        setIndedx((prev) => prev + 1);
+      }, 10000),
+    );
+
+    return () => clearTimeout(timer);
+  }, [index]);
+
+  const initGauge = () => {
     document.querySelector(".timer-gauge").style.display = "none";
     document.querySelector(".timer-needle").style.display = "none";
+  };
+
+  const onNextClick = () => {
+    addValueToAnswer();
     setIndedx((prev) => prev + 1);
-    clearInterval(timer);
-  }, [index]);
+  };
 
   return (
     <div className="speedquiz-container">
@@ -183,7 +183,7 @@ export default function SpeedQuiz() {
             question={questions[index]}
             index={index + 1}
             onNextClick={onNextClick}
-            timer={timer}
+            initGauge={initGauge}
           />
         </section>
       ) : (
