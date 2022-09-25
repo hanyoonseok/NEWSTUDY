@@ -22,7 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/vocaburary")
-public class VocaburalyController {
+public class VocabularyController {
 
     private final VocabularyService vocabularyService;
     private final BadgeService badgeService;
