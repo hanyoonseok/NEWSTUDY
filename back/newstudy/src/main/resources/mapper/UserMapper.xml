@@ -18,7 +18,7 @@
     <select id="selectUserByUid" resultType="userDto">
         SELECT u_id, email, pw, level, nickname, src
         FROM user
-        WHERE u_id = #{uId}
+        WHERE u_id = #{u_id}
     </select>
 
     <select id="selectUidByEmail" resultType="int">
