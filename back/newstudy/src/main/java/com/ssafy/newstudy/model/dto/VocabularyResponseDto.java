@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BadgeRequest {
-    private Integer u_id;
-    private Integer b_id;
+public class VocabularyResponseDto {
+    private Integer v_id; // 단어 id
+    private String eng;   // 영단어
+    private boolean done; // 외움 여부
 }

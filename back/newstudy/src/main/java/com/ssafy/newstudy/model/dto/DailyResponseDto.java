@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BadgeResponse {
-    private Integer b_id;
-    private String name;
+public class DailyResponseDto {
+    private Integer c_id;
+    private String eng;
+    private String kor; // 한국어 뜻  // 오늘의 단어
+    private Integer cnt;
 }
