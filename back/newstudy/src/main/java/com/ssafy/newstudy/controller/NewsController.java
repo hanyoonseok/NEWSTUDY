@@ -98,7 +98,7 @@ public class NewsController {
             @ApiResponse(code = 401, message="로그인정보 없음"),
             @ApiResponse(code = 500, message="서버오류")
     })
-    public ResponseEntity<List<NewsResponseDto>> getNewsRelated(@PathVariable Integer n_id){
+    public ResponseEntity<List<NewsResponseDto>> getNewsRelated(@PathVariable(required = false) Integer n_id){
         List<NewsResponseDto> responseArray = newsService.getNewsRelated(n_id);
         return new ResponseEntity<List<NewsResponseDto>>(responseArray, HttpStatus.OK);
     }

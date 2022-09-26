@@ -30,7 +30,7 @@
                thumbnail
         FROM `NEWS`
         WHERE level between #{startlevel} and #{endlevel}
-        <if test="(categoryid != '' and categoryid != null)">
+        <if test="categoryid != '' and categoryid != null and categoryid != 0">
           AND c_id = #{categoryid}
         </if>
         <if test="search != '' and search != null">

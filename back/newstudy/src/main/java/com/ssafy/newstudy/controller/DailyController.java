@@ -20,7 +20,7 @@ import java.util.List;
 public class DailyController {
     private final DailyService dailyService;
 
-    @GetMapping("/{c_id}")
+    @GetMapping(value = {"/{c_id}", "/", ""})
     @ApiOperation(value = "오늘 가장 많이 사용된 단어 목록", notes = "가장 많이 사용된 단어, 횟수의 목록을 준다")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
@@ -28,7 +28,8 @@ public class DailyController {
             @ApiResponse(code = 500, message="서버오류")
     })
     public ResponseEntity<List<DailyResponseDto>> getDailyKeyword(@ApiParam(value = "카테고리 넘버", required = false,
-                                                                            defaultValue = "0") @PathVariable Integer c_id){
+                                                                            defaultValue = "0") @PathVariable(required = false) Integer c_id){
+        if(c_id == null) c_id = 0;
         //데일리 키워드 리스트
         List<DailyResponseDto> responseArray = dailyService.getDailyKeyword(c_id);
         return new ResponseEntity<List<DailyResponseDto>>(responseArray, HttpStatus.OK);

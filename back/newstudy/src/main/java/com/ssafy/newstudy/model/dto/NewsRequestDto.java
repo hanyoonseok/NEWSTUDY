@@ -1,14 +1,13 @@
 package com.ssafy.newstudy.model.dto;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NewsRequestDto {
-    private Integer page;
+    private Integer page = 1;
     private Integer start_no;
     private final Integer per_page = 10;
 
@@ -25,7 +24,11 @@ public class NewsRequestDto {
     }
 
     public void setPage(Integer page){
-        this.page = page;
-        this.start_no = (page - 1) * per_page;
+        if(page == null || page == 0) {
+            setPage(1);
+            return;
+        }
+            this.page = page;
+            this.start_no = (page - 1) * per_page;
     }
 }
