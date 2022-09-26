@@ -3,13 +3,13 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 import { persistReducer } from "redux-persist";
 import user from "./user/user";
 
-export const rootReducer = combineReducers({
-  user,
-});
-
 const persistConfig = {
   key: "root",
   storage,
 };
+
+export const rootReducer = combineReducers({
+  user,
+});
 
 export default persistReducer(persistConfig, rootReducer);

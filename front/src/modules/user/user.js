@@ -1,4 +1,5 @@
 import axios from "axios";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
 /*********************** 액션 타입 만들기 ***********************/
 // Ducks 패턴을 따를땐 액션의 이름에 접두사를 넣어주세요.
@@ -23,7 +24,6 @@ export const authEmail = async (data) => {
 
 export const signupUser = async (data) => {
   console.log("signupuser");
-  console.log(data);
   const request = await axios
     .post(`${process.env.REACT_APP_API_URL}/user/signup`, data)
     .then((res) => console.log(res));
@@ -83,12 +83,14 @@ export const onSilentRefresh = async (refresh_token) => {
 
 export const logoutUser = async () => {
   console.log("logoutUser");
-  const request = await axios
-    .get(`${process.env.REACT_APP_API_URL}/auth/logout`)
-    .then((res) => {
-      console.log(res);
-      localStorage.removeItem("isLogin");
-    });
+  const request = await axios.create({
+    transformRequest: (data, headers) => {
+      // or just the auth header
+      delete headers.common.Authorization;
+    },
+  });
+  localStorage.removeItem("isLogin");
+  storage.removeItem("persist:root"); // storage에 저장된 데이터 날리기
   return {
     type: LOGOUT_USER,
     payload: request,
@@ -97,7 +99,7 @@ export const logoutUser = async () => {
 
 /* 리덕스에서 관리 할 상태 정의 */
 const userState = {
-  currentUser: {},
+  currentUser: null,
 };
 
 /*********************** 리듀서 선언 ***********************/
@@ -115,10 +117,7 @@ export default function user(state = userState, action) {
         currentUser: action.payload,
       };
     case LOGOUT_USER:
-      return {
-        ...state,
-        currentUser: {},
-      };
+      return (state.currentUser = null);
     default:
       return state;
   }

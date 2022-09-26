@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import "./style.scss";
@@ -19,7 +19,6 @@ import { logoutUser } from "modules/user/user";
 
 export default function Sidebar() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
@@ -53,7 +52,7 @@ export default function Sidebar() {
 
   const onClickLogout = () => {
     dispatch(logoutUser).then((res) => {
-      navigate("/");
+      window.location.replace("/");
     });
   };
 
