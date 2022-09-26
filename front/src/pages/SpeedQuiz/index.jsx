@@ -115,7 +115,7 @@ export default function SpeedQuiz() {
   const [answer, setAnswer] = useState([]);
 
   const addValueToAnswer = () => {
-    initGauge();
+    initDomElement();
     if (index >= 0) {
       let curAnswer = "";
       document.querySelectorAll(".question-input").forEach((e) => {
@@ -152,9 +152,9 @@ export default function SpeedQuiz() {
     return () => clearTimeout(timer);
   }, [index]);
 
-  const initGauge = () => {
-    document.querySelector(".timer-gauge").style.display = "none";
-    document.querySelector(".timer-needle").style.display = "none";
+  const initDomElement = () => {
+    document.querySelector(".question-timer-container").replaceChildren();
+    document.querySelector(".question-kor-trans").style.display = "none";
   };
 
   const onNextClick = () => {
@@ -183,7 +183,7 @@ export default function SpeedQuiz() {
             question={questions[index]}
             index={index + 1}
             onNextClick={onNextClick}
-            initGauge={initGauge}
+            initDomElement={initDomElement}
           />
         </section>
       ) : (

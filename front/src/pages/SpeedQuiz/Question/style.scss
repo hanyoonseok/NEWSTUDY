@@ -5,10 +5,7 @@
   @include FLEX-COLUMN;
   align-items: center;
   margin-top: rem(30);
-
-  @media (max-width: 480px) {
-    justify-content: space-around;
-  }
+  justify-content: space-around;
 
   .question-desc-container {
     width: 80%;
@@ -41,8 +38,8 @@
   }
 
   .question-kor-trans {
-    margin-top: rem(30);
     @include FLEX-COLUMN;
+    display: none;
 
     .question-trans-row {
       @include FLEX-ALIGN-CENTER;
@@ -69,7 +66,6 @@
     @include FLEX-CENTER;
     width: 100%;
     flex-wrap: wrap;
-    margin-top: rem(20);
 
     .question-input {
       width: rem(100);
@@ -100,7 +96,6 @@
     width: 100%;
     @include FLEX-AROUND;
     align-items: flex-end;
-    margin-top: rem(10);
 
     @media (max-width: 480px) {
       flex-direction: column;
@@ -119,7 +114,7 @@
         width: 100%;
       }
 
-      @keyframes start {
+      @keyframes startGauge {
         0% {
           width: 0%;
         }
@@ -131,6 +126,7 @@
         height: rem(20);
         border-radius: 20px;
         background: linear-gradient(to right, $light-blue, $soft-blue);
+        animation: startGauge 10s forwards linear;
       }
 
       @keyframes startNeedle {
@@ -149,6 +145,7 @@
         border-top: 30px solid $soft-blue;
         border-left: 15px solid transparent;
         border-right: 15px solid transparent;
+        animation: startNeedle 10s forwards linear;
       }
     }
 

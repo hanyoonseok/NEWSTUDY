@@ -1,7 +1,13 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import "./style.scss";
 
-export default function Question({ question, index, onNextClick, initGauge }) {
+export default function Question({
+  question,
+  index,
+  onNextClick,
+  initDomElement,
+}) {
+  const korTrans = useRef();
   let inputHTML;
 
   const onInputChange = (e, idx) => {
@@ -37,15 +43,22 @@ export default function Question({ question, index, onNextClick, initGauge }) {
   };
 
   useEffect(() => {
-    initGauge();
-    document.querySelector(".timer-gauge").style.display = "block";
-    document.querySelector(".timer-needle").style.display = "block";
-    document.querySelector(".timer-gauge").style.animation =
-      "start 10s forwards linear";
-    document.querySelector(".timer-needle").style.animation =
-      "startNeedle 10s forwards linear";
+    initDomElement();
+    const gauge = document.createElement("span");
+    const needle = document.createElement("span");
+    gauge.className = "timer-gauge";
+    needle.className = "timer-needle";
+
+    document.querySelector(".question-timer-container").appendChild(gauge);
+    document.querySelector(".question-timer-container").appendChild(needle);
 
     inputHTML.length > 0 && inputHTML[0].focus();
+
+    const fiveTimer = setTimeout(() => {
+      korTrans.current.style.display = "flex";
+    }, 5000);
+
+    return () => clearTimeout(fiveTimer);
   }, [index, inputHTML]);
 
   return (
@@ -54,7 +67,7 @@ export default function Question({ question, index, onNextClick, initGauge }) {
         <i className="question-index">{index}</i>
         <span className="question-desc">{question.desc}</span>
       </p>
-      <div className="question-kor-trans">
+      <div className="question-kor-trans" ref={korTrans}>
         {question.translate.map((e, i) => {
           return (
             <div className="question-trans-row" key={i}>
