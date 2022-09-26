@@ -4,13 +4,13 @@
   display: flex;
   .mycrossword-col {
     @include FLEX-CENTER;
-    width: rem(36);
-    height: rem(36);
+    width: rem(32);
+    height: rem(32);
     margin: 1px;
 
     @media (max-width: 480px) {
-      width: rem(28);
-      height: rem(28);
+      width: rem(26);
+      height: rem(26);
     }
 
     &.value {

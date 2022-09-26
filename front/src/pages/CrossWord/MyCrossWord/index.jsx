@@ -15,7 +15,11 @@ export default function MyCrossWord({ maxR, maxC }) {
 
     crosswordInputs.forEach((e) => {
       const wordSplit = e.dataset.word.split(" ");
-      wordSet.add(wordSplit.length > 1 ? wordSplit[1] : wordSplit[0]);
+      wordSet.add(
+        wordSplit.length > 1
+          ? wordSplit[1].toLowerCase()
+          : wordSplit[0].toLowerCase(),
+      );
       crosswordsPos[parseInt(e.dataset.row)].push(e);
     });
 
@@ -31,18 +35,23 @@ export default function MyCrossWord({ maxR, maxC }) {
         //row행에 있는 input들 다 조회
         for (let j = 0; j < curRowPos.length; j++) {
           if (parseInt(curRowPos[j].dataset.col) === i) {
-            innerText = curRowPos[j].value === "" ? " " : curRowPos[j].value;
+            innerText =
+              curRowPos[j].value === ""
+                ? " "
+                : curRowPos[j].value.toLowerCase();
 
             const curWord = curRowPos[j].dataset.word.split(" "); //row행 j열의 input의 data-word
 
             for (let k = 0; k < curWord.length; k++) {
               if (
-                curWord[k].charAt(matchingAlgorithm[curWord[k]]) !==
-                curRowPos[j].value
+                curWord[k]
+                  .toLowerCase()
+                  .charAt(matchingAlgorithm[curWord[k].toLowerCase()]) !==
+                curRowPos[j].value.toLowerCase()
               ) {
                 innerText += " wrong";
               }
-              matchingAlgorithm[curWord[k]]++;
+              matchingAlgorithm[curWord[k].toLowerCase()]++;
             }
           }
         }

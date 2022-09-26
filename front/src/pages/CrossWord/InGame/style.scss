@@ -9,6 +9,7 @@
 
   @media (max-width: 480px) {
     padding: 12px 6px;
+    margin-bottom: 10px;
   }
 
   .crossword-game-title {
@@ -218,6 +219,10 @@
         font-family: $eng-font;
         word-break: keep-all;
         font-size: rem(18);
+
+        @media (max-width: 480px) {
+          font-size: rem(24);
+        }
       }
     }
 

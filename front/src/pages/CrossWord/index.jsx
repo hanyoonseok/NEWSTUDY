@@ -1,10 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./style.scss";
 import InGame from "./InGame";
 import MyCrossWord from "./MyCrossWord";
 import AnsCrossWord from "./AnsCrossWord";
+import { useCallback } from "react";
 
 export default function CrossWord() {
   const [maxR, setMaxR] = useState(0);
@@ -15,7 +18,7 @@ export default function CrossWord() {
       r: 0,
       c: 0,
       d: 1,
-      name: "squid",
+      name: "Squid",
       hint: "hinthinthi nthint ginthintgint hinthint hinthintgint hintgint hinthinthin thintginthintg int",
     },
     {
@@ -98,6 +101,10 @@ export default function CrossWord() {
     setMaxC(curc);
   }, [maxC, maxR, wordArr]);
 
+  const onLinkMenuClick = () => {
+    window.location.href = "/game/menu";
+  };
+
   return (
     <div className={`crossword-container ${!inGame && "col"}`}>
       {inGame ? (
@@ -114,7 +121,9 @@ export default function CrossWord() {
             <MyCrossWord maxR={maxR} maxC={maxC} />
           </div>
           <div className="crossword-mainbtn-wrapper">
-            <button className="crossword-main-btn">메인으로</button>
+            <button className="crossword-main-btn" onClick={onLinkMenuClick}>
+              게임 목록으로 <FontAwesomeIcon icon={faAnglesRight} />
+            </button>
           </div>
         </>
       )}

@@ -5,6 +5,10 @@
   align-items: center;
   @include STRETCH;
 
+  @media (max-width: 480px) {
+    overflow-y: auto;
+  }
+
   .speedquiz-result-title {
     width: 100%;
     @include FLEX-CENTER;
@@ -92,6 +96,29 @@
         top: rem(15);
         left: rem(15);
       }
+    }
+  }
+}
+
+.speedquiz-mainbtn-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: rem(30);
+  .speedquiz-main-btn {
+    transition: 0.3s ease;
+    height: rem(50);
+    padding: rem(12) rem(30);
+    background-color: $default-grey;
+    color: #fff;
+    border-radius: 15px;
+    font-family: $kor-font;
+    font-size: rem(18);
+    color: #f5f5f5;
+
+    &:hover {
+      background-color: lighten($default-grey, 20%);
+      color: $default-grey;
     }
   }
 }

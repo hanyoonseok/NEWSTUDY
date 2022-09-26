@@ -1,4 +1,5 @@
 import React from "react";
+import "./style.scss";
 
 import Globe from "assets/user_globe.png";
 
@@ -18,32 +19,32 @@ export default function AnsCrossWord({ maxR, maxC }) {
       crosswordsPos[parseInt(e.dataset.row)].push(e);
     });
 
-    wordSet.forEach((e) => (matchingAlgorithm[e] = 0));
+    wordSet.forEach((e) => (matchingAlgorithm[e.toLowerCase()] = 0));
 
-    const makeMyCol = (row) => {
+    const makeAnsCol = (row) => {
       const columns = [];
 
       for (let i = 0; i < maxC; i++) {
         let innerText = "";
-        const curRowPos = crosswordsPos[row];
+        const curRowPos = crosswordsPos[row]; //row행에 있는 모든 input
 
         //row행에 있는 input들 다 조회
         for (let j = 0; j < curRowPos.length; j++) {
           if (parseInt(curRowPos[j].dataset.col) === i) {
-            innerText = curRowPos[j].value === "" ? " " : curRowPos[j].value;
-
             const curWord = curRowPos[j].dataset.word.split(" "); //row행 j열의 input의 data-word
 
             for (let k = 0; k < curWord.length; k++) {
-              innerText = curWord[k].charAt(matchingAlgorithm[curWord[k]]);
-              matchingAlgorithm[curWord[k]]++;
+              innerText = curWord[k]
+                .toLowerCase()
+                .charAt(matchingAlgorithm[curWord[k].toLowerCase()]);
+              matchingAlgorithm[curWord[k].toLowerCase()]++;
             }
           }
         }
 
         columns.push(
           <div
-            className={`mycrossword-col ${innerText === "" ? "" : "value"}`}
+            className={`anscrossword-col ${innerText === "" ? "" : "value"}`}
             key={i}
           >
             {innerText}
@@ -56,8 +57,8 @@ export default function AnsCrossWord({ maxR, maxC }) {
 
     for (let i = 0; i < maxR; i++) {
       result.push(
-        <div className="mycrossword-row" key={i}>
-          {makeMyCol(i)}
+        <div className="anscrossword-row" key={i}>
+          {makeAnsCol(i)}
         </div>,
       );
     }
