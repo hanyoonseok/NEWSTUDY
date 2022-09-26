@@ -162,7 +162,7 @@ function SearchList() {
           <label htmlFor="content"></label>
         </div>
         <div className="search-dates">
-          <div className="search-date" key={"start"}>
+          <div className="search-date">
             <div className="date-icon" onClick={onStartCalendar}>
               <i>
                 <FontAwesomeIcon icon={faCalendarDays} />
@@ -182,7 +182,7 @@ function SearchList() {
 
           <div className="search-separator">-</div>
 
-          <div className="search-date" key={"end"}>
+          <div className="search-date">
             <div className="date-icon" onClick={onEndCalendar}>
               <i>
                 <FontAwesomeIcon icon={faCalendarDays} />
