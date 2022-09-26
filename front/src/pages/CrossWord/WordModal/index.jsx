@@ -23,6 +23,7 @@ export default function WordModal({ wordInfo, setSelectedWord }) {
             onClick={() => setSelectedWord(null)}
           />
         </article>
+        <h1 className="wordmodal-word-title">{wordInfo.name}</h1>
         <article className="wordmodal-desc-container">
           <i className="wordmodal-index">{wordInfo.index}</i>
           <span className="wordmodal-desc">{wordInfo.hint}</span>

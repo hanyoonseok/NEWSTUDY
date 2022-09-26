@@ -110,7 +110,7 @@
     margin-top: rem(20);
     align-items: center;
     .wordmodal-input-row {
-      @include FLEX-ALIGN-CENTER;
+      @include FLEX-CENTER;
       flex-wrap: wrap;
 
       .wordmodal-wordblock {
@@ -122,6 +122,7 @@
         font-size: rem(32);
         font-weight: bold;
         margin-bottom: rem(4);
+        margin-right: rem(10);
         @include FLEX-CENTER;
         &.wrong {
           color: #ffb2b2;
@@ -129,15 +130,7 @@
         @media (max-width: 480px) {
           width: rem(40);
           height: rem(40);
-          margin-right: rem(10);
-          margin-bottom: rem(4);
           font-size: rem(28);
-        }
-      }
-      .wordmodal-wordblock + .wordmodal-wordblock {
-        margin-left: rem(10);
-        @media (max-width: 480px) {
-          margin-left: 0;
         }
       }
     }

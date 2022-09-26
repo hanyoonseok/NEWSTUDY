@@ -9,6 +9,12 @@
   @include FLEX-CENTER;
   z-index: 10;
 
+  .wordmodal-word-title {
+    font-size: rem(50);
+    font-family: $eng-title-font;
+    font-weight: bold;
+  }
+
   .wordmodal-content-container {
     padding: rem(28);
     background-color: #fff;
@@ -103,50 +109,6 @@
         font-family: $kor-font;
         font-weight: bold;
       }
-    }
-  }
-
-  .wordmodal-input-result {
-    @include FLEX-COLUMN;
-    margin-top: rem(20);
-    align-items: center;
-    .wordmodal-input-row {
-      @include FLEX-ALIGN-CENTER;
-      flex-wrap: wrap;
-
-      .wordmodal-wordblock {
-        width: rem(50);
-        height: rem(50);
-        border-radius: 12px;
-        background-color: $light-grey;
-        font-family: $eng-title-font;
-        font-size: rem(32);
-        font-weight: bold;
-        @include FLEX-CENTER;
-        &.wrong {
-          color: #ffb2b2;
-        }
-        @media (max-width: 480px) {
-          width: rem(40);
-          height: rem(40);
-          margin-right: rem(10);
-          margin-bottom: rem(4);
-          font-size: rem(28);
-        }
-      }
-      .wordmodal-wordblock + .wordmodal-wordblock {
-        margin-left: rem(10);
-        @media (max-width: 480px) {
-          margin-left: 0;
-        }
-      }
-    }
-
-    .wordmodal-arrow-down {
-      width: rem(26);
-      height: rem(30);
-      margin: rem(10) 0;
-      color: #85899f;
     }
   }
   .wordmodal-add-btn {

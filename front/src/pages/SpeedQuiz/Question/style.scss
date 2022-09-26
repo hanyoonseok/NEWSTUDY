@@ -77,17 +77,14 @@
       font-family: $eng-title-font;
       font-size: rem(50);
       font-weight: bold;
+      margin-bottom: rem(4);
+      margin-right: rem(30);
 
       @media (max-width: 480px) {
         width: rem(50);
         height: rem(50);
         font-size: rem(40);
-      }
-    }
-    .question-input + .question-input {
-      margin-left: rem(30);
-      @media (max-width: 480px) {
-        margin-left: rem(10);
+        margin-right: rem(10);
       }
     }
   }
