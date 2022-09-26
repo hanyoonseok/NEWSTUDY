@@ -147,8 +147,8 @@ export default function Header() {
       <div className={`search-list ${activeSearch ? "visible" : "hidden"}`}>
         <ul>
           {searchArticles.map((article, index) => (
-            <li>
-              <SearchResult article={article} query={searchQuery} key={index} />
+            <li key={index}>
+              <SearchResult article={article} query={searchQuery} />
             </li>
           ))}
         </ul>

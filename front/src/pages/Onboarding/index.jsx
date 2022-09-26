@@ -12,7 +12,7 @@ import Page5 from "./Page5";
 import Dots from "./Dots";
 import Marker from "assets/marker.jpg";
 import Countrycard from "assets/country-card.jpg";
-import Earth from "assets/earthmap_color.png";
+import Earth from "assets/earthmap.jpg";
 
 export default function Onboarding() {
   const [scrollIdx, setScrollIdx] = useState(1);

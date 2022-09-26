@@ -205,10 +205,9 @@ function SearchList() {
       </div>
       <div className="search-top-news">
         {news.map((e, i) => (
-          <div className="top-news">
+          <div className="top-news" key={i}>
             <HotNewsCard
               news={news[0]}
-              key={i}
               isMobile={isMobile}
               query={params.query}
             ></HotNewsCard>
@@ -217,8 +216,8 @@ function SearchList() {
       </div>
       <div className="search-newslist">
         {newses.map((e, i) => (
-          <div className="news-result">
-            <NewsCard news={e} stretch={!isMobile} key={i} />
+          <div className="news-result" key={i}>
+            <NewsCard news={e} stretch={!isMobile} />
           </div>
         ))}
       </div>

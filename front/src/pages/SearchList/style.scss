@@ -28,7 +28,7 @@
     }
     .search-toggle {
       @include FLEX-CENTER;
-      width: 150px;
+      width: rem(130);
       margin: 0 5px;
       @media (max-width: 480px) {
         width: 28vw;
@@ -54,8 +54,8 @@
         content: "";
         cursor: pointer;
         text-indent: -9999px;
-        width: 90px;
-        height: 40px;
+        width: 70px;
+        height: 30px;
         background: $soft-grey;
         filter: $drop-shadow;
         display: block;
@@ -72,10 +72,10 @@
         position: absolute;
         top: 5px;
         left: 5px;
-        width: 10px;
-        height: 10px;
+        width: 7px;
+        height: 7px;
         background: transparent;
-        border: 10px solid white;
+        border: 7px solid white;
         border-radius: 90px;
         transition: 0.3s;
         @media (max-width: 480px) {
@@ -94,7 +94,7 @@
       input:checked + label:after {
         left: calc(100% - 5px);
         transform: translateX(-100%);
-        border: 10px solid $soft-blue;
+        border: 7px solid $soft-blue;
         @media (max-width: 480px) {
           border: 6px solid $soft-blue;
         }

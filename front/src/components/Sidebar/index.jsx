@@ -51,6 +51,7 @@ export default function Sidebar() {
   };
   // 검색창 열엉
   const onSearchBar = () => {
+    searchInput.current.value = "";
     setActiveSearch(true);
     searchInput.current.focus();
     console.log("여기있다 출력해라");
@@ -60,7 +61,6 @@ export default function Sidebar() {
 
   const closeSearchBar = () => {
     setActiveSearch(false);
-    searchInput.current.value = "";
   };
   const searchArticle = (e) => {
     console.log(e.target.value);
@@ -167,12 +167,8 @@ export default function Sidebar() {
               >
                 <ul>
                   {searchArticles.map((article, index) => (
-                    <li>
-                      <SearchResult
-                        article={article}
-                        query={searchQuery}
-                        key={index}
-                      />
+                    <li key={index}>
+                      <SearchResult article={article} query={searchQuery} />
                     </li>
                   ))}
                 </ul>
