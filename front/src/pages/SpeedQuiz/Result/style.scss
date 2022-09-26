@@ -120,5 +120,9 @@
       background-color: lighten($default-grey, 20%);
       color: $default-grey;
     }
+
+    @media (max-width: 480px) {
+      width: 100%;
+    }
   }
 }

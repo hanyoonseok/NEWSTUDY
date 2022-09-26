@@ -7,7 +7,6 @@ import "./style.scss";
 import InGame from "./InGame";
 import MyCrossWord from "./MyCrossWord";
 import AnsCrossWord from "./AnsCrossWord";
-import { useCallback } from "react";
 
 export default function CrossWord() {
   const [maxR, setMaxR] = useState(0);
@@ -15,6 +14,7 @@ export default function CrossWord() {
   const [inGame, setInGame] = useState(true);
   const [wordArr, setWordArr] = useState([
     {
+      index: 1,
       r: 0,
       c: 0,
       d: 1,
@@ -22,6 +22,7 @@ export default function CrossWord() {
       hint: "hinthinthi nthint ginthintgint hinthint hinthintgint hintgint hinthinthin thintginthintg int",
     },
     {
+      index: 2,
       r: 0,
       c: 3,
       d: -1,
@@ -29,6 +30,7 @@ export default function CrossWord() {
       hint: "hinthinthinthintginthintgint",
     },
     {
+      index: 3,
       r: 2,
       c: 3,
       d: 1,
@@ -36,6 +38,7 @@ export default function CrossWord() {
       hint: "hinthinthinthintginthintgint",
     },
     {
+      index: 4,
       r: 0,
       c: 7,
       d: -1,
@@ -43,6 +46,7 @@ export default function CrossWord() {
       hint: "hinthinthinthintginthintgint",
     },
     {
+      index: 5,
       r: 0,
       c: 7,
       d: 1,
@@ -50,6 +54,7 @@ export default function CrossWord() {
       hint: "hinthinthinthintginthintgint",
     },
     {
+      index: 6,
       r: 6,
       c: 0,
       d: 1,
@@ -57,6 +62,7 @@ export default function CrossWord() {
       hint: "hinthinthinthintginthintgint",
     },
     {
+      index: 7,
       r: 5,
       c: 0,
       d: -1,
@@ -64,6 +70,7 @@ export default function CrossWord() {
       hint: "hinthinthinthintginthintgint",
     },
     {
+      index: 8,
       r: 6,
       c: 3,
       d: -1,
@@ -71,6 +78,7 @@ export default function CrossWord() {
       hint: "hinthinthinthintginthintgint",
     },
     {
+      index: 9,
       r: 5,
       c: 5,
       d: -1,
@@ -78,6 +86,7 @@ export default function CrossWord() {
       hint: "hinthinthinthintginthintgint",
     },
     {
+      index: 10,
       r: 0,
       c: 14,
       d: -1,
@@ -85,6 +94,8 @@ export default function CrossWord() {
       hint: "hinthinthinthintginthintgint",
     },
   ]);
+
+  const crosswordInputs = document.querySelectorAll(".crossword-input");
 
   useEffect(() => {
     let curr = 0;
@@ -99,7 +110,7 @@ export default function CrossWord() {
 
     setMaxR(curr);
     setMaxC(curc);
-  }, [maxC, maxR, wordArr]);
+  }, []);
 
   const onLinkMenuClick = () => {
     window.location.href = "/game/menu";
@@ -117,7 +128,12 @@ export default function CrossWord() {
       ) : (
         <>
           <div className="crossword-result-container">
-            <AnsCrossWord maxR={maxR} maxC={maxC} />
+            <AnsCrossWord
+              maxR={maxR}
+              maxC={maxC}
+              wordArr={wordArr}
+              crosswordInputs={crosswordInputs}
+            />
             <MyCrossWord maxR={maxR} maxC={maxC} />
           </div>
           <div className="crossword-mainbtn-wrapper">
