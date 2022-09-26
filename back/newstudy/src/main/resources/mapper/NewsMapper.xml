@@ -30,7 +30,7 @@
                thumbnail
         FROM `NEWS`
         WHERE level between #{startlevel} and #{endlevel}
-        <if test="categoryid != '' and categoryid != null">
+        <if test="(categoryid != '' and categoryid != null)">
           AND c_id = #{categoryid}
         </if>
         <if test="search != '' and search != null">
@@ -77,4 +77,9 @@
         WHERE c_id = (SELECT c_id FROM `NEWS` WHERE n_id = #{n_id})
         LIMIT 0, 10
     </select>
+    <update id="updateViewCnt" parameterType="int">
+        UPDATE `NEWS`
+        SET    cnt = cnt + 1
+        WHERE  n_id = #{n_id}
+    </update>
 </mapper>

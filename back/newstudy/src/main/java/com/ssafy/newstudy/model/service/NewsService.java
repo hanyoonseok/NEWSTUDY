@@ -66,4 +66,12 @@ public class NewsService {
     public List<NewsResponseDto> getNewsRecommend(Integer n_id) {
         return newsDao.selectRelatedNewsList(n_id);
     }
+
+    /**
+     * News테이블의 cnt를 하나 올려준다
+     * @param n_id
+     */
+    public void updateViewCnt(Integer n_id){
+        newsDao.updateViewCnt(n_id);
+    }
 }

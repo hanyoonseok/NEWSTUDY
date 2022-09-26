@@ -34,10 +34,12 @@ public class NewsController {
     })
     public ResponseEntity<NewsResponseDto> getNews(@PathVariable Integer n_id){
         NewsResponseDto response = newsService.getNews(n_id);
-        if(response != null)
+        if(response != null) {
+            newsService.updateViewCnt(n_id);    //어차피 cnt를 보여주지 않으니 이대로 간다 (속도)
             return new ResponseEntity<NewsResponseDto>(response, HttpStatus.OK);
-        else
+        }else{
             return new ResponseEntity<NewsResponseDto>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping()
@@ -49,7 +51,6 @@ public class NewsController {
     })
     public ResponseEntity<List<NewsResponseDto>> getNewsList(@ApiParam(value = "로그인된 유저 정보", required = true) @RequestHeader("Authorization") String bearerToken,
                                                              @RequestBody NewsRequestDto newsRequestDto){
-       System.out.print(newsRequestDto.getPage()+" "+newsRequestDto.getStart_no());
         //request에 레벨 범위가 없다면 본인레벨 start, end
         if(newsRequestDto == null || newsRequestDto.getStartlevel() == null) {
             UserDto user = userService.getUserByUid(userService.getUidFromBearerToken(bearerToken));
@@ -110,7 +111,6 @@ public class NewsController {
             @ApiResponse(code = 500, message="서버오류")
     })
     public ResponseEntity<List<NewsResponseDto>> getNewsRecommend(@RequestBody NewsRequestDto newsRequestDto){
-        System.out.print("recommend"+newsRequestDto.getN_id());
         List<NewsResponseDto> responseArray = newsService.getNewsRecommend(newsRequestDto.getN_id());
         return new ResponseEntity<List<NewsResponseDto>>(responseArray, HttpStatus.OK);
     }

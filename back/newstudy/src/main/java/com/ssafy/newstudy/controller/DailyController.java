@@ -27,7 +27,8 @@ public class DailyController {
             @ApiResponse(code = 401, message="로그인정보 없음"),
             @ApiResponse(code = 500, message="서버오류")
     })
-    public ResponseEntity<List<DailyResponseDto>> getDailyKeyword(@PathVariable Integer c_id){
+    public ResponseEntity<List<DailyResponseDto>> getDailyKeyword(@ApiParam(value = "카테고리 넘버", required = false,
+                                                                            defaultValue = "0") @PathVariable Integer c_id){
         //데일리 키워드 리스트
         List<DailyResponseDto> responseArray = dailyService.getDailyKeyword(c_id);
         return new ResponseEntity<List<DailyResponseDto>>(responseArray, HttpStatus.OK);
