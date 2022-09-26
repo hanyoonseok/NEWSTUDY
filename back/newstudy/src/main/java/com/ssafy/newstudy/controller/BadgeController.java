@@ -2,10 +2,8 @@ package com.ssafy.newstudy.controller;
 
 import com.ssafy.newstudy.model.dto.BadgeRequestDto;
 import com.ssafy.newstudy.model.dto.BadgeResponseDto;
-import com.ssafy.newstudy.model.dto.UserDto;
 import com.ssafy.newstudy.model.service.BadgeService;
 import com.ssafy.newstudy.model.service.UserService;
-import com.ssafy.newstudy.util.JwtTokenUtil;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,7 +23,6 @@ public class BadgeController {
 
     private final BadgeService badgeService;
     private final UserService userService;
-    private final JwtTokenUtil jwtTokenUtil;
 
     @GetMapping()
     @ApiOperation(value = "회원의 배지 목록", notes = "로그인 한 회원의 배지 목록을 준다")

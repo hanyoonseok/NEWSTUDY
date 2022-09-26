@@ -9,7 +9,10 @@
                kor,
                cnt
         FROM `DAILY_WORD`
-        WHERE c_id = #{c_id}
+        WHERE 1 = 1
+            <if test="c_id != 0">
+                AND c_id = #{c_id}
+            </if>
           AND date(`date`) = date(now())
         order by cnt desc
         limit 0, 50
