@@ -67,7 +67,7 @@ body {
   font-family: $kor-font;
 }
 
-.root {
+#root {
   width: 100%;
   height: 100%;
 }
@@ -95,6 +95,7 @@ h4 {
 }
 i {
   cursor: pointer;
+  font-style: initial;
 }
 li {
   cursor: pointer;
