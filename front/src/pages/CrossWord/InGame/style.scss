@@ -1,0 +1,228 @@
+@import "variables.scss";
+
+.crossword-game-section {
+  @include BACKGROUND-IMAGE("assets/crossword-background.png");
+  @include FLEX-COLUMN;
+  // max-width: rem(824);
+  border-radius: 25px;
+  padding: rem(10);
+
+  @media (max-width: 480px) {
+    padding: 12px 6px;
+  }
+
+  .crossword-game-title {
+    @include FLEX-CENTER;
+    font-size: rem(40);
+    font-family: $eng-title-font;
+    font-weight: bold;
+    color: $dark-grey;
+    b {
+      color: $soft-blue;
+    }
+    .crossword-title-globe {
+      width: rem(32);
+      height: rem(32);
+    }
+
+    @media (max-width: 480px) {
+      margin-bottom: rem(10);
+    }
+  }
+
+  .crossword-game-field {
+    width: 100%;
+    height: 100%;
+    @include FLEX-CENTER;
+    flex-direction: column;
+
+    .crossword-row {
+      display: flex;
+      .crossword-col {
+        width: rem(36);
+        height: rem(36);
+        background-color: transparent;
+        margin: 1px;
+        position: relative;
+
+        @media (max-width: 480px) {
+          width: rem(28);
+          height: rem(28);
+        }
+
+        .crossword-input {
+          width: 100%;
+          height: 100%;
+          border: none;
+          border-radius: 10px;
+          background-color: #fff;
+          text-align: center;
+          filter: $drop-shadow;
+          font-family: $eng-title-font;
+          font-size: rem(18);
+          font-weight: bold;
+          color: #000;
+          transition: 0.2s ease;
+          cursor: pointer;
+
+          &.across {
+            background-color: $soft-grey;
+          }
+          &.down {
+            background-color: $soft-blue;
+          }
+        }
+
+        .hint-dot {
+          position: absolute;
+          top: 4px;
+          width: 10px;
+          height: 10px;
+          border-radius: 10px;
+          z-index: 2;
+          cursor: none;
+
+          &.across {
+            left: 4px;
+            background-color: $grey;
+          }
+          &.down {
+            right: 4px;
+            background-color: $blue;
+          }
+
+          @media (max-width: 480px) {
+            width: 5px;
+            height: 5px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.crossword-hint-section {
+  width: 40%;
+  height: 100%;
+  @include FLEX-COLUMN;
+  margin-left: rem(30);
+
+  @media (max-width: 480px) {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .crossword-hint-article {
+    height: 100%;
+    @include FLEX-COLUMN;
+    overflow: hidden;
+  }
+
+  .crossword-submit-btn {
+    flex-shrink: 0;
+    height: rem(40);
+    width: 100%;
+    border-radius: 20px;
+    background-color: $light-blue;
+    font-size: rem(20);
+    font-family: $kor-font;
+    font-weight: bold;
+    @include BTN-COLOR($light-blue);
+
+    @media (max-width: 480px) {
+      height: 40px;
+    }
+  }
+
+  .hint-article-title {
+    font-family: $eng-title-font;
+    font-size: rem(28);
+    color: $dark-grey;
+    flex-shrink: 0;
+
+    @media (max-width: 480px) {
+      display: none;
+    }
+  }
+
+  .hint-article-list {
+    height: 100%;
+    overflow-y: auto;
+    padding: rem(4) rem(4);
+    margin-bottom: rem(6);
+    @include FLEX-COLUMN;
+
+    .hint-card {
+      width: 100%;
+      padding: rem(10);
+      border-radius: 15px;
+      @include FLEX-ALIGN-CENTER;
+      box-shadow: $light-shadow;
+      cursor: pointer;
+      transition: 0.3s ease;
+
+      @media (max-width: 480px) {
+        display: none;
+        padding: 25px 15px;
+        height: 100%;
+      }
+
+      &.row {
+        .hint-card-index {
+          background-color: #000;
+        }
+
+        &.active {
+          background-color: $light-grey;
+        }
+
+        &:hover {
+          background-color: $light-grey;
+        }
+        @media (max-width: 480px) {
+          background-color: $light-grey;
+        }
+      }
+
+      &.col {
+        .hint-card-index {
+          background-color: $soft-blue;
+        }
+
+        &.active {
+          background-color: #d7e2ff;
+        }
+
+        &:hover {
+          background-color: #d7e2ff;
+        }
+
+        @media (max-width: 480px) {
+          background-color: #d7e2ff;
+        }
+      }
+
+      .hint-card-index {
+        color: #fff;
+        font-family: $eng-font;
+        font-size: rem(20);
+        width: rem(30);
+        height: rem(30);
+        border-radius: 20px;
+        margin-right: rem(10);
+        flex-shrink: 0;
+        @include FLEX-CENTER;
+      }
+
+      .hint-card-desc {
+        font-family: $eng-font;
+        word-break: keep-all;
+        font-size: rem(18);
+      }
+    }
+
+    .hint-card + .hint-card {
+      margin-top: rem(10);
+    }
+  }
+}
