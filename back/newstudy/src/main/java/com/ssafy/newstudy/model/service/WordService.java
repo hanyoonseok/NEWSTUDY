@@ -47,7 +47,6 @@ public class WordService {
             String curStr = word_list[cur[3]];
 
             if(check[cur[3]]) continue;
-            //System.out.println(curStr + " " + cur[0] + " " + cur[1] + " " + cur[2]);
 
             if(isValidPos(cur[0], cur[1], cur[2], curStr)) {
                 check[cur[3]] = true;
@@ -97,7 +96,20 @@ public class WordService {
             }
         }
 
+        getWordDescription(list, payload);
+
         return payload;
+    }
+
+    private void getWordDescription(List<WordResponseDto> list, List<WordResponseDto> payload){
+        outer : for(int i = 0 ; i < payload.size() ; i++){
+            for(int j = 0 ; j < list.size() ; j++) {
+                if(payload.get(i).getEng().equals(list.get(j).getEng())) {
+                    payload.get(i).setDescription(list.get(j).getDescription());
+                    continue outer;
+                }
+            }
+        }
     }
 
     private void addWordToQueue(int r, int c, int dir, String curStr) {
