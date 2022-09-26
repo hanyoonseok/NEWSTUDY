@@ -10,7 +10,7 @@
                cnt
         FROM `DAILY_WORD`
         WHERE 1 = 1
-            <if test="c_id != 0">
+            <if test="c_id != null and c_id != 0">
                 AND c_id = #{c_id}
             </if>
           AND date(`date`) = date(now())

@@ -20,7 +20,7 @@ public class WordController {
     private final WordService wordService;
 
     @GetMapping("/test")
-    @ApiOperation(value = "테스트용 단어 제공", notes = "레벨 테스트용 단어 ( 1 - 6 레벨, 레벨 당 5개 단어) 제공")
+    @ApiOperation(value = "테스트용 단어 제공", notes = "레벨 테스트용 단어 ( 1 - 6 레벨, 레벨 당 5개 단어) 랜덤 제공")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
             @ApiResponse(code = 401, message="로그인정보 없음"),
@@ -32,7 +32,7 @@ public class WordController {
     }
 
     @GetMapping("/game")
-    @ApiOperation(value = "게임용 단어 제공", notes = "게임용 단어 10개 랜덤 제공")
+    @ApiOperation(value = "게임용 단어 제공", notes = "게임용 단어 10개 랜덤 제공, crossword 인 경우 param으로 type에 'cross' 주면 됨. 나머지는 speed ")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
             @ApiResponse(code = 401, message="로그인정보 없음"),
