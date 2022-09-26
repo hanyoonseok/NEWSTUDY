@@ -7,7 +7,6 @@
     width: rem(32);
     height: rem(32);
     margin: 1px;
-    cursor: pointer;
 
     @media (max-width: 480px) {
       width: rem(26);
@@ -24,6 +23,7 @@
       transition: 0.2s ease;
       border: none;
       border-radius: 10px;
+      cursor: pointer;
     }
 
     &.wrong {

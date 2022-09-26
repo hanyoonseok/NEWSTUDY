@@ -1,5 +1,4 @@
-import React from "react";
-import { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 import "./style.scss";
@@ -7,14 +6,16 @@ import BackBtn from "components/BackBtn";
 import Globe from "assets/user_globe.png";
 
 export default function InGame({ maxR, maxC, wordArr, setInGame }) {
+  const [selectedWord, setSelectedWord] = useState(null);
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
 
-  const onInputFocus = useCallback((e) => {
+  const onInputClick = useCallback((e) => {
     const words = e.target.dataset.word.split(" ");
     const word = words.length > 1 ? words[1] : words[0];
     const dir = e.target.dataset.dir;
+    setSelectedWord(word);
 
     focusOutActive(false);
     highlightInput(word, dir);
@@ -43,6 +44,27 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
     isMobile
       ? (hintCard.style.display = "flex")
       : (hintCard.className += " active");
+  };
+
+  const onInputChange = (e) => {
+    if (e.target.value.length !== 1) return;
+    const resultArr = [];
+    const inputArr = document.querySelectorAll(`[data-word]`);
+    const er = e.target.dataset.row;
+    const ec = e.target.dataset.col;
+    let curIdx = 0;
+
+    inputArr.forEach((el, i) => {
+      el.className = "crossword-input";
+      if (el.dataset.word === selectedWord) resultArr.push(el);
+      else if (el.dataset.word.indexOf(selectedWord) >= 0) resultArr.push(el);
+    });
+
+    resultArr.forEach((el, i) => {
+      if (el.dataset.row === er && el.dataset.col === ec) curIdx = i;
+    });
+
+    if (curIdx < selectedWord.length - 1) resultArr[curIdx + 1].focus();
   };
 
   const drawCrossword = () => {
@@ -80,7 +102,8 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
                 data-col={i}
                 data-dir={activeDirPos[i]}
                 data-word={wordPos[i]}
-                onFocus={onInputFocus}
+                onClick={onInputClick}
+                onChange={onInputChange}
               />
             )}
             {dotArr.map((e, j) =>

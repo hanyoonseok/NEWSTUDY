@@ -121,6 +121,7 @@
         font-family: $eng-title-font;
         font-size: rem(32);
         font-weight: bold;
+        margin-bottom: rem(4);
         @include FLEX-CENTER;
         &.wrong {
           color: #ffb2b2;

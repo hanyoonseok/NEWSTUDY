@@ -47,7 +47,7 @@ export default function SpeedQuiz() {
         { part: "noun", level: "C1", trans: "현명함, 지혜" },
       ],
       index: 4,
-      answer: "horsehosasd",
+      answer: "horsehosasdss",
       correct: false,
     },
     {
