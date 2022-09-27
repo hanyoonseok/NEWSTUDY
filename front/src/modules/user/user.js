@@ -41,11 +41,14 @@ export const loginUser = async (data) => {
     email: null,
     level: null,
     nickname: null,
+    accessToken: null,
   };
   // 로그인 처리
   await axios
     .post(`${process.env.REACT_APP_API_URL}/auth/login`, data)
-    .then(loginSuccess);
+    .then((res) => {
+      userInfo.accessToken = loginSuccess(res);
+    });
   // 회원정보 조회
   await axios.get(`${process.env.REACT_APP_API_URL}/user`).then((res) => {
     console.log(res.data.data);
@@ -53,6 +56,7 @@ export const loginUser = async (data) => {
     userInfo.level = res.data.data.level;
     userInfo.nickname = res.data.data.nickname;
   });
+  console.log(userInfo);
   return {
     type: LOGIN_USER,
     payload: userInfo,
@@ -67,6 +71,7 @@ export const loginSuccess = (res) => {
   // accessToken 만료하기 1분 전에 로그인 연장
   setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
   localStorage.setItem("isLogin", true);
+  return accessToken;
 };
 
 export const onSilentRefresh = async (refresh_token) => {

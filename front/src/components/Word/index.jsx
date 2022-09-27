@@ -1,10 +1,21 @@
 import "./style.scss";
-import React, { useEffect } from "react";
+import axios from "axios";
+import React from "react";
+import { useSelector } from "react-redux";
 
 export default function Word({ vocas, setWordMemorizeStatus }) {
-  const changeMemorizeStatus = (status) => {
-    status.memorize = !status.memorize;
-    setWordMemorizeStatus(true);
+  const user = useSelector((state) => state.user.currentUser);
+
+  const changeMemorizeStatus = (voca) => {
+    axios
+      .put(`${process.env.REACT_APP_API_URL}/vocaburary/${voca.v_id}`, null, {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      })
+      .then((res) => {
+        setWordMemorizeStatus((current) => !current);
+      });
   };
 
   return (
@@ -13,11 +24,11 @@ export default function Word({ vocas, setWordMemorizeStatus }) {
         <div className="voca" key={index}>
           <div
             onClick={() => changeMemorizeStatus(voca)}
-            className={"memorize " + (voca.memorize ? "blue" : "grey")}
+            className={"memorize " + (voca.done ? "blue" : "grey")}
           ></div>
-          <div className="word">{voca.word}</div>
+          <div className="word">{voca.eng}</div>
           <div className="mean">
-            {voca.part.map((item, index) => (
+            {/* {voca.part.map((item, index) => (
               <div key={index}>
                 {item.id === 0 && <p className="tag blue">형</p>}
                 {item.id === 1 && <p className="tag orange">명</p>}
@@ -25,7 +36,8 @@ export default function Word({ vocas, setWordMemorizeStatus }) {
                 {item.id === 3 && <p className="tag green">동</p>}
                 <p className="kor-mean">{item.mean}</p>
               </div>
-            ))}
+            ))} */}
+            {voca.kor}
           </div>
         </div>
       ))}

@@ -29,7 +29,7 @@
           position: absolute;
           left: 80px;
           top: 20px;
-          width: rem(60);
+          width: rem(62);
           height: rem(65);
           z-index: 10;
 
@@ -225,13 +225,17 @@
         grid-template-columns: 1fr 1fr 1fr;
         gap: 1.8rem;
 
-        > div {
+        > a {
           width: 225px;
           height: 200px;
           margin: auto;
           position: relative;
           border-radius: 20px;
           padding: 3% 4%;
+
+          &:visited {
+            color: black;
+          }
 
           &:hover {
             transform: scale(1.02);
