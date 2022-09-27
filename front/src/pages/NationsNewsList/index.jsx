@@ -1,17 +1,36 @@
 import React, { useCallback, useState, useEffect } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
 import Kor from "assets/kor.jpg";
-
 import Globe from "./Globe";
 
 export default function NationsNewsList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [receiveIdx, setReceiveIdx] = useState(0); //globe에서 마커 클릭했을 때 클릭한 나라 id 값 받을 변수
+  const [nationsNews, setNationsNews] = useState([]);
+  const { currentUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      };
+      const categoryResponse = await axios.get("/gategory", headers);
+      console.log(categoryResponse);
+      //여기서 카테고리 리스트 받아서 국가에 해당하는 속성만 따로 저장하는 로직 들어가야 함
+      //getNationsNews(0);
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     setSelectedIdx(receiveIdx);
@@ -168,6 +187,26 @@ export default function NationsNewsList() {
     setIsModalOpen(false);
   }, []);
 
+  const getNationsNews = useCallback(async (nationId) => {
+    const payload = {
+      categoryid: nationId,
+      endlevel: 0,
+      n_id: 0,
+      page: 0,
+      per_page: 0,
+      search: "string",
+      start_no: 0,
+      startlevel: 0,
+    };
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${currentUser.accessToken}`,
+      },
+    };
+    const nationsNewsResponse = await axios.post("/news", payload, headers);
+    console.log(nationsNewsResponse);
+  }, []);
+
   return (
     <section className="nationsnews-container">
       <article className="nationsnews-globe-container">
@@ -195,9 +234,10 @@ export default function NationsNewsList() {
           <Filter clickHandler={onFilterClick} />
         </div>
         <div className="nationsnews-list">
-          {news.map((e, i) => {
-            return <NewsCard news={e} key={i} />;
-          })}
+          {nationsNews.length > 0 &&
+            nationsNews.map((e, i) => {
+              return <NewsCard news={e} key={i} />;
+            })}
         </div>
       </article>
       {isModalOpen && <FilterModal closeHandler={onCloseClick} />}

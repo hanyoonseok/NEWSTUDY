@@ -1,7 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
-import BackBtn from "components/BackBtn";
-import "./style.scss";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
+import "./style.scss";
+import BackBtn from "components/BackBtn";
 import Check from "assets/check.png";
 import Question from "./Question";
 import Result from "./Result";
@@ -9,110 +11,9 @@ import Result from "./Result";
 export default function SpeedQuiz() {
   const [index, setIndedx] = useState(0);
   const [timer, setTimer] = useState(null);
-  const questions = [
-    {
-      desc: "Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "형", level: "A1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "명", level: "A2", trans: "현명함, 지혜" },
-      ],
-      index: 1,
-      answer: "wise",
-      correct: false,
-    },
-    {
-      desc: "1Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 2,
-      answer: "wiseman",
-      correct: false,
-    },
-    {
-      desc: "2Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 3,
-      answer: "ant",
-      correct: false,
-    },
-    {
-      desc: "3Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 4,
-      answer: "horsehosasdss",
-      correct: false,
-    },
-    {
-      desc: "4Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 5,
-      answer: "penguin",
-      correct: false,
-    },
-    {
-      desc: "5Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 6,
-      answer: "newyork",
-      correct: false,
-    },
-    {
-      desc: "6Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 7,
-      answer: "korea",
-      correct: false,
-    },
-    {
-      desc: "7Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 8,
-      answer: "taiwan",
-      correct: false,
-    },
-    {
-      desc: "8Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 9,
-      answer: "japan",
-      correct: false,
-    },
-    {
-      desc: "9Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 10,
-      answer: "china",
-      correct: false,
-    },
-  ];
-
+  const [questions, setQuestions] = useState([]);
   const [answer, setAnswer] = useState([]);
+  const { currentUser } = useSelector((state) => state.user);
 
   const addValueToAnswer = () => {
     initDomElement();
@@ -136,6 +37,19 @@ export default function SpeedQuiz() {
       ]);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const questionResponse = await axios.get("/word/game", {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`,
+        },
+      });
+      console.log(questionResponse);
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (timer) clearTimeout(timer);
@@ -165,7 +79,7 @@ export default function SpeedQuiz() {
   return (
     <div className="speedquiz-container">
       <BackBtn />
-      {index < 10 ? (
+      {/* {index < 10 ? (
         <section className="speedquiz-content-container">
           <h1 className="speedquiz-title">
             <b>SPEED</b> QUIZ
@@ -188,7 +102,7 @@ export default function SpeedQuiz() {
         </section>
       ) : (
         <Result answer={answer} />
-      )}
+      )} */}
     </div>
   );
 }

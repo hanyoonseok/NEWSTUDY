@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 import "./style.scss";
 import InGame from "./InGame";
@@ -98,18 +99,28 @@ export default function CrossWord() {
   const crosswordInputs = document.querySelectorAll(".crossword-input");
 
   useEffect(() => {
-    let curr = 0;
-    let curc = 0;
-    wordArr.forEach((e) => {
-      const rlen = e.r + e.name.length;
-      const clen = e.c + e.name.length;
-      curr = Math.max(curr, e.r + 1);
-      curc = Math.max(curc, e.c + 1);
-      e.d === 1 ? (curc = Math.max(curc, clen)) : (curr = Math.max(curr, rlen));
-    });
+    const fetchData = async () => {
+      const crossResponse = await axios.get("/word/game?type=cross");
+      console.log(crossResponse);
+      setWordArr(crossResponse.data);
 
-    setMaxR(curr);
-    setMaxC(curc);
+      let curr = 0;
+      let curc = 0;
+      wordArr.forEach((e) => {
+        const rlen = e.r + e.name.length;
+        const clen = e.c + e.name.length;
+        curr = Math.max(curr, e.r + 1);
+        curc = Math.max(curc, e.c + 1);
+        e.d === 1
+          ? (curc = Math.max(curc, clen))
+          : (curr = Math.max(curr, rlen));
+      });
+
+      setMaxR(curr);
+      setMaxC(curc);
+    };
+
+    fetchData();
   }, []);
 
   const onLinkMenuClick = () => {
