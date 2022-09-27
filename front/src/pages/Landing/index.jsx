@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "./style.scss";
+import { useDispatch } from "react-redux";
 import ArticleInside from "./ArticleInside";
 import ArticleOutside from "./ArticleOutside";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 
 import {
   faBorderAll,
@@ -91,14 +93,20 @@ function UserfitArticle({ children }) {
 }
 
 function Landing() {
+  const dispatch = useDispatch();
   const [activeId, setActiveId] = useState(0);
   const onClickSwitchTab = (id) => {
     setActiveId(id);
   };
-  // const [activeFitArticle, setActiveFitArticle] = useState(0);
-  // const onClickSwitchFitArticle = (id) => {
-  //   setActiveFitArticle(id);
-  // };
+  // 데일리 빈출단어는 DB에서 한꺼번에 가져옴
+  const [allRanking, setAllRanking] = useState([]);
+  const [politicsRanking, setPoliticsRanking] = useState([]);
+  const [economyRanking, setEconomyRanking] = useState([]);
+  const [entertainRanking, setEntertainRanking] = useState([]);
+  const [sportsRanking, setSportsRanking] = useState([]);
+  const [userFitNews, setUserFitNews] = useState([]);
+  const [hotNews, setHotNews] = useState([]);
+  const [dailyWordCloud, setDailyWordCloud] = useState([]);
   const Articles = [
     {
       title: `Two in flooded basement parking lot found alive`,
@@ -179,13 +187,6 @@ function Landing() {
       desc: "매일 수집된 뉴스를 바탕으로 많이 언급된 단어들을 보여줍니다.",
     },
   ];
-
-  // 데일리 빈출단어는 DB에서 한꺼번에 가져옴
-  const [allRanking, setAllRanking] = useState([]);
-  const [politicsRanking, setPoliticsRanking] = useState([]);
-  const [economyRanking, setEconomyRanking] = useState([]);
-  const [entertainRanking, setEntertainRanking] = useState([]);
-  const [sportsRanking, setSportsRanking] = useState([]);
 
   const getKeywordsRanking = () => {
     // value 크기 따라 정렬
@@ -722,7 +723,6 @@ function Landing() {
         value: 10,
       },
     ];
-
     const setAll = () => {
       let array = [];
       const init = [...wordcloud.sort(sortValue)];
@@ -744,10 +744,32 @@ function Landing() {
     setEntertainRanking(setCategory("entertain"));
     setSportsRanking(setCategory("sports"));
   };
+  const currentUser = localStorage.getItem("user");
 
   useEffect(() => {
+    const fetchData = async () => {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${currentUser}`;
+
+      const fitNewsResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/news/recommend`,
+      );
+      setUserFitNews(fitNewsResponse.data);
+      console.log("사용자맞춤임!!!", userFitNews);
+      const hotNewsResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/news/hot`,
+      );
+      setHotNews(hotNewsResponse.data);
+      console.log("핫뉴스임!!!", hotNews);
+      // 핫뉴스는 한꺼번에 받아와서, 키워드별로 여기서 나눠도 될것같은데.
+      const dailyWordCloudResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/daily`,
+      );
+      setHotNews(dailyWordCloudResponse.data);
+      console.log("데일리워드클라우드임!!!!", dailyWordCloud);
+    };
+
+    fetchData();
     getKeywordsRanking();
-    return () => {};
   }, []);
 
   const ranking = {
@@ -850,7 +872,7 @@ function Landing() {
             ))}
           </UserfitArticle>
         </div>
-        <div className="userfit-order">1/20</div>
+        <div className="userfit-order">1/{userFitNews.length}</div>
       </section>
       {/* 핫토픽 */}
       <section className="hottopic">
@@ -861,9 +883,7 @@ function Landing() {
               <img src={require("assets/article2.png")} alt="article"></img>
               <span className="article-level">C</span>
             </div>
-            <h3 className="hottopic-title">
-              Two in flooded basement parking lot found aliveasdsad dasdasd
-            </h3>
+            <h3 className="hottopic-title">Articles[0].title</h3>
             <span className="article-category">
               <i>
                 <FontAwesomeIcon icon={faCircle} />
@@ -872,9 +892,9 @@ function Landing() {
             </span>
           </div>
           <div className="hottopic-right">
-            <ArticleOutside Article={Articles[0]}></ArticleOutside>
             <ArticleOutside Article={Articles[1]}></ArticleOutside>
             <ArticleOutside Article={Articles[2]}></ArticleOutside>
+            <ArticleOutside Article={Articles[3]}></ArticleOutside>
           </div>
         </div>
       </section>

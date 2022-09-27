@@ -62,6 +62,7 @@ export const loginUser = async (data) => {
 export const loginSuccess = (res) => {
   console.log("loginSuccess");
   const { accessToken } = res.data.data;
+  localStorage.setItem("user", accessToken);
   // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
   axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   // accessToken 만료하기 1분 전에 로그인 연장
@@ -90,6 +91,7 @@ export const logoutUser = async () => {
     },
   });
   localStorage.removeItem("isLogin");
+  localStorage.removeItem("user");
   storage.removeItem("persist:root"); // storage에 저장된 데이터 날리기
   return {
     type: LOGOUT_USER,
