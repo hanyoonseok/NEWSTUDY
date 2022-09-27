@@ -10,6 +10,7 @@ import NewsList from "pages/NewsList";
 import Layout from "components/Layout";
 import Signup from "./Signup";
 import Mypage from "./Mypage";
+import SearchList from "./SearchList";
 import GameMenu from "./GameMenu";
 import CrossWord from "./CrossWord";
 import SpeedQuiz from "./SpeedQuiz";
@@ -49,6 +50,10 @@ function App() {
           <Route
             path="/nationsnews"
             element={<AuthRoute component={<NationsNewsList />} />}
+          ></Route>
+          <Route
+            path="/search/:query"
+            element={<AuthRoute component={<SearchList />} />}
           ></Route>
           <Route
             path="/news/list"
