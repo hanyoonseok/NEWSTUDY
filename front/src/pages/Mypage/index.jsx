@@ -9,7 +9,6 @@ import {
   faCertificate,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState, useRef } from "react";
-
 import Attendance1 from "assets/1attendance_badge.png";
 import Attendance50 from "assets/50attendance_badge.png";
 import Attendance100 from "assets/100attendance_badge.png";
