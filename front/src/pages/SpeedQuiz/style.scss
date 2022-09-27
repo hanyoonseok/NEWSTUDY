@@ -1,0 +1,42 @@
+@import "variables.scss";
+
+.speedquiz-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  padding: rem(100) rem(50) rem(20) rem(100);
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    padding: rem(110) rem(15);
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+.speedquiz-content-container {
+  @include FLEX-COLUMN;
+  @include STRETCH;
+  align-items: center;
+
+  .speedquiz-title {
+    font-family: $eng-title-font;
+    font-size: rem(50);
+    color: $dark-grey;
+    b {
+      color: $soft-blue;
+    }
+  }
+
+  .speedquiz-subtitle {
+    @include FLEX-ALIGN-CENTER;
+    margin-top: rem(10);
+    color: $default-grey;
+    font-family: $kor-font;
+    font-size: rem(16);
+    .speedquiz-subtitle-checkimg {
+      width: rem(18);
+      height: rem(18);
+    }
+  }
+}

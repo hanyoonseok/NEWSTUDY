@@ -10,6 +10,9 @@ import NewsList from "pages/NewsList";
 import Layout from "components/Layout";
 import Signup from "./Signup";
 import Mypage from "./Mypage";
+import GameMenu from "./GameMenu";
+import CrossWord from "./CrossWord";
+import SpeedQuiz from "./SpeedQuiz";
 import LevelTest from "pages/LevelTest";
 import AuthRoute from "routes/AuthRoute";
 import { NotAuthRoute } from "routes/NotAuthRoute";
@@ -50,6 +53,18 @@ function App() {
           <Route
             path="/news/list"
             element={<AuthRoute component={<NewsList />} />}
+          ></Route>
+          <Route
+            path="/game/menu"
+            element={<AuthRoute component={<GameMenu />} />}
+          ></Route>
+          <Route
+            path="/game/crossword"
+            element={<AuthRoute component={<CrossWord />} />}
+          ></Route>
+          <Route
+            path="/game/speedquiz"
+            element={<AuthRoute component={<SpeedQuiz />} />}
           ></Route>
         </Routes>
       </Layout>
