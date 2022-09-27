@@ -10,7 +10,6 @@ import {
   faL,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState, useRef } from "react";
-
 import Attendance1 from "assets/1attendance_badge.png";
 import DefaultUserImage from "assets/user_globe.png";
 import A1 from "assets/A1.png";

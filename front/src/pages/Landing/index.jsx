@@ -67,6 +67,7 @@ function UserfitArticle({ children }) {
       )}
       {React.Children.map(children, (child, i) => (
         <div
+          key={i}
           className="card-container"
           style={{
             "--active": i === active ? 1 : 0,

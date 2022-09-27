@@ -7,7 +7,7 @@
   @include FLEX-COLUMN;
 
   @media (max-width: 480px) {
-    padding: 100px 12px;
+    padding: 100px 16px;
     background-color: #fff;
   }
 
@@ -29,7 +29,7 @@
     @include FLEX-COLUMN;
     border-radius: 20px;
     box-shadow: $light-shadow;
-    padding: rem(25);
+    padding: rem(30) rem(70);
 
     @media (max-width: 480px) {
       padding: 0;
