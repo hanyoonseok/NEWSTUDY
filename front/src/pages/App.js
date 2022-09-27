@@ -52,6 +52,10 @@ function App() {
             element={<AuthRoute component={<NationsNewsList />} />}
           ></Route>
           <Route
+            path="/search/:query"
+            element={<AuthRoute component={<SearchList />} />}
+          ></Route>
+          <Route
             path="/news/list"
             element={<AuthRoute component={<NewsList />} />}
           ></Route>
