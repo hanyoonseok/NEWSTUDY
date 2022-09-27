@@ -2,9 +2,11 @@ import React from "react";
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
+import { useState } from "react";
 
 function ArticleOutside({ Article }) {
-  const { title, content, level, category } = Article;
+  const { title, content, level, c_id } = Article;
   return (
     <>
       <div className="article-wrapper-side">
@@ -19,7 +21,7 @@ function ArticleOutside({ Article }) {
             <i>
               <FontAwesomeIcon icon={faCircle} />
             </i>
-            {category}
+            {c_id}
           </span>
         </div>
       </div>

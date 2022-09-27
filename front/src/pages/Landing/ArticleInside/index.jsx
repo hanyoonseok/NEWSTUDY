@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function ArticleInside({ Article }) {
-  const { title, content, level, category } = Article;
+  const { title, content, level, c_id } = Article;
 
   return (
     <>
@@ -17,7 +17,7 @@ export default function ArticleInside({ Article }) {
           <i>
             <FontAwesomeIcon icon={faCircle} />
           </i>
-          {category}
+          {c_id}
         </span>
         <div className="article-info">
           <h2 className="article-title">{title}</h2>

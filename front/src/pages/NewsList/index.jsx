@@ -1,16 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
-import React, { useState, useCallback } from "react";
-
+import React, { useState, useCallback, useEffect } from "react";
+import { useSelector } from "react-redux";
 import "./style.scss";
 import LevelContainer from "./LevelContainer";
 import Filter from "components/Filter";
 import NewsCard from "components/NewsCard";
+import axios from "axios";
 
 export default function NewsList() {
+  const { currentUser } = useSelector((state) => state.user);
   const [selectedLevel, setSelectedLevel] = useState("A1");
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [newsList, setNewsList] = useState(null);
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
@@ -107,6 +111,33 @@ export default function NewsList() {
     },
     [selectedLevel],
   );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${currentUser.accessToken}`;
+      try {
+        // 로딩값을 true로 변경
+        setLoading(true);
+        // 초기화시켜주기
+        setNewsList(null);
+
+        const user = {
+          level: currentUser.level,
+        };
+        const newsListResponse = await axios.post(`/news`);
+        console.log(newsListResponse.data);
+        setNewsList(newsListResponse.data);
+        // 뉴스 목록 불러오기
+      } catch (e) {
+        setError(e);
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <section className="newslist-container">

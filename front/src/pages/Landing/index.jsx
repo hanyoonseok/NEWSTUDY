@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import "./style.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ArticleInside from "./ArticleInside";
 import ArticleOutside from "./ArticleOutside";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-
 import {
   faBorderAll,
   faHandshake,
@@ -45,9 +44,9 @@ function KeywordRanking({ item, rank }) {
       <div className="key-ranking">
         <div className="rank">{rank}</div>
         <div className="rank-content">
-          <div className="keyword">{item.text}</div>
+          <div className="keyword">{item.eng}</div>
           {/* 지금은 빈도수로 해놨는데 만약 관련기사 수로 할거면 나중에 추가하셍요 */}
-          <div className="rank-change">{item.value}건</div>
+          <div className="rank-change">{item.cnt}건</div>
         </div>
       </div>
     </>
@@ -93,6 +92,7 @@ function UserfitArticle({ children }) {
 }
 
 function Landing() {
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [activeId, setActiveId] = useState(0);
   const onClickSwitchTab = (id) => {
@@ -100,13 +100,15 @@ function Landing() {
   };
   // 데일리 빈출단어는 DB에서 한꺼번에 가져옴
   const [allRanking, setAllRanking] = useState([]);
-  const [politicsRanking, setPoliticsRanking] = useState([]);
-  const [economyRanking, setEconomyRanking] = useState([]);
-  const [entertainRanking, setEntertainRanking] = useState([]);
+  const [lifeRanking, setLifeRanking] = useState([]);
+  const [newsRanking, setNewsRanking] = useState([]);
   const [sportsRanking, setSportsRanking] = useState([]);
-  const [userFitNews, setUserFitNews] = useState([]);
-  const [hotNews, setHotNews] = useState([]);
-  const [dailyWordCloud, setDailyWordCloud] = useState([]);
+  const [techRanking, setTechRanking] = useState([]);
+  const [worldRanking, setWorldRanking] = useState([]);
+  const [otherRanking, setOtherRanking] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const Articles = [
     {
       title: `Two in flooded basement parking lot found alive`,
@@ -188,609 +190,70 @@ function Landing() {
     },
   ];
 
-  const getKeywordsRanking = () => {
-    // value 크기 따라 정렬
-    const sortValue = (a, b) => {
-      if (a.value > b.value) {
-        return -1;
-      }
-      if (a.value < b.value) {
-        return 1;
-      }
-      return 0;
-    };
-
-    // 카테고리별로 구분
-    const setCategory = (category) => {
-      let array = [];
-      wordcloud.forEach((word) => {
-        if (word.category === category) {
-          let temp = {
-            text: word.text,
-            value: word.value,
-          };
-          array.push(temp);
-        }
-      });
-      return array.sort(sortValue);
-    };
-
-    const wordcloud = [
-      {
-        text: "all",
-        category: "politics",
-        value: 64,
-      },
-      {
-        text: "DaBin",
-        category: "politics",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "politics",
-        value: 16,
-      },
-      {
-        text: "bad",
-        category: "politics",
-        value: 17,
-      },
-      {
-        text: "HwaYeon",
-        category: "politics",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "economy",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "economy",
-        value: 16,
-      },
-      {
-        text: "bad",
-        category: "economy",
-        value: 17,
-      },
-      {
-        text: "HwaYeon",
-        category: "economy",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "economy",
-        value: 60,
-      },
-      {
-        text: "thought",
-        category: "economy",
-        value: 6,
-      },
-      {
-        text: "bad",
-        category: "economy",
-        value: 19,
-      },
-      {
-        text: "HwaYeon",
-        category: "economy",
-        value: 25,
-      },
-      {
-        text: "DaBin",
-        category: "entertain",
-        value: 54,
-      },
-      {
-        text: "thought",
-        category: "entertain",
-        value: 100,
-      },
-      {
-        text: "bad",
-        category: "entertain",
-        value: 90,
-      },
-      {
-        text: "HwaYeon",
-        category: "entertain",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "entertain",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "entertain",
-        value: 40,
-      },
-      {
-        text: "bad",
-        category: "entertain",
-        value: 10,
-      },
-
-      {
-        text: "politics",
-        category: "entertain",
-        value: 64,
-      },
-      {
-        text: "DaBin",
-        category: "entertain",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "entertain",
-        value: 16,
-      },
-      {
-        text: "bad",
-        category: "entertain",
-        value: 17,
-      },
-      {
-        text: "HwaYeon",
-        category: "sports",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "sports",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "sports",
-        value: 16,
-      },
-      {
-        text: "bad",
-        category: "sports",
-        value: 17,
-      },
-      {
-        text: "HwaYeon",
-        category: "sports",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "sports",
-        value: 60,
-      },
-      {
-        text: "thought",
-        category: "sports",
-        value: 6,
-      },
-      {
-        text: "bad",
-        category: "sports",
-        value: 19,
-      },
-      {
-        text: "HwaYeon",
-        category: "sports",
-        value: 25,
-      },
-      {
-        text: "DaBin",
-        category: "sports",
-        value: 54,
-      },
-      {
-        text: "thought",
-        category: "sports",
-        value: 100,
-      },
-      {
-        text: "bad",
-        category: "sports",
-        value: 90,
-      },
-      {
-        text: "HwaYeon",
-        category: "sports",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "economy",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "economy",
-        value: 40,
-      },
-      {
-        text: "bad",
-        category: "economy",
-
-        value: 10,
-      },
-      {
-        text: "economy",
-        category: "economy",
-
-        value: 64,
-      },
-      {
-        text: "DaBin",
-        category: "entertain",
-
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "entertain",
-        value: 16,
-      },
-      {
-        text: "bad",
-        category: "entertain",
-        value: 17,
-      },
-      {
-        text: "HwaYeon",
-        category: "entertain",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "entertain",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "entertain",
-        value: 16,
-      },
-      {
-        text: "bad",
-        category: "entertain",
-        value: 17,
-      },
-      {
-        text: "HwaYeon",
-        category: "entertain",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "entertain",
-        value: 60,
-      },
-      {
-        text: "thought",
-        category: "entertain",
-        value: 6,
-      },
-      {
-        text: "bad",
-        category: "entertain",
-        value: 19,
-      },
-      {
-        text: "HwaYeon",
-        category: "entertain",
-        value: 25,
-      },
-      {
-        text: "DaBin",
-        category: "politics",
-        value: 54,
-      },
-      {
-        text: "thought",
-        category: "politics",
-        value: 100,
-      },
-      {
-        text: "bad",
-        category: "politics",
-        value: 90,
-      },
-      {
-        text: "HwaYeon",
-        category: "politics",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "politics",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "politics",
-        value: 40,
-      },
-      {
-        text: "bad",
-        category: "politics",
-        value: 10,
-      },
-
-      {
-        text: "entertain",
-        category: "politics",
-        value: 64,
-      },
-      {
-        text: "DaBin",
-        category: "politics",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "politics",
-        value: 16,
-      },
-      {
-        text: "bad",
-        category: "politics",
-        value: 17,
-      },
-      {
-        text: "HwaYeon",
-        category: "politics",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "politics",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "politics",
-        value: 16,
-      },
-      {
-        text: "bad",
-        category: "politics",
-        value: 17,
-      },
-      {
-        text: "HwaYeon",
-        category: "politics",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "politics",
-        value: 60,
-      },
-      {
-        text: "thought",
-        category: "politics",
-        value: 6,
-      },
-      {
-        text: "bad",
-        category: "politics",
-        value: 19,
-      },
-      {
-        text: "HwaYeon",
-        category: "politics",
-        value: 25,
-      },
-      {
-        text: "DaBin",
-        category: "politics",
-        value: 54,
-      },
-      {
-        text: "thought",
-        category: "politics",
-        value: 100,
-      },
-      {
-        text: "bad",
-        category: "politics",
-        value: 90,
-      },
-      {
-        text: "HwaYeon",
-        category: "politics",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "politics",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "politics",
-        value: 40,
-      },
-      {
-        text: "bad",
-        category: "politics",
-        value: 10,
-      },
-
-      {
-        text: "sports",
-        category: "politics",
-        value: 64,
-      },
-      {
-        text: "DaBin",
-        category: "politics",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "economy",
-        value: 16,
-      },
-      {
-        text: "bad",
-        category: "economy",
-        value: 17,
-      },
-      {
-        text: "HwaYeon",
-        category: "economy",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "economy",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "economy",
-        value: 16,
-      },
-      {
-        text: "bad",
-        category: "economy",
-        value: 17,
-      },
-      {
-        text: "HwaYeon",
-        category: "sports",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "sports",
-        value: 60,
-      },
-      {
-        text: "thought",
-        category: "sports",
-        value: 6,
-      },
-      {
-        text: "bad",
-        category: "sports",
-        value: 19,
-      },
-      {
-        text: "HwaYeon",
-        category: "sports",
-        value: 25,
-      },
-      {
-        text: "DaBin",
-        category: "sports",
-        value: 54,
-      },
-      {
-        text: "thought",
-        category: "sports",
-        value: 100,
-      },
-      {
-        text: "bad",
-        category: "sports",
-        value: 90,
-      },
-      {
-        text: "HwaYeon",
-        category: "sports",
-        value: 30,
-      },
-      {
-        text: "DaBin",
-        category: "sports",
-        value: 50,
-      },
-      {
-        text: "thought",
-        category: "sports",
-        value: 40,
-      },
-      {
-        text: "bad",
-        category: "sports",
-        value: 10,
-      },
-    ];
-    const setAll = () => {
-      let array = [];
-      const init = [...wordcloud.sort(sortValue)];
-      init.forEach((word, index) => {
-        if (index <= 25) {
-          let temp = {
-            text: word.text,
-            value: word.value,
-          };
-          array.push(temp);
-        }
-      });
-      return array;
-    };
-
-    setAllRanking(setAll);
-    setPoliticsRanking(setCategory("politics"));
-    setEconomyRanking(setCategory("economy"));
-    setEntertainRanking(setCategory("entertain"));
-    setSportsRanking(setCategory("sports"));
-  };
-  const currentUser = localStorage.getItem("user");
+  const [userFitNews, setUserFitNews] = useState(null);
+  const [hotNews, setHotNews] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${currentUser}`;
-      const fitNewsResponse = await axios.get(
-        `${process.env.REACT_APP_API_URL}/news/recommend`,
-      );
-      setUserFitNews(fitNewsResponse.data);
-      console.log("사용자 맞춤 반응!!!", fitNewsResponse);
-      console.log("사용자맞춤임!!!", userFitNews);
-      const hotNewsResponse = await axios.get(
-        `${process.env.REACT_APP_API_URL}/news/hot`,
-      );
-      console.log("핫뉴스 반응!!!", hotNewsResponse);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${currentUser.accessToken}`;
+      try {
+        // 로딩값을 true로 변경
+        setLoading(true);
+        // 초기화시켜주기
+        setUserFitNews(null);
+        setHotNews(null);
+        setAllRanking(null);
 
-      setHotNews(hotNewsResponse.data);
-      console.log("핫뉴스임!!!", hotNews);
-      // 핫뉴스는 한꺼번에 받아와서, 키워드별로 여기서 나눠도 될것같은데.
-      const dailyWordCloudResponse = await axios.get(
-        `${process.env.REACT_APP_API_URL}/daily`,
-      );
-      setHotNews(dailyWordCloudResponse.data);
-      console.log("데일리워드클라우드임!!!!", dailyWordCloud);
+        // 사용자 맞춤 기사
+        const fitNewsResponse = await axios.get(`/news/recommend`);
+        console.log(fitNewsResponse.data);
+        setUserFitNews(fitNewsResponse.data);
+        // 핫토픽 기사
+        const hotNewsResponse = await axios.get(`/news/hot`);
+        console.log(hotNewsResponse.data);
+        setHotNews(hotNewsResponse.data);
+        // 데일리 워드클라우드
+        const allWordCloudResponse = await axios.get(`/daily/${0}`);
+        console.log("길이 " + allWordCloudResponse.data.length);
+        setAllRanking(allWordCloudResponse.data);
+      } catch (e) {
+        setError(e);
+      }
+      setLoading(false);
     };
 
     fetchData();
-    getKeywordsRanking();
   }, []);
+
+  // const onCategoryClick = useCallback(async (c_id) => {
+  //   const payload = {
+  //     Authorization: `Bearer ${currentUser.accessToken}`,
+  //     n_id: newsId,
+  //   };
+  //   const addScrapResponse = await axios.post(`/daily/${c_id}`, payload);
+  //   console.log(addScrapResponse);
+  // }, []);
 
   const ranking = {
     0: (
       <>
-        {allRanking.slice(0, 5).map((item, index) => {
-          return (
-            <KeywordRanking
-              item={item}
-              rank={index + 1}
-              key={index}
-            ></KeywordRanking>
-          );
-        })}
+        {allRanking &&
+          allRanking.slice(0, 5).map((item, index) => {
+            return (
+              <KeywordRanking
+                item={item}
+                rank={index + 1}
+                key={index}
+              ></KeywordRanking>
+            );
+          })}
       </>
     ),
     1: (
       <>
-        {politicsRanking.slice(0, 5).map((item, index) => {
+        {lifeRanking.slice(0, 5).map((item, index) => {
           return (
             <KeywordRanking
               item={item}
@@ -803,7 +266,7 @@ function Landing() {
     ),
     2: (
       <>
-        {economyRanking.slice(0, 5).map((item, index) => {
+        {techRanking.slice(0, 5).map((item, index) => {
           return (
             <KeywordRanking
               item={item}
@@ -816,7 +279,7 @@ function Landing() {
     ),
     3: (
       <>
-        {entertainRanking.slice(0, 5).map((item, index) => {
+        {worldRanking.slice(0, 5).map((item, index) => {
           return (
             <KeywordRanking
               item={item}
@@ -843,18 +306,14 @@ function Landing() {
   };
   const tabContent = {
     0: <>{allRanking && <Wordcloud words={allRanking}></Wordcloud>}</>,
-    1: (
-      <>{politicsRanking && <Wordcloud words={politicsRanking}></Wordcloud>}</>
-    ),
-    2: <>{economyRanking && <Wordcloud words={economyRanking}></Wordcloud>}</>,
-    3: (
-      <>
-        {entertainRanking && <Wordcloud words={entertainRanking}></Wordcloud>}
-      </>
-    ),
+    1: <>{lifeRanking && <Wordcloud words={lifeRanking}></Wordcloud>}</>,
+    2: <>{techRanking && <Wordcloud words={techRanking}></Wordcloud>}</>,
+    3: <>{worldRanking && <Wordcloud words={worldRanking}></Wordcloud>}</>,
     4: <>{sportsRanking && <Wordcloud words={sportsRanking}></Wordcloud>}</>,
   };
 
+  if (error) return <div>{error} 에러가 발생했습니다.</div>;
+  if (loading) return <div>로딩중..</div>;
   return (
     <div className="landing-wrapper">
       <div className="landing-header">
@@ -869,12 +328,15 @@ function Landing() {
 
         <div className="userfit-articles">
           <UserfitArticle>
-            {Articles.map((fitArticle, index) => (
-              <ArticleInside Article={fitArticle} key={index}></ArticleInside>
-            ))}
+            {userFitNews &&
+              userFitNews.map((fitArticle, index) => (
+                <ArticleInside Article={fitArticle} key={index}></ArticleInside>
+              ))}
           </UserfitArticle>
         </div>
-        <div className="userfit-order">1/{userFitNews.length}</div>
+        {userFitNews && (
+          <div className="userfit-order">1/{userFitNews.length}</div>
+        )}
       </section>
       {/* 핫토픽 */}
       <section className="hottopic">
@@ -885,7 +347,7 @@ function Landing() {
               <img src={require("assets/article2.png")} alt="article"></img>
               <span className="article-level">C</span>
             </div>
-            <h3 className="hottopic-title">Articles[0].title</h3>
+            <h3 className="hottopic-title"></h3>
             <span className="article-category">
               <i>
                 <FontAwesomeIcon icon={faCircle} />
@@ -893,11 +355,13 @@ function Landing() {
               SPORTS
             </span>
           </div>
-          <div className="hottopic-right">
-            <ArticleOutside Article={Articles[1]}></ArticleOutside>
-            <ArticleOutside Article={Articles[2]}></ArticleOutside>
-            <ArticleOutside Article={Articles[3]}></ArticleOutside>
-          </div>
+          {hotNews && (
+            <div className="hottopic-right">
+              <ArticleOutside Article={hotNews[1]}></ArticleOutside>
+              <ArticleOutside Article={hotNews[2]}></ArticleOutside>
+              <ArticleOutside Article={hotNews[3]}></ArticleOutside>
+            </div>
+          )}
         </div>
       </section>
       <section className="daily-keyword">
@@ -928,7 +392,7 @@ function Landing() {
                   <i>
                     <FontAwesomeIcon icon={faHandshake} />
                   </i>
-                  <span className="category-name">&nbsp; POLITICS</span>
+                  <span className="category-name">&nbsp; LIFE</span>
                 </li>
                 <li
                   className={`${
@@ -939,7 +403,7 @@ function Landing() {
                   <i>
                     <FontAwesomeIcon icon={faSackDollar} />
                   </i>
-                  <span className="category-name">&nbsp; ECONOMY</span>
+                  <span className="category-name">&nbsp; TECH</span>
                 </li>
                 <li
                   className={`${
@@ -950,7 +414,7 @@ function Landing() {
                   <i>
                     <FontAwesomeIcon icon={faFaceGrin} />
                   </i>
-                  <span className="category-name">&nbsp; ENTERTAIN</span>
+                  <span className="category-name">&nbsp; WORLD</span>
                 </li>
                 <li
                   className={`${
