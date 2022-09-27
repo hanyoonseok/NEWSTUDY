@@ -93,6 +93,7 @@ export default function Signup() {
         email: Email,
         pw: Password,
         nickname: Nickname,
+        level: 1,
       };
       dispatch(signupUser(user)).then((res) => {
         console.log("회원가입 성공 ", res);

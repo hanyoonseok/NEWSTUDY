@@ -8,6 +8,7 @@ const AUTH_EMAIL = "user/AUTH_EMAIL";
 const SIGNUP_USER = "user/SIGNUP_USER";
 const LOGIN_USER = "user/LOGIN_USER";
 const LOGOUT_USER = "user/LOGOUT_USER";
+const CHANGE_LEVEL = "uset/CHANGE_LEVEL";
 
 /*********************** 액션 생성함수 만들기 ***********************/
 export const authEmail = async (data) => {
@@ -102,6 +103,27 @@ export const logoutUser = async () => {
   };
 };
 
+export const changeLevel = async (level, user) => {
+  console.log("changeLevel");
+  const request = await axios
+    .put(`${process.env.REACT_APP_API_URL}/user/level/${level}`, null, {
+      headers: {
+        Authorization: `Bearer ${user.accessToken}`,
+      },
+    })
+    .then((res) => console.log(res));
+  const userInfo = {
+    email: user.email,
+    level: level,
+    nickname: user.nickname,
+    accessToken: user.accessToken,
+  };
+  return {
+    type: CHANGE_LEVEL,
+    payload: userInfo,
+  };
+};
+
 /* 리덕스에서 관리 할 상태 정의 */
 const userState = {
   currentUser: null,
@@ -123,6 +145,11 @@ export default function user(state = userState, action) {
       };
     case LOGOUT_USER:
       return (state.currentUser = null);
+    case CHANGE_LEVEL:
+      return {
+        ...state,
+        currentUser: action.payload,
+      };
     default:
       return state;
   }

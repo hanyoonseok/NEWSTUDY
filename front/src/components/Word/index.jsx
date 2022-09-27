@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 export default function Word({ vocas, setWordMemorizeStatus }) {
   const user = useSelector((state) => state.user.currentUser);
 
-  const changeMemorizeStatus = (voca) => {
-    axios
+  const changeMemorizeStatus = async (voca) => {
+    await axios
       .put(`${process.env.REACT_APP_API_URL}/vocaburary/${voca.v_id}`, null, {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,

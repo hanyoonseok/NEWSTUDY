@@ -7,7 +7,7 @@ import { faPlay, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
 
 function BeforeLevelTest({ getLeveltestState }) {
-  const user = useSelector((state) => state.currentUser);
+  const user = useSelector((state) => state.user.currentUser);
   useEffect(() => {
     if (user) {
       console.log("user???");

@@ -161,8 +161,8 @@ export default function Mypage() {
   };
 
   //배지목록 가져오기
-  const getBadges = () => {
-    axios
+  const getBadges = async () => {
+    await axios
       .get(`${process.env.REACT_APP_API_URL}/badge`, {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
@@ -183,8 +183,8 @@ export default function Mypage() {
   };
 
   // 단어 목록 가져오기
-  const getVocas = () => {
-    axios
+  const getVocas = async () => {
+    await axios
       .get(`${process.env.REACT_APP_API_URL}/vocaburary`, {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
@@ -196,9 +196,8 @@ export default function Mypage() {
   };
 
   //기사 목록 가져오기
-  const getArticles = () => {
-    console.log(user);
-    axios
+  const getArticles = async () => {
+    await axios
       .get(`${process.env.REACT_APP_API_URL}/scrap`, {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
@@ -367,17 +366,17 @@ export default function Mypage() {
 
 function level(level) {
   switch (level) {
-    case 0:
-      return <img src={A1} alt="A1"></img>;
     case 1:
-      return <img src={A2} alt="A2"></img>;
+      return <img src={A1} alt="A1"></img>;
     case 2:
-      return <img src={B1} alt="B1"></img>;
+      return <img src={A2} alt="A2"></img>;
     case 3:
-      return <img src={B2} alt="B2"></img>;
+      return <img src={B1} alt="B1"></img>;
     case 4:
-      return <img src={C1} alt="C1"></img>;
+      return <img src={B2} alt="B2"></img>;
     case 5:
+      return <img src={C1} alt="C1"></img>;
+    case 6:
       return <img src={C2} alt="C2"></img>;
     default:
       break;
