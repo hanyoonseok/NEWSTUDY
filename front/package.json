@@ -2,6 +2,7 @@
   "name": "front",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080/api",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
@@ -17,10 +18,15 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-globe": "^5.0.2",
+    "react-redux": "^8.0.2",
     "react-responsive": "^9.0.0-beta.10",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-wordcloud": "^1.2.7",
+    "redux": "^4.2.0",
+    "redux-persist": "^6.0.0",
+    "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.4.1",
     "sass-loader": "^13.0.2",
     "three": "^0.122.0",
     "web-vitals": "^2.1.4"

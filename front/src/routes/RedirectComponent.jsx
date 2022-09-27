@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Route } from "react-router-dom";
+import React from "react";
 
 import Signup from "pages/Signup";
 import NewsList from "pages/NewsList";

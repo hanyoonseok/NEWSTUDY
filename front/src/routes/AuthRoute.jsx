@@ -1,14 +1,13 @@
-import { Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import React from "react";
 
-import RedirectComponent from "./RedirectComponent";
-
-const AuthRoute = ({ path, element }) => {
+const AuthRoute = ({ component: Component }) => {
   const me = localStorage.getItem("isLogin");
 
-  return me ? ( // 로그인 했을 시 접근 불가 페이지들
-    <Route path={path} element={element}></Route>
+  return me === "true" ? (
+    Component
   ) : (
-    <RedirectComponent needAuth={true} />
+    <Navigate to="/" {...alert("접근할 수 없는 페이지입니다.")} />
   );
 };
 

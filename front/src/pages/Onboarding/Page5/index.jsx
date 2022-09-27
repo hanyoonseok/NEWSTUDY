@@ -5,11 +5,11 @@ import {
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
+import React from "react";
 
 import "pages/Onboarding/Page5/style.scss";
 import Page5Img from "assets/page5-img.png";
 import Page5ImgMobile from "assets/page5-img-mobile.png";
-import React from "react";
 
 export default function Page5() {
   const isMobile = useMediaQuery({

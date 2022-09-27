@@ -9,6 +9,7 @@
   transition: 0.3s ease;
   padding: rem(14) rem(10);
   border-radius: 20px;
+  cursor: pointer;
   &:hover {
     background-color: rgba(180, 201, 254, 0.15);
     transform: scale(1.02);
