@@ -3,6 +3,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./pages/App";
 import reportWebVitals from "./reportWebVitals";
+import axios from "axios";
+
+axios.defaults.baseURL = process.env.REACT_APP_LOCAL_API_URL;
 
 // const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(

@@ -1,5 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faVolumeUp,
@@ -12,10 +14,13 @@ import {
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";
-import { useEffect } from "react";
 
 export default function NewsDetail() {
+  const { newsId } = useParams();
   const [selectedWord, setSelectedWord] = useState(null);
+  const [newsDetail, setNewsDetail] = useState(null);
+  const [newsKeywords, setNewsKeywords] = useState([]);
+  const [relatedNews, setRelatedNews] = useState([]);
 
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
@@ -93,6 +98,26 @@ export default function NewsDetail() {
 
   const [isTextToSpeechStatus, setIsTextToSpeechStatus] = useState(false); //발음듣기 상태 여부
   const [isPauseStatus, setIsPauseStatus] = useState(false); //일시정지 버튼 누른 여부
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const newsDetailResponse = await axios.get(`/news/${newsId}`);
+      setNewsDetail(newsDetailResponse.data);
+
+      const newsKeywordsResponse = await axios.get(`/news/keyword/${newsId}`);
+      setNewsKeywords(newsKeywordsResponse.data);
+
+      const relatedNewsResponse = await axios.get(`/news/related/${newsId}`);
+      setRelatedNews(relatedNewsResponse.data);
+    };
+
+    fetchData();
+  }, []);
+
+  const onScrapClick = useCallback(async () => {
+    const addScrapResponse = await axios.post("/scrap");
+    console.log(addScrapResponse);
+  }, []);
 
   return (
     <div className="newsdetail-container">
@@ -173,7 +198,7 @@ export default function NewsDetail() {
                 </i>
                 <div className="icon-desc">번역보기</div>
               </div>
-              <div className="icon-row">
+              <div className="icon-row" onClick={onScrapClick}>
                 <i>
                   <FontAwesomeIcon icon={faBookmark} />
                 </i>
