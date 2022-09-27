@@ -749,15 +749,17 @@ function Landing() {
   useEffect(() => {
     const fetchData = async () => {
       axios.defaults.headers.common["Authorization"] = `Bearer ${currentUser}`;
-
       const fitNewsResponse = await axios.get(
         `${process.env.REACT_APP_API_URL}/news/recommend`,
       );
       setUserFitNews(fitNewsResponse.data);
+      console.log("사용자 맞춤 반응!!!", fitNewsResponse);
       console.log("사용자맞춤임!!!", userFitNews);
       const hotNewsResponse = await axios.get(
         `${process.env.REACT_APP_API_URL}/news/hot`,
       );
+      console.log("핫뉴스 반응!!!", hotNewsResponse);
+
       setHotNews(hotNewsResponse.data);
       console.log("핫뉴스임!!!", hotNews);
       // 핫뉴스는 한꺼번에 받아와서, 키워드별로 여기서 나눠도 될것같은데.
