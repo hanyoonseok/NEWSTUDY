@@ -1,20 +1,28 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
+import { useSelector } from "react-redux";
+
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
+
 import DoLevelTest from "./DoLevelTest";
 import BeforeLevelTest from "./BeforeLevelTest";
+
 function LevelTest(props) {
+  const user = useSelector((state) => state.user.currentUser);
+
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
+
   const [levelTestState, setLevelTestState] = useState(0);
   const levelTestDesc = [
     "레벨테스트는 유저의 레벨에 맞는 다양한 기사들을 보여주기 위한 과정입니다.",
     "알고있는 단어를 체크해주세요!",
   ];
+
   const getLeveltestState = (stateNum) => {
     setLevelTestState(stateNum);
   };
@@ -57,7 +65,8 @@ function LevelTest(props) {
               </div>
               <div className="result-word">레벨테스트 결과,</div>
               <div className="result-desc">
-                OO님은 <span className="text-spotlight">B1등급</span>입니다!
+                {user.nickname}님은
+                <span className="text-spotlight">B1등급</span>입니다!
               </div>
 
               <Link to="/landing">

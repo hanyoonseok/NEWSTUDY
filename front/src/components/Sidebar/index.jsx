@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import "./style.scss";
 
 import {
@@ -15,8 +16,11 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import SearchResult from "components/Header/SearchResult";
+import { logoutUser } from "modules/user/user";
 
 export default function Sidebar() {
+  const dispatch = useDispatch();
+
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
@@ -108,6 +112,12 @@ export default function Sidebar() {
       level: "A1",
     },
   ];
+
+  const onClickLogout = () => {
+    dispatch(logoutUser).then((res) => {
+      window.location.replace("/");
+    });
+  };
 
   return (
     <>
@@ -254,7 +264,12 @@ export default function Sidebar() {
                     나라별 기사목록
                   </Link>
                 </div>
-                <div className="nav-content nav-desc">로그아웃</div>
+                <div
+                  className="nav-content nav-desc"
+                  onClick={() => onClickLogout()}
+                >
+                  로그아웃
+                </div>
               </div>
             </>
           )}

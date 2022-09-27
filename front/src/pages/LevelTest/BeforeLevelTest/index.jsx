@@ -1,14 +1,28 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { useMediaQuery } from "react-responsive";
+
 import { faPlay, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
-import { useMediaQuery } from "react-responsive";
+
 function BeforeLevelTest({ getLeveltestState }) {
+  const user = useSelector((state) => state.currentUser);
+  useEffect(() => {
+    if (user) {
+      console.log("user???");
+      setMyLevelId(user.level);
+    }
+    changePosArrow(myLevelId, "click");
+    return () => {};
+  }, []);
+
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
+
   // 내 레벨 id값
-  const myLevelId = 5;
+  const [myLevelId, setMyLevelId] = useState(0);
   const levels = ["A1", "A2", "B1", "B2", "C1", "C2"];
   const [arrowPos, setArrowPos] = useState("0px");
   const [arrowPosMobile, setArrowPosMobile] = useState("0px");
@@ -23,11 +37,13 @@ function BeforeLevelTest({ getLeveltestState }) {
   imgRef[3] = useRef();
   imgRef[4] = useRef();
   imgRef[5] = useRef();
+
   const levelDesc = {
     1: <div>A1-A2레벨은EF-SET 1~40까지의 기초 단어 수준의 레벨입니다.</div>,
     3: <div>B1~B2레벨은EF-SET 41~60까지의 중급 단어 수준의 레벨입니다.</div>,
     5: <div>C1~C2레벨은EF-SET 61~100까지의 고급 단어 수준의 레벨입니다.</div>,
   };
+
   const changePosArrow = (pos, e) => {
     setActiveHoverlId(pos);
     if (e === "click") {
@@ -49,11 +65,6 @@ function BeforeLevelTest({ getLeveltestState }) {
   const goLeveltest = () => {
     getLeveltestState(1);
   };
-
-  useEffect(() => {
-    changePosArrow(myLevelId, "click");
-    console.log("gpgp");
-  }, []);
 
   return (
     <>
