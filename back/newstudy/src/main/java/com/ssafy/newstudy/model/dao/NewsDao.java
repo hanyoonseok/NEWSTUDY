@@ -11,7 +11,8 @@ public interface NewsDao {
     NewsResponseDto selectNews(Integer n_id);
     List<NewsResponseDto> selectNewsList(NewsRequestDto newsRequestDto);
     List<String> getNewsKeyword(Integer n_id);
-    List<NewsResponseDto> selectNewsListOrderByCnt(NewsRequestDto newsRequestDto);
+    List<NewsResponseDto> selectNewsListOrderByCnt(Integer c_id);
     List<NewsResponseDto> selectRelatedNewsList(Integer n_id);
+    List<NewsResponseDto> selectRecommendNewsList();
     void updateViewCnt(Integer n_id);
 }

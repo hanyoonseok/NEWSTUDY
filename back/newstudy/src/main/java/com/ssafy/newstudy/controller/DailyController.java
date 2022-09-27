@@ -21,7 +21,7 @@ public class DailyController {
     private final DailyService dailyService;
 
     @GetMapping(value = {"/{c_id}", "/", ""})
-    @ApiOperation(value = "오늘 가장 많이 사용된 단어 목록", notes = "가장 많이 사용된 단어, 횟수의 목록을 준다")
+    @ApiOperation(value = "오늘 가장 많이 사용된 단어 목록", notes = "카테고리별(c_id 없으면 전체 기준) 가장 많이 사용된 단어, 횟수의 목록을 준다")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
             @ApiResponse(code = 401, message="로그인정보 없음"),

@@ -15,7 +15,7 @@ public class NewsRequestDto {
 
     private Integer startlevel;
     private Integer endlevel;
-    private Integer categoryid;
+    private Integer categoryid = 0;
     private String search;
 
     public void setStartlevelAndEndlevel(int startlevel, int endlevel){

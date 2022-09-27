@@ -47,7 +47,7 @@
         FROM `KEYWORD`
         WHERE n_id = #{n_id}
     </select>
-    <select id="selectNewsListOrderByCnt" parameterType="newsRequestDto" resultType="newsResponseDto">
+    <select id="selectNewsListOrderByCnt" parameterType="int" resultType="newsResponseDto">
         SELECT n_id,
                c_id,
                title,
@@ -59,8 +59,12 @@
                `date`,
                thumbnail
         FROM `NEWS`
+        WHERE 1 = 1
+          <if test="c_id != null and c_id != 0">
+              AND c_id = #{c_id}
+          </if>
         ORDER BY cnt DESC
-        LIMIT #{start_no}, #{per_page}
+        LIMIT 0, 10
     </select>
     <select id="selectRelatedNewsList" parameterType="int" resultType="newsResponseDto">
         SELECT n_id,
@@ -75,7 +79,22 @@
                thumbnail
         FROM `NEWS`
         WHERE c_id = (SELECT c_id FROM `NEWS` WHERE n_id = #{n_id})
-        LIMIT 0, 10
+        LIMIT 0, 6
+    </select>
+    <select id="selectRecommendNewsList" resultType="newsResponseDto">
+        SELECT n_id,
+        c_id,
+        title,
+        content,
+        origin,
+        url,
+        `level`,
+        cnt,
+        `date`,
+        thumbnail
+        FROM `NEWS`
+        ORDER BY cnt DESC
+        LIMIT 0, 20
     </select>
     <update id="updateViewCnt" parameterType="int">
         UPDATE `NEWS`
