@@ -1,0 +1,172 @@
+@import "variables.scss";
+
+.wordmodal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  @include STRETCH;
+  background-color: rgba(63, 65, 75, 0.15);
+  @include FLEX-CENTER;
+
+  .wordmodal-content-container {
+    padding: rem(28);
+    background-color: #fff;
+    width: rem(800);
+    border-radius: 28px;
+    @include FLEX-COLUMN;
+    align-items: center;
+
+    .wordmodal-btn-wrapper {
+      width: 100%;
+      @include FLEX-ALIGN-CENTER;
+      justify-content: flex-start;
+
+      &.end {
+        justify-content: flex-end;
+      }
+    }
+    .wordmodal-closebtn {
+      width: rem(24);
+      height: rem(24);
+      cursor: pointer;
+    }
+  }
+
+  .wordmodal-desc-container {
+    width: 100%;
+    padding: rem(23) rem(23);
+    background-color: #eef4ff;
+    border-radius: 26px;
+    margin-top: rem(10);
+    @include FLEX-ALIGN-CENTER;
+
+    .wordmodal-index {
+      @include FLEX-CENTER;
+      color: #fff;
+      background-color: $soft-blue;
+      font-family: $eng-font;
+      font-size: rem(20);
+      width: rem(30);
+      height: rem(30);
+      border-radius: 20px;
+      margin-right: rem(10);
+      flex-shrink: 0;
+    }
+
+    .wordmodal-desc {
+      @include FLEX-CENTER;
+      font-family: $eng-font;
+      font-size: rem(24);
+    }
+  }
+
+  .wordmodal-kor-trans {
+    margin-top: rem(30);
+    @include FLEX-COLUMN;
+
+    .wordmodal-trans-row {
+      @include FLEX-ALIGN-CENTER;
+      .wordmodal-trans-level {
+        width: rem(30);
+        height: rem(30);
+        border-radius: 30px;
+        color: #fff;
+        font-family: $eng-title-font;
+        font-size: rem(14);
+        margin-right: rem(12);
+        @include FLEX-CENTER;
+
+        &.Alv {
+          background-color: $Alv;
+        }
+        &.Blv {
+          background-color: $Blv;
+        }
+        &.Clv {
+          background-color: $Clv;
+        }
+      }
+      .wordmodal-trans-part {
+        background-color: $soft-blue;
+        color: #fff;
+        width: rem(30);
+        height: rem(30);
+        font-size: rem(16);
+        font-family: $kor-font;
+        @include FLEX-CENTER;
+        border-radius: 5px;
+        margin-right: rem(26);
+      }
+      .wordmodal-trans {
+        font-size: rem(24);
+        font-family: $kor-font;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .wordmodal-input-result {
+    @include FLEX-COLUMN;
+    margin-top: rem(20);
+    align-items: center;
+    .wordmodal-input-row {
+      @include FLEX-CENTER;
+      flex-wrap: wrap;
+
+      .wordmodal-wordblock {
+        width: rem(50);
+        height: rem(50);
+        border-radius: 12px;
+        background-color: $light-grey;
+        font-family: $eng-title-font;
+        font-size: rem(32);
+        font-weight: bold;
+        margin-bottom: rem(4);
+        margin-right: rem(10);
+        @include FLEX-CENTER;
+        &.wrong {
+          color: #ffb2b2;
+        }
+        @media (max-width: 480px) {
+          width: rem(40);
+          height: rem(40);
+          font-size: rem(28);
+        }
+      }
+    }
+
+    .wordmodal-arrow-down {
+      width: rem(26);
+      height: rem(30);
+      margin: rem(10) 0;
+      color: #85899f;
+    }
+  }
+  .wordmodal-add-btn {
+    border-radius: 15px;
+    background-color: $default-grey;
+    padding: rem(8) rem(15);
+    color: #f5f5f5;
+    @include FLEX-ALIGN-CENTER;
+    font-size: rem(18);
+    font-family: $kor-font;
+    font-weight: bold;
+    margin-top: rem(10);
+    transition: 0.3s ease;
+
+    .add-btn-circle {
+      @include FLEX-CENTER;
+      background-color: #a0a3b5;
+      width: rem(35);
+      height: rem(35);
+      border-radius: 35px;
+    }
+    .wordmodal-add-btn-icon {
+      font-size: rem(35);
+    }
+
+    &:hover {
+      background-color: darken($default-grey, 10%);
+    }
+  }
+}

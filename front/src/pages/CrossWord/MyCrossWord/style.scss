@@ -1,0 +1,32 @@
+@import "variables.scss";
+
+.mycrossword-row {
+  display: flex;
+  .mycrossword-col {
+    @include FLEX-CENTER;
+    width: rem(32);
+    height: rem(32);
+    margin: 1px;
+
+    @media (max-width: 480px) {
+      width: rem(26);
+      height: rem(26);
+    }
+
+    &.value {
+      background-color: #fff;
+      filter: $drop-shadow;
+      font-family: $eng-title-font;
+      font-size: rem(18);
+      font-weight: bold;
+      color: #000;
+      transition: 0.2s ease;
+      border: none;
+      border-radius: 10px;
+    }
+
+    &.wrong {
+      color: #ff9090;
+    }
+  }
+}

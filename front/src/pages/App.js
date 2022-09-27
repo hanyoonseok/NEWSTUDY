@@ -11,6 +11,9 @@ import Layout from "components/Layout";
 import Signup from "./Signup";
 import Mypage from "./Mypage";
 import SearchList from "./SearchList";
+import GameMenu from "./GameMenu";
+import CrossWord from "./CrossWord";
+import SpeedQuiz from "./SpeedQuiz";
 
 import LevelTest from "pages/LevelTest";
 
@@ -28,6 +31,9 @@ function App() {
           <Route path="/nationsnews" element={<NationsNewsList />}></Route>
           <Route path="/news/list" element={<NewsList />}></Route>
           <Route path="/search/:query" element={<SearchList />}></Route>
+          <Route path="/game/menu" element={<GameMenu />}></Route>
+          <Route path="/game/crossword" element={<CrossWord />}></Route>
+          <Route path="/game/speedquiz" element={<SpeedQuiz />}></Route>
         </Routes>
       </Layout>
     </BrowserRouter>
