@@ -110,6 +110,31 @@
         width: 100%;
         height: 100%;
       }
+
+      .signup {
+        .email-box {
+          .input-div {
+            margin-bottom: 1%;
+          }
+        }
+        > div:nth-of-type(2),
+        > div:nth-of-type(4) {
+          margin-bottom: 1%;
+        }
+
+        p {
+          padding: 0;
+          font-size: rem(12);
+          margin: 2% 0;
+          text-align: right;
+        }
+        .error {
+          color: rgb(252, 113, 113);
+        }
+        .correct {
+          color: rgb(56, 157, 56);
+        }
+      }
     }
   }
 }
@@ -172,5 +197,47 @@
         }
       }
     }
+  }
+}
+
+.input-div {
+  display: flex;
+  border-bottom: 1px solid #4d4d4db7;
+  padding-bottom: 3%;
+  margin-bottom: 9%;
+
+  &:focus-within {
+    .box {
+      background-color: $soft-blue;
+    }
+  }
+
+  .box {
+    width: 25px;
+    height: 25px;
+    background-color: $soft-grey;
+    margin-right: 5%;
+  }
+
+  input {
+    width: 100%;
+    border: 0;
+    color: $grey;
+    background: transparent;
+    font-size: rem(19);
+    font-family: $kor-font;
+
+    &::placeholder {
+      font-size: rem(19);
+    }
+  }
+
+  button {
+    @include BTN-COLOR($soft-grey);
+
+    padding: 2% 5%;
+    font-size: rem(16);
+    font-family: $kor-font;
+    border-radius: 10px 10px 0 0;
   }
 }

@@ -168,6 +168,7 @@ export default function Onboarding() {
           width="100%"
           globeBackgroundTexture={null}
           globeTexture={Earth}
+          globeCloudsTexture={null}
           options={{
             enableCameraZoom: false,
             focusDistanceRadiusScale: 3,
