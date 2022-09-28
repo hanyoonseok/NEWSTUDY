@@ -5,6 +5,7 @@ import com.ssafy.newstudy.model.dto.JWTokenDto;
 import com.ssafy.newstudy.model.dto.UserDto;
 import com.ssafy.newstudy.model.response.Response;
 import com.ssafy.newstudy.model.service.AuthService;
+import com.ssafy.newstudy.model.service.UserService;
 import com.ssafy.newstudy.util.JWToken;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -34,6 +35,7 @@ public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
+    private final UserService userService;
     private final Response response;
 //    private final OAuthService oAuthService;
 
@@ -48,6 +50,10 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody @ApiParam(value = "로그인 정보", required = true) UserDto userDto, HttpServletResponse resp) {
 
         JWToken jwt = authService.login(userDto);
+;
+        int u_id = userService.getUidFromBearerToken(jwt.getAccessToken());
+        authService.saveLoginLog(u_id);
+        authService.checkLoginCnt(u_id);
 
 //        ResponseCookie cookie = ResponseCookie.from("refresh-token", jwt.getRefreshToken())
 //                .maxAge(60*60*24*15)

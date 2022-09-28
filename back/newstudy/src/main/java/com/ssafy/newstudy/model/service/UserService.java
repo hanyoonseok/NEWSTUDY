@@ -73,12 +73,6 @@ public class UserService {
         return userDao.selectUidByEmail(jwtTokenUtil.getEmailFromBearerToken(BearerToken));
     }
 
-//    public User getUserById(Long id) {
-//        Optional<User> user = userRepository.findUserById(id);
-//        if (!user.isPresent()) throw new UsernameNotFoundException("존재하지 않는 유저입니다.");
-//        return user.get();
-//    }
-
     public String saveImage(MultipartFile multipartFile) throws IOException {
         String path = System.getProperty("user.dir")+"\\"+LocalDateTime.now().getMonthValue();
         logger.info("path : {}",path);

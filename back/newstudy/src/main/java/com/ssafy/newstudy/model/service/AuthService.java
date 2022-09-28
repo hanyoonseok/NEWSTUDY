@@ -1,6 +1,8 @@
 package com.ssafy.newstudy.model.service;
 
 import com.ssafy.newstudy.exception.InvalidEmailAndPasswordException;
+import com.ssafy.newstudy.model.dao.UserDao;
+import com.ssafy.newstudy.model.dto.BadgeRequestDto;
 import com.ssafy.newstudy.model.dto.UserDto;
 import com.ssafy.newstudy.util.JWToken;
 import com.ssafy.newstudy.util.JwtTokenUtil;
@@ -20,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final UserService userService;
+    private final BadgeService badgeService;
+    private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenUtil jwtTokenUtil;
@@ -35,14 +39,23 @@ public class AuthService {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPw());
             Authentication auth = authenticationManagerBuilder.getObject().authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
+
             return jwtTokenUtil.createToken(userDto, auth);
-//            return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(loginInfo.getEmail())));
         }
 
-        // 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
-//        return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null));
-        System.out.println("userDto = " + userDto.getEmail() + " "  + userDto.getPw());
         throw new InvalidEmailAndPasswordException();
+    }
+
+    public void saveLoginLog(int u_id){
+        userDao.saveLoginLog(u_id);
+    }
+
+    public void checkLoginCnt(int u_id){
+        int cnt = userDao.checkLoginCnt(u_id);
+        if(cnt==1) badgeService.addBadge(new BadgeRequestDto(u_id, 1));
+        if(cnt==50) badgeService.addBadge(new BadgeRequestDto(u_id, 2));
+        if(cnt==100) badgeService.addBadge(new BadgeRequestDto(u_id, 3));
+        //사실... 이거 1, 50, 100 로만 하는게 아니고 뱃지 확인하고 없으면 addbadge를 해주는게 좋아. 나중에 리팩토링 하자.
     }
 
     public boolean checkRightPw(UserDto userDto) {

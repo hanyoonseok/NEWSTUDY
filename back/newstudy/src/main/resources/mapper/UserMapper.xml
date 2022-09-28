@@ -32,19 +32,16 @@
         SET pw = #{pw}, level = #{level},  nickname = #{nickname}, src = #{src}
         where email = #{email}
     </update>
+    
+    <insert id="saveLoginLog">
+        insert into `login_log` (u_id, date)
+        values (#{u_id}, date(now()))
+    </insert>
 
-<!--    <select id="selectUser" resultType="userDto">-->
-<!--        SELECT id, nickname, introduce-->
-<!--        FROM userDto-->
-<!--        WHERE id = #{id}-->
-<!--          AND password = #{password}-->
-<!--    </select>-->
-
-
-
-<!--    <delete id="deleteUser">-->
-<!--        DELETE FROM userDto-->
-<!--        WHERE id = #{id}-->
-<!--    </delete>-->
+    <select id="checkLoginCnt">
+        select count(*)
+        from login_log
+        where u_id = #{u_id}
+    </select>
 
 </mapper>
