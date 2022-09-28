@@ -11,8 +11,8 @@
     </select>
 
     <insert id="insertVocabulary" parameterType="vocabularyRequestDto">
-        INSERT INTO `USER_VOCA`(u_id, eng)
-        VALUES (#{u_id}, #{eng})
+        INSERT INTO `USER_VOCA`(u_id, eng, kor)
+        VALUES (#{u_id}, #{eng}, #{kor})
     </insert>
 
     <update id="updateVocabulary" parameterType="vocabularyRequestDto">
