@@ -32,6 +32,7 @@ export const loginUser = async (data) => {
   // 로그인 처리
   await axios.post(`/auth/login`, data).then((res) => {
     userInfo.accessToken = loginSuccess(res);
+    console.log("로그인", res);
   });
   // 회원정보 조회
   await axios.get(`/user`).then((res) => {

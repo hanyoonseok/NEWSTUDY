@@ -44,8 +44,9 @@ export default function Mypage() {
   const fileInput = useRef(null);
 
   const onChange = (e) => {
-    if (e.target.files[0]) {
-      // setFile(e.target.files[0]);
+    const profileImg = e.target.files[0];
+    if (profileImg) {
+      // setFile(profileImg);
     } else {
       //업로드 취소할 시
       setUserImage(DefaultUserImage);
@@ -53,10 +54,26 @@ export default function Mypage() {
     }
     //화면에 프로필 사진 표시
     const reader = new FileReader();
+    const formData = new FormData();
     reader.onload = () => {
       if (reader.readyState === 2) {
         //이미지 정상적으로 불러오면 변경하기
         setUserImage(reader.result);
+        formData.append("file", profileImg);
+
+        for (let key of formData.keys()) {
+          console.log(key, ":", formData.get(key));
+        }
+
+        // 유저 이미지 변경 api 전송
+        axios
+          .post("/user/avatar", formData, {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => console.log("이미지 변경완?", res));
       }
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -65,65 +82,65 @@ export default function Mypage() {
   // 프론트에서 갖고 있을 배지 목록
   const badges = [
     {
-      id: 0,
+      id: 1,
       name: "1일 출석 배지",
       img: Attendance1,
       isAchieve: false,
     },
     {
-      id: 1,
+      id: 2,
       name: "50일 출석 배지",
       img: Attendance50,
       isAchieve: false,
     },
     {
-      id: 2,
+      id: 3,
       name: "100일 출석 배지",
       img: Attendance100,
       isAchieve: false,
     },
     {
-      id: 3,
+      id: 4,
       name: "레벨 A 달성 배지",
       img: LevelA,
       isAchieve: false,
     },
     {
-      id: 4,
+      id: 5,
       name: "레벨 B 달성 배지",
       img: LevelB,
       isAchieve: false,
     },
     {
-      id: 5,
+      id: 6,
       name: "레벨 C 달성 배지",
       img: LevelC,
       isAchieve: false,
     },
     {
-      id: 6,
+      id: 7,
       name: "게임 50초 이내 클리어",
       img: GameClear50,
       isAchieve: false,
     },
     {
-      id: 7,
+      id: 8,
       name: "게임 30초 이내 클리어",
       img: GameClear30,
       isAchieve: false,
     },
     {
-      id: 8,
+      id: 9,
       name: "게임 10초 이내 클리어",
       img: GameClear10,
       isAchieve: false,
     },
-    { id: 9, name: "뉴스 스크랩 1회", img: NewsScrap1, isAchieve: false },
-    { id: 10, name: "뉴스 스크랩 10회", img: NewsScrap10, isAchieve: false },
-    { id: 11, name: "뉴스 스크랩 50회", img: NewsScrap50, isAchieve: false },
-    { id: 12, name: "단어 1개 저장", img: MyVoca1, isAchieve: false },
-    { id: 13, name: "단어 100개 저장", img: MyVoca100, isAchieve: false },
-    { id: 14, name: "단어 500개 저장", img: MyVoca500, isAchieve: false },
+    { id: 10, name: "뉴스 스크랩 1회", img: NewsScrap1, isAchieve: false },
+    { id: 11, name: "뉴스 스크랩 10회", img: NewsScrap10, isAchieve: false },
+    { id: 12, name: "뉴스 스크랩 50회", img: NewsScrap50, isAchieve: false },
+    { id: 13, name: "단어 1개 저장", img: MyVoca1, isAchieve: false },
+    { id: 14, name: "단어 100개 저장", img: MyVoca100, isAchieve: false },
+    { id: 15, name: "단어 500개 저장", img: MyVoca500, isAchieve: false },
   ];
 
   const [userBadges, setUserBadges] = useState([]);
@@ -365,7 +382,7 @@ export default function Mypage() {
   );
 }
 
-function level(level) {
+const level = (level) => {
   switch (level) {
     case 1:
       return <img src={A1} alt="A1"></img>;
@@ -382,4 +399,4 @@ function level(level) {
     default:
       break;
   }
-}
+};

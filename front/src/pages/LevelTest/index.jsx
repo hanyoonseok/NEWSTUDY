@@ -23,6 +23,7 @@ function LevelTest() {
     "알고있는 단어를 체크해주세요!",
   ];
   const [levelAvg, setLevelAvg] = useState(0);
+  const [levelBadge, setLevelBadge] = useState(false);
 
   const getLeveltestState = (stateNum) => {
     setLevelTestState(stateNum);
