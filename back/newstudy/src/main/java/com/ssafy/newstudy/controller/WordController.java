@@ -1,7 +1,6 @@
 package com.ssafy.newstudy.controller;
 
 import com.ssafy.newstudy.model.dto.WordResponseDto;
-import com.ssafy.newstudy.model.service.UserService;
 import com.ssafy.newstudy.model.service.WordService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -42,7 +41,7 @@ public class WordController {
         // 게임용 단어 랜덤으로
         List<WordResponseDto> list = wordService.getWordGame();
         // cross인 경우에는
-        if(type != null && type.equals("cross")){
+        if(type != null && (type.equals("cross") || type.equals("crossword"))){
             list = wordService.getCrossWord(list);
         }
         // 기본적으로 speed라 생각한다

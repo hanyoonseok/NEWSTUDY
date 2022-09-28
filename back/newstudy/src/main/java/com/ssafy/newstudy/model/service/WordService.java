@@ -32,6 +32,9 @@ public class WordService {
      * @return
      */
     public List<WordResponseDto> getCrossWord(List<WordResponseDto> list) {
+        q.clear();
+        payload.clear();
+
         word_list = new String[list.size()];
         for(int i = 0 ; i < word_list.length ; i++) {
             word_list[i] = list.get(i).getEng();
