@@ -38,7 +38,7 @@
         values (#{u_id}, date(now()))
     </insert>
 
-    <select id="checkLoginCnt">
+    <select id="checkLoginCnt" resultType="int">
         select count(*)
         from login_log
         where u_id = #{u_id}
