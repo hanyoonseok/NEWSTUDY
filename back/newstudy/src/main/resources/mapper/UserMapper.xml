@@ -33,18 +33,11 @@
         where email = #{email}
     </update>
 
-<!--    <select id="selectUser" resultType="userDto">-->
-<!--        SELECT id, nickname, introduce-->
-<!--        FROM userDto-->
-<!--        WHERE id = #{id}-->
-<!--          AND password = #{password}-->
-<!--    </select>-->
+    <update id="saveImage">
+        UPDATE user
+        SET src = #{src}
+        WHERE u_id = #{u_id}
+    </update>
 
-
-
-<!--    <delete id="deleteUser">-->
-<!--        DELETE FROM userDto-->
-<!--        WHERE id = #{id}-->
-<!--    </delete>-->
 
 </mapper>

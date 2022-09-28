@@ -104,23 +104,25 @@ public class UserController {
                 ,HttpStatus.OK);
     }
 
-    /**
-     *
-     * 이 아래부터는 일단 가지고 있다가 필요할 때 올려서 사용할게요!
-     */
+    @PostMapping("/avatar")
+    public ResponseEntity<?> addImage(@RequestPart MultipartFile file, @RequestHeader("Authorization") String bearerToken) {
+        try{
+            int u_id = userService.getUidFromBearerToken(bearerToken);
+            userService.saveImage(u_id, file);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
-//
-//    @PostMapping("/image")
-//    public ResponseEntity<?> addImage(@RequestPart MultipartFile file)throws IOException{
-//
-//        return response.success(ImageDto.builder().src(userService.saveImage(file)).build());
-//    }
-//    @GetMapping(value = "/image/{src}", produces = {MediaType.IMAGE_JPEG_VALUE,MediaType.IMAGE_GIF_VALUE,MediaType.IMAGE_PNG_VALUE})
-//    public byte[] getImage(@PathVariable String src) throws IOException {
-//        String[] split = src.split("`");
-//        InputStream in = new FileInputStream(System.getProperty("user.dir")+"/"+split[0]+"/"+split[1]);
-//        byte[] bytes = IOUtils.toByteArray(in);
-//        in.close();
-//        return bytes;
-//    }
+    @GetMapping("/avatar")
+    public byte[] getImage(@RequestHeader("Authorization") String bearerToken) throws IOException {
+        String src = userService.getUserByUid(userService.getUidFromBearerToken(bearerToken)).getSrc();
+        String[] split = src.split("`");
+        InputStream in = new FileInputStream(System.getProperty("user.dir")+"/"+split[0]+"/"+split[1]);
+        byte[] bytes = IOUtils.toByteArray(in);
+        in.close();
+        return bytes;
+    }
 }
