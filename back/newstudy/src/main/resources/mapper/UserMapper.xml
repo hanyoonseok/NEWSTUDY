@@ -44,4 +44,10 @@
         where u_id = #{u_id}
     </select>
 
+    <update id="saveImage">
+        UPDATE user
+        SET src = #{src}
+        WHERE u_id = #{u_id}
+    </update>
+
 </mapper>

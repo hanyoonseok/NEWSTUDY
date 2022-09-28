@@ -73,7 +73,7 @@ public class UserService {
         return userDao.selectUidByEmail(jwtTokenUtil.getEmailFromBearerToken(BearerToken));
     }
 
-    public String saveImage(MultipartFile multipartFile) throws IOException {
+    public void saveImage(int u_id, MultipartFile multipartFile) throws IOException {
         String path = System.getProperty("user.dir")+"\\"+LocalDateTime.now().getMonthValue();
         logger.info("path : {}",path);
         String fileName = UUID.randomUUID().toString().substring(0, 10)+multipartFile.getOriginalFilename();
@@ -84,6 +84,8 @@ public class UserService {
         }
         multipartFile.transferTo(dest);
 
-        return LocalDateTime.now().getMonthValue()+"`"+fileName;
+        String src = LocalDateTime.now().getMonthValue()+"`"+fileName;
+
+        userDao.saveImage(u_id, src);
     }
 }
