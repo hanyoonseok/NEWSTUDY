@@ -8,7 +8,7 @@ export default function Word({ vocas, setWordMemorizeStatus }) {
 
   const changeMemorizeStatus = async (voca) => {
     await axios
-      .put(`${process.env.REACT_APP_API_URL}/vocaburary/${voca.v_id}`, null, {
+      .put(`/vocaburary/${voca.v_id}`, null, {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },

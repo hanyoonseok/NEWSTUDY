@@ -13,7 +13,7 @@ const CHANGE_LEVEL = "uset/CHANGE_LEVEL";
 export const signupUser = async (data) => {
   console.log("signupuser");
   const request = await axios
-    .post(`${process.env.REACT_APP_API_URL}/user/signup`, data)
+    .post(`/user/signup`, data)
     .then((res) => console.log(res));
   return {
     type: SIGNUP_USER,
@@ -30,13 +30,11 @@ export const loginUser = async (data) => {
     accessToken: null,
   };
   // 로그인 처리
-  await axios
-    .post(`${process.env.REACT_APP_API_URL}/auth/login`, data)
-    .then((res) => {
-      userInfo.accessToken = loginSuccess(res);
-    });
+  await axios.post(`/auth/login`, data).then((res) => {
+    userInfo.accessToken = loginSuccess(res);
+  });
   // 회원정보 조회
-  await axios.get(`${process.env.REACT_APP_API_URL}/user`).then((res) => {
+  await axios.get(`/user`).then((res) => {
     console.log(res.data.data);
     userInfo.email = res.data.data.email;
     userInfo.level = res.data.data.level;
@@ -78,7 +76,7 @@ export const logoutUser = async () => {
 export const changeLevel = async (level, user) => {
   console.log("changeLevel");
   const request = await axios
-    .put(`${process.env.REACT_APP_API_URL}/user/level/${level}`, null, {
+    .put(`/user/level/${level}`, null, {
       headers: {
         Authorization: `Bearer ${user.accessToken}`,
       },

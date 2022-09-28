@@ -51,7 +51,51 @@ function DoLevelTest({ getResult, user, setLevelAvg }) {
       setLevelAvg(6);
       level = 6;
     }
-    dispatch(changeLevel(level, userInfo));
+    let flag = false;
+    dispatch(changeLevel(level, userInfo)).then((res) => {
+      console.log(res);
+      // 회원 배지 목록 가져오기
+      axios
+        .get(`/badge`, {
+          headers: {
+            Authorization: `Bearer ${userInfo.accessToken}`,
+          },
+        })
+        .then((res) => {
+          //가져온 배지중에 현재 획득한 배지 레벨의 배지가 없을 경우 추가해주기
+          console.log(res.data);
+          const checkBadge = (badgeId) => {
+            res.data.array.forEach((element) => {
+              if (element.b_id === badgeId) {
+                flag = true; // 배지가 이미 있으면 true
+              }
+            });
+            //배지가 없을 경우에만 배지 update
+            if (!flag) {
+              axios
+                .post(
+                  `/badge`,
+                  {
+                    b_id: badgeId,
+                  },
+                  {
+                    headers: {
+                      Authorization: `Bearer ${userInfo.accessToken}`,
+                    },
+                  },
+                )
+                .then((res) => console.log("배지 업데이트", res));
+            }
+          };
+          if (level === 1 || level === 2) {
+            checkBadge(3);
+          } else if (level === 3 || level === 4) {
+            checkBadge(4);
+          } else {
+            checkBadge(5);
+          }
+        });
+    });
   };
 
   const [checkedList, setCheckedList] = useState([]);
@@ -70,10 +114,7 @@ function DoLevelTest({ getResult, user, setLevelAvg }) {
           Authorization: `Bearer ${user.accessToken}`,
         },
       };
-      const testWordsResponse = await axios.get(
-        `${process.env.REACT_APP_API_URL}/word/test`,
-        headers,
-      );
+      const testWordsResponse = await axios.get(`/word/test`, headers);
       setLeveltestWord(testWordsResponse.data);
     };
 

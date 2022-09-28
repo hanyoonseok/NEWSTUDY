@@ -163,7 +163,7 @@ export default function Mypage() {
   //배지목록 가져오기
   const getBadges = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/badge`, {
+      .get(`/badge`, {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
@@ -185,7 +185,7 @@ export default function Mypage() {
   // 단어 목록 가져오기
   const getVocas = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/vocaburary`, {
+      .get(`/vocaburary`, {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },
@@ -199,7 +199,7 @@ export default function Mypage() {
   //기사 목록 가져오기
   const getArticles = async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/scrap`, {
+      .get(`/scrap`, {
         headers: {
           Authorization: `Bearer ${user.accessToken}`,
         },

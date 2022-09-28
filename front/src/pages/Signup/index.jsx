@@ -65,21 +65,21 @@ export default function Signup() {
   const onClickAuthEmail = async (e) => {
     e.preventDefault();
     console.log("이메일 인증 클릭함");
-    setIsEmailModal(true);
     // 중복검사 했는데 중복 이메일일 경우
-    // await axios
-    //   .post(`${process.env.REACT_APP_API_URL}/user/mail`, {
-    //     email: Email,
-    //   })
-    //   .then((res) => {
-    //     console.log("res", res); // 여기서 넘어오는 key를 receiveAuthKey에 저장
-    //     setIsDuplicateEmail(true);
-    //     setIsEmailModal(true);
-    //   })
-    //   .catch((error) => {
-    //     console.log("error", error);
-    //     setIsDuplicateEmail(false);
-    //   });
+    await axios
+      .post(`/user/mail`, {
+        email: Email,
+      })
+      .then((res) => {
+        console.log("res", res); // 여기서 넘어오는 key를 receiveAuthKey에 저장
+        setIsDuplicateEmail(true);
+        setIsEmailModal(true);
+      })
+      .catch((error) => {
+        console.log("error", error);
+        setIsDuplicateEmail(false);
+        setIsEmailModal(true);
+      });
   };
 
   const onLoginHandler = (e) => {
