@@ -10,6 +10,7 @@ import com.ssafy.newstudy.util.JWToken;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,8 @@ import io.swagger.annotations.ApiResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 인증 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -65,7 +68,7 @@ public class AuthController {
 //                .build();
 //
 //        resp.setHeader("Set-Cookie", cookie.toString());
-        return response.success(JWTokenDto.of(jwt));
+        return new ResponseEntity<>(JWTokenDto.of(jwt), HttpStatus.OK);
     }
 
     @GetMapping("/logout")
