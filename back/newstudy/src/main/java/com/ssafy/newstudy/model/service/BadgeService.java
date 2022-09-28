@@ -42,6 +42,12 @@ public class BadgeService{
      * @return성공 row 수
      */
     public int addBadge(BadgeRequestDto badge) {
-        return badgeDao.insertBadge(badge);
+        int result = 0;
+        try {
+            result = badgeDao.insertBadge(badge);
+        }catch(Exception e){
+            result = 0;
+        }
+        return result;
     }
 }

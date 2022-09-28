@@ -10,6 +10,6 @@ import java.util.List;
 public interface BadgeDao {
     List<BadgeResponseDto> selectBadgeList(Integer u_id);
     List<BadgeResponseDto> selectNewBadgeList(Integer u_id);
-    int insertBadge(BadgeRequestDto badge);
+    int insertBadge(BadgeRequestDto badge) throws Exception;
     void updateBadge(Integer b_id);
 }
