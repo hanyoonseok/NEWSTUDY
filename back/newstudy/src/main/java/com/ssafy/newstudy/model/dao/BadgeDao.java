@@ -9,5 +9,7 @@ import java.util.List;
 @Mapper
 public interface BadgeDao {
     List<BadgeResponseDto> selectBadgeList(Integer u_id);
+    List<BadgeResponseDto> selectNewBadgeList(Integer u_id);
     int insertBadge(BadgeRequestDto badge);
+    void updateBadge(Integer b_id);
 }
