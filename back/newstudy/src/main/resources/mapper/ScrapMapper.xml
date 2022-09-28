@@ -22,4 +22,9 @@
          WHERE u_id = #{u_id}
            AND n_id = #{n_id}
     </delete>
+    <select id="selectScrapCnt" parameterType="scrapRequestDto" resultType="int">
+        SELECT count(*)
+          FROM `NEWS_SCRAP`
+         WHERE u_id = #{u_id}
+    </select>
 </mapper>

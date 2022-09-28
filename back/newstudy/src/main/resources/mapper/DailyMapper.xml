@@ -13,7 +13,7 @@
             <if test="c_id != null and c_id != 0">
                 AND c_id = #{c_id}
             </if>
-          AND date(`date`) = date(now())
+          AND date(`date`) = date(now() - INTERVAL 1 DAY)
         order by cnt desc
         limit 0, 50
     </select>

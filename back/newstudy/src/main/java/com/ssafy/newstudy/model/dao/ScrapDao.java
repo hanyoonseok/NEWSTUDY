@@ -9,6 +9,7 @@ import java.util.List;
 @Mapper
 public interface ScrapDao {
     List<ScrapResponseDto> selectScrapList(Integer u_id);
-    int insertScrap(ScrapRequestDto scrapRequestDto);
+    int insertScrap(ScrapRequestDto scrapRequestDto) throws Exception;
     int deleteScrap(ScrapRequestDto scrapRequestDto);
+    int selectScrapCnt(ScrapRequestDto scrapRequestDto);
 }
