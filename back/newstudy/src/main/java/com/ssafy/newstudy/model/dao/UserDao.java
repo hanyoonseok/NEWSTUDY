@@ -12,5 +12,5 @@ public interface UserDao {
     void updateUser(UserDto userDto);
     void saveLoginLog(int u_id);
     int checkLoginCnt(int u_id);
-    void saveImage(int u_id, String src);
+    void saveImage(UserDto userDto);
 }

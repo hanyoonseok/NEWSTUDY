@@ -86,6 +86,6 @@ public class UserService {
 
         String src = LocalDateTime.now().getMonthValue()+"`"+fileName;
 
-        userDao.saveImage(u_id, src);
+        userDao.saveImage(new UserDto().builder().u_id(u_id).src(src).build());
     }
 }
