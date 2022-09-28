@@ -35,7 +35,21 @@ public class BadgeController {
         // 유저 id를 가지고 온다
         // 배지 목록을 가지고 온다
         List<BadgeResponseDto> responseArray = badgeService.getBadge(userService.getUidFromBearerToken(bearerToken));
+        return new ResponseEntity<List<BadgeResponseDto>>(responseArray, HttpStatus.OK);
+    }
 
+    @GetMapping("/new")
+    @ApiOperation(value = "회원의 새로운 배지 목록", notes = "로그인 한 회원의 확인하지 않은 배지 목록을 준다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message="성공", response = List.class),
+            @ApiResponse(code = 401, message="로그인정보 없음"),
+            @ApiResponse(code = 500, message="서버오류")
+    })
+    public ResponseEntity<List<BadgeResponseDto>> getNewBadge(@ApiParam(value = "로그인된 유저 정보", required = true) @RequestHeader("Authorization") String bearerToken){
+        // 유저 id를 가지고 온다
+        // 배지 목록을 가지고 온다
+        List<BadgeResponseDto> responseArray = badgeService.getNewBadge(userService.getUidFromBearerToken(bearerToken));
+        badgeService.setNewBadge_old(responseArray);
         return new ResponseEntity<List<BadgeResponseDto>>(responseArray, HttpStatus.OK);
     }
 

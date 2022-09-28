@@ -105,7 +105,7 @@ public class UserController {
     }
 
     @PostMapping("/avatar")
-    public ResponseEntity<?> addImage(@RequestPart MultipartFile file, @RequestHeader("Authorization") String bearerToken) {
+    public ResponseEntity<?> addImage(@RequestPart("file") MultipartFile file, @RequestHeader("Authorization") String bearerToken) {
         try{
             int u_id = userService.getUidFromBearerToken(bearerToken);
             userService.saveImage(u_id, file);

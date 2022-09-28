@@ -5,12 +5,30 @@
 <mapper namespace="com.ssafy.newstudy.model.dao.BadgeDao">
     <select id="selectBadgeList" parameterType="int" resultType="badgeResponseDto">
         SELECT u_id,
-               b_id
+               b_id,
+               `name`
         FROM `USER_BADGE`
+        LEFT JOIN `BADGE`
+        USING (`b_id`)
         WHERE u_id = #{u_id}
     </select>
     <insert id="insertBadge" parameterType="badgeRequestDto">
         INSERT INTO `USER_BADGE`(u_id, b_id)
         VALUES (#{u_id}, #{b_id})
     </insert>
+    <select id="selectNewBadgeList" parameterType="int" resultType="badgeResponseDto">
+        SELECT u_id,
+               b_id,
+               `name`
+        FROM `USER_BADGE`
+        LEFT JOIN `BADGE`
+        USING (`b_id`)
+        WHERE u_id = #{u_id}
+          AND `done` = 0
+    </select>
+    <update id="updateBadge" parameterType="badgeResponseDto">
+        UPDATE `USER_BADGE`
+           SET `done` = 1
+         WHERE b_id = #{b_id}
+    </update>
 </mapper>

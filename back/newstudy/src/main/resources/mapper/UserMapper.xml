@@ -39,12 +39,12 @@
     </insert>
 
     <select id="checkLoginCnt" resultType="int">
-        select count(*)
+        select count(distinct date)
         from login_log
         where u_id = #{u_id}
     </select>
 
-    <update id="saveImage">
+    <update id="saveImage" parameterType="userDto">
         UPDATE user
         SET src = #{src}
         WHERE u_id = #{u_id}

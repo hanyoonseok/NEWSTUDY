@@ -28,7 +28,13 @@ public class ScrapService {
      * @return 성공 row 수
      */
     public int addScrap(ScrapRequestDto scrapRequestDto) {
-        return scrapDao.insertScrap(scrapRequestDto);
+        int result = 0;
+        try{
+            result = scrapDao.insertScrap(scrapRequestDto);
+        }catch(Exception e){
+            return 0;
+        }
+        return result;
     }
 
     /**
@@ -38,5 +44,14 @@ public class ScrapService {
      */
     public int deleteScrap(ScrapRequestDto scrapRequestDto) {
         return scrapDao.deleteScrap(scrapRequestDto);
+    }
+
+    /**
+     * 유저 뉴스 스크랩 갯수 확인
+     * @param scrapRequestDto
+     * @return
+     */
+    public int selectScrapCnt(ScrapRequestDto scrapRequestDto){
+        return scrapDao.selectScrapCnt(scrapRequestDto);
     }
 }
