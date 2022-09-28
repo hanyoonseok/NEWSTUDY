@@ -7,12 +7,12 @@
         SELECT eng, part, `level` FROM (
             SELECT eng, part, `level`, RANK() OVER (PARTITION BY words.level ORDER BY RAND()) AS a
             FROM ref_word AS words) AS randwords
-        WHERE randwords.a <![CDATA[ <= ]]> 5;
+        WHERE randwords.a <![CDATA[ <= ]]> 5
     </select>
     <select id="selectWordGameList" resultType="wordResponseDto">
         SELECT eng, part, `level`, `description` FROM (
             SELECT eng, part, `level`, `description`, RANK() OVER (ORDER BY RAND()) AS a
             FROM ref_word AS words) AS randwords
-        WHERE randwords.a <![CDATA[ <= ]]> 10;
+        WHERE randwords.a <![CDATA[ <= ]]> 10
     </select>
 </mapper>

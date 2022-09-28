@@ -10,6 +10,7 @@ import java.util.List;
 public interface NewsDao {
     NewsResponseDto selectNews(Integer n_id);
     List<NewsResponseDto> selectNewsList(NewsRequestDto newsRequestDto);
+    Integer selectNewsListCnt(NewsRequestDto newsRequestDto);
     List<String> getNewsKeyword(Integer n_id);
     List<NewsResponseDto> selectNewsListOrderByCnt(Integer c_id);
     List<NewsResponseDto> selectRelatedNewsList(Integer n_id);

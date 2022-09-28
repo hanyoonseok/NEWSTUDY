@@ -32,6 +32,15 @@ public class NewsService {
     }
 
     /**
+     * 뉴스 검색 조건 받아서 해당하는 뉴스 카운트를 리턴
+     * @param newsRequestDto
+     * @return total_cnt
+     */
+    public Integer getSearchListTotalCnt(NewsRequestDto newsRequestDto){
+        return newsDao.selectNewsListCnt(newsRequestDto);
+    }
+
+    /**
      * 뉴스 id를 받아서 해당 뉴스의 keyword를 리턴
      * @param n_id
      * @return 해당 뉴스 keyword (string) 리스트

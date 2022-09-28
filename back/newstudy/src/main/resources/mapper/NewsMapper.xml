@@ -30,17 +30,48 @@
                thumbnail
         FROM `NEWS`
         WHERE level between #{startlevel} and #{endlevel}
-        <if test="categoryid != '' and categoryid != null and categoryid != 0">
-          AND c_id = #{categoryid}
+        <if test="startcategoryid != null and endcategoryid != null and startcategoryid != '' and startcategoryid != 0 and endcategoryid != '' and endcategoryid != 0">
+          AND c_id between #{startcategoryid} and #{endcategoryid}
         </if>
-        <if test="search != '' and search != null">
-            AND
-            (
-                title like '%${search}%'
-                OR content like '%${search}%'
+        <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
+            AND (
+        </if>
+        <if test="titlekeyword != null and titlekeyword != ''">
+            title like '%${titlekeyword}%'
+        </if>
+        <if test="titlekeyword != null and titlekeyword != '' and contentkeyword != null and contentkeyword != ''">
+            OR
+        </if>
+        <if test="contentkeyword != null and contentkeyword != ''">
+            content like '%${contentkeyword}%'
+        </if>
+        <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
             )
         </if>
         LIMIT #{start_no}, #{per_page}
+    </select>
+    <select id="selectNewsListCnt" parameterType="newsRequestDto" resultType="int">
+        SELECT count(*)
+        FROM `NEWS`
+        WHERE level between #{startlevel} and #{endlevel}
+        <if test="startcategoryid != null and endcategoryid != null and startcategoryid != '' and startcategoryid != 0 and endcategoryid != '' and endcategoryid != 0">
+            AND c_id between #{startcategoryid} and #{endcategoryid}
+        </if>
+        <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
+            AND (
+        </if>
+        <if test="titlekeyword != null and titlekeyword != ''">
+            title like '%${titlekeyword}%'
+        </if>
+        <if test="titlekeyword != null and titlekeyword != '' and contentkeyword != null and contentkeyword != ''">
+            OR
+        </if>
+        <if test="contentkeyword != null and contentkeyword != ''">
+            content like '%${contentkeyword}%'
+        </if>
+        <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
+            )
+        </if>
     </select>
     <select id="getNewsKeyword" parameterType="int" resultType="string">
         SELECT eng
