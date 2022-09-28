@@ -50,8 +50,8 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody @ApiParam(value = "로그인 정보", required = true) UserDto userDto, HttpServletResponse resp) {
 
         JWToken jwt = authService.login(userDto);
-;
-        int u_id = userService.getUidFromBearerToken(jwt.getAccessToken());
+
+        int u_id = userService.getUidFromBearerToken("Bearer "+jwt.getAccessToken());
         authService.saveLoginLog(u_id);
         authService.checkLoginCnt(u_id);
 
