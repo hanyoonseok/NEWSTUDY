@@ -10,4 +10,5 @@ public interface UserDao {
     UserDto selectUserByUid(int uId);
     void insertUser(UserDto userDto);
     void updateUser(UserDto userDto);
+    void saveImage(int u_id, String src);
 }
