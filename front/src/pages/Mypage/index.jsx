@@ -192,6 +192,7 @@ export default function Mypage() {
       })
       .then((res) => {
         setUserVocas(res.data);
+        console.log(res.data);
       });
   };
 
@@ -261,7 +262,7 @@ export default function Mypage() {
           />
           <label htmlFor="memorize">외운 단어 보기</label>
         </div>
-        {filterVocas && (
+        {filterVocas.length > 0 && (
           <Word
             vocas={filterVocas}
             setWordMemorizeStatus={setWordMemorizeStatus}

@@ -6,6 +6,8 @@ import { authEmail } from "modules/user/user";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
+import axios from "axios";
+import Modal from "components/Modal";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -24,6 +26,7 @@ export default function Signup() {
   const [ConfirmPw, setConfirmPw] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(true); //비밀번호 일치 여부
   const [Nickname, setNickname] = useState("");
+  const [isEmailModal, setIsEmailModal] = useState(false);
 
   const onEmailHandler = (e) => {
     setEmail(e.currentTarget.value);
@@ -59,19 +62,24 @@ export default function Signup() {
     setNickname(e.currentTarget.value);
   };
 
-  const onClickAuthEmail = () => {
+  const onClickAuthEmail = async (e) => {
+    e.preventDefault();
+    console.log("이메일 인증 클릭함");
+    setIsEmailModal(true);
     // 중복검사 했는데 중복 이메일일 경우
-    if (true) {
-      setIsDuplicateEmail(false);
-    } else {
-      setIsDuplicateEmail(true); // 여기서 넘어오는 key를 receiveAuthKey에 저장
-      // 중복 이메일도 아님
-      dispatch(
-        authEmail({
-          email: Email,
-        }),
-      );
-    }
+    // await axios
+    //   .post(`${process.env.REACT_APP_API_URL}/user/mail`, {
+    //     email: Email,
+    //   })
+    //   .then((res) => {
+    //     console.log("res", res); // 여기서 넘어오는 key를 receiveAuthKey에 저장
+    //     setIsDuplicateEmail(true);
+    //     setIsEmailModal(true);
+    //   })
+    //   .catch((error) => {
+    //     console.log("error", error);
+    //     setIsDuplicateEmail(false);
+    //   });
   };
 
   const onLoginHandler = (e) => {
@@ -147,7 +155,7 @@ export default function Signup() {
               required
             />
           </div>
-          <button onClick={onClickAuthEmail}>인증</button>
+          <button onClick={(e) => onClickAuthEmail(e)}>인증</button>
         </div>
         {isDuplicateEmail ? (
           <p className="error">
@@ -254,6 +262,14 @@ export default function Signup() {
           <div className="content">{tabContent[activeId]}</div>
         </div>
       </div>
+      {isEmailModal && (
+        <Modal
+          text={
+            "이메일로 인증키가 발송됐습니다.\n인증키를 확인하고 입력해주세요!"
+          }
+          setStatus={setIsEmailModal}
+        />
+      )}
     </>
   );
 }

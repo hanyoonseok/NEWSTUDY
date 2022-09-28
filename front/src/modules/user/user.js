@@ -4,25 +4,12 @@ import storage from "redux-persist/lib/storage"; // defaults to localStorage for
 /*********************** 액션 타입 만들기 ***********************/
 // Ducks 패턴을 따를땐 액션의 이름에 접두사를 넣어주세요.
 // 이렇게 하면 다른 모듈과 액션 이름이 중복되는 것을 방지 할 수 있습니다.
-const AUTH_EMAIL = "user/AUTH_EMAIL";
 const SIGNUP_USER = "user/SIGNUP_USER";
 const LOGIN_USER = "user/LOGIN_USER";
 const LOGOUT_USER = "user/LOGOUT_USER";
 const CHANGE_LEVEL = "uset/CHANGE_LEVEL";
 
 /*********************** 액션 생성함수 만들기 ***********************/
-export const authEmail = async (data) => {
-  console.log("authemail");
-  console.log(data);
-  const request = await axios
-    .post(`${process.env.REACT_APP_API_URL}/user/mail`, data)
-    .then((res) => console.log(res));
-  return {
-    type: AUTH_EMAIL,
-    payload: request,
-  };
-};
-
 export const signupUser = async (data) => {
   console.log("signupuser");
   const request = await axios
@@ -33,8 +20,6 @@ export const signupUser = async (data) => {
     payload: request,
   };
 };
-
-const JWT_EXPIRY_TIME = 24 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 
 export const loginUser = async (data) => {
   console.log("loginUser");
@@ -70,21 +55,8 @@ export const loginSuccess = (res) => {
   // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
   axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   // accessToken 만료하기 1분 전에 로그인 연장
-  setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60000);
   localStorage.setItem("isLogin", true);
   return accessToken;
-};
-
-export const onSilentRefresh = async (refresh_token) => {
-  console.log("onSilentRefresh");
-  axios
-    .post(`${process.env.REACT_APP_API_URL}/auth/reissue`, {
-      refresh: refresh_token,
-    })
-    .then(loginSuccess)
-    .catch((error) => {
-      // ... 로그인 실패 처리
-    });
 };
 
 export const logoutUser = async () => {
@@ -132,10 +104,6 @@ const userState = {
 /*********************** 리듀서 선언 ***********************/
 export default function user(state = userState, action) {
   switch (action.type) {
-    case AUTH_EMAIL:
-      return {
-        ...state,
-      };
     case SIGNUP_USER:
       return { ...state };
     case LOGIN_USER:
