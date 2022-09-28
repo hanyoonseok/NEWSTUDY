@@ -40,7 +40,7 @@ public class BadgeController {
     }
 
     @PostMapping()
-    @ApiOperation(value = "회원에게 배지 추가", notes = "로그인 한 회원에게 배지를 준다")
+    @ApiOperation(value = "회원에게 배지 추가", notes = "로그인 한 회원에게 배지를 준다 (b_id에 해당하는 배지를 로그인한 회원에게 준다)")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
             @ApiResponse(code = 401, message="로그인정보 없음"),

@@ -42,11 +42,11 @@ public class NewsService {
 
     /**
      * 조회수 상위 10개씩 기사를 가져온다
-     * @param newsRequestDto
+     * @param c_id
      * @return 뉴스 리스트
      */
-    public List<NewsResponseDto> getNewsHot(NewsRequestDto newsRequestDto) {
-        return newsDao.selectNewsListOrderByCnt(newsRequestDto);
+    public List<NewsResponseDto> getNewsHot(Integer c_id) {
+        return newsDao.selectNewsListOrderByCnt(c_id);
     }
 
     /**
@@ -63,8 +63,8 @@ public class NewsService {
      * @param
      * @return 뉴스 리스트
      */
-    public List<NewsResponseDto> getNewsRecommend(Integer n_id) {
-        return newsDao.selectRelatedNewsList(n_id);
+    public List<NewsResponseDto> getNewsRecommend() {
+        return newsDao.selectRecommendNewsList();
     }
 
     /**

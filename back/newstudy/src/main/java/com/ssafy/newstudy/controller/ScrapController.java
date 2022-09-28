@@ -36,7 +36,7 @@ public class ScrapController {
     }
 
     @PostMapping()
-    @ApiOperation(value = "뉴스 스크랩 더하기", notes = "로그인 회원의 뉴스 스크랩 추가")
+    @ApiOperation(value = "뉴스 스크랩 더하기", notes = "로그인 회원의 뉴스 스크랩 추가, 'n_id'를 보내면 해당하는 뉴스를 로그인 한 회원의 뉴스 스크랩에 추가한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
             @ApiResponse(code = 401, message="로그인정보 없음"),
@@ -54,7 +54,7 @@ public class ScrapController {
     }
 
     @DeleteMapping("/{n_id}")
-    @ApiOperation(value = "뉴스 스크랩 삭제", notes = "로그인 회원의 뉴스 스크랩 삭제")
+    @ApiOperation(value = "뉴스 스크랩 삭제", notes = "로그인 회원의 뉴스 스크랩 삭제, 'n_id'를 보내면 로그인 한 회원의 n_id에 해당하는 뉴스 스크랩을 삭제한다.")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
             @ApiResponse(code = 401, message="로그인정보 없음"),
