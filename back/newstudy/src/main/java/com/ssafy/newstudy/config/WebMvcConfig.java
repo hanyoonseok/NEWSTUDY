@@ -12,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.servlet.Filter;
 
 @Configuration
-@EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
