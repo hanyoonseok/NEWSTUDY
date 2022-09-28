@@ -32,12 +32,22 @@
         SET pw = #{pw}, level = #{level},  nickname = #{nickname}, src = #{src}
         where email = #{email}
     </update>
+    
+    <insert id="saveLoginLog">
+        insert into `login_log` (u_id, date)
+        values (#{u_id}, date(now()))
+    </insert>
+
+    <select id="checkLoginCnt" resultType="int">
+        select count(*)
+        from login_log
+        where u_id = #{u_id}
+    </select>
 
     <update id="saveImage">
         UPDATE user
         SET src = #{src}
         WHERE u_id = #{u_id}
     </update>
-
 
 </mapper>

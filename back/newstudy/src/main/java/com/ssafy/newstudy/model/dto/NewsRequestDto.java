@@ -8,15 +8,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NewsRequestDto {
     private Integer page = 1;
-    private Integer start_no;
+    private Integer start_no = 0;
     private final Integer per_page = 10;
+    private Integer total_cnt;  // 해당 카테고리 전체 뉴스 수
 
     private Integer n_id;
 
-    private Integer startlevel;
-    private Integer endlevel;
-    private Integer categoryid = 0;
-    private String search;
+    private Integer startlevel = 1;
+    private Integer endlevel = 6;
+    private Integer startcategoryid = 0;
+    private Integer endcategoryid = 0;
+    private String titlekeyword;
+    private String contentkeyword;
 
     public void setStartlevelAndEndlevel(int startlevel, int endlevel){
         this.startlevel = startlevel;

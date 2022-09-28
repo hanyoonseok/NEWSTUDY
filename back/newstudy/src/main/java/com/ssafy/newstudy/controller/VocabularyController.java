@@ -4,6 +4,7 @@ import com.ssafy.newstudy.model.dto.BadgeRequestDto;
 import com.ssafy.newstudy.model.dto.VocabularyRequestDto;
 import com.ssafy.newstudy.model.dto.VocabularyResponseDto;
 import com.ssafy.newstudy.model.service.BadgeService;
+import com.ssafy.newstudy.model.service.PapagoService;
 import com.ssafy.newstudy.model.service.UserService;
 import com.ssafy.newstudy.model.service.VocabularyService;
 import com.ssafy.newstudy.util.JwtTokenUtil;
@@ -27,7 +28,7 @@ public class VocabularyController {
     private final VocabularyService vocabularyService;
     private final BadgeService badgeService;
     private final UserService userService;
-    private final JwtTokenUtil jwtTokenUtil;
+    private final PapagoService papagoService;
 
 
     @GetMapping()
@@ -76,7 +77,10 @@ public class VocabularyController {
 
         // 2. 단어 및 사용자 정보 저장
         try {
-            if(vocabularyService.addVocabulary(new VocabularyRequestDto(u_id, eng)) == 0) {
+            String response = papagoService.translate(eng);
+            String kor = response.substring(response.indexOf("translatedText") + 17,response.indexOf("engineType")-3);
+
+            if(vocabularyService.addVocabulary(new VocabularyRequestDto(u_id, eng, kor)) == 0) {
                 throw new Exception();
             };
         }catch (Exception e){
