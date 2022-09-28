@@ -11,12 +11,15 @@ public class VocabularyRequestDto {
     private Integer v_id; // 단어 id
     private String eng;   // 영단어
 
+    private String kor;   // 한글 뜻
+
     public VocabularyRequestDto(Integer u_id, Integer v_id){
         this.u_id = u_id;
         this.v_id = v_id;
     }
-    public VocabularyRequestDto(Integer u_id, String eng){
+    public VocabularyRequestDto(Integer u_id, String eng, String kor){
         this.u_id = u_id;
         this.eng = eng;
+        this.kor = kor;
     }
 }
