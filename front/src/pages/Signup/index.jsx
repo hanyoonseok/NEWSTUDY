@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
+import PaperBg from "assets/paper-background.png";
+
 export default function Signup() {
   const dispatch = useDispatch();
   const [activeId, setActiveId] = useState(0);
@@ -250,7 +252,7 @@ export default function Signup() {
               회원가입
             </button>
           </div>
-          <div className="content">{tabContent[activeId]}</div>
+          <div className="content"><img src={PaperBg} alt="종이 배경이미지" className="content-backgroundimg"/>{tabContent[activeId]}</div>
         </div>
       </div>
     </>

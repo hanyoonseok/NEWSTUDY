@@ -11,6 +11,7 @@
   top: 0;
   left: 0;
 
+
   > div {
     width: 50%;
     height: 100%;
@@ -43,12 +44,12 @@
 
   .right-div {
     margin-left: 1%;
+    align-items: flex-start;
 
     .tab {
       width: 100%;
       display: flex;
       align-items: flex-end;
-      padding-top: 8%;
 
       button {
         @include BTN-COLOR($soft-grey);
@@ -66,22 +67,33 @@
     }
 
     .content {
-      @include BACKGROUND-IMAGE("assets/paper-background.png");
+      // @include BACKGROUND-IMAGE("assets/paper-background.png");
       @include FLEX-ALIGN-CENTER;
-      width: 65%;
-      height: 72%;
-      margin: 0 auto 0 0;
+      width: 100%;
+      max-width:500px;
+      height:initial;
       background-size: contain;
       padding: 5%;
       align-items: normal;
+      position:relative;
+      display:flex;
+
+
+      .content-backgroundimg{
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+      }
 
       .email-box {
-        position: relative;
+        width:100%;
+        @include FLEX-BETWEEN;
+     
         button {
-          position: absolute;
-          right: 0;
-          top: -15%;
           padding: 2% 4%;
+          word-break: keep-all;
         }
       }
 
@@ -112,9 +124,12 @@
       }
 
       .signup {
+        z-index: 2;
         .email-box {
           .input-div {
             margin-bottom: 1%;
+            width:80%;
+
           }
         }
         > div:nth-of-type(2),
@@ -180,7 +195,7 @@
       .content {
         width: 100%;
         height: 80%;
-        display: block;
+        display: flex;
         padding: 8%;
 
         > div {
@@ -240,4 +255,8 @@
     font-family: $kor-font;
     border-radius: 10px 10px 0 0;
   }
+}
+
+.login{
+  z-index: 2;
 }
