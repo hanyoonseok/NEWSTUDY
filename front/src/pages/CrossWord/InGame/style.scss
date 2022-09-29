@@ -219,9 +219,21 @@
         font-family: $eng-font;
         word-break: keep-all;
         font-size: rem(18);
+        @include FLEX-COLUMN;
 
         @media (max-width: 480px) {
           font-size: rem(24);
+        }
+
+        .hint-card-desc-row {
+          line-height: 1.2;
+          b {
+            font-size: rem(6);
+            color: $default-grey;
+          }
+        }
+        .hint-card-desc-row + .hint-card-desc-row {
+          margin-top: rem(8);
         }
       }
     }

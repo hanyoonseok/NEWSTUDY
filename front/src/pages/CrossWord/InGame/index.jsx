@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 
 import "./style.scss";
 import BackBtn from "components/BackBtn";
@@ -131,28 +133,28 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
       wordArr.forEach((e) => {
         if (e.d === 1) {
           if (e.r === i) {
-            for (let j = 0; j < e.name.length; j++) {
+            for (let j = 0; j < e.eng.length; j++) {
               if (j === 0) {
                 dotPos.push(e.c);
                 dotDirPos.push(1);
               }
               activePos.push(e.c + j);
-              if (wordPos[e.c + j]) wordPos[e.c + j] += ` ${e.name}`;
-              else wordPos[e.c + j] = e.name;
+              if (wordPos[e.c + j]) wordPos[e.c + j] += ` ${e.eng}`;
+              else wordPos[e.c + j] = e.eng;
 
               activeDirPos[e.c + j] = 1;
             }
           }
         } else {
-          if (i >= e.r && i < e.r + e.name.length) {
+          if (i >= e.r && i < e.r + e.eng.length) {
             if (i === e.r) {
               dotPos.push(e.c);
               dotDirPos.push(-1);
             }
             activePos.push(e.c);
 
-            if (wordPos[e.c]) wordPos[e.c] += ` ${e.name}`;
-            else wordPos[e.c] = e.name;
+            if (wordPos[e.c]) wordPos[e.c] += ` ${e.eng}`;
+            else wordPos[e.c] = e.eng;
 
             activeDirPos[e.c] = -1;
           }
@@ -217,11 +219,25 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
                 <div
                   className="hint-card row"
                   key={i}
-                  data-hint={e.name}
-                  onClick={() => onHintClick(e.name, 1)}
+                  data-hint={e.eng}
+                  onClick={() => onHintClick(e.eng, 1)}
                 >
                   <i className="hint-card-index">{i + 1}</i>
-                  <p className="hint-card-desc">{e.hint}</p>
+                  <p className="hint-card-desc">
+                    {e.description.split("@@").map(
+                      (desc, idx) =>
+                        desc !== "" && (
+                          <span className="hint-card-desc-row" key={idx}>
+                            {e.description.split("@@").length > 2 && (
+                              <b>
+                                <FontAwesomeIcon icon={faCircle} />
+                              </b>
+                            )}{" "}
+                            {desc}
+                          </span>
+                        ),
+                    )}
+                  </p>
                 </div>
               ))}
           </div>
@@ -236,11 +252,25 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
                 <div
                   className="hint-card col"
                   key={i}
-                  data-hint={e.name}
-                  onClick={() => onHintClick(e.name, -1)}
+                  data-hint={e.eng}
+                  onClick={() => onHintClick(e.eng, -1)}
                 >
                   <i className="hint-card-index">{i + 1}</i>
-                  <p className="hint-card-desc">{e.hint}</p>
+                  <p className="hint-card-desc">
+                    {e.description.split("@@").map(
+                      (desc, idx) =>
+                        desc !== "" && (
+                          <span className="hint-card-desc-row" key={idx}>
+                            {e.description.split("@@").length > 2 && (
+                              <b>
+                                <FontAwesomeIcon icon={faCircle} />
+                              </b>
+                            )}{" "}
+                            {desc}
+                          </span>
+                        ),
+                    )}
+                  </p>
                 </div>
               ))}
           </div>

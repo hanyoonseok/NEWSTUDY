@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 import "./style.scss";
 import InGame from "./InGame";
@@ -13,102 +14,27 @@ export default function CrossWord() {
   const [maxR, setMaxR] = useState(0);
   const [maxC, setMaxC] = useState(0);
   const [inGame, setInGame] = useState(true);
-  const [wordArr, setWordArr] = useState([
-    {
-      index: 1,
-      r: 0,
-      c: 0,
-      d: 1,
-      name: "Squid",
-      hint: "hinthinthi nthint ginthintgint hinthint hinthintgint hintgint hinthinthin thintginthintg int",
-    },
-    {
-      index: 2,
-      r: 0,
-      c: 3,
-      d: -1,
-      name: "index",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 3,
-      r: 2,
-      c: 3,
-      d: 1,
-      name: "discord",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 4,
-      r: 0,
-      c: 7,
-      d: -1,
-      name: "globe",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 5,
-      r: 0,
-      c: 7,
-      d: 1,
-      name: "gather",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 6,
-      r: 6,
-      c: 0,
-      d: 1,
-      name: "banana",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 7,
-      r: 5,
-      c: 0,
-      d: -1,
-      name: "absolute",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 8,
-      r: 6,
-      c: 3,
-      d: -1,
-      name: "apple",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 9,
-      r: 5,
-      c: 5,
-      d: -1,
-      name: "parent",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 10,
-      r: 0,
-      c: 14,
-      d: -1,
-      name: "puzzle",
-      hint: "hinthinthinthintginthintgint",
-    },
-  ]);
+  const [wordArr, setWordArr] = useState([]);
+  const userState = useSelector((state) => state.user);
 
   const crosswordInputs = document.querySelectorAll(".crossword-input");
 
   useEffect(() => {
     const fetchData = async () => {
-      const crossResponse = await axios.get("/word/game?type=cross");
+      const headers = {
+        headers:{
+          Authorization:`Bearer ${userState.accessToken}`
+        }
+      }
+      const crossResponse = await axios.get("/word/game?type=cross", headers);
       console.log(crossResponse);
       setWordArr(crossResponse.data);
 
       let curr = 0;
       let curc = 0;
-      wordArr.forEach((e) => {
-        const rlen = e.r + e.name.length;
-        const clen = e.c + e.name.length;
+      crossResponse.data.forEach((e) => {
+        const rlen = e.r + e.eng.length;
+        const clen = e.c + e.eng.length;
         curr = Math.max(curr, e.r + 1);
         curc = Math.max(curc, e.c + 1);
         e.d === 1
