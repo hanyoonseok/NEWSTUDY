@@ -66,15 +66,16 @@ export default function SignUp({ setIsEmailModal }) {
       })
       .then((res) => {
         console.log("res", res);
-        setAuthKey(res.data.tempPassword); // 여기서 넘어오는 key를 receiveAuthKey에 저장
-        setIsDuplicateEmail(true);
+        setReceiveAuthKey(res.data.data.tempPassword); // 여기서 넘어오는 key를 receiveAuthKey에 저장
+        setIsDuplicateEmail(false);
         setIsEmailModal(true);
+        console.log("AuthKey", AuthKey);
       })
       .catch((error) => {
         // 중복검사 했는데 중복 이메일일 경우
         console.log("error", error);
-        setIsDuplicateEmail(false);
-        setIsEmailModal(true);
+        setIsDuplicateEmail(true);
+        setIsEmailModal(false);
       });
   };
   const onSignupHandler = (e) => {
