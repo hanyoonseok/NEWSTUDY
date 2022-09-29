@@ -40,7 +40,7 @@ function App() {
             element={<AuthRoute component={<Landing />} />}
           ></Route>
           <Route
-            path="/news/:id"
+            path="/news/:newsId"
             element={<AuthRoute component={<NewsDetail />} />}
           ></Route>
           <Route

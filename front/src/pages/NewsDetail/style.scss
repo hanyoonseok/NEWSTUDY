@@ -136,6 +136,17 @@
           flex-direction: column;
         }
       }
+      .newsdetail-thumbnail-wrapper {
+        margin-top: rem(10);
+        @include FLEX-CENTER;
+        width: 100%;
+        .newsdetail-thumbnail {
+          width: 60%;
+          @media (max-width: 480px) {
+            width: 100%;
+          }
+        }
+      }
 
       .news-article {
         margin-top: rem(60);
