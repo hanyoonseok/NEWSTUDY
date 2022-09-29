@@ -1,0 +1,47 @@
+@import "variables.scss";
+
+.voca-box {
+  .voca {
+    .memorize {
+      width: rem(22);
+      height: rem(22);
+      margin-right: 2%;
+      cursor: pointer;
+    }
+
+    .blue {
+      background-color: $soft-blue;
+    }
+
+    .grey {
+      background-color: $soft-grey;
+    }
+  }
+}
+
+/* *************** Mobile View ********************* */
+@media only screen and (max-width: 480px) {
+  .voca-box {
+    width: 100%;
+    .voca {
+      > div {
+        padding: 4% 2%;
+      }
+
+      .word {
+        width: 40%;
+        font-size: rem(20);
+      }
+
+      .mean {
+        .tag {
+          padding: 2% 2.5%;
+        }
+      }
+
+      .memorize {
+        padding: 1%;
+      }
+    }
+  }
+}

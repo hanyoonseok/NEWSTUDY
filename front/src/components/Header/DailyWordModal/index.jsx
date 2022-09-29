@@ -7,115 +7,115 @@ import "./style.scss";
 export default function DailyWordModal({ close }) {
   const vocas = [
     {
-      word: "Administration",
+      eng: "Administration",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩",
+          done: "수콩수콩수콩수콩수콩수콩수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩",
+          done: "수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,

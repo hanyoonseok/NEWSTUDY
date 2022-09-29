@@ -72,7 +72,7 @@ $drop-shadow-dark: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.3));
 
 @mixin BTN-COLOR($bgcolor) {
   background-color: $bgcolor;
-  transition: 0.5s ease;
+  transition: 0.3s ease;
   &:hover {
     background-color: darken($bgcolor, 10%);
   }
