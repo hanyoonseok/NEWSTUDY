@@ -43,7 +43,7 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
       markerObjectID: markerObject.uuid,
       pointerEventPosition: { x: event.clientX, y: event.clientY },
     });
-    setDetails(markerTooltipRenderer(marker));
+    // setDetails(markerTooltipRenderer(marker));
     setReceiveIdx(marker.id);
   };
 
@@ -57,7 +57,7 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
 
   return (
     <div className="globe-box">
-      {details && (
+      {/* {details && (
         <>
           <div className="nation-info-card">
             <img src={Kor} alt="" className="nation-info-flag" />
@@ -121,7 +121,7 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
             </div>
           </div>
         </>
-      )}
+      )} */}
       <ReactGlobe
         height="100%"
         globeBackgroundTexture={null}

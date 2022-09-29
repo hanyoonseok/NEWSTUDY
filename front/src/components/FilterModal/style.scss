@@ -7,12 +7,12 @@
   width: 100%;
   height: 100%;
   background-color: rgba(133, 137, 159, 0.3);
+  z-index: 100;
   @include FLEX-CENTER;
 }
 
 .modal-container {
   width: rem(400);
-  height: rem(600);
   padding: 20px;
   background-color: #fff;
   border-radius: 18px;
@@ -31,6 +31,7 @@
     width: 100%;
     height: 100%;
     @include FLEX-COLUMN;
+    margin: rem(10) 0;
 
     .main-category-container {
       width: 100%;
@@ -38,19 +39,36 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-row-gap: 16px;
+      border-bottom: 1px solid $light-grey;
+      margin-bottom: rem(20);
+      padding-bottom: rem(10);
 
       .main-category-btn {
         background-color: $lightx2-blue;
         border-radius: 7px;
         width: rem(172);
         height: rem(36);
+        cursor: pointer;
         @include FLEX-CENTER;
       }
     }
 
     .sub-category-container {
       width: 100%;
-      height: 100%;
+      height: rem(155);
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-row-gap: 16px;
+      align-items: start;
+      > div {
+        border: 1px solid $soft-blue;
+        border-radius: 7px;
+        width: rem(172);
+        height: rem(36);
+        cursor: pointer;
+        @include FLEX-CENTER;
+      }
     }
   }
 

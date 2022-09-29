@@ -32,8 +32,8 @@ export default function Page5({ activePage }) {
         </h1>
         <h3 className={`subdescription-h3 ${activePage && "slidein-right "}`}>
           기사의 빈출 단어를 제공해드려요
-          <br /> 모르는 단어는 마우스만 올리세요 <br /> TTS 기능을 통해 따라
-          읽어보세요
+          <br /> 모르는 단어는 나만의 단어장에 저장해보세요. <br /> TTS 기능을
+          통해 따라 읽어보세요
         </h3>
 
         <div className="iconset-div">

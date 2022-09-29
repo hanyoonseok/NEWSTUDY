@@ -8,7 +8,7 @@ import {
   faFileWord,
   faCertificate,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import DefaultUserImage from "assets/user_globe.png";
 import A1 from "assets/A1.png";
 import A2 from "assets/A2.png";
@@ -23,6 +23,7 @@ import { getUser } from "modules/user/user";
 import MyArticle from "./MyArticle";
 import MyVoca from "./MyVoca";
 import MyBadge from "./MyBadge";
+import FilterModal from "components/FilterModal";
 
 export default function Mypage() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ export default function Mypage() {
   const [articleLength, setArticleLength] = useState(0);
   const [vocaLength, setVocaLength] = useState(0);
   const [badgeLength, setBadgeLength] = useState(0);
+  const [isFilterModal, setIsFilterModal] = useState(false);
 
   useEffect(() => {
     if (user && !user.src) {
@@ -98,6 +100,10 @@ export default function Mypage() {
     reader.readAsDataURL(e.target.files[0]);
   };
 
+  const onCloseClick = useCallback(() => {
+    setIsFilterModal(false);
+  }, []);
+
   const myRecord = [
     {
       title: "스크랩한 기사",
@@ -126,80 +132,89 @@ export default function Mypage() {
   };
 
   return (
-    <div className="mypage">
-      <div className="left-box">
-        <div className="info-box">
-          <div className="profile-img">
-            <div className="level-box">{level(user.level)}</div>
-            <div className="img-box">
-              <img src={userImage} alt="사용자 프로필 지구본"></img>
-              <div
-                className="img-hover"
-                onClick={() => {
-                  fileInput.current.click();
-                }}
-              >
-                이미지 수정{user.src}
+    <>
+      <div className="mypage">
+        <div className="left-box">
+          <div className="info-box">
+            <div className="profile-img">
+              <div className="level-box">{level(user.level)}</div>
+              <div className="img-box">
+                <img src={userImage} alt="사용자 프로필 지구본"></img>
+                <div
+                  className="img-hover"
+                  onClick={() => {
+                    fileInput.current.click();
+                  }}
+                >
+                  이미지 수정{user.src}
+                </div>
+                <input
+                  type="file"
+                  style={{ display: "none" }}
+                  accept="image/jpg,impge/png,image/jpeg"
+                  name="profile_img"
+                  onChange={onChange}
+                  ref={fileInput}
+                />
               </div>
-              <input
-                type="file"
-                style={{ display: "none" }}
-                accept="image/jpg,impge/png,image/jpeg"
-                name="profile_img"
-                onChange={onChange}
-                ref={fileInput}
+            </div>
+            <p className="name">{user.nickname}</p>
+            <p className="email">
+              <FontAwesomeIcon icon={faEnvelope} />
+              {user.email}
+            </p>
+          </div>
+          <div className="current">
+            {myRecord.map((item, index) => (
+              <div key={index}>
+                <FontAwesomeIcon icon={faThumbTack} />
+                <p>{item.title}</p>
+                <p>{item.count}개</p>
+              </div>
+            ))}
+          </div>
+          <div className="interest">
+            <div className="title">
+              MY&nbsp; <b> INTEREST</b>
+              <FontAwesomeIcon
+                icon={faPencil}
+                onClick={() => setIsFilterModal(true)}
               />
             </div>
+            <div className="list"></div>
           </div>
-          <p className="name">{user.nickname}</p>
-          <p className="email">
-            <FontAwesomeIcon icon={faEnvelope} /> {user.email}
-          </p>
         </div>
-        <div className="current">
-          {myRecord.map((item, index) => (
-            <div key={index}>
-              <FontAwesomeIcon icon={faThumbTack} />
-              <p>{item.title}</p>
-              <p>{item.count}개</p>
-            </div>
-          ))}
-        </div>
-        <div className="interest">
-          <div className="title">
-            MY&nbsp; <b> INTEREST</b>
-            <FontAwesomeIcon icon={faPencil} />
+        <div className="right-box">
+          <div className="tab">
+            <button
+              className={`${activeId === 0 ? "active" : ""}`}
+              onClick={() => onClickSwitchTab(0)}
+            >
+              <FontAwesomeIcon icon={faNewspaper} />
+              MY <span>ARTICLE</span>
+            </button>
+            <button
+              className={`${activeId === 1 ? "active" : ""}`}
+              onClick={() => onClickSwitchTab(1)}
+            >
+              <FontAwesomeIcon icon={faFileWord} />
+              MY <span>VOCA</span>
+            </button>
+            <button
+              className={`${activeId === 2 ? "active" : ""}`}
+              onClick={() => onClickSwitchTab(2)}
+            >
+              <FontAwesomeIcon icon={faCertificate} />
+              MY <span>BADGE</span>
+            </button>
           </div>
-          <div className="list"></div>
+          <div className="content">{tabContent[activeId]}</div>
         </div>
       </div>
-      <div className="right-box">
-        <div className="tab">
-          <button
-            className={`${activeId === 0 ? "active" : ""}`}
-            onClick={() => onClickSwitchTab(0)}
-          >
-            <FontAwesomeIcon icon={faNewspaper} />
-            MY <span>ARTICLE</span>
-          </button>
-          <button
-            className={`${activeId === 1 ? "active" : ""}`}
-            onClick={() => onClickSwitchTab(1)}
-          >
-            <FontAwesomeIcon icon={faFileWord} />
-            MY <span>VOCA</span>
-          </button>
-          <button
-            className={`${activeId === 2 ? "active" : ""}`}
-            onClick={() => onClickSwitchTab(2)}
-          >
-            <FontAwesomeIcon icon={faCertificate} />
-            MY <span>BADGE</span>
-          </button>
-        </div>
-        <div className="content">{tabContent[activeId]}</div>
-      </div>
-    </div>
+      {isFilterModal && (
+        <FilterModal text={"수정하기"} closeHandler={onCloseClick} />
+      )}
+    </>
   );
 }
 
