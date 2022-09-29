@@ -14,13 +14,13 @@ export default function NationsNewsList() {
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [receiveIdx, setReceiveIdx] = useState(0); //globe에서 마커 클릭했을 때 클릭한 나라 id 값 받을 변수
   const [nationsNews, setNationsNews] = useState([]);
-  const { currentUser } = useSelector((state) => state.user);
+  const userState = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchData = async () => {
       const headers = {
         headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
+          Authorization: `Bearer ${userState.accessToken}`,
         },
       };
       const categoryResponse = await axios.get("/gategory", headers);
@@ -200,7 +200,7 @@ export default function NationsNewsList() {
     };
     const headers = {
       headers: {
-        Authorization: `Bearer ${currentUser.accessToken}`,
+        Authorization: `Bearer ${userState.accessToken}`,
       },
     };
     const nationsNewsResponse = await axios.post("/news", payload, headers);

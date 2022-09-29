@@ -1,0 +1,82 @@
+@import "variables.scss";
+
+.badge-modal {
+  z-index: 100;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+
+  .badge-modal-body {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    padding: 50px 80px;
+    background-color: $white;
+    transform: translate(-50%, -50%);
+    border-radius: 30px;
+    @include FLEX-CENTER;
+    flex-direction: column;
+    font-family: $kor-title-font;
+    white-space: pre-wrap;
+
+    @media (max-width: 480px) {
+      padding: 50px 60px;
+    }
+    .img-box {
+      padding: 30px;
+      background-color: #f2f4ff;
+      border-radius: 15px;
+      filter: $drop-shadow-light;
+      @media (max-width: 480px) {
+        width: 15rem;
+      }
+
+      img {
+        width: 10rem;
+        @media (max-width: 480px) {
+          width: 10rem;
+        }
+      }
+    }
+
+    .text-box {
+      margin-top: 30px;
+      text-align: center;
+      @media (max-width: 480px) {
+        font-size: rem(18);
+      }
+
+      span {
+        color: $blue;
+      }
+    }
+
+    button {
+      padding: 10px;
+      font-family: $kor-font;
+      font-weight: bold;
+      margin-top: 20px;
+      width: 100%;
+      border-radius: 10px;
+      background-color: $light-blue;
+      transition: all 300ms ease;
+      @media (max-width: 480px) {
+        font-size: rem(16);
+      }
+      &:hover {
+        transform: scale(1.02);
+        background-color: $soft-blue;
+        transition: all 300ms ease;
+        color: white;
+        i {
+          transition: all 300ms ease;
+          padding-left: 5px;
+          color: white;
+        }
+      }
+    }
+  }
+}

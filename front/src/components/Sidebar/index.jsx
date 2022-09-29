@@ -14,6 +14,7 @@ import {
   faBars,
   faSearch,
   faXmark,
+  faPuzzlePiece,
 } from "@fortawesome/free-solid-svg-icons";
 import SearchResult from "components/Header/SearchResult";
 import { logoutUser } from "modules/user/user";
@@ -216,6 +217,12 @@ export default function Sidebar() {
                       </i>
                       <Link to="nationsnews">나라별 기사목록</Link>
                     </div>
+                    <div className="nav-content nav-desc">
+                      <i>
+                        <FontAwesomeIcon icon={faPuzzlePiece} />
+                      </i>
+                      <Link to="/game/menu">영어 게임</Link>
+                    </div>
                   </div>
                   <div className="nav-content nav-desc">
                     <i>
@@ -242,6 +249,9 @@ export default function Sidebar() {
                   <i className="nav-content">
                     <FontAwesomeIcon icon={faGlobe} />
                   </i>
+                  <i className="nav-content">
+                    <FontAwesomeIcon icon={faPuzzlePiece} />
+                  </i>
                 </div>
                 <div>
                   <i className="nav-content">
@@ -262,6 +272,9 @@ export default function Sidebar() {
                   </Link>
                   <Link className="nav-content nav-desc" to="nationsnews">
                     나라별 기사목록
+                  </Link>
+                  <Link className="nav-content nav-desc" to="/game/menu">
+                    영어 게임
                   </Link>
                 </div>
                 <div

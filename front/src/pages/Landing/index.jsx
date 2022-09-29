@@ -16,24 +16,64 @@ import {
   faSackDollar,
 } from "@fortawesome/free-solid-svg-icons";
 import Wordcloud from "./WordCloud";
+import axios from "axios";
+import BadgeModal from "components/BadgeModal";
+import { useSelector } from "react-redux";
 const MAX_VISIBILITY = 3;
 
 function SectionTitle({ sectionTitle }) {
+  const user = useSelector((state) => state.user);
+
   const { blueTitle, blackTitle, desc } = sectionTitle;
+  const [badgeContent, setBadgeContent] = useState({});
+  const [isBadgeModal, setIsBadgeModal] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .get("/badge/new", {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.length > 0) {
+            setBadgeContent({
+              text: res.data[0].name,
+              index: res.data[0].b_id,
+            });
+            setIsBadgeModal(true);
+          }
+        });
+    };
+    fetchData();
+    return () => {};
+  }, []);
   return (
-    <div className="section">
-      <h1 className="section-title">
-        <span className="text-spotlight">{blueTitle}&nbsp; </span> {blackTitle}
-      </h1>
-      <div className="section-desc">
-        {desc}
-        <img
-          className="check-img"
-          src={require("assets/check.png")}
-          alt="check"
-        ></img>
+    <>
+      <div className="section">
+        <h1 className="section-title">
+          <span className="text-spotlight">{blueTitle}&nbsp; </span>{" "}
+          {blackTitle}
+        </h1>
+        <div className="section-desc">
+          {desc}
+          <img
+            className="check-img"
+            src={require("assets/check.png")}
+            alt="check"
+          ></img>
+        </div>
       </div>
-    </div>
+      {isBadgeModal && (
+        <BadgeModal
+          setStatus={setIsBadgeModal}
+          text={badgeContent.text}
+          index={badgeContent.index}
+        />
+      )}
+    </>
   );
 }
 

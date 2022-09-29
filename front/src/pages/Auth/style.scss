@@ -123,6 +123,22 @@
         height: 100%;
       }
 
+      .login {
+        .error {
+          padding: 0;
+          font-size: rem(14);
+          margin: 2% 0 7%;
+          color: rgb(252, 113, 113);
+          text-align: right;
+        }
+
+        p {
+          &:nth-of-type(2) {
+            padding: 0;
+          }
+        }
+      }
+
       .signup {
         z-index: 2;
         .email-box {

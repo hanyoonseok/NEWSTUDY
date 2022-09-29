@@ -13,7 +13,7 @@ export default function SpeedQuiz() {
   const [timer, setTimer] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [answer, setAnswer] = useState([]);
-  const { currentUser } = useSelector((state) => state.user);
+  const userState = useSelector((state) => state.user);
 
   const addValueToAnswer = () => {
     initDomElement();
@@ -42,7 +42,7 @@ export default function SpeedQuiz() {
     const fetchData = async () => {
       const questionResponse = await axios.get("/word/game", {
         headers: {
-          Authorization: `Bearer ${currentUser.accessToken}`,
+          Authorization: `Bearer ${userState.accessToken}`,
         },
       });
       console.log(questionResponse);
