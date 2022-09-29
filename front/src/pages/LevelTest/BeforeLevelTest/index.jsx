@@ -5,9 +5,13 @@ import { useMediaQuery } from "react-responsive";
 
 import { faPlay, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
+import axios from "axios";
+import BadgeModal from "components/BadgeModal";
 
 function BeforeLevelTest({ getLeveltestState }) {
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.user);
+  const [badgeContent, setBadgeContent] = useState({});
+  const [isBadgeModal, setIsBadgeModal] = useState(false);
 
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
@@ -32,6 +36,25 @@ function BeforeLevelTest({ getLeveltestState }) {
 
   useEffect(() => {
     setMyLevelId(user.level - 1);
+    const fetchData = async () => {
+      await axios
+        .get("/badge/new", {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.length > 0) {
+            setBadgeContent({
+              text: res.data[0].name,
+              index: res.data[0].b_id,
+            });
+            setIsBadgeModal(true);
+          }
+        });
+    };
+    fetchData();
     return () => {};
   }, []);
 
@@ -218,6 +241,13 @@ function BeforeLevelTest({ getLeveltestState }) {
           </i>
         </button>
       </div>
+      {isBadgeModal && (
+        <BadgeModal
+          setStatus={setIsBadgeModal}
+          text={badgeContent.text}
+          index={badgeContent.index}
+        />
+      )}
     </>
   );
 }

@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeLevel } from "modules/user/user";
 
 function DoLevelTest({ getResult, user, setLevelAvg }) {
-  const userInfo = useSelector((state) => state.user.currentUser);
+  const userInfo = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [pageState, setPageState] = useState(0);
   const [leveltestWord, setLeveltestWord] = useState([]);
@@ -51,51 +51,56 @@ function DoLevelTest({ getResult, user, setLevelAvg }) {
       setLevelAvg(6);
       level = 6;
     }
-    let flag = false;
-    dispatch(changeLevel(level, userInfo)).then((res) => {
+    dispatch(changeLevel(level)).then(async (res) => {
       console.log(res);
       // 회원 배지 목록 가져오기
-      axios
+      await axios
         .get(`/badge`, {
           headers: {
             Authorization: `Bearer ${userInfo.accessToken}`,
           },
         })
-        .then((res) => {
-          //가져온 배지중에 현재 획득한 배지 레벨의 배지가 없을 경우 추가해주기
-          console.log(res.data);
-          const checkBadge = (badgeId) => {
-            res.data.array.forEach((element) => {
-              if (element.b_id === badgeId) {
-                flag = true; // 배지가 이미 있으면 true
-              }
-            });
-            //배지가 없을 경우에만 배지 update
-            if (!flag) {
-              axios
-                .post(
-                  `/badge`,
-                  {
-                    b_id: badgeId,
-                  },
-                  {
-                    headers: {
-                      Authorization: `Bearer ${userInfo.accessToken}`,
-                    },
-                  },
-                )
-                .then((res) => console.log("배지 업데이트", res));
-            }
-          };
+        .then(({ data }) => {
+          console.log(data);
           if (level === 1 || level === 2) {
-            checkBadge(3);
+            console.log("A 등급 레벨 획득");
+            checkBadge(data, 4);
           } else if (level === 3 || level === 4) {
-            checkBadge(4);
+            console.log("B 등급 레벨 획득");
+            checkBadge(data, 5);
           } else {
-            checkBadge(5);
+            console.log("C 등급 레벨 획득");
+            checkBadge(data, 6);
           }
         });
     });
+  };
+
+  //가져온 배지중에 현재 획득한 배지 레벨의 배지가 없을 경우 추가해주기
+  const checkBadge = async (array, badgeId) => {
+    let flag = false;
+    console.log("현재 사용자가 획득해야할 배지 번ㄴ호는? ", badgeId);
+    array.forEach((element) => {
+      if (element.b_id === badgeId) {
+        flag = true; // 배지가 이미 있으면 true
+      }
+    });
+    //배지가 없을 경우에만 배지 update
+    if (!flag) {
+      await axios
+        .post(
+          `/badge`,
+          {
+            b_id: badgeId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${userInfo.accessToken}`,
+            },
+          },
+        )
+        .then((res) => console.log("배지 업데이트", res));
+    }
   };
 
   const [checkedList, setCheckedList] = useState([]);

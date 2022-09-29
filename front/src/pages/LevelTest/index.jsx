@@ -11,7 +11,7 @@ import DoLevelTest from "./DoLevelTest";
 import BeforeLevelTest from "./BeforeLevelTest";
 
 function LevelTest() {
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.user);
 
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",

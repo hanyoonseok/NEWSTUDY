@@ -4,7 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export default function Word({ vocas, setWordMemorizeStatus }) {
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.user);
 
   const changeMemorizeStatus = async (voca) => {
     await axios

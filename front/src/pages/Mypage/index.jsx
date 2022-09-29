@@ -33,15 +33,50 @@ import C1 from "assets/C1.png";
 import C2 from "assets/C2.png";
 
 import Word from "components/Word";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { getUser } from "modules/user/user";
 
 export default function Mypage() {
-  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
+  const [user, setUser] = useState(useSelector((state) => state.user));
 
-  const [userImage, setUserImage] = useState(DefaultUserImage);
+  const [userImage, setUserImage] = useState("");
   const fileInput = useRef(null);
+  const [userBadges, setUserBadges] = useState([]);
+  const [userBadgesCount, setUserBadgesCount] = useState(0);
+  const [userVocas, setUserVocas] = useState([]);
+  const [userArticles, setUserArticles] = useState([]);
+  const [filterVocas, setFilterVocas] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
+  const [wordMemorizeStatus, setWordMemorizeStatus] = useState(false); //단어 외움 상태 바꿨는지 감지할 변수
+
+  useEffect(() => {
+    getBadges();
+    getVocas();
+    getArticles();
+    if (user && !user.src) {
+      setUserImage(DefaultUserImage);
+    } else {
+      setUserImage(user.src);
+    }
+    const fetchData = async () => {
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      };
+      const testWordsResponse = await axios.get(`/user/avatar`, headers);
+      console.log(testWordsResponse);
+      setUserImage(
+        testWordsResponse.data.slice(10, testWordsResponse.data.length - 10),
+      );
+    };
+
+    fetchData();
+    return () => {};
+  }, []);
 
   const onChange = (e) => {
     const profileImg = e.target.files[0];
@@ -55,7 +90,7 @@ export default function Mypage() {
     //화면에 프로필 사진 표시
     const reader = new FileReader();
     const formData = new FormData();
-    reader.onload = () => {
+    reader.onload = async () => {
       if (reader.readyState === 2) {
         //이미지 정상적으로 불러오면 변경하기
         setUserImage(reader.result);
@@ -66,14 +101,19 @@ export default function Mypage() {
         }
 
         // 유저 이미지 변경 api 전송
-        axios
+        await axios
           .post("/user/avatar", formData, {
             headers: {
               Authorization: `Bearer ${user.accessToken}`,
               "Content-Type": "multipart/form-data",
             },
           })
-          .then((res) => console.log("이미지 변경완?", res));
+          .then((res) => {
+            console.log("이미지 변경완?", res);
+            dispatch(getUser(user.accessToken)).then((res) =>
+              console.log("스토어 업데이트 까지 완", res),
+            );
+          });
       }
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -142,21 +182,6 @@ export default function Mypage() {
     { id: 14, name: "단어 100개 저장", img: MyVoca100, isAchieve: false },
     { id: 15, name: "단어 500개 저장", img: MyVoca500, isAchieve: false },
   ];
-
-  const [userBadges, setUserBadges] = useState([]);
-  const [userBadgesCount, setUserBadgesCount] = useState(0);
-  const [userVocas, setUserVocas] = useState([]);
-  const [userArticles, setUserArticles] = useState([]);
-  const [filterVocas, setFilterVocas] = useState([]);
-  const [isChecked, setIsChecked] = useState(false);
-  const [wordMemorizeStatus, setWordMemorizeStatus] = useState(false); //단어 외움 상태 바꿨는지 감지할 변수
-
-  useEffect(() => {
-    getBadges();
-    getVocas();
-    getArticles();
-    return () => {};
-  }, []);
 
   useEffect(() => {
     changeFilterVocas();
@@ -318,7 +343,7 @@ export default function Mypage() {
                   fileInput.current.click();
                 }}
               >
-                이미지 수정
+                이미지 수정{user.src}
               </div>
               <input
                 type="file"
