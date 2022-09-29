@@ -62,9 +62,9 @@ public class BadgeController {
             @ApiResponse(code = 500, message="서버오류")
     })
     public ResponseEntity<HttpStatus> addBadge(@ApiParam(value = "로그인된 유저 정보", required = true) @RequestHeader("Authorization") String bearerToken,
-                                     @ApiParam(value = "추가할 배지 id", required = true) int b_id){
+                                     @ApiParam(value = "추가할 배지 id", required = true) @RequestBody BadgeRequestDto badge){
         // 배지와 유저 정보 받기
-        BadgeRequestDto badge = new BadgeRequestDto(userService.getUidFromBearerToken(bearerToken), b_id);
+        badge.setU_id(userService.getUidFromBearerToken(bearerToken));
         // 배지를 추가한다
         int result = badgeService.addBadge(badge);
         // 배지 추가 실패 ( 배지 없음 )
@@ -73,7 +73,4 @@ public class BadgeController {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
 }
