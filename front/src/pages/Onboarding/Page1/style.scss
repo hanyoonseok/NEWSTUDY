@@ -28,6 +28,12 @@
       margin-top: 160px;
     }
   }
+  .fade-in {
+    transition: all 500ms ease;
+    animation-name: FadeIn;
+    animation-delay: 100ms;
+    animation-duration: 3000ms;
+  }
 
   .subtitle-h3 {
     font-family: $kor-light-font;
@@ -39,6 +45,20 @@
     @media (max-width: 480px) {
       display: none;
     }
+  }
+
+  .slidein-right {
+    animation-name: specialSlideInUp;
+    animation-delay: 100ms;
+    animation-duration: 1500ms;
+    animation-fill-mode: both;
+  }
+  .slidein-right-h4 {
+    transition: all 500ms ease;
+    animation-name: specialSlideInUp;
+    animation-delay: 300ms;
+    animation-duration: 1500ms;
+    animation-fill-mode: both;
   }
 
   .subdescription-h4 {

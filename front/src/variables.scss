@@ -30,8 +30,8 @@ $eng-fontB: "HelveticaB"; //영어 본문
 $shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
 $light-shadow: 0 4px 4px rgba(63, 65, 75, 0.1);
 $drop-shadow-light: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.05));
-$drop-shadow: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.1));
-$drop-shadow-dark: drop-shadow(4px 4px 6px rgba(0, 0, 0, 0.3));
+$drop-shadow: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.1));
+$drop-shadow-dark: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.3));
 
 @function rem($px) {
   @return #{$px/16}rem;

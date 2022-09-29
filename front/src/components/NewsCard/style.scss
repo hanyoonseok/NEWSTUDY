@@ -83,7 +83,8 @@
     .newscard-body {
       font-size: rem(16);
       font-family: $eng-font;
-      color: $soft-grey;
+      color: rgba($color: $dark-grey, $alpha: 0.5);
+      font-weight: normal;
       width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;

@@ -3,17 +3,17 @@ import usa from "assets/usa.jpg";
 import kor from "assets/kor.jpg";
 import React from "react";
 
-export default function Page2() {
+export default function Page2({ activePage }) {
   return (
     <div className="page-div">
       <div className="contents-div">
-        <h1 className="title-h1">
+        <h1 className={`title-h1 ${activePage && "slidein-up"}`}>
           <span>
             <b>세계 각지의 뉴스</b>를{" "}
           </span>
           <br /> 한 눈에 볼 수 있습니다.
         </h1>
-        <h3 className="subtitle-h3">
+        <h3 className={`subtitle-h3 ${activePage && "slidein-right "}`}>
           소식이 궁금한 나라가 있나요? <br />
           지구 반대편에서 어떡 소식이 들려올지 궁금하신가요? <br />
           뉴스터디의 지구본을 돌려가며 나라별 소식을 확인해보세요.

@@ -9,7 +9,6 @@
   a {
     color: #ffffff;
   }
-
   background-color: $dark-grey;
   transition: all 300ms ease;
   display: flex;
@@ -32,6 +31,39 @@
       height: 60px;
       @include FLEX-BETWEEN;
     }
+    .search-container {
+      position: fixed;
+      background-color: $dark-grey;
+      top: 60px;
+      left: 0;
+      padding: 0 20px;
+      width: 100%;
+      height: 60px;
+      @include FLEX-CENTER;
+      i {
+        font-size: rem(24);
+        color: white;
+      }
+      &.visible {
+        animation-name: specialSlideInDown;
+        animation-duration: 400ms;
+        animation-fill-mode: both;
+      }
+      &.hidden {
+        animation-name: specialSlideOutUp;
+        animation-duration: 400ms;
+        animation-fill-mode: both;
+      }
+      .header-search {
+        .input-search {
+          background-color: transparent;
+          color: white;
+          ::placeholder {
+            color: $soft-grey;
+          }
+        }
+      }
+    }
     .sidebar-content {
       z-index: 10;
       height: 100%;
@@ -43,6 +75,19 @@
     .nav-btn {
       color: white;
       font-size: 2rem;
+
+      &.visible {
+        animation-name: specialFadeIn;
+        animation-delay: 70ms;
+        animation-duration: 400ms;
+        animation-fill-mode: both;
+      }
+      &.hidden {
+        animation-name: specialFadeOut;
+        animation-delay: 200ms;
+        animation-duration: 400ms;
+        animation-fill-mode: both;
+      }
     }
     .logo-img {
       > img {
@@ -113,6 +158,30 @@
       font-weight: bold;
     }
   }
+}
+.search-list-mobile {
+  position: fixed;
+  top: 120px;
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+  left: 0;
+  &.visible {
+    animation-name: specialFadeInLeft;
+    animation-delay: 300ms;
+    animation-duration: 400ms;
+    animation-fill-mode: both;
+  }
+  &.hidden {
+    display: none;
+  }
+}
+.fade-screen {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 5;
+  background-color: rgba($color: $dark-grey, $alpha: 0.2);
 }
 
 .screen-wrapper {

@@ -1,5 +1,4 @@
 import React, { useCallback, useState, useEffect } from "react";
-
 import "./style.scss";
 import NewsCard from "components/NewsCard";
 import Filter from "components/Filter";

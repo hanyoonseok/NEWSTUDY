@@ -1,0 +1,373 @@
+@import "variables.scss";
+
+.searchlist-container {
+  padding: 120px 130px 80px 210px;
+  @include STRETCH;
+  background-color: #fbfbfb;
+  @include FLEX-COLUMN;
+
+  @media (max-width: 480px) {
+    padding: 100px 16px;
+    background-color: #fff;
+    width: 100%;
+  }
+  > h4 {
+    font-size: rem(24);
+  }
+
+  b {
+    color: #7cb8ff;
+  }
+  .search-header {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 0;
+    width: 100%;
+    @media (max-width: 960px) {
+      flex-wrap: wrap;
+    }
+    .search-toggle {
+      @include FLEX-CENTER;
+      width: rem(130);
+      margin: 0 5px;
+      @media (max-width: 480px) {
+        width: 28vw;
+      }
+      > div {
+        font-family: $kor-font;
+        font-weight: bold;
+        font-size: rem(14);
+        margin-right: 10px;
+        @media (max-width: 480px) {
+          font-size: rem(16);
+          margin-right: 5px;
+        }
+      }
+
+      input[type="checkbox"] {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+      }
+
+      label {
+        content: "";
+        cursor: pointer;
+        text-indent: -9999px;
+        width: 70px;
+        height: 30px;
+        background: $soft-grey;
+        filter: $drop-shadow;
+        display: block;
+        border-radius: 100px;
+        position: relative;
+        @media (max-width: 480px) {
+          width: 60px;
+          height: 30px;
+        }
+      }
+
+      label:after {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 7px;
+        height: 7px;
+        background: transparent;
+        border: 7px solid white;
+        border-radius: 90px;
+        transition: 0.3s;
+        @media (max-width: 480px) {
+          width: 8px;
+          height: 8px;
+          border: 6px solid white;
+        }
+      }
+
+      input:checked + label {
+        content: "off";
+        background: white;
+        filter: $drop-shadow;
+      }
+
+      input:checked + label:after {
+        left: calc(100% - 5px);
+        transform: translateX(-100%);
+        border: 7px solid $soft-blue;
+        @media (max-width: 480px) {
+          border: 6px solid $soft-blue;
+        }
+      }
+
+      label:active:after {
+        width: 25px;
+      }
+    }
+  }
+  .search-result {
+    margin: 15px 0;
+    font-family: $kor-font;
+    font-weight: bold;
+    color: $grey;
+    @include FLEX-BETWEEN;
+  }
+  .search-analysis {
+    margin: 30px 0px;
+    width: 100%;
+    background-color: $light-grey;
+    height: 350px;
+    border-radius: 20px;
+  }
+  .search-newslist {
+    .news-result {
+      margin: 15px 0;
+      @media (max-width: 480px) {
+        margin: 0;
+      }
+    }
+  }
+  .search-top-news {
+    @include FLEX-CENTER;
+    margin: 15px 0px;
+    @media (max-width: 480px) {
+      @include FLEX-COLUMN;
+      margin: 0;
+    }
+    .top-news {
+      margin: 15px;
+    }
+  }
+  .search-dates {
+    @media (max-width: 480px) {
+      margin-top: 30px;
+    }
+    @include FLEX-CENTER;
+    .search-date {
+      @include FLEX-CENTER;
+      position: relative;
+      .date-icon {
+        cursor: pointer;
+        background-color: white;
+        width: rem(40);
+        height: rem(40);
+        border-radius: 40px;
+        @include FLEX-CENTER;
+        filter: $drop-shadow;
+      }
+      .calendar {
+        position: absolute;
+        z-index: 2;
+        left: rem(40);
+        top: rem(40);
+        &.visible {
+          animation-name: specialFadeInLeft;
+          animation-duration: 400ms;
+          animation-fill-mode: both;
+        }
+        &.hidden {
+          animation-name: specialFadeOut;
+          animation-duration: 400ms;
+          animation-fill-mode: both;
+        }
+        @media (max-width: 480px) {
+          position: fixed;
+          left: 12%;
+          top: 30%;
+        }
+      }
+      .date {
+        font-weight: bold;
+        font-size: rem(15);
+        margin: 0 15px;
+        @media (max-width: 480px) {
+          font-size: rem(18);
+        }
+      }
+    }
+    .search-separator {
+      margin: 0 10px;
+      font-weight: bold;
+    }
+  }
+
+  .newslist-morebtn-container {
+    @include FLEX-CENTER;
+    width: 100%;
+    margin-top: rem(30);
+    .newslist-morebtn {
+      width: rem(175);
+      height: rem(42);
+      border-radius: 15px;
+      @include FLEX-CENTER;
+      border: 1px solid #a0b8ff;
+      background-color: #fff;
+      font-size: rem(20);
+      font-family: $kor-font;
+      color: #6a6a6a;
+      transition: 0.3s ease;
+      font-weight: bold;
+      &:hover {
+        background-color: #a0b8ff;
+        color: #fff;
+      }
+
+      @media (max-width: 480px) {
+        background-color: $lightx2-blue;
+        width: 100%;
+        border-radius: 0;
+        border: none;
+        padding: 8px 0;
+      }
+    }
+  }
+}
+
+/*달력 css*/
+.react-calendar {
+  width: rem(400);
+  height: 100%;
+  max-width: 100%;
+  min-height: 300px;
+  padding: 10px;
+  background-color: #fff;
+  color: #222;
+  border-radius: 8px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.125em;
+  font-family: $kor-font;
+  text-align: center;
+}
+.react-calendar__navigation button {
+  color: $blue;
+  min-width: rem(40);
+  height: 30px;
+  font-weight: bold;
+  background: none;
+  font-size: rem(16);
+  margin: 8px;
+  @media (max-width: 480px) {
+    font-size: rem(18);
+  }
+}
+.react-calendar__month-view__weekdays__weekday {
+  font-family: $kor-font;
+  font-weight: bold;
+  margin: 10px 0;
+  width: 100%;
+  @include FLEX-CENTER;
+  > abbr {
+    @include FLEX-CENTER;
+    width: rem(30);
+    height: rem(30);
+    background-color: #e9efff;
+    border-radius: rem(30);
+  }
+  &:nth-child(6) {
+    color: $blue;
+  }
+  &:nth-child(7) {
+    color: rgb(255, 141, 141);
+  }
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: transparent;
+}
+.react-calendar__navigation button[disabled] {
+  background-color: transparent;
+}
+abbr[title] {
+  text-decoration: none;
+}
+/* .react-calendar__month-view__days__day--weekend {
+    color: #d10000;
+   } */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background: $lightx2-blue;
+  color: $dark-grey;
+  border-radius: 6px;
+}
+.react-calendar__month-view__days__day {
+  height: rem(40);
+  font-family: $kor-font;
+  font-size: rem(14);
+  background-color: white;
+  font-weight: bold;
+}
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: $soft-grey;
+}
+.react-calendar__tile--now {
+  background: $soft-grey;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+}
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: $soft-grey;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+}
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+  background: #f8f8fa;
+}
+.react-calendar__tile--active {
+  background: $soft-blue;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+}
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+  background: $soft-blue;
+  color: white;
+}
+
+.react-calendar__year-view__months__month {
+  height: rem(60);
+  background-color: transparent;
+  font-family: $kor-font;
+  font-weight: bold;
+  font-size: rem(15);
+}
+.react-calendar__tile--hasActive {
+  &.react-calendar__tile--now {
+    color: $dark-grey;
+    background-color: #d4ddff;
+  }
+}
+
+.react-calendar__decade-view__years__year {
+  height: rem(60);
+  background-color: transparent;
+  font-family: $kor-font;
+  font-weight: bold;
+  font-size: rem(15);
+  transition: all 300ms ease;
+  &:hover {
+    color: $dark-grey;
+  }
+}
+
+.react-calendar__century-view__decades__decade {
+  height: rem(60);
+  background-color: transparent;
+  font-family: $kor-font;
+  font-weight: bold;
+  font-size: rem(14);
+  transition: all 300ms ease;
+  &:hover {
+    color: $dark-grey;
+  }
+}
+.screen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
