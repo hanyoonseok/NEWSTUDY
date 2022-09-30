@@ -51,11 +51,10 @@ public class NewsService {
 
     /**
      * 조회수 상위 10개씩 기사를 가져온다
-     * @param c_id
      * @return 뉴스 리스트
      */
-    public List<NewsResponseDto> getNewsHot(Integer c_id) {
-        return newsDao.selectNewsListOrderByCnt(c_id);
+    public List<NewsResponseDto> getNewsHot() {
+        return newsDao.selectNewsListOrderByCnt();
     }
 
     /**

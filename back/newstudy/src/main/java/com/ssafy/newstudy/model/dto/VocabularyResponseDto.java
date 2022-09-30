@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class VocabularyResponseDto {
     private Integer v_id; // 단어 id
     private String eng;   // 영단어
+    private String kor;   // 한글 뜻
     private boolean done; // 외움 여부
 }

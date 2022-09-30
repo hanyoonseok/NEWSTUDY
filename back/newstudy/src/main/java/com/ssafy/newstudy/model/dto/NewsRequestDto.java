@@ -3,6 +3,9 @@ package com.ssafy.newstudy.model.dto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,10 +19,11 @@ public class NewsRequestDto {
 
     private Integer startlevel = 1;
     private Integer endlevel = 6;
-    private Integer startcategoryid = 0;
-    private Integer endcategoryid = 0;
+    private Integer[] categoryid;
     private String titlekeyword;
     private String contentkeyword;
+    private LocalDate startdate;
+    private LocalDate enddate;
 
     public void setStartlevelAndEndlevel(int startlevel, int endlevel){
         this.startlevel = startlevel;
