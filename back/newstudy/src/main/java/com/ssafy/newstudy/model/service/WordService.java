@@ -109,6 +109,7 @@ public class WordService {
             for(int j = 0 ; j < list.size() ; j++) {
                 if(payload.get(i).getEng().equals(list.get(j).getEng())) {
                     payload.get(i).setDescription(list.get(j).getDescription());
+                    payload.get(i).setKor(list.get(j).getKor());
                     continue outer;
                 }
             }
