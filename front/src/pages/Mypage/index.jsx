@@ -1,121 +1,109 @@
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faEnvelope,
-  faThumbTack,
-  faPencil,
   faNewspaper,
   faFileWord,
   faCertificate,
 } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import DefaultUserImage from "assets/user_globe.png";
-import A1 from "assets/A1.png";
-import A2 from "assets/A2.png";
-import B1 from "assets/B1.png";
-import B2 from "assets/B2.png";
-import C1 from "assets/C1.png";
-import C2 from "assets/C2.png";
+import React, { useEffect, useState, useCallback } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
-import { getUser } from "modules/user/user";
 import MyArticle from "./MyArticle";
 import MyVoca from "./MyVoca";
 import MyBadge from "./MyBadge";
-import FilterModal from "components/FilterModal";
+import MyInfo from "./MyInfo";
 
 export default function Mypage() {
-  const dispatch = useDispatch();
   const [user, setUser] = useState(useSelector((state) => state.user));
-
-  const [userImage, setUserImage] = useState("");
-  const fileInput = useRef(null);
-  const [articleLength, setArticleLength] = useState(0);
-  const [vocaLength, setVocaLength] = useState(0);
-  const [badgeLength, setBadgeLength] = useState(0);
-  const [isFilterModal, setIsFilterModal] = useState(false);
+  const [userCategory, setUserCategory] = useState([]);
+  const [myRecords, setMyRecords] = useState({
+    article: 0,
+    voca: 0,
+    badge: 0,
+  });
 
   useEffect(() => {
-    if (user && !user.src) {
-      setUserImage(DefaultUserImage);
-    } else {
-      setUserImage(user.src);
-    }
-    const fetchData = async () => {
-      const headers = {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      };
-      const testWordsResponse = await axios.get(`/user/avatar`, headers);
-      console.log(testWordsResponse);
-      setUserImage(
-        testWordsResponse.data.slice(10, testWordsResponse.data.length - 10),
-      );
+    const getArticlesLength = async () => {
+      await axios
+        .get(`/scrap`, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        })
+        .then(({ data }) => {
+          setMyRecords((current) => {
+            let newCondition = { ...current };
+            newCondition["article"] = data.length;
+            return newCondition;
+          });
+        });
     };
-
-    fetchData();
+    const getBadgesLength = async () => {
+      await axios
+        .get(`/badge`, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        })
+        .then(({ data }) => {
+          setMyRecords((current) => {
+            let newCondition = { ...current };
+            newCondition["badge"] = data.length;
+            return newCondition;
+          });
+        });
+    };
+    const getVocasLength = async () => {
+      await axios
+        .get(`/vocaburary`, {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        })
+        .then(({ data }) => {
+          setMyRecords((current) => {
+            let newCondition = { ...current };
+            newCondition["voca"] = data.length;
+            return newCondition;
+          });
+        });
+    };
+    getArticlesLength();
+    getBadgesLength();
+    getVocasLength();
     return () => {};
   }, []);
 
-  const onChange = (e) => {
-    const profileImg = e.target.files[0];
-    if (profileImg) {
-      // setFile(profileImg);
-    } else {
-      //업로드 취소할 시
-      setUserImage(DefaultUserImage);
-      return;
-    }
-    //화면에 프로필 사진 표시
-    const reader = new FileReader();
-    const formData = new FormData();
-    reader.onload = async () => {
-      if (reader.readyState === 2) {
-        //이미지 정상적으로 불러오면 변경하기
-        setUserImage(reader.result);
-        formData.append("file", profileImg);
+  useEffect(() => {
+    getCategory();
+    return () => {};
+  }, [userCategory]);
 
-        for (let key of formData.keys()) {
-          console.log(key, ":", formData.get(key));
-        }
-
-        // 유저 이미지 변경 api 전송
-        await axios
-          .post("/user/avatar", formData, {
-            headers: {
-              Authorization: `Bearer ${user.accessToken}`,
-              "Content-Type": "multipart/form-data",
-            },
-          })
-          .then((res) => {
-            console.log("이미지 변경완?", res);
-            dispatch(getUser(user.accessToken)).then((res) =>
-              console.log("스토어 업데이트 까지 완", res),
-            );
-          });
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
+  const getCategory = async () => {
+    await axios
+      .get("/category/me", {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      })
+      .then((res) => {
+        setUserCategory(res.data);
+      });
   };
-
-  const onCloseClick = useCallback(() => {
-    setIsFilterModal(false);
-  }, []);
 
   const myRecord = [
     {
       title: "스크랩한 기사",
-      count: articleLength,
+      count: myRecords.article,
     },
     {
       title: "내 단어",
-      count: vocaLength,
+      count: myRecords.voca,
     },
     {
       title: "내 뱃지",
-      count: badgeLength,
+      count: myRecords.badge,
     },
   ];
 
@@ -126,64 +114,15 @@ export default function Mypage() {
   };
 
   const tabContent = {
-    0: <MyArticle setArticleLength={setArticleLength} />,
-    1: <MyVoca setVocaLength={setVocaLength} />,
-    2: <MyBadge setBadgeLength={setBadgeLength} />,
+    0: <MyArticle myRecord={myRecord} />,
+    1: <MyVoca />,
+    2: <MyBadge />,
   };
 
   return (
     <>
       <div className="mypage">
-        <div className="left-box">
-          <div className="info-box">
-            <div className="profile-img">
-              <div className="level-box">{level(user.level)}</div>
-              <div className="img-box">
-                <img src={userImage} alt="사용자 프로필 지구본"></img>
-                <div
-                  className="img-hover"
-                  onClick={() => {
-                    fileInput.current.click();
-                  }}
-                >
-                  이미지 수정{user.src}
-                </div>
-                <input
-                  type="file"
-                  style={{ display: "none" }}
-                  accept="image/jpg,impge/png,image/jpeg"
-                  name="profile_img"
-                  onChange={onChange}
-                  ref={fileInput}
-                />
-              </div>
-            </div>
-            <p className="name">{user.nickname}</p>
-            <p className="email">
-              <FontAwesomeIcon icon={faEnvelope} />
-              {user.email}
-            </p>
-          </div>
-          <div className="current">
-            {myRecord.map((item, index) => (
-              <div key={index}>
-                <FontAwesomeIcon icon={faThumbTack} />
-                <p>{item.title}</p>
-                <p>{item.count}개</p>
-              </div>
-            ))}
-          </div>
-          <div className="interest">
-            <div className="title">
-              MY&nbsp; <b> INTEREST</b>
-              <FontAwesomeIcon
-                icon={faPencil}
-                onClick={() => setIsFilterModal(true)}
-              />
-            </div>
-            <div className="list"></div>
-          </div>
-        </div>
+        <MyInfo userCategory={userCategory} myRecord={myRecord} />
         <div className="right-box">
           <div className="tab">
             <button
@@ -211,28 +150,6 @@ export default function Mypage() {
           <div className="content">{tabContent[activeId]}</div>
         </div>
       </div>
-      {isFilterModal && (
-        <FilterModal text={"수정하기"} closeHandler={onCloseClick} />
-      )}
     </>
   );
 }
-
-const level = (level) => {
-  switch (level) {
-    case 1:
-      return <img src={A1} alt="A1"></img>;
-    case 2:
-      return <img src={A2} alt="A2"></img>;
-    case 3:
-      return <img src={B1} alt="B1"></img>;
-    case 4:
-      return <img src={B2} alt="B2"></img>;
-    case 5:
-      return <img src={C1} alt="C1"></img>;
-    case 6:
-      return <img src={C2} alt="C2"></img>;
-    default:
-      break;
-  }
-};

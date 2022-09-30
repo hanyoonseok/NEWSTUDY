@@ -1,18 +1,26 @@
 import "./style.scss";
-import { categoryFilter } from "constants";
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 
-export default function FilterModal({ text, closeHandler }) {
+export default function FilterModal({ text, closeHandler, sendApi }) {
+  // sendApi는 선택 다 한다음 체크된 리스트 가지고 api처리하기 위한 props
   const user = useSelector((state) => state.user);
-  // const mainCategory = Object.keys(categoryFilter);
   const [allCategory, setAllCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
-  const [active, setActive] = useState(false);
-  const mainCategory = ["life", "news", "sports", "tech", "world", "other"];
+  const [active, setActive] = useState("");
+  const [checkedList, setCheckedList] = useState([]);
+
+  const addCheckList = (checked, id) => {
+    console.log("지금 체크된 id", id);
+    if (checked) {
+      setCheckedList([...checkedList, id]);
+    } else {
+      setCheckedList(checkedList.filter((item) => item !== id));
+    }
+    console.log("체크된 값", checkedList);
+  };
+  const mainCategory = ["life", "news", "sports", "tech", "world", "other"]; //대분류 카테고리
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +40,7 @@ export default function FilterModal({ text, closeHandler }) {
   }, []);
 
   const openSub = (main) => {
-    setSubCategory(allCategory.filter((category) => category.main === main));
+    setSubCategory(allCategory.filter((category) => category.main === main)); //대분류에 맞춰 소분류 설정
   };
 
   return (
@@ -44,9 +52,14 @@ export default function FilterModal({ text, closeHandler }) {
             {mainCategory &&
               mainCategory.map((e, i) => (
                 <div
-                  className={`main-category-btn ${active ? "active" : ""}`}
+                  className={`main-category-btn ${
+                    active === e ? "active" : ""
+                  }`}
                   key={i}
-                  onClick={() => openSub(e)}
+                  onClick={() => {
+                    openSub(e);
+                    setActive(e);
+                  }}
                 >
                   {e}
                 </div>
@@ -54,14 +67,28 @@ export default function FilterModal({ text, closeHandler }) {
           </article>
           {subCategory.length > 0 && (
             <article className="sub-category-container">
-              {subCategory.map((e, i) => (
-                <div key={i}>{e.sub}</div>
+              {subCategory.map((sub) => (
+                <label className="sub-category-name" key={sub.c_id}>
+                  <input
+                    type="checkbox"
+                    name={sub.c_id}
+                    checked={checkedList.includes(sub.c_id) ? true : false}
+                    onChange={(e) => addCheckList(e.target.checked, sub.c_id)}
+                  />
+                  <span>{sub.sub}</span>
+                </label>
               ))}
             </article>
           )}
         </div>
 
-        <div className="modal-submit-btn" onClick={closeHandler}>
+        <div
+          className="modal-submit-btn"
+          onClick={() => {
+            sendApi(checkedList);
+            closeHandler();
+          }}
+        >
           {text}
           <div className="arrow-btn-wrapper">
             <button className="right-arrow-btn"></button>

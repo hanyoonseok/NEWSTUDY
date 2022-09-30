@@ -50,6 +50,10 @@
         height: rem(36);
         cursor: pointer;
         @include FLEX-CENTER;
+
+        &.active {
+          background-color: $soft-blue;
+        }
       }
     }
 
@@ -60,14 +64,38 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-row-gap: 16px;
+      grid-column-gap: 10px;
       align-items: start;
-      > div {
-        border: 1px solid $soft-blue;
-        border-radius: 7px;
-        width: rem(172);
-        height: rem(36);
-        cursor: pointer;
+      padding: 0 rem(4);
+
+      .sub-category-name {
+        position: relative;
         @include FLEX-CENTER;
+        border-radius: 7px;
+        border: 1px solid $light-blue;
+        cursor: pointer;
+        transition: all 300ms ease;
+        color: $dark-grey;
+        height: rem(40);
+
+        &:hover {
+          background-color: $lightx2-blue;
+        }
+
+        & input[type="checkbox"] {
+          opacity: 0;
+          &:checked ~ span {
+            background-color: $lightx2-blue;
+          }
+        }
+
+        span {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 7px;
+          @include FLEX-CENTER;
+        }
       }
     }
   }
@@ -82,6 +110,7 @@
     font-weight: bold;
     @include BTN-COLOR($light-blue);
     @include FLEX-CENTER;
+    cursor: pointer;
     .arrow-btn-wrapper {
       .right-arrow-btn {
         width: 12px;

@@ -111,7 +111,6 @@ export default function MyBadge({ setBadgeLength }) {
           }
         }
         setUserBadges(badges);
-        setBadgeLength(res.data.length);
       });
   };
 

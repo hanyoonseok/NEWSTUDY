@@ -47,7 +47,6 @@ export default function MyVoca({ setVocaLength }) {
       .then((res) => {
         setUserVocas(res.data);
         console.log(res.data);
-        setVocaLength(res.data.length);
       });
   };
 
