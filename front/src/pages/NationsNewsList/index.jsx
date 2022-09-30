@@ -23,7 +23,7 @@ export default function NationsNewsList() {
           Authorization: `Bearer ${userState.accessToken}`,
         },
       };
-      const categoryResponse = await axios.get("/gategory", headers);
+      const categoryResponse = await axios.get("/category", headers);
       console.log(categoryResponse);
       //여기서 카테고리 리스트 받아서 국가에 해당하는 속성만 따로 저장하는 로직 들어가야 함
       //getNationsNews(0);

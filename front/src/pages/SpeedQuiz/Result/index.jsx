@@ -28,12 +28,23 @@ export default function Result({ answer, takenTime, userState }) {
           Authorization: `Bearer ${userState.accessToken}`,
         },
       };
-      const newBadgeResponse = await axios.get("/badge/new", headers);
-      if (newBadgeResponse.data.length > 0)
-        setNewBadgeInfo(newBadgeResponse.data[0]);
+      if (takenTime <= 90) {
+        await axios.post(
+          "/badge",
+          {
+            b_id: takenTime <= 30 ? 9 : takenTime <= 60 ? 8 : 7,
+          },
+          headers,
+        );
+        const newBadgeResponse = await axios.get("/badge/new", headers);
+        if (newBadgeResponse.data.length > 0)
+          setNewBadgeInfo(newBadgeResponse.data[0]);
+      }
     };
+    const isAllCorrect = answer.filter((e) => e.correct).length === 10;
 
-    fetchData();
+    console.log("taken :", takenTime);
+    isAllCorrect && fetchData();
   }, [answer, takenTime]);
 
   return (

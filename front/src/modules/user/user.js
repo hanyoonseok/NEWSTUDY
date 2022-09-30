@@ -51,12 +51,12 @@ export const getUser = async (token) => {
       },
     })
     .then((res) => {
-      console.log(res.data.data);
       userInfo.email = res.data.data.email;
       userInfo.level = res.data.data.level;
       userInfo.nickname = res.data.data.nickname;
       userInfo.src = res.data.data.src;
       userInfo.accessToken = token;
+      userInfo.u_id = res.data.data.u_id;
     });
   return {
     type: GET_USER,
@@ -72,7 +72,6 @@ export const loginSuccess = (res) => {
   // accessToken 만료하기 1분 전에 로그인 연장
   localStorage.setItem("isLogin", true);
   return accessToken;
-
 };
 
 export const logoutUser = async () => {
