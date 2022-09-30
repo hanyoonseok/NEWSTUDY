@@ -1,14 +1,42 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faPlus, faCircle } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 import "./style.scss";
+import Modal from "components/Modal";
+import BadgeModal from "components/BadgeModal";
 
 export default function WordModal({ wordInfo, setSelectedWord }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newBadgeInfo, setNewBadgeInfo] = useState();
+  const userState = useSelector((state) => state.user);
+
   const closeModal = (e) => {
     e.stopPropagation();
     setSelectedWord(null);
   };
+
+  const onAddWordClick = useCallback(async () => {
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${userState.accessToken}`,
+      },
+    };
+    await axios.post("/vocaburary", wordInfo.eng, headers).then(() => {
+      setIsModalOpen(true);
+      setTimeout(() => {
+        setIsModalOpen(false);
+
+        axios.get("/badge/new", headers).then((res) => {
+          if (res.data.length > 0) {
+            setNewBadgeInfo(res.data[0]);
+          }
+        });
+      }, 1500);
+    });
+  }, []);
 
   return (
     <div className="wordmodal-container" onClick={closeModal}>
@@ -60,7 +88,7 @@ export default function WordModal({ wordInfo, setSelectedWord }) {
           </div> */}
         </article>
         <article className="wordmodal-btn-wrapper end">
-          <button className="wordmodal-add-btn">
+          <button className="wordmodal-add-btn" onClick={onAddWordClick}>
             <i className="add-btn-circle">
               {" "}
               <FontAwesomeIcon
@@ -72,6 +100,18 @@ export default function WordModal({ wordInfo, setSelectedWord }) {
           </button>
         </article>
       </div>
+
+      {isModalOpen && (
+        <Modal text="단어장에 추가 완료" setStatus={setIsModalOpen} />
+      )}
+
+      {newBadgeInfo && (
+        <BadgeModal
+          index={newBadgeInfo.b_id}
+          text={newBadgeInfo.name}
+          setStatus={setNewBadgeInfo}
+        />
+      )}
     </div>
   );
 }
