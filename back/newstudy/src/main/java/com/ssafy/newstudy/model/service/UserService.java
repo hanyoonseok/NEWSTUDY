@@ -7,6 +7,8 @@ import com.ssafy.newstudy.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -74,18 +76,10 @@ public class UserService {
     }
 
     public void saveImage(int u_id, MultipartFile multipartFile) throws IOException {
-        String path = System.getProperty("user.dir")+"\\"+LocalDateTime.now().getMonthValue();
-        logger.info("path : {}",path);
-        String fileName = UUID.randomUUID().toString().substring(0, 10)+multipartFile.getOriginalFilename();
 
-        File dest = new File(path, fileName);
-        if(!dest.exists()){
-            dest.mkdirs();
-        }
-        multipartFile.transferTo(dest);
-
-        String src = LocalDateTime.now().getMonthValue()+"`"+fileName;
-
+        String encodedImage = Base64.getEncoder().encodeToString(multipartFile.getBytes());
+        String ext = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".") + 1);
+       String src ="data:image/"+ext+";base64,"+encodedImage;
         userDao.saveImage(new UserDto().builder().u_id(u_id).src(src).build());
     }
 }
