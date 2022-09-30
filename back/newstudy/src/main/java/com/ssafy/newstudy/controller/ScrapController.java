@@ -47,9 +47,10 @@ public class ScrapController {
             @ApiResponse(code = 401, message="로그인정보 없음"),
             @ApiResponse(code = 500, message="서버오류")
     })
-    public ResponseEntity<HttpStatus> addScrap(@ApiParam(value = "로그인된 유저 정보", required = true) @RequestHeader("Authorization") String bearerToken, Integer n_id){
+    public ResponseEntity<HttpStatus> addScrap(@ApiParam(value = "로그인된 유저 정보", required = true) @RequestHeader("Authorization") String bearerToken,
+                                               @RequestBody ScrapRequestDto scrapRequestDto){
         Integer u_id = userService.getUidFromBearerToken(bearerToken);
-        ScrapRequestDto scrapRequestDto = new ScrapRequestDto(u_id, n_id);
+        scrapRequestDto.setU_id(u_id);
 
         //스크랩
         int result = scrapService.addScrap(scrapRequestDto);
