@@ -24,7 +24,7 @@ export default function WordModal({ wordInfo, setSelectedWord }) {
         Authorization: `Bearer ${userState.accessToken}`,
       },
     };
-    await axios.post("/vocaburary", wordInfo.eng, headers).then(() => {
+    await axios.post("/vocaburary", { eng: wordInfo.eng }, headers).then(() => {
       setIsModalOpen(true);
       setTimeout(() => {
         setIsModalOpen(false);
