@@ -27,6 +27,25 @@ export default function MyArticle() {
       });
   };
 
+  const changeLevel = (level) => {
+    switch (level) {
+      case 1:
+        return "A1";
+      case 2:
+        return "A2";
+      case 3:
+        return "B1";
+      case 4:
+        return "B2";
+      case 5:
+        return "C1";
+      case 6:
+        return "C2";
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="article-box">
       {userArticles.length > 0 &&
@@ -37,7 +56,7 @@ export default function MyArticle() {
             className="article"
             key={index}
           >
-            <span>{article.level}</span>
+            <span>{changeLevel(article.level)}</span>
             <div className="img-box">
               <img src={require("assets/test.png")} alt="기사 이미지"></img>
             </div>
