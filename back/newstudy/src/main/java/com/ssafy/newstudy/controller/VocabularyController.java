@@ -7,7 +7,6 @@ import com.ssafy.newstudy.model.service.BadgeService;
 import com.ssafy.newstudy.model.service.PapagoService;
 import com.ssafy.newstudy.model.service.UserService;
 import com.ssafy.newstudy.model.service.VocabularyService;
-import com.ssafy.newstudy.util.JwtTokenUtil;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
