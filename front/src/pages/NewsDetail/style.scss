@@ -66,9 +66,28 @@
       padding: rem(25) rem(40);
 
       .news-title {
-        text-align: center;
+        @include FLEX-CENTER;
         font-size: rem(32);
         font-family: $eng-fontB;
+      }
+
+      .news-title-level {
+        width: rem(40);
+        height: rem(40);
+        border-radius: 45px;
+        @include FLEX-CENTER;
+        color: $white;
+        font-size: rem(20);
+        font-family: $eng-title-font;
+        &.Alv {
+          background-color: $Alv;
+        }
+        &.Blv {
+          background-color: $Blv;
+        }
+        &.Clv {
+          background-color: $Clv;
+        }
       }
 
       .news-date {

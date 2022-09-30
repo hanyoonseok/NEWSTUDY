@@ -1,15 +1,17 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 import "./style.scss";
 import Right from "assets/right.png";
 import Wrong from "assets/wrong.png";
 import WordModal from "../WordModal";
-import { useEffect } from "react";
+import BadgeModal from "components/BadgeModal";
 
-export default function Result({ answer }) {
+export default function Result({ answer, takenTime, userState }) {
   const [selectedWord, setSelectedWord] = useState(null);
+  const [newBadgeInfo, setNewBadgeInfo] = useState(null);
 
   const onResultColClick = useCallback((word) => {
     setSelectedWord(word);
@@ -20,8 +22,19 @@ export default function Result({ answer }) {
   };
 
   useEffect(() => {
-    console.log(answer);
-  }, [answer]);
+    const fetchData = async () => {
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${userState.accessToken}`,
+        },
+      };
+      const newBadgeResponse = await axios.get("/badge/new", headers);
+      if (newBadgeResponse.data.length > 0)
+        setNewBadgeInfo(newBadgeResponse.data[0]);
+    };
+
+    fetchData();
+  }, [answer, takenTime]);
 
   return (
     <div className="speedquiz-result-container">
@@ -88,8 +101,17 @@ export default function Result({ answer }) {
           게임 목록으로 <FontAwesomeIcon icon={faAnglesRight} />
         </button>
       </div>
+
       {selectedWord && (
         <WordModal info={selectedWord} setSelectedModal={setSelectedWord} />
+      )}
+
+      {newBadgeInfo && (
+        <BadgeModal
+          index={newBadgeInfo.b_id}
+          text={newBadgeInfo.name}
+          setStatus={setNewBadgeInfo}
+        />
       )}
     </div>
   );

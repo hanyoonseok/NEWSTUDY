@@ -1,9 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle } from "@fortawesome/free-solid-svg-icons";
-import "./style.scss";
 import { useCallback } from "react";
-import { useState } from "react";
+
+import { partToKor } from "constants";
+import "./style.scss";
 
 export default function Question({
   question,
@@ -31,7 +32,9 @@ export default function Question({
 
   const submitAnswer = useCallback(
     (e) => {
-      if (e.key === "Enter") onNextClick();
+      if (e.key === "Enter") {
+        onNextClick();
+      }
     },
     [onNextClick],
   );
@@ -71,7 +74,9 @@ export default function Question({
       korTrans.current.style.display = "flex";
     }, 5000);
 
-    return () => clearTimeout(fiveTimer);
+    return () => {
+      clearTimeout(fiveTimer);
+    };
   }, [index]);
 
   return (
@@ -96,7 +101,7 @@ export default function Question({
       </p>
       <div className="question-kor-trans" ref={korTrans}>
         <div className="question-trans-row">
-          <i className="question-trans-part">{question.part}</i>
+          <i className="question-trans-part">{partToKor[question.part]}</i>
           <div className="question-trans">{question.kor}</div>
         </div>
       </div>

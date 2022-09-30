@@ -9,7 +9,12 @@ import {
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function TextToSpeech({ news }) {
+export default function TextToSpeech({
+  news,
+  onScrapClick,
+  isScrapped,
+  setIsScrapped,
+}) {
   const synth = window.speechSynthesis;
 
   const textToSpeech = () => {
@@ -113,11 +118,12 @@ export default function TextToSpeech({ news }) {
         </i>
         <div className="icon-desc">번역보기</div>
       </div>
-      <div className="icon-row">
+
+      <div className="icon-row" onClick={onScrapClick}>
         <i>
           <FontAwesomeIcon icon={faBookmark} />
         </i>
-        <div className="icon-desc">스크랩</div>
+        <div className="icon-desc">{isScrapped ? "스크랩 취소" : "스크랩"}</div>
       </div>
     </section>
   );

@@ -4,19 +4,12 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import moment from "moment";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faVolumeUp,
-  faGlobe,
-  faBookmark,
-  faPause,
-  faStop,
-  faPlay,
-} from "@fortawesome/free-solid-svg-icons";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";
 import TextToSpeech from "./TextToSpeech";
+import { intToLevel } from "constants";
+import BadgeModal from "components/BadgeModal";
 
 export default function NewsDetail() {
   const { newsId } = useParams();
@@ -24,6 +17,8 @@ export default function NewsDetail() {
   const [newsDetail, setNewsDetail] = useState(null);
   const [newsKeywords, setNewsKeywords] = useState([]);
   const [relatedNews, setRelatedNews] = useState([]);
+  const [isScrapped, setIsScrapped] = useState(false);
+  const [newBadgeInfo, setNewBadgeInfo] = useState(null);
   const userState = useSelector((state) => state.user);
 
   const isMobile = useMediaQuery({
@@ -41,38 +36,51 @@ export default function NewsDetail() {
     [isMobile, selectedWord],
   );
 
-
   useEffect(() => {
     const fetchData = async () => {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${userState.accessToken}`;
       const newsDetailResponse = await axios.get(`/news/${newsId}`);
-      newsDetailResponse.data.date = moment(newsDetailResponse.data.date).format("ddd, MMMM, DD, YYYY");
+      newsDetailResponse.data.date = moment(
+        newsDetailResponse.data.date,
+      ).format("ddd, MMMM, DD, YYYY");
       setNewsDetail(newsDetailResponse.data);
       console.log("뉴스 상세 : ", newsDetailResponse);
 
       const newsKeywordsResponse = await axios.get(`/news/keyword/${newsId}`);
       setNewsKeywords(newsKeywordsResponse.data);
-      console.log("키워드 리스트 : ",newsKeywordsResponse);
+      console.log("키워드 리스트 : ", newsKeywordsResponse);
 
       const relatedNewsResponse = await axios.get(`/news/related/${newsId}`);
       setRelatedNews(relatedNewsResponse.data);
-      console.log("관련 기사 : ",relatedNewsResponse);
+      console.log("관련 기사 : ", relatedNewsResponse);
+
+      const scrapListResponse = await axios.get("/scrap");
+      setIsScrapped(
+        scrapListResponse.data.filter((e) => e.n_id === newsId).length > 0,
+      );
     };
 
     fetchData();
   }, []);
 
-
   const onScrapClick = useCallback(async () => {
     const payload = {
-      Authorization: `Bearer ${userState.accessToken}`,
-      n_id: newsId,
+      n_id: parseInt(newsId),
     };
-    const addScrapResponse = await axios.post("/scrap", payload);
-    console.log(addScrapResponse);
-  }, []);
+    isScrapped
+      ? await axios.delete(`/scrap/${newsId}`, payload)
+      : await axios.post("/scrap", payload);
+
+    if (!isScrapped) {
+      const newBadgeResponse = await axios.get("/badge/new");
+      newBadgeResponse.data.length > 0 &&
+        setNewBadgeInfo(newBadgeResponse.data[0]);
+    }
+
+    setIsScrapped((prev) => !prev);
+  }, [isScrapped]);
 
   return (
     <div className="newsdetail-container">
@@ -83,9 +91,30 @@ export default function NewsDetail() {
         {newsDetail && (
           <>
             <section className="news-section">
-              <h1 className="news-title">{newsDetail.title}</h1>
+              <h1 className="news-title">
+                {" "}
+                <i
+                  className={`news-title-level ${
+                    newsDetail.level <= 2
+                      ? "Alv"
+                      : newsDetail.level <= 4
+                      ? "Blv"
+                      : "Clv"
+                  }`}
+                >
+                  {intToLevel[newsDetail.level]}
+                </i>
+                &nbsp; {newsDetail.title}
+              </h1>
               <p className="news-date">{newsDetail.date}</p>
-              {isMobile && <TextToSpeech news={newsDetail} />}
+              {isMobile && (
+                <TextToSpeech
+                  isScrapped={isScrapped}
+                  setIsScrapped={setIsScrapped}
+                  news={newsDetail}
+                  onScrapClick={onScrapClick}
+                />
+              )}
               <h3 className="news-subtitle change">VOCABULARY</h3>
               <div className="news-hot-word">
                 <section className="words-container">
@@ -106,14 +135,20 @@ export default function NewsDetail() {
                       );
                     })}
                 </section>
-                {!isMobile && <TextToSpeech news={newsDetail} />}
+                {!isMobile && (
+                  <TextToSpeech
+                    isScrapped={isScrapped}
+                    setIsScrapped={setIsScrapped}
+                    news={newsDetail}
+                    onScrapClick={onScrapClick}
+                  />
+                )}
                 {selectedWord && (
                   <div className="word-mean-container">
                     <h3 className="word-mean-title">{selectedWord.eng}</h3>
                     <h4 className="word-mean">{selectedWord.mean}</h4>
                   </div>
                 )}
-
               </div>
               {isMobile && <h3 className="news-subtitle change">ARTICLE</h3>}
               {newsDetail.thumbnail && (
@@ -139,6 +174,13 @@ export default function NewsDetail() {
           </>
         )}
       </div>
+      {newBadgeInfo && (
+        <BadgeModal
+          index={newBadgeInfo.b_id}
+          text={newBadgeInfo.name}
+          setStatus={setNewBadgeInfo}
+        />
+      )}
     </div>
   );
 }

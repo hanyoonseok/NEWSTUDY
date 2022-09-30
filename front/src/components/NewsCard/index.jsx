@@ -3,6 +3,7 @@ import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
 import "./style.scss";
+import { intToLevel } from "constants";
 
 export default function NewsCard({ news, stretch }) {
   return (
@@ -14,7 +15,7 @@ export default function NewsCard({ news, stretch }) {
             news.level <= 2 ? "Alv" : news.level <= 4 ? "Blv" : "Clv"
           }`}
         >
-          {news.level}
+          {intToLevel[news.level]}
         </i>
       </div>
       <div className="newscard-contents-container">

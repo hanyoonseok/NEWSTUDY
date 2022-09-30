@@ -11,6 +11,8 @@ import MyCrossWord from "./MyCrossWord";
 import AnsCrossWord from "./AnsCrossWord";
 
 export default function CrossWord() {
+  const boundR = 15;
+  const boundC = 18;
   const [maxR, setMaxR] = useState(0);
   const [maxC, setMaxC] = useState(0);
   const [inGame, setInGame] = useState(true);
@@ -26,25 +28,22 @@ export default function CrossWord() {
           Authorization: `Bearer ${userState.accessToken}`,
         },
       };
-      const crossResponse = await axios.get("/word/game?type=cross", headers);
-      console.log(crossResponse);
-      setWordArr(crossResponse.data);
+      let crossResponse = await axios.get("/word/game?type=cross", headers);
 
-      let curr = 0;
-      let curc = 0;
-      crossResponse.data.forEach((e, i) => {
-        e.index = i + 1;
-        const rlen = e.r + e.eng.length;
-        const clen = e.c + e.eng.length;
-        curr = Math.max(curr, e.r + 1);
-        curc = Math.max(curc, e.c + 1);
-        e.d === 1
-          ? (curc = Math.max(curc, clen))
-          : (curr = Math.max(curr, rlen));
-      });
+      while (true) {
+        const isValid = isValidBound(crossResponse.data);
 
-      setMaxR(curr);
-      setMaxC(curc);
+        if (!isValidBound(crossResponse.data)) {
+          crossResponse = await axios.get("/word/game?type=cross", headers);
+          continue;
+        } else {
+          console.log(crossResponse);
+          setWordArr(crossResponse.data);
+          setMaxR(isValid[0]);
+          setMaxC(isValid[1]);
+          break;
+        }
+      }
     };
 
     fetchData();
@@ -52,6 +51,25 @@ export default function CrossWord() {
 
   const onLinkMenuClick = () => {
     window.location.href = "/game/menu";
+  };
+
+  const isValidBound = (resp) => {
+    let tempR = 0;
+    let tempC = 0;
+    resp.forEach((e, i) => {
+      e.index = i + 1;
+      const rlen = e.r + e.eng.length;
+      const clen = e.c + e.eng.length;
+      tempR = Math.max(tempR, e.r + 1);
+      tempC = Math.max(tempC, e.c + 1);
+      e.d === 1
+        ? (tempC = Math.max(tempC, clen))
+        : (tempR = Math.max(tempR, rlen));
+    });
+
+    if (tempR >= boundR || tempC >= boundC) return false;
+
+    return [tempR, tempC];
   };
 
   return (
