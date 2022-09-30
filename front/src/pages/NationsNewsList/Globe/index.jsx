@@ -34,16 +34,16 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
   }, [selectedIdx]);
 
   const onClickMarker = (marker, markerObject, event) => {
-    // console.log("event", event);
-    // console.log("marker", marker.id);
-    // console.log("markerObject", markerObject);
+    console.log("event", event);
+    console.log("marker", marker.id);
+    console.log("markerObject", markerObject);
     setEvent({
       type: "CLICK",
       marker,
       markerObjectID: markerObject.uuid,
       pointerEventPosition: { x: event.clientX, y: event.clientY },
     });
-    // setDetails(markerTooltipRenderer(marker));
+    setDetails(markerTooltipRenderer(marker));
     setReceiveIdx(marker.id);
   };
 
@@ -57,14 +57,14 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
 
   return (
     <div className="globe-box">
-      {/* {details && (
+      {details && (
         <>
           <div className="nation-info-card">
             <img src={Kor} alt="" className="nation-info-flag" />
             <h1 className="nation-info-name">
               {markers[selectedIdx].city}, {markers[selectedIdx].kor}{" "}
             </h1>
-            <div className="nation-info-taglist">
+            {/* <div className="nation-info-taglist">
               <div className="nation-info-tag">
                 <b>#</b> &nbsp;수빈
               </div>
@@ -118,10 +118,10 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
                   &nbsp; ▲
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </>
-      )} */}
+      )}
       <ReactGlobe
         height="100%"
         globeBackgroundTexture={null}

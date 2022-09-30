@@ -10,9 +10,9 @@ import Attendance100 from "assets/100attendance_badge.png";
 import LevelA from "assets/A_level_badge.png";
 import LevelB from "assets/B_level_badge.png";
 import LevelC from "assets/C_level_badge.png";
-import GameClear50 from "assets/50game_clear.png";
+import GameClear90 from "assets/90game_clear.png";
+import GameClear60 from "assets/60game_clear.png";
 import GameClear30 from "assets/30game_clear.png";
-import GameClear10 from "assets/10game_clear.png";
 import NewsScrap1 from "assets/1news_scrap.png";
 import NewsScrap10 from "assets/10news_scrap.png";
 import NewsScrap50 from "assets/50news_scrap.png";
@@ -69,20 +69,20 @@ export default function MyBadge({ setBadgeLength }) {
     },
     {
       id: 7,
-      name: "게임 50초 이내 클리어",
-      img: GameClear50,
+      name: "게임 90초 이내 클리어",
+      img: GameClear90,
       isAchieve: false,
     },
     {
       id: 8,
-      name: "게임 30초 이내 클리어",
-      img: GameClear30,
+      name: "게임 60초 이내 클리어",
+      img: GameClear60,
       isAchieve: false,
     },
     {
       id: 9,
-      name: "게임 10초 이내 클리어",
-      img: GameClear10,
+      name: "게임 30초 이내 클리어",
+      img: GameClear30,
       isAchieve: false,
     },
     { id: 10, name: "뉴스 스크랩 1회", img: NewsScrap1, isAchieve: false },

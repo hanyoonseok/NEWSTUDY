@@ -186,6 +186,7 @@
 
     .info-box {
       height: 26%;
+      margin-bottom: rem(50);
 
       .profile-img {
         height: 130px;
@@ -225,9 +226,6 @@
         .fa-pencil {
           font-size: rem(23);
         }
-      }
-
-      .list {
       }
     }
   }

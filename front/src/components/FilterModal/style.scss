@@ -68,6 +68,9 @@
       align-items: start;
       padding: 0 rem(4);
 
+      @media (max-width: 480px) {
+        grid-row-gap: 10px;
+      }
       .sub-category-name {
         position: relative;
         @include FLEX-CENTER;
