@@ -10,6 +10,7 @@ import NewsCard from "components/NewsCard";
 import TextToSpeech from "./TextToSpeech";
 import { intToLevel } from "constants";
 import BadgeModal from "components/BadgeModal";
+import Modal from "components/Modal";
 
 export default function NewsDetail() {
   const { newsId } = useParams();
@@ -19,6 +20,7 @@ export default function NewsDetail() {
   const [relatedNews, setRelatedNews] = useState([]);
   const [isScrapped, setIsScrapped] = useState(false);
   const [newBadgeInfo, setNewBadgeInfo] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const userState = useSelector((state) => state.user);
 
   const isMobile = useMediaQuery({
@@ -57,8 +59,10 @@ export default function NewsDetail() {
       console.log("관련 기사 : ", relatedNewsResponse);
 
       const scrapListResponse = await axios.get("/scrap");
+
       setIsScrapped(
-        scrapListResponse.data.filter((e) => e.n_id === newsId).length > 0,
+        scrapListResponse.data.filter((e) => e.n_id === parseInt(newsId))
+          .length > 0,
       );
     };
 
@@ -74,9 +78,15 @@ export default function NewsDetail() {
       : await axios.post("/scrap", payload);
 
     if (!isScrapped) {
-      const newBadgeResponse = await axios.get("/badge/new");
-      newBadgeResponse.data.length > 0 &&
-        setNewBadgeInfo(newBadgeResponse.data[0]);
+      setIsModalOpen(true);
+
+      setTimeout(async () => {
+        setIsModalOpen(false);
+
+        axios.get("/badge/new").then((res) => {
+          res.data.length > 0 && setNewBadgeInfo(res.data[0]);
+        });
+      }, 1200);
     }
 
     setIsScrapped((prev) => !prev);
@@ -180,6 +190,10 @@ export default function NewsDetail() {
           text={newBadgeInfo.name}
           setStatus={setNewBadgeInfo}
         />
+      )}
+
+      {isModalOpen && (
+        <Modal text="스크랩 되었습니다!" setStatus={setIsModalOpen} />
       )}
     </div>
   );

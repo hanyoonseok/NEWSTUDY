@@ -34,7 +34,7 @@ export default function WordModal({ wordInfo, setSelectedWord }) {
             setNewBadgeInfo(res.data[0]);
           }
         });
-      }, 1500);
+      }, 1200);
     });
   }, []);
 
