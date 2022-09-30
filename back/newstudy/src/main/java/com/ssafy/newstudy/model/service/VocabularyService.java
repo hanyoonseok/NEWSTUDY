@@ -18,6 +18,12 @@ public class VocabularyService{
     }
 
     public int addVocabulary(VocabularyRequestDto voca) {
+        List<VocabularyResponseDto> voca_list = getVocabulary(voca.getU_id());
+        String eng = voca.getEng();
+        for (VocabularyResponseDto response : voca_list) {
+            String savedEng = response.getEng();
+            if (savedEng.equals(eng)) return -1;
+        }
         return vocabularyDao.insertVocabulary(voca);
     }
 

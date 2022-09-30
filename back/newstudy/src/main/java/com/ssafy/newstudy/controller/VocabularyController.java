@@ -65,7 +65,7 @@ public class VocabularyController {
             @ApiResponse(code = 500, message="서버오류")
     })
     public ResponseEntity<?> addVocabulary(@ApiParam(value = "유저 토큰", required = true) @RequestHeader("Authorization") String bearerToken,
-                                                    @ApiParam(value = "추가할 단어", required = true) @RequestBody String eng) {
+                                                    @ApiParam(value = "추가할 단어", required = true) @RequestBody VocabularyRequestDto vocabularyRequestDto) {
         // 1. 유저 정보 가져오기
         Integer u_id;
         try{
@@ -76,14 +76,19 @@ public class VocabularyController {
 
         // 2. 단어 및 사용자 정보 저장
         try {
+            String eng = vocabularyRequestDto.getEng();
             String response = papagoService.translate(eng);
             String kor = response.substring(response.indexOf("translatedText") + 17,response.indexOf("engineType")-3);
 
-            if(vocabularyService.addVocabulary(new VocabularyRequestDto(u_id, eng, kor)) == 0) {
-                throw new Exception();
-            };
+            System.out.println(response);
+            int addVoca = vocabularyService.addVocabulary(new VocabularyRequestDto(u_id, eng, kor));
+            if(addVoca == 0) {
+                return new ResponseEntity<String>("단어 추가 중 문제가 발생했습니다", HttpStatus.NOT_FOUND);
+            }else if(addVoca == -1) {
+                return new ResponseEntity<String>("이미 추가된 단어입니다", HttpStatus.BAD_REQUEST);
+            }
         }catch (Exception e){
-            return new ResponseEntity<String>("단어 추가 실패", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>("단어 추가 중 문제가 발생했습니다", HttpStatus.NOT_FOUND);
         }
 
         // 3. 저장된 단어 수에 따라 배지 부여
@@ -91,7 +96,7 @@ public class VocabularyController {
         try{
             vocabularyList = vocabularyService.getVocabulary(u_id);
         }catch (Exception e){
-            return new ResponseEntity<String>("단어장 목록 조회 실패", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>("단어장 목록 조회에 실패했습니다", HttpStatus.NOT_FOUND);
         }
 
         try{
