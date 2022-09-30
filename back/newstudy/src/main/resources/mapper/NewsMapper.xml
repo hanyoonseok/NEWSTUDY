@@ -33,6 +33,9 @@
         <if test="startcategoryid != null and endcategoryid != null and startcategoryid != '' and startcategoryid != 0 and endcategoryid != '' and endcategoryid != 0">
           AND c_id between #{startcategoryid} and #{endcategoryid}
         </if>
+        <if test="startdate != null and enddate != null">
+            AND `date` between #{startdate} and #{enddate}
+        </if>
         <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
             AND (
         </if>
@@ -57,6 +60,9 @@
         <if test="startcategoryid != null and endcategoryid != null and startcategoryid != '' and startcategoryid != 0 and endcategoryid != '' and endcategoryid != 0">
             AND c_id between #{startcategoryid} and #{endcategoryid}
         </if>
+        <if test="startdate != null and enddate != null">
+            AND `date` between #{startdate} and #{enddate}
+        </if>
         <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
             AND (
         </if>
@@ -78,7 +84,7 @@
         FROM `KEYWORD`
         WHERE n_id = #{n_id}
     </select>
-    <select id="selectNewsListOrderByCnt" parameterType="int" resultType="newsResponseDto">
+    <select id="selectNewsListOrderByCnt" resultType="newsResponseDto">
         SELECT n_id,
                c_id,
                title,
@@ -90,10 +96,7 @@
                `date`,
                thumbnail
         FROM `NEWS`
-        WHERE 1 = 1
-          <if test="c_id != null and c_id != 0">
-              AND c_id = #{c_id}
-          </if>
+        WHERE `date` BETWEEN DATE(DATE_SUB(now(), INTERVAL 1 DAY)) AND now()
         ORDER BY cnt DESC
         LIMIT 0, 10
     </select>
@@ -110,6 +113,7 @@
                thumbnail
         FROM `NEWS`
         WHERE c_id = (SELECT c_id FROM `NEWS` WHERE n_id = #{n_id})
+        ORDER BY cnt DESC
         LIMIT 0, 6
     </select>
     <select id="selectRecommendNewsList" resultType="newsResponseDto">

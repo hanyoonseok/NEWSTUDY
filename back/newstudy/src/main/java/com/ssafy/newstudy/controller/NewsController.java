@@ -48,6 +48,7 @@ public class NewsController {
             "(newsList 로 가져올 수 있음, totalCnt로 총 검색 결과 카운트 가져오기) \n" +
             "=> level(없으면 로그인한 유저의 lv), startcategoryid, endcategory (둘이 세트. 둘 다 없거나 둘 다 0이면 전체), \n" +
             "titlekeyword, categorykeyword (타이틀만 검색 -> titlekeyword, 카테고리만 -> categorykeyword, 둘 다 하려면 양쪽에) \n" +
+            "startdate, enddate 추가 \n"+
             ", page(필수!) 사용 가능 //하둡으로 검색 바꿀 예정")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
@@ -95,17 +96,15 @@ public class NewsController {
         return new ResponseEntity<List<String>>(responseArray, HttpStatus.OK);
     }
 
-    @GetMapping(value={"/hot/{c_id}", "/hot", "/hot/" })
-    @ApiOperation(value = "카테고리별 조회 수 상위 10개씩 기사를 가져온다", notes = "c_id를 이용해서 (없으면 전체에서) 카테고리별 조회 수 상위 10개씩 기사를 가져온다")
+    @GetMapping(value={"/hot" })
+    @ApiOperation(value = "전체 조회 수 상위 10개씩 기사를 가져온다", notes = "어제자 뉴스 중 조회 수 상위 10개씩 기사를 가져온다")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
             @ApiResponse(code = 401, message="로그인정보 없음"),
             @ApiResponse(code = 500, message="서버오류")
     })
-    public ResponseEntity<List<NewsResponseDto>> getNewsHot(@ApiParam(value = "카테고리 넘버", required = false,
-                                                                defaultValue = "0") @PathVariable(required = false) Integer c_id){
-        if(c_id == null) c_id = 0;
-        List<NewsResponseDto> responseArray = newsService.getNewsHot(c_id);
+    public ResponseEntity<List<NewsResponseDto>> getNewsHot(){
+        List<NewsResponseDto> responseArray = newsService.getNewsHot();
         return new ResponseEntity<List<NewsResponseDto>>(responseArray, HttpStatus.OK);
     }
 
