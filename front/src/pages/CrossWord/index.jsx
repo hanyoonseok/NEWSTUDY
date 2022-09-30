@@ -22,17 +22,18 @@ export default function CrossWord() {
   useEffect(() => {
     const fetchData = async () => {
       const headers = {
-        headers:{
-          Authorization:`Bearer ${userState.accessToken}`
-        }
-      }
+        headers: {
+          Authorization: `Bearer ${userState.accessToken}`,
+        },
+      };
       const crossResponse = await axios.get("/word/game?type=cross", headers);
       console.log(crossResponse);
       setWordArr(crossResponse.data);
 
       let curr = 0;
       let curc = 0;
-      crossResponse.data.forEach((e) => {
+      crossResponse.data.forEach((e, i) => {
+        e.index = i + 1;
         const rlen = e.r + e.eng.length;
         const clen = e.c + e.eng.length;
         curr = Math.max(curr, e.r + 1);

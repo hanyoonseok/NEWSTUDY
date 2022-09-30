@@ -7,6 +7,7 @@ import BackBtn from "components/BackBtn";
 import Check from "assets/check.png";
 import Question from "./Question";
 import Result from "./Result";
+import { useCallback } from "react";
 
 export default function SpeedQuiz() {
   const [index, setIndedx] = useState(0);
@@ -15,7 +16,7 @@ export default function SpeedQuiz() {
   const [answer, setAnswer] = useState([]);
   const userState = useSelector((state) => state.user);
 
-  const addValueToAnswer = () => {
+  const addValueToAnswer = useCallback(() => {
     initDomElement();
     if (index >= 0) {
       let curAnswer = "";
@@ -30,22 +31,30 @@ export default function SpeedQuiz() {
           ...questions[index],
           user: curAnswer,
           correct:
-            curAnswer.toUpperCase() === questions[index].answer.toUpperCase()
+            curAnswer.toUpperCase() === questions[index].eng.toUpperCase()
               ? true
               : false,
+          index: index + 1,
         },
       ]);
     }
-  };
+  }, [questions, answer]);
+
+  const onNextClick = useCallback(() => {
+    addValueToAnswer();
+    setIndedx((prev) => prev + 1);
+  }, [addValueToAnswer]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const questionResponse = await axios.get("/word/game", {
+      const headers = {
         headers: {
           Authorization: `Bearer ${userState.accessToken}`,
         },
-      });
-      console.log(questionResponse);
+      };
+      const questionResponse = await axios.get("/word/game", headers);
+      setQuestions(questionResponse.data);
+      console.log(questionResponse.data);
     };
 
     fetchData();
@@ -55,31 +64,26 @@ export default function SpeedQuiz() {
     if (timer) clearTimeout(timer);
 
     if (index >= 10) return;
+
     setTimer(
       setTimeout(() => {
         if (index >= 10) return;
-        addValueToAnswer();
-        setIndedx((prev) => prev + 1);
+        onNextClick();
       }, 10000),
     );
 
     return () => clearTimeout(timer);
-  }, [index]);
+  }, [index, questions, onNextClick]);
 
   const initDomElement = () => {
     document.querySelector(".question-timer-container").replaceChildren();
     document.querySelector(".question-kor-trans").style.display = "none";
   };
 
-  const onNextClick = () => {
-    addValueToAnswer();
-    setIndedx((prev) => prev + 1);
-  };
-
   return (
     <div className="speedquiz-container">
       <BackBtn />
-      {/* {index < 10 ? (
+      {index < 10 && questions.length > 0 ? (
         <section className="speedquiz-content-container">
           <h1 className="speedquiz-title">
             <b>SPEED</b> QUIZ
@@ -102,7 +106,7 @@ export default function SpeedQuiz() {
         </section>
       ) : (
         <Result answer={answer} />
-      )} */}
+      )}
     </div>
   );
 }

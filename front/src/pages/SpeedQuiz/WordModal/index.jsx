@@ -4,19 +4,23 @@ import {
   faClose,
   faArrowDown,
   faPlus,
+  faCircle,
 } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 import "./style.scss";
+import { intToLevel, partToKor } from "constants";
+import { useCallback } from "react";
 
 export default function WordModal({ info, setSelectedModal }) {
   const renderMyAnswer = () => {
     const result = [];
 
-    for (let i = 0; i < info.answer.length; i++) {
+    for (let i = 0; i < info.eng.length; i++) {
       const wordBlock = (
         <div
           className={`wordmodal-wordblock ${
-            info.answer.toUpperCase().charAt(i) ===
+            info.eng.toUpperCase().charAt(i) ===
             info.user.toUpperCase().charAt(i)
               ? ""
               : "wrong"
@@ -35,10 +39,10 @@ export default function WordModal({ info, setSelectedModal }) {
   const renderWordAnswer = () => {
     const result = [];
 
-    for (let i = 0; i < info.answer.length; i++) {
+    for (let i = 0; i < info.eng.length; i++) {
       const wordBlock = (
         <div className={`wordmodal-wordblock`} key={i}>
-          {info.answer.toUpperCase().charAt(i)}
+          {info.eng.toUpperCase().charAt(i)}
         </div>
       );
       result.push(wordBlock);
@@ -51,6 +55,8 @@ export default function WordModal({ info, setSelectedModal }) {
     e.stopPropagation();
     setSelectedModal(null);
   };
+
+  const onAddWordClick = useCallback(() => {}, []);
 
   return (
     <div className="wordmodal-container" onClick={closeModal}>
@@ -67,28 +73,34 @@ export default function WordModal({ info, setSelectedModal }) {
         </article>
         <article className="wordmodal-desc-container">
           <i className="wordmodal-index">{info.index}</i>
-          <span className="wordmodal-desc">{info.desc}</span>
+          <span className="wordmodal-desc">
+            {info.description.split("@@").map(
+              (desc, idx) =>
+                desc !== "" && (
+                  <span className="hint-card-desc-row" key={idx}>
+                    {info.description.split("@@").length > 2 && (
+                      <b>
+                        <FontAwesomeIcon icon={faCircle} />
+                      </b>
+                    )}{" "}
+                    {desc}
+                  </span>
+                ),
+            )}
+          </span>
         </article>
         <article className="wordmodal-kor-trans">
-          {info.translate.map((e, i) => {
-            return (
-              <div className="wordmodal-trans-row" key={i}>
-                <i
-                  className={`wordmodal-trans-level ${
-                    e.level.includes("A")
-                      ? "Alv"
-                      : e.level.includes("B")
-                      ? "Blv"
-                      : "Clv"
-                  }`}
-                >
-                  {e.level}
-                </i>
-                <i className="wordmodal-trans-part">{e.part}</i>
-                <div className="wordmodal-trans">{e.trans}</div>
-              </div>
-            );
-          })}
+          <div className="wordmodal-trans-row">
+            <i
+              className={`wordmodal-trans-level ${
+                info.level <= 2 ? "Alv" : info.level <= 4 ? "Blv" : "Clv"
+              }`}
+            >
+              {intToLevel[info.level]}
+            </i>
+            <i className="wordmodal-trans-part">{partToKor[info.part]}</i>
+            <div className="wordmodal-trans">{info.kor}</div>
+          </div>
         </article>
         <article className="wordmodal-input-result">
           <div className="wordmodal-input-row">{renderMyAnswer()}</div>
@@ -99,7 +111,7 @@ export default function WordModal({ info, setSelectedModal }) {
           <div className="wordmodal-input-row">{renderWordAnswer()}</div>
         </article>
         <article className="wordmodal-btn-wrapper end">
-          <button className="wordmodal-add-btn">
+          <button className="wordmodal-add-btn" onClick={onAddWordClick}>
             <i className="add-btn-circle">
               {" "}
               <FontAwesomeIcon

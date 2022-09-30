@@ -151,6 +151,7 @@
     overflow-y: auto;
     padding: rem(4) rem(4);
     margin-bottom: rem(6);
+    flex-shrink: 0;
     @include FLEX-COLUMN;
 
     .hint-card {

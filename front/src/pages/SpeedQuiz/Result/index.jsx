@@ -6,6 +6,7 @@ import "./style.scss";
 import Right from "assets/right.png";
 import Wrong from "assets/wrong.png";
 import WordModal from "../WordModal";
+import { useEffect } from "react";
 
 export default function Result({ answer }) {
   const [selectedWord, setSelectedWord] = useState(null);
@@ -17,6 +18,10 @@ export default function Result({ answer }) {
   const onLinkMenuClick = () => {
     window.location.href = "/game/menu";
   };
+
+  useEffect(() => {
+    console.log(answer);
+  }, [answer]);
 
   return (
     <div className="speedquiz-result-container">
