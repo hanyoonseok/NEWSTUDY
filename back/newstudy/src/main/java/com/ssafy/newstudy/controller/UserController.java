@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 
 /**
  * 유저 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -117,12 +118,8 @@ public class UserController {
     }
 
     @GetMapping("/avatar")
-    public byte[] getImage(@RequestHeader("Authorization") String bearerToken) throws IOException {
+    public ResponseEntity<?> getImage(@RequestHeader("Authorization") String bearerToken) throws IOException {
         String src = userService.getUserByUid(userService.getUidFromBearerToken(bearerToken)).getSrc();
-        String[] split = src.split("`");
-        InputStream in = new FileInputStream(System.getProperty("user.dir")+"/"+split[0]+"/"+split[1]);
-        byte[] bytes = IOUtils.toByteArray(in);
-        in.close();
-        return bytes;
+        return new ResponseEntity<>(src, HttpStatus.OK);
     }
 }
