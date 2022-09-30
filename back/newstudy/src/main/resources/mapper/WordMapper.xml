@@ -10,8 +10,8 @@
         WHERE randwords.a <![CDATA[ <= ]]> 5
     </select>
     <select id="selectWordGameList" resultType="wordResponseDto">
-        SELECT eng, part, `level`, `description` FROM (
-            SELECT eng, part, `level`, `description`, RANK() OVER (ORDER BY RAND()) AS a
+        SELECT eng, part, `level`, `description`, `kor` FROM (
+            SELECT eng, part, `level`, `description`, `kor`, RANK() OVER (ORDER BY RAND()) AS a
             FROM ref_word AS words
             WHERE eng NOT IN (SELECT eng
                 FROM ref_word

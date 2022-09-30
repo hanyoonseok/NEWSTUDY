@@ -35,7 +35,7 @@
             <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
         </if>
         <if test="startdate != null and enddate != null">
-            AND `date` between #{startdate} and #{enddate}
+            AND date(`date`) between #{startdate} and #{enddate}
         </if>
         <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
             AND (
@@ -63,7 +63,7 @@
             <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
         </if>
         <if test="startdate != null and enddate != null">
-            AND `date` between #{startdate} and #{enddate}
+            AND date(`date`) between #{startdate} and #{enddate}
         </if>
         <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
             AND (
