@@ -30,8 +30,9 @@
                thumbnail
         FROM `NEWS`
         WHERE level between #{startlevel} and #{endlevel}
-        <if test="startcategoryid != null and endcategoryid != null and startcategoryid != '' and startcategoryid != 0 and endcategoryid != '' and endcategoryid != 0">
-          AND c_id between #{startcategoryid} and #{endcategoryid}
+        <if test="categoryid != null">
+            AND c_id IN
+            <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
         </if>
         <if test="startdate != null and enddate != null">
             AND `date` between #{startdate} and #{enddate}
@@ -57,8 +58,9 @@
         SELECT count(*)
         FROM `NEWS`
         WHERE level between #{startlevel} and #{endlevel}
-        <if test="startcategoryid != null and endcategoryid != null and startcategoryid != '' and startcategoryid != 0 and endcategoryid != '' and endcategoryid != 0">
-            AND c_id between #{startcategoryid} and #{endcategoryid}
+        <if test="categoryid != null">
+            AND c_id IN
+            <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
         </if>
         <if test="startdate != null and enddate != null">
             AND `date` between #{startdate} and #{enddate}

@@ -46,10 +46,11 @@ public class NewsController {
     @PostMapping()
     @ApiOperation(value = "뉴스 리스트", notes = "뉴스 리스트(newsList)를 담은 HashMap을 가져온다  \n " +
             "(newsList 로 가져올 수 있음, totalCnt로 총 검색 결과 카운트 가져오기) \n" +
-            "=> level(없으면 로그인한 유저의 lv), startcategoryid, endcategory (둘이 세트. 둘 다 없거나 둘 다 0이면 전체), \n" +
+            "level(없으면 로그인한 유저의 lv), " +
+            "categoryid 를 int 배열로 받아서, 해당되는 배열만 가져옴 \n" +
             "titlekeyword, categorykeyword (타이틀만 검색 -> titlekeyword, 카테고리만 -> categorykeyword, 둘 다 하려면 양쪽에) \n" +
             "startdate, enddate 추가 \n"+
-            ", page(필수!) 사용 가능 //하둡으로 검색 바꿀 예정")
+            ", page(필수!) 사용 가능")
     @ApiResponses({
             @ApiResponse(code = 200, message="성공", response = List.class),
             @ApiResponse(code = 401, message="로그인정보 없음"),

@@ -19,8 +19,7 @@ public class NewsRequestDto {
 
     private Integer startlevel = 1;
     private Integer endlevel = 6;
-    private Integer startcategoryid = 0;
-    private Integer endcategoryid = 0;
+    private Integer[] categoryid;
     private String titlekeyword;
     private String contentkeyword;
     private LocalDate startdate;
