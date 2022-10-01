@@ -16,7 +16,8 @@
   .article-img {
     position: relative;
     > img {
-      height: 9vw;
+      width: rem(180);
+      height: rem(150);
       border-radius: 1.5em;
       @media (max-width: 1000px) {
         width: 15rem;
@@ -40,7 +41,7 @@
   }
   .article-info-desc {
     margin: 0 4%;
-    width: 25vw;
+    width: 100%;
     @media (max-width: 1000px) {
       width: 50%;
     }

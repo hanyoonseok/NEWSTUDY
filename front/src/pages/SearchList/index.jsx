@@ -3,7 +3,11 @@ import "./style.scss";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarDays, faCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCalendarDays,
+  faCircle,
+  faEllipsis,
+} from "@fortawesome/free-solid-svg-icons";
 import Calendar from "react-calendar";
 import { useSelector } from "react-redux";
 import moment from "moment";
@@ -12,9 +16,13 @@ import NewsCard from "components/NewsCard";
 import HotNewsCard from "./HotNewsCard";
 import Filter from "components/Filter";
 import LevelRange from "./LevelRange";
+import TopBtn from "components/TopBtn";
 
 function SearchList() {
-  const { currentUser } = useSelector((state) => state.user);
+  const isMobile = useMediaQuery({
+    query: "(max-width:480px)",
+  });
+  const user = useSelector((state) => state.user);
   const [newsList, setNewsList] = useState([]);
   const [totalCnt, setTotalCnt] = useState(0);
   const [isExistMoreNews, setIsExistMoreNews] = useState(false);
@@ -29,17 +37,12 @@ function SearchList() {
     titlekeyword: params.query,
     contentkeyword: params.query,
   });
-
   // 달력 관련
   const [activeSelectDate, setActiveSelectDate] = useState(false);
   const [startDay, setStartDay] = useState(new Date());
   const [endDay, setEndDay] = useState(new Date());
   const [activeStartDate, setActiveStartDate] = useState(false);
   const [activeEndDate, setActiveEndDate] = useState(false);
-
-  const isMobile = useMediaQuery({
-    query: "(max-width:480px)",
-  });
 
   // 캘린더 관련 함수들
   const showSelectDate = (checked) => {
@@ -88,6 +91,18 @@ function SearchList() {
     setActiveSelectDate(false);
   };
 
+  const setFilterSeletedDate = () => {
+    const selectStartDay = moment(startDay).format("YYYY-MM-DD");
+    const selectEndDay = moment(endDay).format("YYYY-MM-DD");
+
+    setFilter((current) => {
+      let newCondition = { ...current };
+      newCondition["startdate"] = selectStartDay;
+      newCondition["enddate"] = selectEndDay;
+      return newCondition;
+    });
+  };
+
   const onEndCalendar = () => {
     setActiveEndDate(!activeEndDate);
     setActiveStartDate(false);
@@ -106,7 +121,7 @@ function SearchList() {
   const getMoreNewsList = async (data) => {
     axios.defaults.headers.common[
       "Authorization"
-    ] = `Bearer ${currentUser.accessToken}`;
+    ] = `Bearer ${user.accessToken}`;
     const newsListResponse = await axios.post(`/news`, data);
     const result = newsListResponse.data;
 
@@ -121,7 +136,7 @@ function SearchList() {
   const getNewsList = async (data) => {
     axios.defaults.headers.common[
       "Authorization"
-    ] = `Bearer ${currentUser.accessToken}`;
+    ] = `Bearer ${user.accessToken}`;
     const newsListResponse = await axios.post(`/news`, data);
     const result = newsListResponse.data;
     console.log("검색 혹은 필터 결과 : ", result.newsList);
@@ -257,7 +272,7 @@ function SearchList() {
             >
               <input type="radio" className="date-btn" name="date" />
               <i>
-                <FontAwesomeIcon icon={faCircle} />
+                {!isMobile && <FontAwesomeIcon icon={faCircle} />}
                 <span>&nbsp; 전체</span>
               </i>
             </label>
@@ -267,7 +282,7 @@ function SearchList() {
             >
               <input type="radio" className="date-btn" name="date" />
               <i>
-                <FontAwesomeIcon icon={faCircle} />
+                {!isMobile && <FontAwesomeIcon icon={faCircle} />}
                 <span>&nbsp; 1일</span>
               </i>
             </label>
@@ -277,7 +292,7 @@ function SearchList() {
             >
               <input type="radio" className="date-btn" name="date" />
               <i>
-                <FontAwesomeIcon icon={faCircle} />
+                {!isMobile && <FontAwesomeIcon icon={faCircle} />}
                 <span>&nbsp; 1주</span>
               </i>
             </label>
@@ -287,7 +302,7 @@ function SearchList() {
             >
               <input type="radio" className="date-btn" name="date" />
               <i>
-                <FontAwesomeIcon icon={faCircle} />
+                {!isMobile && <FontAwesomeIcon icon={faCircle} />}
                 <span>&nbsp; 1개월</span>
               </i>
             </label>
@@ -297,7 +312,7 @@ function SearchList() {
             >
               <input type="radio" className="date-btn" name="date" />
               <i>
-                <FontAwesomeIcon icon={faCircle} />
+                {!isMobile && <FontAwesomeIcon icon={faCircle} />}
                 <span>&nbsp; 1년</span>
               </i>
             </label>
@@ -308,10 +323,19 @@ function SearchList() {
               }}
             >
               <input type="radio" className="date-btn" name="date" />
-              <i>
-                <FontAwesomeIcon icon={faCircle} />
-                <span>&nbsp; 직접입력</span>
-              </i>
+
+              {isMobile ? (
+                <>
+                  <i>
+                    <FontAwesomeIcon icon={faEllipsis} />
+                  </i>
+                </>
+              ) : (
+                <i>
+                  <FontAwesomeIcon icon={faCircle} />
+                  <span>&nbsp; 직접입력</span>
+                </i>
+              )}
             </label>
           </div>
 
@@ -355,6 +379,9 @@ function SearchList() {
                   <Calendar onChange={setEndDay} value={endDay} />
                 </div>
               </div>
+              <button className="show-result" onClick={setFilterSeletedDate}>
+                완료
+              </button>
             </div>
           )}
         </div>
@@ -402,6 +429,7 @@ function SearchList() {
           )}
         </>
       )}
+      <TopBtn></TopBtn>
     </div>
   );
 }

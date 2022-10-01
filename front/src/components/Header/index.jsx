@@ -23,7 +23,8 @@ export default function Header() {
   const [modalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const searchInput = useRef();
-  const { currentUser } = useSelector((state) => state.user);
+
+  const user = useSelector((state) => state.user);
   const [searchResults, setSearchResults] = useState(null);
   const openModal = () => {
     setModalOpen(true);
@@ -69,7 +70,7 @@ export default function Header() {
       }
       axios.defaults.headers.common[
         "Authorization"
-      ] = `Bearer ${currentUser.accessToken}`;
+      ] = `Bearer ${user.accessToken}`;
 
       const data = {
         page: 1,

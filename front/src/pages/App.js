@@ -8,7 +8,6 @@ import NewsDetail from "pages/NewsDetail";
 import NationsNewsList from "pages/NationsNewsList";
 import NewsList from "pages/NewsList";
 import Layout from "components/Layout";
-import Signup from "./Signup";
 import Mypage from "./Mypage";
 import SearchList from "./SearchList";
 import GameMenu from "./GameMenu";
@@ -17,6 +16,7 @@ import SpeedQuiz from "./SpeedQuiz";
 import LevelTest from "pages/LevelTest";
 import AuthRoute from "routes/AuthRoute";
 import { NotAuthRoute } from "routes/NotAuthRoute";
+import Auth from "./Auth";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
           ></Route>
           <Route
             path="/signup"
-            element={<NotAuthRoute component={<Signup />} />}
+            element={<NotAuthRoute component={<Auth />} />}
           ></Route>
           <Route
             path="/leveltest"

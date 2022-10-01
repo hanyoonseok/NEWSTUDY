@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./style.scss";
 import { useSelector } from "react-redux";
+import BadgeModal from "components/BadgeModal";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,21 +27,58 @@ import TopBtn from "components/TopBtn";
 const MAX_VISIBILITY = 3;
 
 function SectionTitle({ sectionTitle }) {
+  const user = useSelector((state) => state.user);
+
   const { blueTitle, blackTitle, desc } = sectionTitle;
+  const [badgeContent, setBadgeContent] = useState({});
+  const [isBadgeModal, setIsBadgeModal] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await axios
+        .get("/badge/new", {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.length > 0) {
+            setBadgeContent({
+              text: res.data[0].name,
+              index: res.data[0].b_id,
+            });
+            setIsBadgeModal(true);
+          }
+        });
+    };
+    fetchData();
+    return () => {};
+  }, []);
   return (
-    <div className="section" data-aos="fade-up">
-      <h1 className="section-title">
-        <span className="text-spotlight">{blueTitle}&nbsp; </span> {blackTitle}
-      </h1>
-      <div className="section-desc">
-        {desc}
-        <img
-          className="check-img"
-          src={require("assets/check.png")}
-          alt="check"
-        ></img>
+    <>
+      <div className="section">
+        <h1 className="section-title">
+          <span className="text-spotlight">{blueTitle}&nbsp; </span>{" "}
+          {blackTitle}
+        </h1>
+        <div className="section-desc">
+          {desc}
+          <img
+            className="check-img"
+            src={require("assets/check.png")}
+            alt="check"
+          ></img>
+        </div>
       </div>
-    </div>
+      {isBadgeModal && (
+        <BadgeModal
+          setStatus={setIsBadgeModal}
+          text={badgeContent.text}
+          index={badgeContent.index}
+        />
+      )}
+    </>
   );
 }
 
@@ -99,7 +137,7 @@ function UserfitArticle({ children }) {
 }
 
 function Landing() {
-  const { currentUser } = useSelector((state) => state.user);
+  const [user, setUser] = useState(useSelector((state) => state.user));
   const [activeId, setActiveId] = useState(0);
   const [wordRanking, setWordRanking] = useState(null);
   const [userFitNews, setUserFitNews] = useState(null);
@@ -132,7 +170,7 @@ function Landing() {
     const fetchData = async () => {
       axios.defaults.headers.common[
         "Authorization"
-      ] = `Bearer ${currentUser.accessToken}`;
+      ] = `Bearer ${user.accessToken}`;
       const wordCloudResponse = await axios.get(`/daily/${activeId}`);
       console.log(wordCloudResponse.data);
       setWordRanking(wordCloudResponse.data);
@@ -147,7 +185,7 @@ function Landing() {
     const fetchData = async () => {
       axios.defaults.headers.common[
         "Authorization"
-      ] = `Bearer ${currentUser.accessToken}`;
+      ] = `Bearer ${user.accessToken}`;
       try {
         // 로딩값을 true로 변경
         setLoading(true);
@@ -208,11 +246,11 @@ function Landing() {
         )}
       </section>
       {/* 핫토픽 */}
-      {hotNews && hotNews.length > 0 && (
-        <>
-          <section className="hottopic">
-            <SectionTitle sectionTitle={sectionTitle[1]}></SectionTitle>
+      <section className="hottopic">
+        <SectionTitle sectionTitle={sectionTitle[1]}></SectionTitle>
 
+        {hotNews && hotNews.length > 0 && (
+          <>
             <div className="hottopic-articles">
               <div
                 className="hottopic-left"
@@ -243,9 +281,9 @@ function Landing() {
                 ))}
               </div>
             </div>
-          </section>
-        </>
-      )}
+          </>
+        )}
+      </section>
 
       <section className="daily-keyword">
         <SectionTitle sectionTitle={sectionTitle[2]}></SectionTitle>

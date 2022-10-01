@@ -142,6 +142,9 @@
   }
   .search-dates-container {
     margin-left: rem(50);
+    @media (max-width: 480px) {
+      margin-left: rem(0);
+    }
     .search-dates {
       @media (max-width: 480px) {
         margin-top: 30px;
@@ -155,6 +158,11 @@
         border-radius: 8px;
         background-color: $light-grey;
         transition: all 300ms ease;
+        @media (max-width: 480px) {
+          width: 10vw;
+          margin: 0 2px;
+          border-radius: 5px;
+        }
         input[type="radio"] {
           display: none;
         }
@@ -175,6 +183,9 @@
           top: 0;
           @include FLEX-CENTER;
           transition: all 300ms ease;
+          @media (max-width: 480px) {
+            font-size: rem(15);
+          }
           > span {
             color: $dark-grey;
             font-family: $kor-font;
@@ -216,15 +227,14 @@
           z-index: 2;
           left: rem(40);
           top: rem(40);
+          display: none;
           &.visible {
+            display: block;
             animation-name: specialFadeInLeft;
             animation-duration: 400ms;
             animation-fill-mode: both;
           }
           &.hidden {
-            // animation-name: specialFadeOut;
-            // animation-duration: 400ms;
-            // animation-fill-mode: both;
             opacity: 0;
           }
           @media (max-width: 480px) {
@@ -234,12 +244,26 @@
           }
         }
         .date {
+          font-family: $kor-font;
           font-weight: bold;
-          font-size: rem(15);
+          font-size: rem(14);
           margin: 0 15px;
           @media (max-width: 480px) {
             font-size: rem(18);
           }
+        }
+      }
+      .show-result {
+        padding: 5px 15px;
+        border-radius: 5px;
+        background-color: $soft-grey;
+        font-family: $kor-font;
+        font-weight: bold;
+        font-size: rem(14);
+        transition: all 300ms ease;
+        &:hover {
+          transform: scale(1.05);
+          background-color: #bdc0cf;
         }
       }
       .search-separator {
@@ -260,7 +284,6 @@
   .filter-title {
     font-family: $eng-title-font;
     font-weight: bold;
-
     color: $dark-grey;
     padding: 7px 15px;
     background-color: white;
@@ -268,6 +291,10 @@
     filter: $drop-shadow;
     display: inline-block;
     margin: 0 rem(20);
+    @media (max-width: 480px) {
+      padding: 5px 8px;
+      font-size: rem(14);
+    }
   }
   .newslist-morebtn-container {
     @include FLEX-CENTER;

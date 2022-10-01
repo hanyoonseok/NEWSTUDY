@@ -9,10 +9,12 @@ import Filter from "components/Filter";
 import NewsCard from "components/NewsCard";
 import axios from "axios";
 
+import TopBtn from "components/TopBtn";
+
 export default function NewsList() {
-  const { currentUser } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
   const [selectedLevel, setSelectedLevel] = useState(
-    currentUser.level === 0 ? 1 : currentUser.level,
+    user.level === 0 ? 1 : user.level,
   );
 
   const [newsList, setNewsList] = useState([]);
@@ -34,11 +36,11 @@ export default function NewsList() {
   );
 
   useEffect(() => {
-    console.log("유저정보 찍기 ", currentUser);
+    console.log("유저정보 찍기 ", user);
     const fetchData = async () => {
       axios.defaults.headers.common[
         "Authorization"
-      ] = `Bearer ${currentUser.accessToken}`;
+      ] = `Bearer ${user.accessToken}`;
       console.log(selectedLevel);
 
       // 뉴스 목록 불러오기.
@@ -153,6 +155,7 @@ export default function NewsList() {
           </>
         )}
       </article>
+      <TopBtn></TopBtn>
     </section>
   );
 }

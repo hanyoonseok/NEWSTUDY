@@ -7,10 +7,8 @@ import {
   faNewspaper,
   faFileWord,
   faCertificate,
-  faL,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState, useRef } from "react";
-import Attendance1 from "assets/1attendance_badge.png";
 import DefaultUserImage from "assets/user_globe.png";
 import A1 from "assets/A1.png";
 import A2 from "assets/A2.png";
@@ -19,21 +17,50 @@ import B2 from "assets/B2.png";
 import C1 from "assets/C1.png";
 import C2 from "assets/C2.png";
 
-import Word from "components/Word";
-
-const user = {
-  name: "김싸피",
-  email: "kimssafy@ssafy.com",
-  level: "A1",
-};
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { getUser } from "modules/user/user";
+import MyArticle from "./MyArticle";
+import MyVoca from "./MyVoca";
+import MyBadge from "./MyBadge";
 
 export default function Mypage() {
-  const [userImage, setUserImage] = useState(DefaultUserImage);
+  const dispatch = useDispatch();
+  const [user, setUser] = useState(useSelector((state) => state.user));
+
+  const [userImage, setUserImage] = useState("");
   const fileInput = useRef(null);
+  const [articleLength, setArticleLength] = useState(0);
+  const [vocaLength, setVocaLength] = useState(0);
+  const [badgeLength, setBadgeLength] = useState(0);
+
+  useEffect(() => {
+    if (user && !user.src) {
+      setUserImage(DefaultUserImage);
+    } else {
+      setUserImage(user.src);
+    }
+    const fetchData = async () => {
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      };
+      const testWordsResponse = await axios.get(`/user/avatar`, headers);
+      console.log(testWordsResponse);
+      setUserImage(
+        testWordsResponse.data.slice(10, testWordsResponse.data.length - 10),
+      );
+    };
+
+    fetchData();
+    return () => {};
+  }, []);
 
   const onChange = (e) => {
-    if (e.target.files[0]) {
-      // setFile(e.target.files[0]);
+    const profileImg = e.target.files[0];
+    if (profileImg) {
+      // setFile(profileImg);
     } else {
       //업로드 취소할 시
       setUserImage(DefaultUserImage);
@@ -41,314 +68,48 @@ export default function Mypage() {
     }
     //화면에 프로필 사진 표시
     const reader = new FileReader();
-    reader.onload = () => {
+    const formData = new FormData();
+    reader.onload = async () => {
       if (reader.readyState === 2) {
         //이미지 정상적으로 불러오면 변경하기
         setUserImage(reader.result);
+        formData.append("file", profileImg);
+
+        for (let key of formData.keys()) {
+          console.log(key, ":", formData.get(key));
+        }
+
+        // 유저 이미지 변경 api 전송
+        await axios
+          .post("/user/avatar", formData, {
+            headers: {
+              Authorization: `Bearer ${user.accessToken}`,
+              "Content-Type": "multipart/form-data",
+            },
+          })
+          .then((res) => {
+            console.log("이미지 변경완?", res);
+            dispatch(getUser(user.accessToken)).then((res) =>
+              console.log("스토어 업데이트 까지 완", res),
+            );
+          });
       }
     };
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  const articles = [
-    {
-      img: "assets/test.png",
-      title:
-        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-    {
-      img: "assets/test.png",
-      title: "An Overseas news story that fits the difficulty",
-      level: "c",
-    },
-  ];
-
-  const badges = [
-    {
-      id: 0,
-      name: "1일 출석 배지",
-      img: Attendance1,
-      isAchieve: false,
-    },
-    {
-      id: 1,
-      name: "50일 출석 배지",
-      img: "assets/50attendance_badge.png",
-      isAchieve: false,
-    },
-    {
-      id: 2,
-      name: "100일 출석 배지",
-      img: "assets/100attendance_badge.png",
-      isAchieve: false,
-    },
-    {
-      id: 3,
-      name: "레벨 A 달성 배지",
-      img: "assets/A_level_badge.png",
-      isAchieve: false,
-    },
-    {
-      id: 4,
-      name: "레벨 B 달성 배지",
-      img: "assets/B_level_badge.png",
-      isAchieve: false,
-    },
-    {
-      id: 5,
-      name: "레벨 C 달성 배지",
-      img: "assets/C_level_badge.png",
-      isAchieve: false,
-    },
-    {
-      id: 6,
-      name: "10개의 나라 뉴스 열람 배지",
-      img: "assets/",
-      isAchieve: false,
-    },
-    {
-      id: 7,
-      name: "50개의 나라 뉴스 열람 배지",
-      img: "assets/",
-      isAchieve: false,
-    },
-    {
-      id: 8,
-      name: "100개의 나라 뉴스 열람 배지",
-      img: "assets/",
-      isAchieve: false,
-    },
-    { id: 9, name: "게임 50초 이내 클리어", img: "assets/", isAchieve: false },
-    { id: 10, name: "게임 30초 이내 클리어", img: "assets/", isAchieve: false },
-    { id: 11, name: "게임 10초 이내 클리어", img: "assets/", isAchieve: false },
-    { id: 12, name: "뉴스 스크랩 1회", img: "assets/", isAchieve: false },
-    { id: 13, name: "뉴스 스크랩 10회", img: "assets/", isAchieve: false },
-    { id: 14, name: "뉴스 스크랩 50회", img: "assets/", isAchieve: false },
-    { id: 15, name: "단어 1개 저장", img: "assets/", isAchieve: false },
-    { id: 16, name: "단어 50개 저장", img: "assets/", isAchieve: false },
-    { id: 17, name: "단어 100개 저장", img: "assets/", isAchieve: false },
-  ];
-
-  const [userBadges, setUserBadges] = useState(null);
-  const [userVocas, setUserVocas] = useState([]);
-  const [filterVocas, setFilterVocas] = useState([]);
-  const [isChecked, setIsChecked] = useState(false);
-  const [wordMemorizeStatus, setWordMemorizeStatus] = useState(false); //단어 외움 상태 바꿨는지 감지할 변수
-
-  useEffect(() => {
-    getBadges();
-    getVocas();
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    changeFilterVocas();
-    return () => {};
-  }, [isChecked, userVocas]);
-
-  useEffect(() => {
-    changeFilterVocas();
-    setWordMemorizeStatus(false);
-    return () => {};
-  }, [wordMemorizeStatus]);
-
-  const changeFilterVocas = () => {
-    if (isChecked) {
-      setFilterVocas(userVocas.filter((voca) => voca.memorize));
-    } else {
-      setFilterVocas(userVocas.filter((voca) => !voca.memorize));
-    }
-  };
-
-  const getBadges = () => {
-    const data = [{ id: 0 }, { id: 9 }, { id: 2 }];
-    for (const badge of badges) {
-      for (const item of data) {
-        if (item.id === badge.id) {
-          badge.isAchieve = true;
-        }
-      }
-    }
-    setUserBadges(badges);
-  };
-
-  const getVocas = () => {
-    const vocas = [
-      {
-        word: "Administration",
-        part: [
-          {
-            id: 0,
-            mean: "수콩수콩수콩",
-          },
-          {
-            id: 3,
-            mean: "화연연ㅇ여연",
-          },
-        ],
-        memorize: true,
-      },
-      {
-        word: "SubiniSubiniSi",
-        part: [
-          {
-            id: 0,
-            mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩",
-          },
-          {
-            id: 3,
-            mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩",
-          },
-        ],
-        memorize: true,
-      },
-      {
-        word: "SubiniSubiniSi",
-        part: [
-          {
-            id: 0,
-            mean: "수콩수콩수콩",
-          },
-          {
-            id: 3,
-            mean: "화연연ㅇ여연",
-          },
-        ],
-        memorize: false,
-      },
-      {
-        word: "SubiniSubiniSi",
-        part: [
-          {
-            id: 0,
-            mean: "수콩수콩수콩",
-          },
-          {
-            id: 3,
-            mean: "화연연ㅇ여연",
-          },
-        ],
-        memorize: true,
-      },
-      {
-        word: "SubiniSubiniSi",
-        part: [
-          {
-            id: 0,
-            mean: "수콩수콩수콩",
-          },
-          {
-            id: 3,
-            mean: "화연연ㅇ여연",
-          },
-        ],
-        memorize: false,
-      },
-      {
-        word: "SubiniSubiniSi",
-        part: [
-          {
-            id: 0,
-            mean: "수콩수콩수콩",
-          },
-          {
-            id: 3,
-            mean: "화연연ㅇ여연",
-          },
-        ],
-        memorize: false,
-      },
-      {
-        word: "SubiniSubiniSi",
-        part: [
-          {
-            id: 0,
-            mean: "수콩수콩수콩",
-          },
-          {
-            id: 3,
-            mean: "화연연ㅇ여연",
-          },
-        ],
-        memorize: false,
-      },
-    ];
-    setUserVocas(vocas);
-  };
-
   const myRecord = [
     {
       title: "스크랩한 기사",
-      count: articles.length,
+      count: articleLength,
     },
     {
       title: "내 단어",
-      count: userVocas.length,
+      count: vocaLength,
     },
     {
       title: "내 뱃지",
-      count: badges.length,
+      count: badgeLength,
     },
   ];
 
@@ -359,55 +120,9 @@ export default function Mypage() {
   };
 
   const tabContent = {
-    0: (
-      <div className="article-box">
-        {articles.map((article, index) => (
-          <div className="article" key={index}>
-            <span>{article.level}</span>
-            <div className="img-box">
-              <img src={require("assets/test.png")} alt="기사 이미지"></img>
-            </div>
-            <p>{article.title}</p>
-          </div>
-        ))}
-      </div>
-    ),
-    1: (
-      <>
-        <div className="wrap">
-          <input
-            type="checkbox"
-            id="memorize"
-            onChange={() => {
-              setIsChecked(!isChecked);
-            }}
-            checked={isChecked}
-          />
-          <label htmlFor="memorize">외운 단어 보기</label>
-        </div>
-        {filterVocas && (
-          <Word
-            vocas={filterVocas}
-            setWordMemorizeStatus={setWordMemorizeStatus}
-          />
-        )}
-      </>
-    ),
-    2: (
-      <div className="badge-box">
-        {userBadges &&
-          userBadges.map((badge, index) => (
-            <div key={index}>
-              {badge.isAchieve ? (
-                <img src={badge.img} alt="배지"></img>
-              ) : (
-                <img src={require("assets/badge_rock.png")} alt="배지"></img>
-              )}
-              <p>{badge.name}</p>
-            </div>
-          ))}
-      </div>
-    ),
+    0: <MyArticle setArticleLength={setArticleLength} />,
+    1: <MyVoca setVocaLength={setVocaLength} />,
+    2: <MyBadge setBadgeLength={setBadgeLength} />,
   };
 
   return (
@@ -424,7 +139,7 @@ export default function Mypage() {
                   fileInput.current.click();
                 }}
               >
-                이미지 수정
+                이미지 수정{user.src}
               </div>
               <input
                 type="file"
@@ -436,7 +151,7 @@ export default function Mypage() {
               />
             </div>
           </div>
-          <p className="name">{user.name}</p>
+          <p className="name">{user.nickname}</p>
           <p className="email">
             <FontAwesomeIcon icon={faEnvelope} /> {user.email}
           </p>
@@ -488,21 +203,21 @@ export default function Mypage() {
   );
 }
 
-function level(level) {
+const level = (level) => {
   switch (level) {
-    case "A1":
+    case 1:
       return <img src={A1} alt="A1"></img>;
-    case "A2":
+    case 2:
       return <img src={A2} alt="A2"></img>;
-    case "B1":
+    case 3:
       return <img src={B1} alt="B1"></img>;
-    case "B2":
+    case 4:
       return <img src={B2} alt="B2"></img>;
-    case "C1":
+    case 5:
       return <img src={C1} alt="C1"></img>;
-    case "C2":
+    case 6:
       return <img src={C2} alt="C2"></img>;
     default:
       break;
   }
-}
+};
