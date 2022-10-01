@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./style.scss";
 
-import GameMenuBackground from "assets/game-background.png";
 import Check from "assets/check.png";
 import Crossword from "assets/crossword.png";
 import SpeedQuiz from "assets/speedquiz.png";
@@ -11,11 +10,6 @@ export default function GameMenu() {
   return (
     <div className="game-container">
       <div className="game-menu-select-page">
-        <img
-          src={GameMenuBackground}
-          className="game-menu-background"
-          alt="게임 메뉴화면의 배경"
-        />
         <div className="game-menu-content-container">
           <h1 className="game-menu-title">
             ENGLISH <b>&nbsp;GAME</b>

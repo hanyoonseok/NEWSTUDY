@@ -50,12 +50,7 @@ export default function MyArticle() {
     <div className="article-box">
       {userArticles.length > 0 &&
         userArticles.map((article, index) => (
-          <Link
-            to="/news/:id"
-            params={{ id: article.n_id }}
-            className="article"
-            key={index}
-          >
+          <Link to={`/news/${article.n_id}`} className="article" key={index}>
             <span>{changeLevel(article.level)}</span>
             <div className="img-box">
               <img src={require("assets/test.png")} alt="기사 이미지"></img>

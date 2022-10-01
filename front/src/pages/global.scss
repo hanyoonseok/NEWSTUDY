@@ -362,4 +362,45 @@ input:focus {
   .before-leveltest-wrapper {
     background-color: $dark-mode-bg;
   }
+
+  // 배지 모달
+  .badge-modal {
+    .badge-modal-body {
+      background-color: $dark-mode-bg;
+      .img-box {
+        background-color: transparent;
+      }
+    }
+  }
+
+  // 랜딩 페이지
+  .landing-wrapper
+    .daily-keyword
+    .daily-wrapper
+    .daily-right
+    .wordcloud-wrapper
+    .wordcloud-nav
+    .word-category {
+    color: $dark-mode-black;
+  }
+
+  // 뉴스 리스트
+  .newslist-container {
+    .newslist-level-container {
+      .newslist-level.active {
+        border-color: $dark-mode-bg;
+      }
+    }
+    .newslist-body-container {
+      background-color: $dark-mode-bg;
+
+      .newslist-mid-area .hottest-article .hottest-article-title {
+        color: $white;
+      }
+    }
+  }
+
+  .newscard-container .newscard-contents-container .newscard-body {
+    color: rgba(255, 255, 255, 0.729);
+  }
 }

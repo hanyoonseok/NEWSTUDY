@@ -275,16 +275,14 @@
           @include FLEX-COLUMN;
           .wordcloud-nav {
             @include FLEX-BETWEEN;
-            width: 50vw;
             @media (max-width: 480px) {
               width: 100%;
             }
 
             .word-category {
               background-color: $lightx2-blue;
-              width: 100%;
-              margin: 0 1%;
               padding: 1%;
+              width: 19%;
               font-weight: bold;
               @include FLEX-CENTER;
               border-radius: 10px 10px 0 0;
