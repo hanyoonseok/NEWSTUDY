@@ -12,110 +12,78 @@ import { category } from "constants/category";
 
 export default function NationsNewsList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedIdx, setSelectedIdx] = useState(0);
-  const [receiveIdx, setReceiveIdx] = useState(25); //globe에서 마커 클릭했을 때 클릭한 나라 id 값 받을 변수
-  const [nationsNews, setNationsNews] = useState([]);
-  const [nations, setNations] = useState([]);
+  const [selectedIdx, setSelectedIdx] = useState(25); //globe에서 마커 클릭했을 때 클릭한 나라 id 값 받을 변수
+  const [nationsNews, setNationsNews] = useState([]); //선택 국가의 뉴스 담긴 배열
+  const [nations, setNations] = useState([]); //국가 정보 담긴 배열
   const userState = useSelector((state) => state.user);
+  const hexValues = [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+  ];
+  const idxGap = 67;
 
   useEffect(() => {
     if (category.length > 0) {
-      const wordArr = category.filter((e) => e && e.main === "world");
-      wordArr.forEach((e, i) => {
-        e.color = `#${Math.round(Math.random() * 0xffffff).toString(16)}`;
+      const worldArr = category.filter((e) => e && e.main === "world");
+      worldArr.forEach((e, i) => {
+        let hex = "#";
+
+        for (let i = 0; i < 6; i++) {
+          const index = Math.floor(Math.random() * hexValues.length);
+          hex += hexValues[index];
+        }
+        e.color = hex;
         e.value = 100;
-        e.city = e.sub.replace(/^./, e.sub[0].toUpperCase());
+        e.city = e.sub.toUpperCase();
         e.id = i;
       });
-      setNations(wordArr);
+      setNations(worldArr);
+      console.log(worldArr);
     }
+  }, []);
 
+  useEffect(() => {
+    // receiveIdx가 바뀔 때마다 해당 국가의 뉴스 리스트를 받아온다
     const fetchData = async () => {
       const headers = {
         headers: {
           Authorization: `Bearer ${userState.accessToken}`,
         },
       };
-      const categoryResponse = await axios.get("/category", headers);
-      console.log(categoryResponse);
-      //여기서 카테고리 리스트 받아서 국가에 해당하는 속성만 따로 저장하는 로직 들어가야 함
-      //getNationsNews(0);
+      const nationsNewsResponse = await axios.post(
+        "/news",
+        { categoryid: [selectedIdx + idxGap] },
+        headers,
+      );
+      console.log(nationsNewsResponse);
+      setNationsNews(nationsNewsResponse.data.newsList);
     };
 
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    setSelectedIdx(receiveIdx);
     return () => {};
-  }, [receiveIdx]);
-
-  // const nations = [
-  //   {
-  //     id: 0,
-  //     kor: "대한민국",
-  //     city: "SOUTH KOREA",
-  //     color: "white",
-  //     coordinates: [37.541, 126.986],
-  //     value: 200,
-  //   },
-  //   {
-  //     id: 1,
-  //     kor: "일본",
-  //     city: "JAPAN",
-  //     color: "blue",
-  //     coordinates: [35.6894, 139.692],
-  //     value: 50,
-  //   },
-  //   {
-  //     id: 2,
-  //     kor: "싱가포르",
-  //     city: "Singapore",
-  //     color: "red",
-  //     coordinates: [1.3521, 103.8198],
-  //     value: 50,
-  //   },
-  //   {
-  //     id: 3,
-  //     kor: "뉴욕",
-  //     city: "New York",
-  //     color: "blue",
-  //     coordinates: [40.73061, -73.935242],
-  //     value: 25,
-  //   },
-  //   {
-  //     id: 4,
-  //     kor: "샌 프란시스코",
-  //     city: "San Francisco",
-  //     color: "orange",
-  //     coordinates: [37.773972, -122.431297],
-  //     value: 35,
-  //   },
-  //   {
-  //     id: 5,
-  //     kor: "베이징",
-  //     city: "Beijing",
-  //     color: "gold",
-  //     coordinates: [39.9042, 116.4074],
-  //     value: 0,
-  //   },
-  //   {
-  //     id: 6,
-  //     kor: "런던",
-  //     city: "London",
-  //     color: "green",
-  //     coordinates: [51.5074, 0.1278],
-  //     value: 80,
-  //   },
-  // ];
+  }, [selectedIdx]);
 
   const onPrevClick = useCallback(() => {
     setSelectedIdx((prev) => (prev === 0 ? nations.length - 1 : prev - 1));
-  }, []);
+  }, [nations.length]);
 
   const onNextClick = useCallback(() => {
     setSelectedIdx((prev) => (prev === nations.length - 1 ? 0 : prev + 1));
-  }, []);
+  }, [nations.length]);
 
   const onFilterClick = useCallback(() => {
     setIsModalOpen(true);
@@ -125,26 +93,26 @@ export default function NationsNewsList() {
     setIsModalOpen(false);
   }, []);
 
-  const getNationsNews = useCallback(async (nationId) => {
-    const payload = {
-      categoryid: nationId,
-      endlevel: 0,
-      n_id: 0,
-      page: 0,
-      per_page: 0,
-      search: "string",
-      start_no: 0,
-      startlevel: 0,
-    };
-    const headers = {
-      headers: {
-        Authorization: `Bearer ${userState.accessToken}`,
-      },
-    };
-    const nationsNewsResponse = await axios.post("/news", payload, headers);
-    console.log(nationsNewsResponse);
-    setNationsNews(nationsNewsResponse.data);
-  }, []);
+  // const getNationsNews = useCallback(async (nationId) => {
+  //   const payload = {
+  //     categoryid: nationId,
+  //     endlevel: 0,
+  //     n_id: 0,
+  //     page: 0,
+  //     per_page: 0,
+  //     search: "string",
+  //     start_no: 0,
+  //     startlevel: 0,
+  //   };
+  //   const headers = {
+  //     headers: {
+  //       Authorization: `Bearer ${userState.accessToken}`,
+  //     },
+  //   };
+  //   const nationsNewsResponse = await axios.post("/news", payload, headers);
+  //   console.log(nationsNewsResponse);
+  //   setNationsNews(nationsNewsResponse.data);
+  // }, []);
 
   return (
     <section className="nationsnews-container">
@@ -155,7 +123,7 @@ export default function NationsNewsList() {
               className="globe"
               markers={nations}
               selectedIdx={selectedIdx}
-              setReceiveIdx={setReceiveIdx}
+              setSelectedIdx={setSelectedIdx}
             ></Globe>
           </article>
           <article className="nationsnews-list-container">
