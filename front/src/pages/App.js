@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 
 import "pages/global.scss";
 import Onboarding from "pages/Onboarding";
@@ -19,9 +19,11 @@ import { NotAuthRoute } from "routes/NotAuthRoute";
 import Auth from "./Auth";
 
 function App() {
+  const [isDark, setIsDark] = useState(false);
+
   return (
     <BrowserRouter>
-      <Layout>
+      <Layout isDark={isDark} setIsDark={setIsDark}>
         <Routes>
           <Route
             path="/"

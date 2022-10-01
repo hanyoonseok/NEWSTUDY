@@ -38,31 +38,8 @@ export default function MyInfo({
     if (user && !user.src) {
       setUserImage(DefaultUserImage);
     } else {
-      setUserImage(
-        `${process.env.REACT_APP_LOCAL_API_URL}/${
-          user.src.substring(0, 2) + user.src.substring(12, user.src.length)
-        }`,
-      );
+      setUserImage(user.src);
     }
-    const fetchData = async () => {
-      const headers = {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      };
-      const testWordsResponse = await axios.get(`/user/avatar`, headers);
-      console.log(testWordsResponse);
-      console.log(
-        testWordsResponse.data.substring(0, 2) +
-          testWordsResponse.data.substring(12, testWordsResponse.data.length),
-      );
-      setUserImage(
-        testWordsResponse.data.substring(0, 2) +
-          testWordsResponse.data.substring(12, testWordsResponse.data.length),
-      );
-    };
-
-    fetchData();
     getCategory();
     return () => {};
   }, []);
@@ -157,7 +134,7 @@ export default function MyInfo({
                   fileInput.current.click();
                 }}
               >
-                이미지 수정{user.src}
+                이미지 수정
               </div>
               <input
                 type="file"

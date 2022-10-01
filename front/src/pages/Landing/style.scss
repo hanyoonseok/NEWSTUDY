@@ -274,7 +274,7 @@
         .wordcloud-wrapper {
           @include FLEX-COLUMN;
           .wordcloud-nav {
-            @include FLEX-AROUND;
+            @include FLEX-BETWEEN;
             width: 50vw;
             @media (max-width: 480px) {
               width: 100%;
@@ -309,7 +309,7 @@
             width: 50vw;
             height: 400px;
             background-color: white;
-            border-radius: 30px;
+            border-radius: 0 0 30px 30px;
             @media (max-width: 480px) {
               width: 100%;
               height: 350px;

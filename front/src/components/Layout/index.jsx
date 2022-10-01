@@ -4,7 +4,7 @@ import "./style.scss";
 import Sidebar from "components/Sidebar";
 import Header from "components/Header";
 
-export default function Layout({ children }) {
+export default function Layout({ children, isDark, setIsDark }) {
   const localStorageItem = localStorage.getItem("isLogin");
   const [isLogin, setIsLogin] = useState(false);
 
@@ -16,10 +16,10 @@ export default function Layout({ children }) {
   }, [localStorageItem]);
 
   return (
-    <div className="layout-div">
+    <div className={`layout-div ${isDark ? "dark" : ""}`}>
       {isLogin && (
         <>
-          <Header />
+          <Header isDark={isDark} setIsDark={setIsDark} />
           <Sidebar />
         </>
       )}

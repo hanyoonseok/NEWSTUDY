@@ -66,7 +66,6 @@ function LevelTest() {
         )}
         {activeResult && (
           <div className="result-notice-back">
-            {/*onClick={() => getResult(false)} 이거는 끄면 안되겠지?*/}
             <div className="result-notice-wrapper">
               <div className="level-img">
                 <img

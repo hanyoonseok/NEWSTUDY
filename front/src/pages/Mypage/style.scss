@@ -4,7 +4,6 @@
   @include FLEX-BETWEEN;
   height: 100vh;
   padding: 80px 3% 1% 130px;
-  background-color: #fafafa;
 
   > div {
     height: 100%;
@@ -23,7 +22,7 @@
         padding: 2% 3%;
         font-size: rem(18);
         position: relative;
-        background-color: #fafafa;
+        background-color: $white;
 
         svg {
           color: #173042;

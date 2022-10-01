@@ -14,9 +14,18 @@ $light-grey: #e8e9ef;
 $default-grey: #3f414b;
 $white: #fbfbfb;
 
+$dark-mode-black: #000;
+$dark-mode-bg: #303135;
+
 $Alv: #a9dd75;
 $Blv: #96b2ff;
 $Clv: #debbff;
+
+// 다크모드
+$darkColors: (
+  main: #1a1b1f,
+  font: $white,
+);
 
 $kor-title-font: "S-CoreDream-5Medium"; //한글 큰 제목(거의 온보딩)
 $kor-light-font: "S-CoreDream-1Thin"; //한글 큰 제목중에서 얇은거

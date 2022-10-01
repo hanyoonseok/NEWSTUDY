@@ -3,7 +3,6 @@
 .newslist-container {
   padding: 120px 80px 80px 160px;
   @include STRETCH;
-  background-color: #fbfbfb;
   @include FLEX-COLUMN;
 
   @media (max-width: 480px) {

@@ -46,6 +46,7 @@ a {
   text-decoration: none;
 }
 a:visited {
+  color: $dark-grey;
   text-decoration: none;
 }
 a:hover {
@@ -307,4 +308,58 @@ input:focus {
   animation-delay: 400ms;
   animation-duration: 1500ms;
   animation-fill-mode: both;
+}
+
+// 다크모드
+*.dark {
+  background-color: map-get($darkColors, main);
+  color: map-get($darkColors, font);
+
+  // 뉴스 디테일
+  .newsdetail-container {
+    .newsdetail-content-div .news-section {
+      background-color: $dark-mode-bg;
+    }
+
+    .functions-container .icon-row .icon-desc {
+      color: $white;
+    }
+
+    .news-hot-word {
+      color: $dark-mode-black;
+    }
+  }
+
+  //레벨테스트
+  .leveltest-wrapper {
+    background-image: url("../assets/leveltest-dark-bg.png");
+    .leveltest-area {
+      .test-wrapper .word-wrapper {
+        .word {
+          background-color: $dark-mode-bg;
+          color: $white;
+          &:hover {
+            background-color: lighten($color: $dark-mode-bg, $amount: 10);
+          }
+
+          input[type="checkbox"]:checked ~ i {
+            background-color: lighten($color: $dark-mode-bg, $amount: 20);
+          }
+        }
+      }
+      .fa-circle-chevron-left,
+      .fa-circle-chevron-right {
+        color: $white;
+      }
+      .result-notice-wrapper {
+        background-color: #1a1b1f;
+        .level-img {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+  .before-leveltest-wrapper {
+    background-color: $dark-mode-bg;
+  }
 }

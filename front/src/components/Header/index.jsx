@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
 import { Link, useNavigate } from "react-router-dom";
 
-import { faSearch, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faXmark, faMoon } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useRef } from "react";
 import DailyWordModal from "./DailyWordModal";
 import SearchResult from "./SearchResult";
-export default function Header() {
+export default function Header({ isDark, setIsDark }) {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
@@ -16,6 +16,14 @@ export default function Header() {
   const [modalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const searchInput = useRef();
+
+  const clickDarkToggle = (checked) => {
+    if (checked) {
+      setIsDark(true);
+    } else {
+      setIsDark(false);
+    }
+  };
 
   const openModal = () => {
     setModalOpen(true);
@@ -107,6 +115,18 @@ export default function Header() {
             activeSearch ? "header-right hidden" : "header-right visible"
           }
         >
+          <div className="dark-toggle" key={"darkmode"}>
+            <div>
+              <FontAwesomeIcon icon={faMoon} />
+            </div>
+            <input
+              type="checkbox"
+              id="darkmode"
+              checked={isDark}
+              onChange={(e) => clickDarkToggle(e.target.checked)}
+            />
+            <label htmlFor="darkmode"></label>
+          </div>
           <button className="daily-word" onClick={openModal}>
             오늘의 단어
           </button>

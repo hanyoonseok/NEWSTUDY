@@ -3,7 +3,6 @@
 .newsdetail-container {
   padding: 120px 80px 80px 160px;
   @include STRETCH;
-  background-color: #fbfbfb;
   display: flex;
 
   @media (max-width: 480px) {
@@ -37,7 +36,6 @@
 
     .news-subtitle {
       font-size: rem(20);
-      color: $default-grey;
       font-family: $eng-title-font;
       margin-top: rem(60);
       width: 100%;
