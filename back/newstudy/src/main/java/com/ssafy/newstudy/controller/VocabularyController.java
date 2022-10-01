@@ -101,13 +101,13 @@ public class VocabularyController {
 
         try{
             if (vocabularyList.size() == 1) {
-                badgeService.addBadge(new BadgeRequestDto(u_id, 16));
+                badgeService.addBadge(new BadgeRequestDto(u_id, 13));
             }
             else if (vocabularyList.size() == 100) {
-                badgeService.addBadge(new BadgeRequestDto(u_id, 17));
+                badgeService.addBadge(new BadgeRequestDto(u_id, 14));
             }
             else if (vocabularyList.size() == 500) {
-                badgeService.addBadge(new BadgeRequestDto(u_id, 18));
+                badgeService.addBadge(new BadgeRequestDto(u_id, 15));
             }
         }catch (Exception e){
             return new ResponseEntity<String>("배지 부여 실패", HttpStatus.NOT_FOUND);
