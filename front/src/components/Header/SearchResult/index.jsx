@@ -2,6 +2,8 @@ import React from "react";
 import "./style.scss";
 
 function SearchResult({ article, query }) {
+  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
+
   return (
     <div className="search-article">
       <div className="search-article-thumbnail">
@@ -20,16 +22,15 @@ function SearchResult({ article, query }) {
       </div>
       <div className="search-article-level">
         <i
-          // className={`newscard-level ${
-          //   article.level.includes("A")
-          //     ? "Alv"
-          //     : article.level.includes("B")
-          //     ? "Blv"
-          //     : "Clv"
-          // }`}
-          className="newscard-level Alv"
+          className={`newscard-level ${
+            level_value[article.level].includes("A")
+              ? "Alv"
+              : level_value[article.level].includes("B")
+              ? "Blv"
+              : "Clv"
+          }`}
         >
-          {article.level}
+          {level_value[article.level]}
         </i>
       </div>
     </div>

@@ -11,8 +11,7 @@ import Page4 from "./Page4";
 import Page5 from "./Page5";
 import Dots from "./Dots";
 import Marker from "assets/marker.jpg";
-import Countrycard from "assets/country-card.jpg";
-import Earth from "assets/earthmap.jpg";
+import Earth from "assets/earthmap_color.png";
 
 export default function Onboarding() {
   const [scrollIdx, setScrollIdx] = useState(1);
@@ -176,13 +175,6 @@ export default function Onboarding() {
         />
       </div>
       <img src={Marker} alt="marker" className="marker" ref={marker} />
-      <img
-        src={Countrycard}
-        alt="countrycard"
-        className="countrycard"
-        ref={countrycard}
-      />
-
       <div className="main-item">
         <Page1
           scrollIdx={scrollIdx}

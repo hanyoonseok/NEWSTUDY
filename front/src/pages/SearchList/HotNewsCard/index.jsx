@@ -1,23 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
+import { category } from "constants/category";
 
 import React from "react";
 
 function HotNewsCard({ news, isMobile, query }) {
+  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
+
   return (
     <div className="hottest-article">
       <i
-        // className={`hottest-article-level ${
-        //   news.level.includes("A")
-        //     ? "Alv"
-        //     : news.level.includes("B")
-        //     ? "Blv"
-        //     : "Clv"
-        // }`}
-        className="hottest-article-level Alv"
+        className={`hottest-article-level ${
+          level_value[news.level].includes("A")
+            ? "Alv"
+            : level_value[news.level].includes("B")
+            ? "Blv"
+            : "Clv"
+        }`}
       >
-        {news.level}
+        {level_value[news.level]}
       </i>
       {isMobile && (
         <div className="hottest-article-category mobile">
@@ -43,7 +45,7 @@ function HotNewsCard({ news, isMobile, query }) {
         <div className="hottest-article-footer">
           <div className="hottest-article-category">
             <FontAwesomeIcon icon={faCircle} />
-            {news.c_id}
+            {category[news.c_id].main}
           </div>
           <FontAwesomeIcon
             icon={faBookmark}

@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import "./style.scss";
 import LevelContainer from "./LevelContainer";
 import Filter from "components/Filter";
+import FilterModal from "components/FilterModal";
+import { category } from "constants/category";
+
 import NewsCard from "components/NewsCard";
 import axios from "axios";
 
@@ -18,12 +21,31 @@ export default function NewsList() {
   );
 
   const [newsList, setNewsList] = useState([]);
-  const [hotNewsList, setHotNewsList] = useState(null);
   const [isExistMoreNews, setIsExistMoreNews] = useState(false);
   const [page, setPage] = useState(1);
+  const [isFilterModal, setIsFilterModal] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [totalNews, setTotalNews] = useState(0);
+  const [cidArray, setCidArray] = useState([]);
+  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
+
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
+
+  const onCloseClick = useCallback(() => {
+    setIsFilterModal(false);
+  }, []);
+
+  const doCategoryFilter = (cidArray) => {
+    setNewsList([]);
+    const categories = [];
+    cidArray.map((i) => {
+      categories.push(category[i]);
+    });
+    setSelectedCategory(categories);
+    console.log(category);
+  };
 
   const onLevelClick = useCallback(
     (lv) => () => {
@@ -44,11 +66,22 @@ export default function NewsList() {
       console.log(selectedLevel);
 
       // 뉴스 목록 불러오기.
-      const data = {
-        startlevel: selectedLevel,
-        endlevel: selectedLevel,
-        page: page,
-      };
+      let data;
+      if (cidArray.length === 0) {
+        data = {
+          startlevel: selectedLevel,
+          endlevel: selectedLevel,
+          page: page,
+        };
+      } else {
+        // cidArray가 있으면
+        data = {
+          startlevel: selectedLevel,
+          endlevel: selectedLevel,
+          page: page,
+          categoryid: cidArray,
+        };
+      }
 
       const newsListResponse = await axios.post(`/news`, data);
       const result = newsListResponse.data;
@@ -58,19 +91,20 @@ export default function NewsList() {
       } else {
         setIsExistMoreNews(false);
       }
-
-      console.log(result.totalCnt);
+      setTotalNews(result.totalCnt);
     };
 
     fetchData();
-  }, [selectedLevel, page]);
+  }, [selectedLevel, page, cidArray]);
 
   return (
     <section className="newslist-container">
       {isMobile && (
         <div className="mobile-level-title">
           <h1 className="LEVEL-title">LEVEL</h1>
-          <Filter />
+          <div onClick={() => setIsFilterModal(true)}>
+            <Filter onClick={() => setIsFilterModal(true)} />
+          </div>
         </div>
       )}
       <LevelContainer
@@ -80,10 +114,16 @@ export default function NewsList() {
       />
       <article className="newslist-body-container">
         <div className="newslist-top-area">
-          <h3 className="hottest-article-depth">
-            A1 Level <b>&gt;</b> SPORTS <b>&gt;</b> LOL
-          </h3>
-          {!isMobile && <Filter />}
+          <h3 className="hottest-article-depth">A1 Level {totalNews}건</h3>
+          {!isMobile && (
+            <div
+              onClick={() => {
+                setIsFilterModal(true);
+              }}
+            >
+              <Filter />
+            </div>
+          )}
         </div>
         {newsList && (
           <>
@@ -92,17 +132,15 @@ export default function NewsList() {
                 <>
                   <div className="hottest-article">
                     <i
-                      // className={`hottest-article-level ${
-                      //   news.level.includes("A")
-                      //     ? "Alv"
-                      //     : news.level.includes("B")
-                      //     ? "Blv"
-                      //     : "Clv"
-                      // }`}
-                      // 이거는 ... 나중에 정제된 데이터 들어오면 넣기.
-                      className="hottest-article-level"
+                      className={`hottest-article-level ${
+                        level_value[newsList[0].level].includes("A")
+                          ? "Alv"
+                          : level_value[newsList[0].level].includes("B")
+                          ? "Blv"
+                          : "Clv"
+                      }`}
                     >
-                      {newsList.level}
+                      {level_value[newsList[0].level]}
                     </i>
                     {isMobile && (
                       <div className="hottest-article-category mobile">
@@ -120,7 +158,7 @@ export default function NewsList() {
                       <div className="hottest-article-footer">
                         <div className="hottest-article-category">
                           <FontAwesomeIcon icon={faCircle} />
-                          {newsList[0].c_id}
+                          {category[newsList[0].c_id].main}
                         </div>
                         <FontAwesomeIcon
                           icon={faBookmark}
@@ -155,6 +193,15 @@ export default function NewsList() {
           </>
         )}
       </article>
+      {isFilterModal && (
+        <FilterModal
+          text={"결과 보기"}
+          closeHandler={onCloseClick}
+          sendApi={doCategoryFilter}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
+      )}
       <TopBtn></TopBtn>
     </section>
   );

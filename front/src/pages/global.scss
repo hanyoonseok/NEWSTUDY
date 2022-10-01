@@ -132,22 +132,6 @@ input:focus {
     border-radius: 4px;
   }
 }
-.article-level {
-  position: absolute;
-  top: 5%;
-  left: 5%;
-  width: 2em;
-  height: 2em;
-  font-size: 1.3rem;
-  background-color: $blue;
-  color: white;
-  @include FLEX-CENTER;
-  border-radius: 30px;
-  @media (max-width: 480px) {
-    width: 1.7em;
-    height: 1.7em;
-  }
-}
 @font-face {
   font-family: "S-CoreDream-5Medium";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff")

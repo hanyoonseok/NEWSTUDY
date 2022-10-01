@@ -3,8 +3,11 @@ import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { category } from "constants/category";
 
 export default function ArticleInside({ Article }) {
+  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
+
   const { title, content, level, c_id, thumbnail } = Article;
   const [activeGoArticle, setActiveGoArticle] = useState(false);
   return (
@@ -26,22 +29,32 @@ export default function ArticleInside({ Article }) {
           </div>
         )}
         <div className="article-img">
+          <span
+            className={`article-level ${
+              level_value[level].includes("A")
+                ? "Alv"
+                : level_value[level].includes("B")
+                ? "Blv"
+                : "Clv"
+            }`}
+          >
+            {level_value[level]}
+          </span>
           {thumbnail ? (
             <img
               src={thumbnail}
               alt="article"
               className={activeGoArticle ? "hover" : "normal"}
-            ></img>
+            />
           ) : (
-            <img src={require("assets/article.png")}></img>
+            <img src={require("assets/article.png")} />
           )}
         </div>
-        <span className="article-level">{level}</span>
         <span className="article-category">
           <i>
             <FontAwesomeIcon icon={faCircle} />
           </i>
-          {c_id}
+          {category[c_id].main}
         </span>
         <div className="article-info">
           <h2 className="article-title">{title}</h2>

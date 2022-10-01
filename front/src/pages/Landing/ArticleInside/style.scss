@@ -22,6 +22,29 @@
       width: 100%;
       height: auto;
     }
+    .article-level {
+      width: rem(32);
+      height: rem(32);
+      border-radius: 32px;
+      color: #fff;
+      font-size: rem(16);
+      font-family: $eng-title-font;
+      font-style: initial;
+      position: absolute;
+      @include FLEX-CENTER;
+      top: 20px;
+      left: 20px;
+
+      &.Alv {
+        background-color: $Alv;
+      }
+      &.Blv {
+        background-color: $Blv;
+      }
+      &.Clv {
+        background-color: $Clv;
+      }
+    }
   }
 
   .article-screen {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./style.scss";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
@@ -15,8 +15,10 @@ import axios from "axios";
 import NewsCard from "components/NewsCard";
 import HotNewsCard from "./HotNewsCard";
 import Filter from "components/Filter";
+import FilterModal from "components/FilterModal";
 import LevelRange from "./LevelRange";
 import TopBtn from "components/TopBtn";
+import { category } from "constants/category";
 
 function SearchList() {
   const isMobile = useMediaQuery({
@@ -32,11 +34,14 @@ function SearchList() {
   const [page, setPage] = useState(1);
   const [activeTitleBtn, setActiveTitleBtn] = useState(true);
   const [activeContentBtn, setActiveContentBtn] = useState(true);
+  const [isFilterModal, setIsFilterModal] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [filter, setFilter] = useState({
     page: 1,
     titlekeyword: params.query,
     contentkeyword: params.query,
   });
+
   // 달력 관련
   const [activeSelectDate, setActiveSelectDate] = useState(false);
   const [startDay, setStartDay] = useState(new Date());
@@ -80,6 +85,7 @@ function SearchList() {
         date = dateFormat(new Date().setYear(year - 1));
         console.log(date);
       }
+      setInitialization();
       setFilter((current) => {
         let newCondition = { ...current };
         newCondition["startdate"] = date;
@@ -94,7 +100,7 @@ function SearchList() {
   const setFilterSeletedDate = () => {
     const selectStartDay = moment(startDay).format("YYYY-MM-DD");
     const selectEndDay = moment(endDay).format("YYYY-MM-DD");
-
+    setInitialization();
     setFilter((current) => {
       let newCondition = { ...current };
       newCondition["startdate"] = selectStartDay;
@@ -126,6 +132,8 @@ function SearchList() {
     const result = newsListResponse.data;
 
     setNewsList([...newsList, ...result.newsList]);
+    setTotalCnt(result.totalCnt);
+
     if (result.totalCnt > newsList.length + result.newsList.length) {
       setIsExistMoreNews(true);
     } else {
@@ -133,44 +141,37 @@ function SearchList() {
     }
   };
 
-  const getNewsList = async (data) => {
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${user.accessToken}`;
-    const newsListResponse = await axios.post(`/news`, data);
-    const result = newsListResponse.data;
-    console.log("검색 혹은 필터 결과 : ", result.newsList);
-    setNewsList(result.newsList);
-    setTotalCnt(result.totalCnt);
-    if (result.newsList && result.totalCnt > result.newsList.length) {
-      setIsExistMoreNews(true);
-    } else {
-      setIsExistMoreNews(false);
-    }
+  // 페이지는 1로, newsList는 초기화해주라
+  const setInitialization = () => {
+    setNewsList([]);
+    setPage(1);
   };
 
   // 필터 관련 함수들
   const clickTitleToggle = (checked) => {
     if (checked) {
+      setInitialization();
       setFilter({
         ...filter,
         titlekeyword: params.query,
       });
     } else {
-      // 여기서는 titlekeyword를 빼야하는데..
-      const { titlekeyword, ...data } = filter;
-      console.log(data);
-      setFilter(data);
       if (!activeContentBtn) {
         setActiveTitleBtn(true);
         return;
       }
+      // 여기서는 titlekeyword를 빼야하는데..
+      const { titlekeyword, ...data } = filter;
+      console.log(data);
+      setInitialization();
+      setFilter(data);
     }
     setActiveTitleBtn(!activeTitleBtn);
   };
 
   const getSelectedLevel = (startLevel, endLevel) => {
     console.log("선택된 레벨 시작 " + startLevel + "끝 : " + endLevel);
+    setInitialization();
     setFilter((current) => {
       let newCondition = { ...current };
       newCondition["startlevel"] = startLevel;
@@ -180,22 +181,41 @@ function SearchList() {
   };
   const clickContentToggle = (checked) => {
     if (checked) {
+      setInitialization();
       setFilter({
         ...filter,
         contentkeyword: params.query,
       });
     } else {
-      // contentkeyword를 빼주자.
-      const { contentkeyword, ...data } = filter;
-      console.log(data);
-      setFilter(data);
       if (!activeTitleBtn) {
         setActiveContentBtn(true);
         return;
       }
+      // contentkeyword를 빼주자.
+      const { contentkeyword, ...data } = filter;
+      console.log(data);
+      setInitialization();
+      setFilter(data);
     }
     setActiveContentBtn(!activeContentBtn);
   };
+  const doCategoryFilter = (cidArray) => {
+    const categories = [];
+    cidArray.map((i) => {
+      categories.push(category[i]);
+    });
+    setSelectedCategory(categories);
+    console.log(category);
+    setInitialization();
+    setFilter((current) => {
+      let newCondition = { ...current };
+      newCondition["categoryid"] = cidArray;
+      return newCondition;
+    });
+  };
+  const onCloseClick = useCallback(() => {
+    setIsFilterModal(false);
+  }, []);
 
   // search query가 변했을 때. scroll을 맨위로 올려준다.
   useEffect(() => {
@@ -203,6 +223,7 @@ function SearchList() {
       top: 0,
       behavior: "smooth",
     });
+    setInitialization();
     setFilter((current) => {
       let newCondition = { ...current };
       newCondition["titlekeyword"] = params.query;
@@ -210,18 +231,22 @@ function SearchList() {
       return newCondition;
     });
     console.log("필터", filter);
-    getNewsList(filter);
+    getMoreNewsList(filter);
   }, [params.query]);
 
   // more버튼을 눌렀을 때.
   useEffect(() => {
-    getMoreNewsList(filter);
+    setFilter((current) => {
+      let newCondition = { ...current };
+      newCondition["page"] = page;
+      return newCondition;
+    });
   }, [page]);
 
   // 필터를 변경했을 때.
   useEffect(() => {
     console.log("filter 찍어봐라", filter);
-    getNewsList(filter);
+    getMoreNewsList(filter);
   }, [filter]);
 
   return (
@@ -234,13 +259,6 @@ function SearchList() {
       </h4>
       <div className="search-analysis"></div>
       <div className="search-header">
-        {/* <div className="search-toggle" key={"new"}>
-          <div>조회순</div>
-          <input type="checkbox" id="new" />
-          <label htmlFor="new"></label>
-        </div> 
-        일단 보류..
-        */}
         <div className="filter-title">KEY</div>
         <div className="search-toggle">
           <div>제목</div>
@@ -396,7 +414,9 @@ function SearchList() {
         <>
           <div className="search-result">
             <span>검색 결과: {totalCnt}건 </span>
-            <Filter />
+            <div onClick={() => setIsFilterModal(true)}>
+              <Filter />
+            </div>
           </div>
           <div className="search-top-news">
             {newsList &&
@@ -422,7 +442,7 @@ function SearchList() {
           {isExistMoreNews && (
             <div
               className="newslist-morebtn-container"
-              onClick={() => setPage(page + 1)}
+              onClick={() => setPage((page) => page + 1)}
             >
               <button className="newslist-morebtn">더보기</button>
             </div>
@@ -430,6 +450,15 @@ function SearchList() {
         </>
       )}
       <TopBtn></TopBtn>
+      {isFilterModal && (
+        <FilterModal
+          text={"수정하기"}
+          closeHandler={onCloseClick}
+          sendApi={doCategoryFilter}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
+      )}
     </div>
   );
 }

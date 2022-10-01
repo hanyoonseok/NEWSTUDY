@@ -1,25 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
+import { category } from "constants/category";
 
 import "./style.scss";
 
 export default function NewsCard({ news, stretch, query }) {
+  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
   return (
     <div className={`newscard-container ${stretch ? "stretch" : ""}`}>
       <div className="newscard-img-container">
         <img src={news.thumbnail} alt="" className="newscard-img" />
         <i
-          // className={`newscard-level ${
-          //   news.level.includes("A")
-          //     ? "Alv"
-          //     : news.level.includes("B")
-          //     ? "Blv"
-          //     : "Clv"
-          // }`}
-          className="newscard-level Alv"
+          className={`newscard-level ${
+            level_value[news.level].includes("A")
+              ? "Alv"
+              : level_value[news.level].includes("B")
+              ? "Blv"
+              : "Clv"
+          }`}
         >
-          {news.level}
+          {level_value[news.level]}
         </i>
       </div>
       <div className="newscard-contents-container">
@@ -56,7 +57,7 @@ export default function NewsCard({ news, stretch, query }) {
         <div className="newscard-footer">
           <div className="newscard-category">
             <FontAwesomeIcon icon={faCircle} />
-            {news.c_id}
+            {category[news.c_id].main}
           </div>
           <div className="newscard-footer-right">
             <i>{news.date}</i> <FontAwesomeIcon icon={faBookmark} />

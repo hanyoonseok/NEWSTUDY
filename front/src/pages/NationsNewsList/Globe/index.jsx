@@ -7,7 +7,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 
 import GlobeImg from "assets/globe_diffuse.jpg";
-import Earth from "assets/earthmap.jpg";
+import Earth from "assets/earthmap_color.png";
 import Kor from "assets/kor.jpg";
 import TrendDesign from "assets/trend-circle-design.png";
 import { useEffect } from "react";
@@ -34,9 +34,9 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
   }, [selectedIdx]);
 
   const onClickMarker = (marker, markerObject, event) => {
-    // console.log("event", event);
-    // console.log("marker", marker.id);
-    // console.log("markerObject", markerObject);
+    console.log("event", event);
+    console.log("marker", marker.id);
+    console.log("markerObject", markerObject);
     setEvent({
       type: "CLICK",
       marker,
@@ -64,7 +64,7 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
             <h1 className="nation-info-name">
               {markers[selectedIdx].city}, {markers[selectedIdx].kor}{" "}
             </h1>
-            <div className="nation-info-taglist">
+            {/* <div className="nation-info-taglist">
               <div className="nation-info-tag">
                 <b>#</b> &nbsp;수빈
               </div>
@@ -118,7 +118,7 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
                   &nbsp; ▲
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </>
       )}

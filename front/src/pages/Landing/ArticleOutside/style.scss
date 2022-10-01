@@ -16,7 +16,7 @@
   .article-img {
     position: relative;
     > img {
-      width: rem(180);
+      width: rem(200);
       height: rem(150);
       border-radius: 1.5em;
       @media (max-width: 1000px) {
@@ -29,12 +29,29 @@
       }
     }
   }
+
   .article-level {
-    top: 7%;
-    left: 5%;
-    width: 1.7rem;
-    height: 1.7rem;
-    font-size: 1rem;
+    width: rem(28);
+    height: rem(28);
+    border-radius: 28px;
+    color: #fff;
+    font-size: rem(16);
+    font-family: $eng-title-font;
+    font-style: initial;
+    position: absolute;
+    @include FLEX-CENTER;
+    top: 15px;
+    left: 15px;
+
+    &.Alv {
+      background-color: $Alv;
+    }
+    &.Blv {
+      background-color: $Blv;
+    }
+    &.Clv {
+      background-color: $Clv;
+    }
   }
   .article-category {
     float: right;

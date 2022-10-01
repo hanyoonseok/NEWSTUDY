@@ -6,17 +6,18 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { category } from "constants/category";
 import {
   faBorderAll,
   faBaseballBatBall,
   faChevronRight,
   faChevronLeft,
-  faHeart,
   faCircle,
   faMicrochip,
   faGlobe,
   faEllipsis,
   faFileWord,
+  faLeaf,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Wordcloud from "./WordCloud";
@@ -137,6 +138,7 @@ function UserfitArticle({ children }) {
 }
 
 function Landing() {
+  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
   const [user, setUser] = useState(useSelector((state) => state.user));
   const [activeId, setActiveId] = useState(0);
   const [wordRanking, setWordRanking] = useState(null);
@@ -260,14 +262,24 @@ function Landing() {
                 <>
                   <div className="hottopic-img">
                     <img src={hotNews[0].thumbnail} alt="article"></img>
-                    <span className="article-level">{hotNews[0].level}</span>
+                    <span
+                      className={`article-level ${
+                        level_value[hotNews[0].level].includes("A")
+                          ? "Alv"
+                          : level_value[hotNews[0].level].includes("B")
+                          ? "Blv"
+                          : "Clv"
+                      }`}
+                    >
+                      {level_value[hotNews[0].level]}
+                    </span>
                   </div>
                   <h3 className="hottopic-title">{hotNews[0].title}</h3>
                   <span className="article-category">
                     <i>
                       <FontAwesomeIcon icon={faCircle} />
                     </i>
-                    SPORTS
+                    {category[hotNews[0].c_id].main}
                   </span>
                 </>
               </div>
@@ -321,7 +333,7 @@ function Landing() {
                   onClick={() => onClickSwitchTab(1)}
                 >
                   <i>
-                    <FontAwesomeIcon icon={faHeart} />
+                    <FontAwesomeIcon icon={faLeaf} />
                   </i>
                   <span className="category-name">&nbsp; LIFE</span>
                 </li>
