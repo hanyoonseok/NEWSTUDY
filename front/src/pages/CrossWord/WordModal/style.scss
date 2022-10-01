@@ -9,6 +9,10 @@
   @include FLEX-CENTER;
   z-index: 10;
 
+  @media (max-width: 480px) {
+    width: 90%;
+  }
+
   .wordmodal-word-title {
     font-size: rem(50);
     font-family: $eng-title-font;

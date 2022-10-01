@@ -21,7 +21,7 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
 
     focusOutActive(false);
     highlightInput(word, dir);
-    highlightHint(word);
+    highlightHint(word, dir);
   }, []);
 
   const highlightInput = (word, dir) => {
@@ -41,11 +41,19 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
     });
   };
 
-  const highlightHint = (word) => {
+  const highlightHint = (word, dir) => {
     const hintCard = document.querySelector(`[data-hint=${word}]`);
+    const hintArticles = document.querySelectorAll(".crossword-hint-article");
     isMobile
       ? (hintCard.style.display = "flex")
       : (hintCard.className += " active");
+
+    if (isMobile) {
+      hintArticles.forEach((el) => (el.style.display = "none"));
+      parseInt(dir) === 1
+        ? (hintArticles[0].style.display = "flex")
+        : (hintArticles[1].style.display = "flex");
+    }
   };
 
   const onInputChange = (e) => {
@@ -190,7 +198,7 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
     (hint, dir) => {
       focusOutActive(false);
       highlightInput(hint, dir);
-      highlightHint(hint);
+      highlightHint(hint, dir);
     },
     [focusOutActive],
   );

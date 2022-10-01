@@ -111,6 +111,7 @@
   @media (max-width: 480px) {
     width: 100%;
     margin-left: 0;
+    overflow-y: hidden;
   }
 
   .crossword-hint-article {
@@ -155,6 +156,10 @@
     flex-shrink: 0;
     @include FLEX-COLUMN;
 
+    @media (max-width: 480px) {
+      overflow-y: initial;
+    }
+
     .hint-card {
       width: 100%;
       padding: rem(10);
@@ -168,6 +173,7 @@
         display: none;
         padding: 25px 15px;
         height: 100%;
+        align-items: initial;
       }
 
       &.row {
@@ -225,10 +231,15 @@
 
         @media (max-width: 480px) {
           font-size: rem(24);
+          height: 100%;
+          justify-content: center;
+          overflow-y: auto;
+          display: block;
         }
 
         .hint-card-desc-row {
           line-height: 1.2;
+          display: flex;
           b {
             font-size: rem(6);
             color: $default-grey;
