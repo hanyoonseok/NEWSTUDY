@@ -1,6 +1,12 @@
 import "pages/Onboarding/Page2/style.scss";
 import usa from "assets/usa.jpg";
 import kor from "assets/kor.jpg";
+import canada from "assets/canada.png";
+import china from "assets/china.png";
+import france from "assets/france.png";
+import germany from "assets/germany.png";
+import italy from "assets/italy.png";
+import uk from "assets/uk.png";
 import React from "react";
 
 export default function Page2({ activePage }) {
@@ -22,14 +28,14 @@ export default function Page2({ activePage }) {
           <div className="country-row">
             <img className="country-img" src={usa} alt="" />
             <img className="country-img" src={kor} alt="" />
-            <img className="country-img" src={usa} alt="" />
-            <img className="country-img" src={kor} alt="" />
+            <img className="country-img" src={canada} alt="" />
+            <img className="country-img" src={uk} alt="" />
           </div>
           <div className="country-row">
-            <img className="country-img" src={kor} alt="" />
-            <img className="country-img" src={usa} alt="" />
-            <img className="country-img" src={kor} alt="" />
-            <img className="country-img" src={usa} alt="" />
+            <img className="country-img" src={france} alt="" />
+            <img className="country-img" src={china} alt="" />
+            <img className="country-img" src={germany} alt="" />
+            <img className="country-img" src={italy} alt="" />
           </div>
         </div>
       </div>

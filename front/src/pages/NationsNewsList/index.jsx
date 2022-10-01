@@ -241,7 +241,9 @@ export default function NationsNewsList() {
             })}
         </div>
       </article>
-      {isModalOpen && <FilterModal closeHandler={onCloseClick} />}
+      {isModalOpen && (
+        <FilterModal closeHandler={onCloseClick} text={"결과보기"} />
+      )}
     </section>
   );
 }
