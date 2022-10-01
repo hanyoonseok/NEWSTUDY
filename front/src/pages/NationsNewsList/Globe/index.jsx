@@ -26,6 +26,7 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
   const [event, setEvent] = useState(null);
   const [details, setDetails] = useState(null);
   const [focus, setFocus] = useState([37.541, 126.986]);
+  const hashtags = ["코로나", "쌔삥", "페이커"];
 
   useEffect(() => {
     setFocus(markers[selectedIdx].coordinates);
@@ -60,10 +61,24 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
       {details && (
         <>
           <div className="nation-info-card">
-            <img src={Kor} alt="" className="nation-info-flag" />
+            <img
+              src={markers[selectedIdx].img}
+              alt=""
+              className="nation-info-flag"
+            />
             <h1 className="nation-info-name">
               {markers[selectedIdx].city}, {markers[selectedIdx].kor}{" "}
             </h1>
+            <div className="nation-info-taglist">
+              {hashtags.map((tag, i) => {
+                return (
+                  <div className="nation-info-tag" key={i}>
+                    <b>#</b>
+                    {tag}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </>
       )}

@@ -72,6 +72,7 @@ export const category = [
     sub: "africa",
     coordinates: [0, 25],
     kor: "아프리카",
+    img: require("assets/africa.png"),
   },
   {
     c_id: 68,
@@ -79,6 +80,7 @@ export const category = [
     sub: "americas",
     coordinates: [45, 255],
     kor: "북 아메리카",
+    img: require("assets/north-america.png"),
   },
   {
     c_id: 69,
@@ -86,6 +88,7 @@ export const category = [
     sub: "asia",
     coordinates: [48, 88],
     kor: "아시아",
+    img: require("assets/asia.png"),
   },
   {
     c_id: 70,
@@ -93,6 +96,7 @@ export const category = [
     sub: "australia",
     coordinates: [335, 132],
     kor: "오스트레일리아",
+    img: require("assets/australia.png"),
   },
   {
     c_id: 71,
@@ -100,6 +104,7 @@ export const category = [
     sub: "brazil",
     coordinates: [346, 310],
     kor: "브라질",
+    img: require("assets/brazil.png"),
   },
   {
     c_id: 72,
@@ -107,6 +112,7 @@ export const category = [
     sub: "canada",
     coordinates: [52, 264],
     kor: "캐나다",
+    img: require("assets/canada.png"),
   },
   {
     c_id: 73,
@@ -114,6 +120,7 @@ export const category = [
     sub: "china",
     coordinates: [35, 103.5],
     kor: "중국",
+    img: require("assets/china.png"),
   },
   {
     c_id: 74,
@@ -121,6 +128,7 @@ export const category = [
     sub: "etc",
     coordinates: [180, 0],
     kor: "기타",
+    img: require("assets/etc.png"),
   },
   {
     c_id: 75,
@@ -128,6 +136,7 @@ export const category = [
     sub: "europe",
     coordinates: [48, 10],
     kor: "유럽",
+    img: require("assets/europe.png"),
   },
   {
     c_id: 76,
@@ -135,6 +144,7 @@ export const category = [
     sub: "france",
     coordinates: [46, 4],
     kor: "프랑스",
+    img: require("assets/france.png"),
   },
   {
     c_id: 77,
@@ -142,6 +152,7 @@ export const category = [
     sub: "germany",
     coordinates: [51, 10],
     kor: "독일",
+    img: require("assets/germany.png"),
   },
   {
     c_id: 78,
@@ -149,6 +160,7 @@ export const category = [
     sub: "hongkong",
     coordinates: [22.317, 113.917],
     kor: "홍콩",
+    img: require("assets/hongkong.png"),
   },
   {
     c_id: 79,
@@ -156,6 +168,7 @@ export const category = [
     sub: "india",
     coordinates: [22, 81],
     kor: "인도",
+    img: require("assets/india.png"),
   },
   {
     c_id: 80,
@@ -163,6 +176,7 @@ export const category = [
     sub: "iran",
     coordinates: [32, 50],
     kor: "이란",
+    img: require("assets/iran.png"),
   },
   {
     c_id: 81,
@@ -170,6 +184,7 @@ export const category = [
     sub: "iraq",
     coordinates: [33, 43],
     kor: "이라크",
+    img: require("assets/iraq.png"),
   },
   {
     c_id: 82,
@@ -177,6 +192,7 @@ export const category = [
     sub: "israel",
     coordinates: [31.776, 35.228],
     kor: "이스라엘",
+    img: require("assets/israel.png"),
   },
   {
     c_id: 83,
@@ -184,6 +200,7 @@ export const category = [
     sub: "italy",
     coordinates: [41.892, 12.511],
     kor: "이탈리아",
+    img: require("assets/italy.png"),
   },
   {
     c_id: 84,
@@ -191,6 +208,7 @@ export const category = [
     sub: "japan",
     coordinates: [35.6894, 139.692],
     kor: "일본",
+    img: require("assets/japan.png"),
   },
   {
     c_id: 85,
@@ -198,6 +216,7 @@ export const category = [
     sub: "lebanon",
     coordinates: [33.5, 35.5],
     kor: "레바논",
+    img: require("assets/lebanon.png"),
   },
   {
     c_id: 86,
@@ -205,6 +224,7 @@ export const category = [
     sub: "mexico",
     coordinates: [23, 258],
     kor: "멕시코",
+    img: require("assets/mexico.png"),
   },
   {
     c_id: 87,
@@ -212,6 +232,7 @@ export const category = [
     sub: "middle east",
     coordinates: [24, 54],
     kor: "중동",
+    img: require("assets/middle-east.png"),
   },
   {
     c_id: 88,
@@ -219,6 +240,7 @@ export const category = [
     sub: "north korea",
     coordinates: [38, 128],
     kor: "북한",
+    img: require("assets/north-korea.png"),
   },
   {
     c_id: 89,
@@ -226,6 +248,7 @@ export const category = [
     sub: "northern ireland",
     coordinates: [56, 358],
     kor: "북아일랜드",
+    img: require("assets/northern-ireland.png"),
   },
   {
     c_id: 90,
@@ -233,6 +256,7 @@ export const category = [
     sub: "russia",
     coordinates: [63, 105],
     kor: "러시아",
+    img: require("assets/russia.png"),
   },
   {
     c_id: 91,
@@ -240,6 +264,7 @@ export const category = [
     sub: "saudiarabia",
     coordinates: [24, 44.5],
     kor: "사우디아라비아",
+    img: require("assets/saudiarabia.png"),
   },
   {
     c_id: 92,
@@ -247,6 +272,7 @@ export const category = [
     sub: "south korea",
     coordinates: [37.541, 126.986],
     kor: "대한민국",
+    img: require("assets/kor.jpg"),
   },
   {
     c_id: 93,
@@ -254,6 +280,7 @@ export const category = [
     sub: "spain",
     coordinates: [39, 0],
     kor: "스페인",
+    img: require("assets/spain.png"),
   },
   {
     c_id: 94,
@@ -261,6 +288,7 @@ export const category = [
     sub: "turkey",
     coordinates: [39, 32],
     kor: "튀르키예",
+    img: require("assets/turkey.png"),
   },
   {
     c_id: 95,
@@ -268,6 +296,7 @@ export const category = [
     sub: "uk",
     coordinates: [54, 358],
     kor: "영국",
+    img: require("assets/uk.png"),
   },
   {
     c_id: 96,
@@ -275,6 +304,7 @@ export const category = [
     sub: "ukraine",
     coordinates: [48, 31],
     kor: "우크라이나",
+    img: require("assets/ukraine.png"),
   },
   {
     c_id: 97,
@@ -282,5 +312,6 @@ export const category = [
     sub: "us",
     coordinates: [36.5, 265],
     kor: "미국",
+    img: require("assets/usa.jpg"),
   },
 ];

@@ -6,15 +6,16 @@ import "./style.scss";
 import NewsCard from "components/NewsCard";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
-import Kor from "assets/kor.jpg";
 import Globe from "./Globe";
 import { category } from "constants/category";
 
 export default function NationsNewsList() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedIdx, setSelectedIdx] = useState(25); //globe에서 마커 클릭했을 때 클릭한 나라 id 값 받을 변수
   const [nationsNews, setNationsNews] = useState([]); //선택 국가의 뉴스 담긴 배열
   const [nations, setNations] = useState([]); //국가 정보 담긴 배열
+  const [dataIdx, setDataIdx] = useState(1);
+  // const [selectedCategory, setSelectedCategory] = useState([]);
   const userState = useSelector((state) => state.user);
   const hexValues = [
     0,
@@ -34,9 +35,13 @@ export default function NationsNewsList() {
     "E",
     "F",
   ];
-  const idxGap = 67;
+  const idxGap = 67; // category내의 c_id와 nations의 인덱스 차이
 
   useEffect(() => {
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${userState.accessToken}`;
+
     if (category.length > 0) {
       const worldArr = category.filter((e) => e && e.main === "world");
       worldArr.forEach((e, i) => {
@@ -52,30 +57,32 @@ export default function NationsNewsList() {
         e.id = i;
       });
       setNations(worldArr);
-      console.log(worldArr);
     }
   }, []);
 
   useEffect(() => {
-    // receiveIdx가 바뀔 때마다 해당 국가의 뉴스 리스트를 받아온다
+    // selectedIdx가 바뀔 때마다 해당 국가의 뉴스 리스트를 받아온다
     const fetchData = async () => {
-      const headers = {
-        headers: {
-          Authorization: `Bearer ${userState.accessToken}`,
-        },
-      };
-      const nationsNewsResponse = await axios.post(
-        "/news",
-        { categoryid: [selectedIdx + idxGap] },
-        headers,
-      );
-      console.log(nationsNewsResponse);
+      const nationsNewsResponse = await axios.post("/news", {
+        categoryid: [selectedIdx + idxGap],
+        page: 1,
+      });
       setNationsNews(nationsNewsResponse.data.newsList);
+      setDataIdx(2);
     };
 
     fetchData();
     return () => {};
   }, [selectedIdx]);
+
+  const onMoreClick = useCallback(async () => {
+    const moreNewsResponse = await axios.post("/news", {
+      categoryid: [selectedIdx + idxGap],
+      page: dataIdx,
+    });
+    setNationsNews(nationsNews.concat(moreNewsResponse.data.newsList));
+    setDataIdx((prev) => prev + 1);
+  }, [dataIdx, nationsNews, selectedIdx]);
 
   const onPrevClick = useCallback(() => {
     setSelectedIdx((prev) => (prev === 0 ? nations.length - 1 : prev - 1));
@@ -85,33 +92,19 @@ export default function NationsNewsList() {
     setSelectedIdx((prev) => (prev === nations.length - 1 ? 0 : prev + 1));
   }, [nations.length]);
 
-  const onFilterClick = useCallback(() => {
-    setIsModalOpen(true);
-  }, []);
+  // const onFilterClick = useCallback(() => {
+  //   setIsModalOpen(true);
+  // }, []);
 
-  const onCloseClick = useCallback(() => {
-    setIsModalOpen(false);
-  }, []);
+  // const onCloseClick = useCallback(() => {
+  //   setIsModalOpen(false);
+  // }, []);
 
-  // const getNationsNews = useCallback(async (nationId) => {
-  //   const payload = {
-  //     categoryid: nationId,
-  //     endlevel: 0,
-  //     n_id: 0,
-  //     page: 0,
-  //     per_page: 0,
-  //     search: "string",
-  //     start_no: 0,
-  //     startlevel: 0,
-  //   };
-  //   const headers = {
-  //     headers: {
-  //       Authorization: `Bearer ${userState.accessToken}`,
-  //     },
-  //   };
-  //   const nationsNewsResponse = await axios.post("/news", payload, headers);
-  //   console.log(nationsNewsResponse);
-  //   setNationsNews(nationsNewsResponse.data);
+  // const confirmCategory = useCallback((cidArray) => {
+  //   const categoryArr = cidArray.map((e) => {
+  //     return category[e];
+  //   });
+  //   setSelectedCategory(categoryArr);
   // }, []);
 
   return (
@@ -139,19 +132,31 @@ export default function NationsNewsList() {
                 <button className="right-arrow-btn"></button>
               </div>
             </div>
-            <div className="filter-container">
+            {/* <div className="filter-container">
               <Filter clickHandler={onFilterClick} />
-            </div>
+            </div> */}
             <div className="nationsnews-list">
-              {nationsNews.length > 0 &&
-                nationsNews.map((e, i) => {
-                  return <NewsCard news={e} key={i} />;
-                })}
+              <div className="nationsnews-list-list">
+                {nationsNews.length > 0 &&
+                  nationsNews.map((e, i) => {
+                    return <NewsCard news={e} key={i} />;
+                  })}
+              </div>
+              <div className="nationsnews-btn-wrapper">
+                <button className="nationsnews-morebtn" onClick={onMoreClick}>
+                  더보기
+                </button>
+              </div>
             </div>
           </article>
-          {isModalOpen && (
-            <FilterModal closeHandler={onCloseClick} text={"결과보기"} />
-          )}
+          {/* {isModalOpen && (
+            <FilterModal
+              closeHandler={onCloseClick}
+              text={"필터추가"}
+              sendApi={confirmCategory}
+              selectedCategory={selectedCategory}
+            />
+          )} */}
         </>
       )}
     </section>
