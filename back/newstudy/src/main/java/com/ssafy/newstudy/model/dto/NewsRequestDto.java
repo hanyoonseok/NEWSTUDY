@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class NewsRequestDto {
     private Integer page = 1;
     private Integer start_no = 0;
-    private final Integer per_page = 10;
+    private Integer per_page = 30;
     private Integer total_cnt;  // 해당 카테고리 전체 뉴스 수
 
     private Integer n_id;
