@@ -2,26 +2,51 @@ import "./style.scss";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-
-export default function FilterModal({ text, closeHandler, sendApi }) {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faLeaf,
+  faNewspaper,
+  faBaseballBatBall,
+  faMicrochip,
+  faGlobe,
+  faEllipsis,
+} from "@fortawesome/free-solid-svg-icons";
+export default function FilterModal({
+  text,
+  closeHandler,
+  sendApi,
+  selectedCategory,
+  setSelectedCategory,
+}) {
   // sendApi는 선택 다 한다음 체크된 리스트 가지고 api처리하기 위한 props
   const user = useSelector((state) => state.user);
   const [allCategory, setAllCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
   const [active, setActive] = useState("");
-  const [checkedList, setCheckedList] = useState([]);
+  const [cidArray, setCidArray] = useState(
+    selectedCategory.map((el) => {
+      return el.c_id;
+    }),
+  );
 
   const addCheckList = (checked, id) => {
     console.log("지금 체크된 id", id);
-    if (checked) {
-      setCheckedList([...checkedList, id]);
+    if (cidArray.includes(id)) {
+      setCidArray(cidArray.filter((item) => item !== id));
     } else {
-      setCheckedList(checkedList.filter((item) => item !== id));
+      setCidArray([...cidArray, id]);
     }
-    console.log("체크된 값", checkedList);
+    console.log("체크된 값", cidArray);
   };
   const mainCategory = ["life", "news", "sports", "tech", "world", "other"]; //대분류 카테고리
-
+  const icon = [
+    faLeaf,
+    faNewspaper,
+    faBaseballBatBall,
+    faMicrochip,
+    faGlobe,
+    faEllipsis,
+  ];
   useEffect(() => {
     const fetchData = async () => {
       await axios
@@ -61,6 +86,9 @@ export default function FilterModal({ text, closeHandler, sendApi }) {
                     setActive(e);
                   }}
                 >
+                  <span>
+                    <FontAwesomeIcon icon={icon[i]} />
+                  </span>
                   {e}
                 </div>
               ))}
@@ -72,10 +100,10 @@ export default function FilterModal({ text, closeHandler, sendApi }) {
                   <input
                     type="checkbox"
                     name={sub.c_id}
-                    checked={checkedList.includes(sub.c_id) ? true : false}
+                    checked={cidArray.includes(sub.c_id)}
                     onChange={(e) => addCheckList(e.target.checked, sub.c_id)}
                   />
-                  <span>{sub.sub}</span>
+                  <span>{sub.sub.replace(/^./, sub.sub[0].toUpperCase())}</span>
                 </label>
               ))}
             </article>
@@ -85,7 +113,7 @@ export default function FilterModal({ text, closeHandler, sendApi }) {
         <div
           className="modal-submit-btn"
           onClick={() => {
-            sendApi(checkedList);
+            sendApi(cidArray);
             closeHandler();
           }}
         >

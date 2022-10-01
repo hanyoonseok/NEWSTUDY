@@ -128,6 +128,8 @@
     @include FLEX-CENTER;
     flex-direction: column;
     justify-content: flex-start;
+    overflow: hidden;
+    padding: rem(10);
 
     .title {
       width: 100%;
@@ -162,6 +164,7 @@
       grid-column-gap: 16px;
       padding: rem(10) rem(20);
       width: 100%;
+      overflow-y: auto;
 
       .category-item {
         background-color: $lightx2-blue;

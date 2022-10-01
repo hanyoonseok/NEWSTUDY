@@ -16,12 +16,12 @@ import MyInfo from "./MyInfo";
 
 export default function Mypage() {
   const [user, setUser] = useState(useSelector((state) => state.user));
-  const [userCategory, setUserCategory] = useState([]);
   const [myRecords, setMyRecords] = useState({
     article: 0,
     voca: 0,
     badge: 0,
   });
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   useEffect(() => {
     const getArticlesLength = async () => {
@@ -75,23 +75,6 @@ export default function Mypage() {
     return () => {};
   }, []);
 
-  useEffect(() => {
-    getCategory();
-    return () => {};
-  }, [userCategory]);
-
-  const getCategory = async () => {
-    await axios
-      .get("/category/me", {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      })
-      .then((res) => {
-        setUserCategory(res.data);
-      });
-  };
-
   const myRecord = [
     {
       title: "스크랩한 기사",
@@ -122,7 +105,11 @@ export default function Mypage() {
   return (
     <>
       <div className="mypage">
-        <MyInfo userCategory={userCategory} myRecord={myRecord} />
+        <MyInfo
+          myRecord={myRecord}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
         <div className="right-box">
           <div className="tab">
             <button

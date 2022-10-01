@@ -21,19 +21,28 @@ import B2 from "assets/B2.png";
 import C1 from "assets/C1.png";
 import C2 from "assets/C2.png";
 import { useCallback } from "react";
-export default function MyInfo({ myRecord, userCategory }) {
+export default function MyInfo({
+  myRecord,
+  selectedCategory,
+  setSelectedCategory,
+}) {
   const dispatch = useDispatch();
 
   const [userImage, setUserImage] = useState("");
   const fileInput = useRef(null);
   const [user, setUser] = useState(useSelector((state) => state.user));
   const [isFilterModal, setIsFilterModal] = useState(false);
+  const [userCategory, setUserCategory] = useState([]);
 
   useEffect(() => {
     if (user && !user.src) {
       setUserImage(DefaultUserImage);
     } else {
-      setUserImage(user.src);
+      setUserImage(
+        `${process.env.REACT_APP_LOCAL_API_URL}/${
+          user.src.substring(0, 2) + user.src.substring(12, user.src.length)
+        }`,
+      );
     }
     const fetchData = async () => {
       const headers = {
@@ -43,12 +52,18 @@ export default function MyInfo({ myRecord, userCategory }) {
       };
       const testWordsResponse = await axios.get(`/user/avatar`, headers);
       console.log(testWordsResponse);
+      console.log(
+        testWordsResponse.data.substring(0, 2) +
+          testWordsResponse.data.substring(12, testWordsResponse.data.length),
+      );
       setUserImage(
-        testWordsResponse.data.slice(10, testWordsResponse.data.length - 10),
+        testWordsResponse.data.substring(0, 2) +
+          testWordsResponse.data.substring(12, testWordsResponse.data.length),
       );
     };
 
     fetchData();
+    getCategory();
     return () => {};
   }, []);
 
@@ -97,12 +112,23 @@ export default function MyInfo({ myRecord, userCategory }) {
     setIsFilterModal(false);
   }, []);
 
+  const getCategory = async () => {
+    await axios
+      .get("/category/me", {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      })
+      .then((res) => {
+        setUserCategory(res.data);
+        setSelectedCategory(res.data);
+      });
+  };
+
   const modifyCategory = async (checkList) => {
     console.log("넘어온 체크 리스트", checkList);
-    const data = [];
-    checkList.forEach((element) => {
-      console.log(element);
-      data.push({ c_id: element });
+    const data = checkList.map((element) => {
+      return { c_id: element };
     });
     console.log("보낼 데이터 최종", data);
     await axios
@@ -113,6 +139,7 @@ export default function MyInfo({ myRecord, userCategory }) {
       })
       .then((res) => {
         console.log(res);
+        getCategory();
       });
   };
 
@@ -144,7 +171,7 @@ export default function MyInfo({ myRecord, userCategory }) {
             <p className="name">{user.nickname}</p>
             <p className="email">
               <FontAwesomeIcon icon={faEnvelope} />
-              {user.email}
+              &nbsp;{user.email}
             </p>
           </div>
         </div>
@@ -185,6 +212,8 @@ export default function MyInfo({ myRecord, userCategory }) {
           text={"수정하기"}
           closeHandler={onCloseClick}
           sendApi={modifyCategory}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
         />
       )}
     </>
