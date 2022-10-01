@@ -20,6 +20,14 @@
       }
     }
   }
+  .recommend-word {
+    float: right;
+    margin: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: white;
+    filter: $drop-shadow;
+  }
   section {
     @include FLEX-COLUMN;
     align-items: center;
@@ -58,7 +66,7 @@
     }
   }
   .userfit-articles {
-    margin: 17%;
+    margin: 15%;
     @media (max-width: 480px) {
     }
     .carousel {
@@ -129,35 +137,42 @@
     background-color: rgba($color: $dark-grey, $alpha: 0.8);
     color: white;
     padding: 0.3rem 1rem;
+    margin-top: 20px;
     border-radius: 0.7rem;
   }
 
   // 핫토픽
   .hottopic {
+    width: 100%;
+    height: 100%;
+    padding: 0 4vw 0 5vw;
     .hottopic-articles {
       @include FLEX-CENTER;
       align-items: flex-start;
+      width: 100%;
       @media (max-width: 1000px) {
         @include FLEX-COLUMN;
       }
       .hottopic-left {
-        width: 35vw;
-        transition: all 300ms ease;
+        width: 100%;
         @media (max-width: 1000px) {
           width: 100%;
-        }
-        &:hover {
-          transform: scale(1.02);
-          filter: $drop-shadow;
         }
         .hottopic-img {
           position: relative;
           padding: 0.5vw;
+          width: 100%;
+          height: 26vw;
           cursor: pointer;
+          transition: all 300ms ease;
+          &:hover {
+            transform: scale(1.02);
+            filter: $drop-shadow;
+          }
           @include FLEX-CENTER;
           > img {
-            width: 34vw;
-            height: 22vw;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
             border-radius: 20px;
             @media (max-width: 1000px) {
@@ -184,6 +199,7 @@
         }
         .hottopic-title {
           @include TEXT-OVERFLOW;
+          padding: 10px;
           cursor: pointer;
           @media (max-width: 1000px) {
             text-align: center;

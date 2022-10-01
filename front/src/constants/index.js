@@ -1,23 +1,55 @@
 export const categoryFilter = {
-  Animals: [
+  Life: [
     {
-      name: "tiger",
+      name: "Business",
       id: 1,
     },
     {
-      name: "lion",
+      name: "Culture",
       id: 2,
     },
     {
-      name: "bear",
+      name: "Entertainment",
       id: 3,
     },
     {
-      name: "eagle",
+      name: "Family",
       id: 4,
     },
     {
-      name: "rabbit",
+      name: "Fitness",
+      id: 5,
+    },
+    {
+      name: "Food",
+      id: 5,
+    },
+    {
+      name: "Health",
+      id: 5,
+    },
+    {
+      name: "Home",
+      id: 5,
+    },
+    {
+      name: "Movies",
+      id: 5,
+    },
+    {
+      name: "Music",
+      id: 5,
+    },
+    {
+      name: "People",
+      id: 5,
+    },
+    {
+      name: "Real estate",
+      id: 5,
+    },
+    {
+      name: "Pets",
       id: 5,
     },
   ],

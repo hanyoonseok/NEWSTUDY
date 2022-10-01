@@ -58,16 +58,23 @@
       @include FLEX-ALIGN-CENTER;
 
       .hottest-article {
-        width: 100%;
+        width: 85%;
         height: rem(360);
         @include FLEX-COLUMN;
         position: relative;
+        @media (max-width: 480px) {
+          width: 100%;
+        }
 
         .hottest-article-img {
           width: 100%;
-          height: 100%;
-          background-color: black;
+          height: 80%;
           border-radius: 18px;
+          background-color: black;
+          > img {
+            width: 100%;
+            height: 100%;
+          }
         }
 
         .hottest-article-level {

@@ -8,24 +8,25 @@ function HotNewsCard({ news, isMobile, query }) {
   return (
     <div className="hottest-article">
       <i
-        className={`hottest-article-level ${
-          news.level.includes("A")
-            ? "Alv"
-            : news.level.includes("B")
-            ? "Blv"
-            : "Clv"
-        }`}
+        // className={`hottest-article-level ${
+        //   news.level.includes("A")
+        //     ? "Alv"
+        //     : news.level.includes("B")
+        //     ? "Blv"
+        //     : "Clv"
+        // }`}
+        className="hottest-article-level Alv"
       >
         {news.level}
       </i>
       {isMobile && (
         <div className="hottest-article-category mobile">
           <FontAwesomeIcon icon={faCircle} />
-          {news.category}
+          {news.c_id}
         </div>
       )}
       <span className="hottest-article-img">
-        <img src={require("assets/article.png")} alt="article"></img>
+        <img src={news.thumbnail} alt="article"></img>
       </span>
       <h1 className="hottest-article-title">
         {news.title.includes(query) ? (
@@ -42,7 +43,7 @@ function HotNewsCard({ news, isMobile, query }) {
         <div className="hottest-article-footer">
           <div className="hottest-article-category">
             <FontAwesomeIcon icon={faCircle} />
-            {news.category}
+            {news.c_id}
           </div>
           <FontAwesomeIcon
             icon={faBookmark}

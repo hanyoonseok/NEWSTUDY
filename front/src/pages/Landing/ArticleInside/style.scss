@@ -2,15 +2,51 @@
 
 .article-wrapper {
   position: relative;
-
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 25px;
   .article-img {
+    width: 45vw;
+    height: 28vw;
     > img {
-      width: auto;
-      height: 28vw;
-      border-radius: 25px;
+      width: 100%;
+      height: 100%;
+      transition: all 300ms ease;
       @media (max-width: 480px) {
         width: 82vw;
         height: 47vw;
+      }
+    }
+  }
+
+  .article-screen {
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #030303, $alpha: 0.4);
+    position: absolute;
+    border-radius: 25px;
+    transition: all 300ms ease;
+    @include FADE-IN(600ms);
+    color: white;
+    @include FLEX-CENTER;
+    .border {
+      position: absolute;
+      width: 96%;
+      height: 93%;
+      border-radius: 20px;
+      cursor: pointer;
+      border: 3px solid rgba($color: #ffffff, $alpha: 0.1);
+    }
+    > span {
+      @include SLIDE-UP(500ms);
+      padding: 10px 20px;
+      background-color: rgba($color: white, $alpha: 0.2);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 300ms ease;
+      &:hover {
+        background-color: rgba($color: white, $alpha: 0.4);
       }
     }
   }
@@ -38,6 +74,7 @@
       font-family: $eng-fontB;
       margin-bottom: 3%;
       text-shadow: $shadow;
+      transition: all 300ms ease;
       @include TEXT-OVERFLOW;
       @media (max-width: 480px) {
         -webkit-line-clamp: 1;
@@ -48,6 +85,13 @@
       color: rgba($color: $white, $alpha: 0.5);
       font-family: $eng-font;
       @include TEXT-OVERFLOW;
+      &.visible {
+        transition: all 300ms ease;
+        animation-delay: 200ms;
+        animation-name: specialSlideInUp;
+        animation-duration: 400ms;
+        animation-fill-mode: both;
+      }
     }
   }
 }

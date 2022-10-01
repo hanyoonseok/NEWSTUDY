@@ -16,11 +16,13 @@
   }
 
   b {
-    color: #7cb8ff;
+    color: $blue;
   }
   .search-header {
     display: flex;
     flex-direction: row;
+    justify-items: flex-start;
+    align-items: flex-start;
     margin: 15px 0;
     width: 100%;
     @media (max-width: 960px) {
@@ -138,59 +140,135 @@
       margin: 15px;
     }
   }
-  .search-dates {
-    @media (max-width: 480px) {
-      margin-top: 30px;
-    }
-    @include FLEX-CENTER;
-    .search-date {
-      @include FLEX-CENTER;
-      position: relative;
-      .date-icon {
-        cursor: pointer;
-        background-color: white;
-        width: rem(40);
-        height: rem(40);
-        border-radius: 40px;
+  .search-dates-container {
+    margin-left: rem(50);
+    .search-dates {
+      @media (max-width: 480px) {
+        margin-top: 30px;
+      }
+      .date-btn {
+        position: relative;
         @include FLEX-CENTER;
-        filter: $drop-shadow;
+        margin: 0 5px;
+        width: 5.5vw;
+        height: rem(30);
+        border-radius: 8px;
+        background-color: $light-grey;
+        transition: all 300ms ease;
+        input[type="radio"] {
+          display: none;
+        }
+        input:checked ~ i {
+          color: $blue;
+
+          border: 3px solid $soft-blue;
+          background-color: #d6e0ff;
+        }
+        > i {
+          font-size: rem(12);
+          color: $soft-grey;
+          position: absolute;
+          border-radius: 8px;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          @include FLEX-CENTER;
+          transition: all 300ms ease;
+          > span {
+            color: $dark-grey;
+            font-family: $kor-font;
+            font-weight: bold;
+            font-size: rem(14);
+          }
+        }
+        &:hover {
+          background-color: #e6ecff;
+          transform: scale(1.05);
+          > i {
+            color: $soft-blue;
+          }
+        }
       }
-      .calendar {
-        position: absolute;
-        z-index: 2;
-        left: rem(40);
-        top: rem(40);
-        &.visible {
-          animation-name: specialFadeInLeft;
-          animation-duration: 400ms;
-          animation-fill-mode: both;
-        }
-        &.hidden {
-          animation-name: specialFadeOut;
-          animation-duration: 400ms;
-          animation-fill-mode: both;
-        }
-        @media (max-width: 480px) {
-          position: fixed;
-          left: 12%;
-          top: 30%;
-        }
-      }
-      .date {
-        font-weight: bold;
-        font-size: rem(15);
-        margin: 0 15px;
-        @media (max-width: 480px) {
-          font-size: rem(18);
-        }
-      }
+      @include FLEX-CENTER;
     }
-    .search-separator {
-      margin: 0 10px;
-      font-weight: bold;
+    .user-select-date {
+      margin-top: 20px;
+      @include FLEX-CENTER;
+      .search-date {
+        @include FLEX-CENTER;
+        position: relative;
+        .date-icon {
+          cursor: pointer;
+          background-color: white;
+          width: rem(40);
+          height: rem(40);
+          border-radius: 40px;
+          @include FLEX-CENTER;
+          filter: $drop-shadow;
+          transition: all 300ms ease;
+          &:hover {
+            transform: scale(1.2);
+          }
+        }
+        .calendar {
+          position: absolute;
+          z-index: 2;
+          left: rem(40);
+          top: rem(40);
+          &.visible {
+            animation-name: specialFadeInLeft;
+            animation-duration: 400ms;
+            animation-fill-mode: both;
+          }
+          &.hidden {
+            // animation-name: specialFadeOut;
+            // animation-duration: 400ms;
+            // animation-fill-mode: both;
+            opacity: 0;
+          }
+          @media (max-width: 480px) {
+            position: fixed;
+            left: 12%;
+            top: 30%;
+          }
+        }
+        .date {
+          font-weight: bold;
+          font-size: rem(15);
+          margin: 0 15px;
+          @media (max-width: 480px) {
+            font-size: rem(18);
+          }
+        }
+      }
+      .search-separator {
+        margin: 0 10px;
+        font-weight: bold;
+      }
     }
   }
+  .search-level-container {
+    width: 100%;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    .level-range {
+      width: 60%;
+    }
+  }
+  .filter-title {
+    font-family: $eng-title-font;
+    font-weight: bold;
 
+    color: $dark-grey;
+    padding: 7px 15px;
+    background-color: white;
+    border-radius: 7px;
+    filter: $drop-shadow;
+    display: inline-block;
+    margin: 0 rem(20);
+  }
   .newslist-morebtn-container {
     @include FLEX-CENTER;
     width: 100%;
@@ -370,4 +448,8 @@ abbr[title] {
   position: fixed;
   width: 100%;
   height: 100%;
+}
+
+.rc-slider-track {
+  background-color: $soft-blue;
 }

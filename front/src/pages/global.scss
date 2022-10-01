@@ -205,7 +205,7 @@ input:focus {
 }
 @keyframes specialSlideInUp {
   from {
-    transform: translate3d(0, 150px, 0);
+    transform: translate3d(0, 130px, 0);
     visibility: visible;
     opacity: 0;
   }
@@ -227,6 +227,19 @@ input:focus {
   to {
     opacity: 0;
     transform: translate3d(0, -50px, 0);
+    pointer-events: none;
+  }
+}
+@keyframes specialSlideOutDown {
+  from {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, 70px, 0);
     pointer-events: none;
   }
 }
@@ -298,7 +311,7 @@ input:focus {
 .slidein-up {
   animation-name: specialSlideInUp;
   animation-delay: 100ms;
-  animation-duration: 1500ms;
+  animation-duration: 1300ms;
   animation-fill-mode: both;
 }
 
@@ -306,5 +319,18 @@ input:focus {
   animation-name: specialSlideInRight;
   animation-delay: 400ms;
   animation-duration: 1500ms;
+  animation-fill-mode: both;
+}
+
+.slide-up {
+  animation-delay: 200ms;
+  animation-name: specialSlideInUp;
+  animation-duration: 400ms;
+  animation-fill-mode: both;
+}
+
+.slideout-down {
+  animation-name: specialSlideOutDown;
+  animation-duration: 400ms;
   animation-fill-mode: both;
 }

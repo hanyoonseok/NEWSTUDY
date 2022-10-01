@@ -52,7 +52,7 @@ export const loginUser = async (data) => {
 
   // 회원정보 조회
   await axios.get(`${process.env.REACT_APP_API_URL}/user`).then((res) => {
-    console.log(res.data.data);
+    console.log(res);
     userInfo.email = res.data.data.email;
     userInfo.level = res.data.data.level;
     userInfo.nickname = res.data.data.nickname;
@@ -67,7 +67,7 @@ export const loginUser = async (data) => {
 
 export const loginSuccess = (res) => {
   console.log("loginSuccess");
-  const { accessToken } = res.data.data;
+  const { accessToken } = res.data;
   // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
   axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
   // accessToken 만료하기 1분 전에 로그인 연장

@@ -1,28 +1,34 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
-import { useDispatch, useSelector } from "react-redux";
-import ArticleInside from "./ArticleInside";
-import ArticleOutside from "./ArticleOutside";
+import { useSelector } from "react-redux";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import {
   faBorderAll,
-  faHandshake,
   faBaseballBatBall,
   faChevronRight,
   faChevronLeft,
+  faHeart,
   faCircle,
-  faFaceGrin,
-  faSackDollar,
+  faMicrochip,
+  faGlobe,
+  faEllipsis,
+  faFileWord,
 } from "@fortawesome/free-solid-svg-icons";
+
 import Wordcloud from "./WordCloud";
+import ArticleInside from "./ArticleInside";
+import ArticleOutside from "./ArticleOutside";
+import TopBtn from "components/TopBtn";
+
 const MAX_VISIBILITY = 3;
 
 function SectionTitle({ sectionTitle }) {
   const { blueTitle, blackTitle, desc } = sectionTitle;
   return (
-    <div className="section">
+    <div className="section" data-aos="fade-up">
       <h1 className="section-title">
         <span className="text-spotlight">{blueTitle}&nbsp; </span> {blackTitle}
       </h1>
@@ -94,85 +100,16 @@ function UserfitArticle({ children }) {
 
 function Landing() {
   const { currentUser } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
   const [activeId, setActiveId] = useState(0);
-  const onClickSwitchTab = (id) => {
-    setActiveId(id);
-  };
-  // 데일리 빈출단어는 DB에서 한꺼번에 가져옴
-  const [allRanking, setAllRanking] = useState([]);
-  const [lifeRanking, setLifeRanking] = useState([]);
-  const [newsRanking, setNewsRanking] = useState([]);
-  const [sportsRanking, setSportsRanking] = useState([]);
-  const [techRanking, setTechRanking] = useState([]);
-  const [worldRanking, setWorldRanking] = useState([]);
-  const [otherRanking, setOtherRanking] = useState([]);
+  const [wordRanking, setWordRanking] = useState(null);
+  const [userFitNews, setUserFitNews] = useState(null);
+  const [hotNews, setHotNews] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const Articles = [
-    {
-      title: `Two in flooded basement parking lot found alive`,
-      content: `My name is Lee Sang-hyeok. My American fans call me “God.” My Korean fans know me as “the Unkillable Demon King.” I actually prefer God, because it feels just a little bit higher.`,
-      level: "C",
-      category: "SPORTS",
-    },
-    {
-      title: `Two in flooded basement parking lot found alive`,
-      content: `My name is Lee Sang-hyeok. My American fans call me “God.” My Korean fans know me as “the Unkillable Demon King.” I actually prefer God, because it feels just a little bit higher.`,
-      category: "SPORTS",
-      level: "C",
-    },
-    {
-      title: `Two in flooded basement parking lot found alive`,
-      content: `My name is Lee Sang-hyeok. My American fans call me “God.” My Korean fans know me as “the Unkillable Demon King.” I actually prefer God, because it feels just a little bit higher.`,
-      category: "SPORTS",
-      level: "C",
-    },
-    {
-      title: `Two in flooded basement parking lot found alive`,
-      content: `My name is Lee Sang-hyeok. My American fans call me “God.” My Korean fans know me as “the Unkillable Demon King.” I actually prefer God, because it feels just a little bit higher.`,
-      level: "C",
-      category: "SPORTS",
-    },
-    {
-      title: `Two in flooded basement parking lot found alive`,
-      content: `My name is Lee Sang-hyeok. My American fans call me “God.” My Korean fans know me as “the Unkillable Demon King.” I actually prefer God, because it feels just a little bit higher.`,
-      level: "C",
-      category: "SPORTS",
-    },
-    {
-      title: `Two in flooded basement parking lot found alive`,
-      content: `My name is Lee Sang-hyeok. My American fans call me “God.” My Korean fans know me as “the Unkillable Demon King.” I actually prefer God, because it feels just a little bit higher.`,
-      level: "C",
-      category: "SPORTS",
-    },
-    {
-      title: `Two in flooded basement parking lot found alive`,
-      content: `My name is Lee Sang-hyeok. My American fans call me “God.” My Korean fans know me as “the Unkillable Demon King.” I actually prefer God, because it feels just a little bit higher.`,
-      level: "C",
-      category: "SPORTS",
-    },
-    {
-      title: `Two in flooded basement parking lot found alive`,
-      content: `My name is Lee Sang-hyeok. My American fans call me “God.” My Korean fans know me as “the Unkillable Demon King.” I actually prefer God, because it feels just a little bit higher.`,
-      level: "C",
-      category: "SPORTS",
-    },
-    {
-      title: `Two in flooded basement parking lot found alive`,
-      content: `My name is Lee Sang-hyeok. My American fans call me “God.” My Korean fans know me as “the Unkillable Demon King.” I actually prefer God, because it feels just a little bit higher.`,
-      level: "C",
-      category: "SPORTS",
-    },
-    {
-      title: `Two in flooded basement parking lot found alive`,
-      content: `My name is Lee Sang-hyeok. My American fans call me “God.” My Korean fans know me as “the Unkillable Demon King.” I actually prefer God, because it feels just a little bit higher.`,
-      level: "C",
-      category: "SPORTS",
-    },
-  ];
-
+  const onClickSwitchTab = (id) => {
+    setActiveId(id);
+  };
   const sectionTitle = [
     {
       blueTitle: "USER FIT ",
@@ -182,7 +119,7 @@ function Landing() {
     {
       blueTitle: "HOT ",
       blackTitle: "TOPIC",
-      desc: "현재 HOT TOPIC인 주제 ‘SUBINI’에 대한 기사입니다.",
+      desc: "오늘 가장 인기있는 기사를 보여줍니다.",
     },
     {
       blueTitle: "DAILY ",
@@ -191,10 +128,22 @@ function Landing() {
     },
   ];
 
-  const [userFitNews, setUserFitNews] = useState(null);
-  const [hotNews, setHotNews] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${currentUser.accessToken}`;
+      const wordCloudResponse = await axios.get(`/daily/${activeId}`);
+      console.log(wordCloudResponse.data);
+      setWordRanking(wordCloudResponse.data);
+    };
+    fetchData();
+  }, [activeId]);
 
   useEffect(() => {
+    AOS.init({
+      duration: 1000,
+    });
     const fetchData = async () => {
       axios.defaults.headers.common[
         "Authorization"
@@ -205,7 +154,8 @@ function Landing() {
         // 초기화시켜주기
         setUserFitNews(null);
         setHotNews(null);
-        setAllRanking(null);
+        setWordRanking(null);
+        // setAllRanking(null);
 
         // 사용자 맞춤 기사
         const fitNewsResponse = await axios.get(`/news/recommend`);
@@ -216,9 +166,9 @@ function Landing() {
         console.log(hotNewsResponse.data);
         setHotNews(hotNewsResponse.data);
         // 데일리 워드클라우드
-        const allWordCloudResponse = await axios.get(`/daily/${0}`);
-        console.log("길이 " + allWordCloudResponse.data.length);
-        setAllRanking(allWordCloudResponse.data);
+        const wordCloudResponse = await axios.get(`/daily/${activeId}`);
+        setWordRanking(wordCloudResponse.data);
+        console.log("워드데이터", wordCloudResponse.data);
       } catch (e) {
         setError(e);
       }
@@ -228,103 +178,21 @@ function Landing() {
     fetchData();
   }, []);
 
-  // const onCategoryClick = useCallback(async (c_id) => {
-  //   const payload = {
-  //     Authorization: `Bearer ${currentUser.accessToken}`,
-  //     n_id: newsId,
-  //   };
-  //   const addScrapResponse = await axios.post(`/daily/${c_id}`, payload);
-  //   console.log(addScrapResponse);
-  // }, []);
-
-  const ranking = {
-    0: (
-      <>
-        {allRanking &&
-          allRanking.slice(0, 5).map((item, index) => {
-            return (
-              <KeywordRanking
-                item={item}
-                rank={index + 1}
-                key={index}
-              ></KeywordRanking>
-            );
-          })}
-      </>
-    ),
-    1: (
-      <>
-        {lifeRanking.slice(0, 5).map((item, index) => {
-          return (
-            <KeywordRanking
-              item={item}
-              rank={index + 1}
-              key={index}
-            ></KeywordRanking>
-          );
-        })}
-      </>
-    ),
-    2: (
-      <>
-        {techRanking.slice(0, 5).map((item, index) => {
-          return (
-            <KeywordRanking
-              item={item}
-              rank={index + 1}
-              key={index}
-            ></KeywordRanking>
-          );
-        })}
-      </>
-    ),
-    3: (
-      <>
-        {worldRanking.slice(0, 5).map((item, index) => {
-          return (
-            <KeywordRanking
-              item={item}
-              rank={index + 1}
-              key={index}
-            ></KeywordRanking>
-          );
-        })}
-      </>
-    ),
-    4: (
-      <>
-        {sportsRanking.slice(0, 5).map((item, index) => {
-          return (
-            <KeywordRanking
-              item={item}
-              rank={index + 1}
-              key={index}
-            ></KeywordRanking>
-          );
-        })}
-      </>
-    ),
-  };
-  const tabContent = {
-    0: <>{allRanking && <Wordcloud words={allRanking}></Wordcloud>}</>,
-    1: <>{lifeRanking && <Wordcloud words={lifeRanking}></Wordcloud>}</>,
-    2: <>{techRanking && <Wordcloud words={techRanking}></Wordcloud>}</>,
-    3: <>{worldRanking && <Wordcloud words={worldRanking}></Wordcloud>}</>,
-    4: <>{sportsRanking && <Wordcloud words={sportsRanking}></Wordcloud>}</>,
-  };
-
   if (error) return <div>{error} 에러가 발생했습니다.</div>;
   if (loading) return <div>로딩중..</div>;
   return (
     <div className="landing-wrapper">
       <div className="landing-header">
-        {/* <div className="logo-img">
-          <img src={require("assets/logo.png")} alt="article"></img>
-        </div> */}
         <div>Wednesday, September 7, 2022</div>
       </div>
+      <div className="recommend-word">
+        <i>
+          <FontAwesomeIcon icon={faFileWord} />
+        </i>
+        &nbsp;&nbsp; 어떤걸 추가하고싶긴 한데..
+      </div>
       {/* 사용자 맞춤 기사 */}
-      <section className="userfit">
+      <section className="userfit" data-aos="fade-up" data-aos-delay="300">
         <SectionTitle sectionTitle={sectionTitle[0]}></SectionTitle>
 
         <div className="userfit-articles">
@@ -340,37 +208,62 @@ function Landing() {
         )}
       </section>
       {/* 핫토픽 */}
-      <section className="hottopic">
-        <SectionTitle sectionTitle={sectionTitle[1]}></SectionTitle>
-        <div className="hottopic-articles">
-          <div className="hottopic-left">
-            <div className="hottopic-img">
-              <img src={require("assets/article2.png")} alt="article"></img>
-              <span className="article-level">C</span>
+      {hotNews && hotNews.length > 0 && (
+        <>
+          <section className="hottopic">
+            <SectionTitle sectionTitle={sectionTitle[1]}></SectionTitle>
+
+            <div className="hottopic-articles">
+              <div
+                className="hottopic-left"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
+                <>
+                  <div className="hottopic-img">
+                    <img src={hotNews[0].thumbnail} alt="article"></img>
+                    <span className="article-level">{hotNews[0].level}</span>
+                  </div>
+                  <h3 className="hottopic-title">{hotNews[0].title}</h3>
+                  <span className="article-category">
+                    <i>
+                      <FontAwesomeIcon icon={faCircle} />
+                    </i>
+                    SPORTS
+                  </span>
+                </>
+              </div>
+              <div
+                className="hottopic-right"
+                data-aos="fade-up"
+                data-aos-delay="300"
+              >
+                {hotNews.slice(1, 4).map((news, index) => (
+                  <ArticleOutside Article={news} key={index}></ArticleOutside>
+                ))}
+              </div>
             </div>
-            <h3 className="hottopic-title"></h3>
-            <span className="article-category">
-              <i>
-                <FontAwesomeIcon icon={faCircle} />
-              </i>
-              SPORTS
-            </span>
-          </div>
-          {hotNews && (
-            <div className="hottopic-right">
-              <ArticleOutside Article={hotNews[1]}></ArticleOutside>
-              <ArticleOutside Article={hotNews[2]}></ArticleOutside>
-              <ArticleOutside Article={hotNews[3]}></ArticleOutside>
-            </div>
-          )}
-        </div>
-      </section>
+          </section>
+        </>
+      )}
+
       <section className="daily-keyword">
         <SectionTitle sectionTitle={sectionTitle[2]}></SectionTitle>
         <div className="daily-wrapper">
-          <div className="daily-left">{ranking[activeId]}</div>
+          <div className="daily-left" data-aos="fade-right">
+            {wordRanking &&
+              wordRanking.slice(0, 5).map((item, index) => {
+                return (
+                  <KeywordRanking
+                    item={item}
+                    rank={index + 1}
+                    key={index}
+                  ></KeywordRanking>
+                );
+              })}
+          </div>
           <div className="daily-right">
-            <div className="wordcloud-wrapper">
+            <div className="wordcloud-wrapper" data-aos="fade-left">
               <ul className="wordcloud-nav">
                 <li
                   className={`${
@@ -389,9 +282,8 @@ function Landing() {
                   }`}
                   onClick={() => onClickSwitchTab(1)}
                 >
-                  {" "}
                   <i>
-                    <FontAwesomeIcon icon={faHandshake} />
+                    <FontAwesomeIcon icon={faHeart} />
                   </i>
                   <span className="category-name">&nbsp; LIFE</span>
                 </li>
@@ -402,7 +294,7 @@ function Landing() {
                   onClick={() => onClickSwitchTab(2)}
                 >
                   <i>
-                    <FontAwesomeIcon icon={faSackDollar} />
+                    <FontAwesomeIcon icon={faMicrochip} />
                   </i>
                   <span className="category-name">&nbsp; TECH</span>
                 </li>
@@ -413,7 +305,7 @@ function Landing() {
                   onClick={() => onClickSwitchTab(3)}
                 >
                   <i>
-                    <FontAwesomeIcon icon={faFaceGrin} />
+                    <FontAwesomeIcon icon={faGlobe} />
                   </i>
                   <span className="category-name">&nbsp; WORLD</span>
                 </li>
@@ -428,12 +320,28 @@ function Landing() {
                   </i>
                   <span className="category-name">&nbsp;SPORTS</span>
                 </li>
+                <li
+                  className={`${
+                    activeId === 5 ? "active word-category" : "word-category"
+                  }`}
+                  onClick={() => onClickSwitchTab(5)}
+                >
+                  <i>
+                    <FontAwesomeIcon icon={faEllipsis} />
+                  </i>
+                  <span className="category-name">&nbsp;OTHER</span>
+                </li>
               </ul>
-              <div className="wordcloud">{tabContent[activeId]}</div>
+              <div className="wordcloud">
+                {wordRanking && (
+                  <Wordcloud wordRanking={wordRanking}></Wordcloud>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </section>
+      <TopBtn></TopBtn>
     </div>
   );
 }

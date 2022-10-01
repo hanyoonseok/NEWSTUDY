@@ -6,12 +6,16 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 function ArticleOutside({ Article }) {
-  const { title, content, level, c_id } = Article;
+  const { title, content, level, c_id, thumbnail } = Article;
   return (
     <>
       <div className="article-wrapper-side">
         <div className="article-img">
-          <img src={require("assets/article.png")} alt="article"></img>
+          {thumbnail ? (
+            <img src={thumbnail} alt="article"></img>
+          ) : (
+            <img src={require("assets/article.png")}></img>
+          )}
           <span className="article-level">{level}</span>
         </div>
         <div className="article-info-desc">

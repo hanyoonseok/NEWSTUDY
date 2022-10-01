@@ -23,7 +23,7 @@ $kor-light-font: "S-CoreDream-1Thin"; //한글 큰 제목중에서 얇은거
 $kor-font: "AppleSDGothicNeoM"; // 한글 디폴트 (제목 제외)
 
 $eng-title-font: "Montserrat"; //영어 큰 제목
-$eng-font: "Helvetica"; //영어 본문
+$eng-font: "Arial"; //영어 본문
 $eng-fontB: "HelveticaB"; //영어 본문
 
 // 그림자
@@ -107,6 +107,26 @@ $drop-shadow-dark: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.3));
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: $line; //라인수 정함
+}
+
+@mixin FADE-IN($delay) {
+  animation-name: FadeIn;
+  animation-delay: 100ms;
+  animation-duration: $delay;
+  animation-fill-mode: both;
+}
+
+@mixin SLIDE-UP($delay) {
+  animation-name: specialSlideInUp;
+  animation-delay: 100ms;
+  animation-duration: $delay;
+  animation-fill-mode: both;
+}
+@mixin SLIDE-RIGHT($delay) {
+  animation-name: specialSlideInRight;
+  animation-delay: 300ms;
+  animation-duration: $delay;
+  animation-fill-mode: both;
 }
 
 @mixin TEXT-OVERFLOW() {
