@@ -145,7 +145,7 @@ export default function NewsList() {
                     {isMobile && (
                       <div className="hottest-article-category mobile">
                         <FontAwesomeIcon icon={faCircle} />
-                        {newsList[0].c_id}
+                        {category[newsList[0].c_id].main}
                       </div>
                     )}
                     <span className="hottest-article-img">

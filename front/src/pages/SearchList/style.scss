@@ -113,6 +113,9 @@
     font-weight: bold;
     color: $grey;
     @include FLEX-BETWEEN;
+    @media (max-width: 480px) {
+      margin: 30px 0;
+    }
   }
   .search-analysis {
     margin: 30px 0px;
@@ -137,7 +140,10 @@
       margin: 0;
     }
     .top-news {
-      margin: 15px;
+      margin: 7px;
+      @media (max-width: 480px) {
+        width: 90%;
+      }
     }
   }
   .search-dates-container {
