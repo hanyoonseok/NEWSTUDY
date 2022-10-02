@@ -11,8 +11,7 @@ import Page4 from "./Page4";
 import Page5 from "./Page5";
 import Dots from "./Dots";
 import Marker from "assets/marker.jpg";
-import Countrycard from "assets/country-card.jpg";
-import Earth from "assets/earthmap.jpg";
+import Earth from "assets/earthmap_color.png";
 
 export default function Onboarding() {
   const [scrollIdx, setScrollIdx] = useState(1);
@@ -49,7 +48,7 @@ export default function Onboarding() {
             globe.current.style.left = "50%";
           } else {
             globe.current.style.left = "70%";
-            globe.current.style.transform = "translate(-50%, 50%) scale(0.75)";
+            globe.current.style.transform = "translate(-50%, 50%) scale(0.9)";
           }
           globe.current.style.bottom = "50%";
           marker.current.style.opacity = 1;
@@ -109,7 +108,7 @@ export default function Onboarding() {
           if (isMobile) {
             globe.current.style.bottom = "-50vh";
           } else {
-            globe.current.style.bottom = "-60vh";
+            globe.current.style.bottom = "-65vh";
           }
           globe.current.style.transform = "translate(-50%, 0) scale(1.5)";
           globe.current.style.left = "50%";
@@ -168,6 +167,7 @@ export default function Onboarding() {
           width="100%"
           globeBackgroundTexture={null}
           globeTexture={Earth}
+          globeCloudsTexture={null}
           options={{
             enableCameraZoom: false,
             focusDistanceRadiusScale: 3,
@@ -175,35 +175,31 @@ export default function Onboarding() {
         />
       </div>
       <img src={Marker} alt="marker" className="marker" ref={marker} />
-      <img
-        src={Countrycard}
-        alt="countrycard"
-        className="countrycard"
-        ref={countrycard}
-      />
-
       <div className="main-item">
-        <Page1 scrollIdx={scrollIdx} />
+        <Page1
+          scrollIdx={scrollIdx}
+          activePage={scrollIdx === 1 ? true : false}
+        />
       </div>
       <div className="divider"></div>
 
       <div className="main-item">
-        <Page2 />
+        <Page2 activePage={scrollIdx === 2 ? true : false} />
       </div>
       <div className="divider"></div>
 
       <div className="main-item">
-        <Page3 />
+        <Page3 activePage={scrollIdx === 3 ? true : false} />
       </div>
       <div className="divider"></div>
 
       <div className="main-item">
-        <Page4 />
+        <Page4 activePage={scrollIdx === 4 ? true : false} />
       </div>
       <div className="divider"></div>
 
       <div className="main-item">
-        <Page5 />
+        <Page5 activePage={scrollIdx === 5 ? true : false} />
       </div>
     </div>
   );

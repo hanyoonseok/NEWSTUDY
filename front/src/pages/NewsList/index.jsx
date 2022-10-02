@@ -1,119 +1,114 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
-import React, { useState, useCallback } from "react";
-
+import React, { useState, useCallback, useEffect } from "react";
+import { useSelector } from "react-redux";
 import "./style.scss";
 import LevelContainer from "./LevelContainer";
 import Filter from "components/Filter";
+import FilterModal from "components/FilterModal";
+import { category } from "constants/category";
+
 import NewsCard from "components/NewsCard";
+import axios from "axios";
+
+import TopBtn from "components/TopBtn";
 
 export default function NewsList() {
-  const [selectedLevel, setSelectedLevel] = useState("A1");
+  const user = useSelector((state) => state.user);
+  const [selectedLevel, setSelectedLevel] = useState(
+    user.level === 0 ? 1 : user.level,
+  );
+
+  const [newsList, setNewsList] = useState([]);
+  const [isExistMoreNews, setIsExistMoreNews] = useState(false);
+  const [page, setPage] = useState(1);
+  const [isFilterModal, setIsFilterModal] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [totalNews, setTotalNews] = useState(0);
+  const [cidArray, setCidArray] = useState([]);
+  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
 
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
 
-  const news = {
-    img: "",
-    title:
-      "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
-    body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
-    date: "Wed, September 7, 2022",
-    category: "SPORTS",
-    level: "c",
-  };
+  const onCloseClick = useCallback(() => {
+    setIsFilterModal(false);
+  }, []);
 
-  const newses = [
-    {
-      img: "",
-      title:
-        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
-      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
-      date: "Wed, September 7, 2022",
-      category: "SPORTS",
-      level: "A1",
-    },
-    {
-      img: "",
-      title:
-        "An Overseas news story that fits the diffiA1ulty An Overseas news story that fits the diffiA1ulty",
-      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
-      date: "Wed, September 7, 2022",
-      category: "SPORTS",
-      level: "A1",
-    },
-    {
-      img: "",
-      title:
-        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
-      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
-      date: "Wed, September 7, 2022",
-      category: "SPORTS",
-      level: "B2",
-    },
-    {
-      img: "",
-      title:
-        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
-      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
-      date: "Wed, September 7, 2022",
-      category: "SPORTS",
-      level: "B2",
-    },
-    {
-      img: "",
-      title:
-        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
-      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
-      date: "Wed, September 7, 2022",
-      category: "SPORTS",
-      level: "C1",
-    },
-    {
-      img: "",
-      title:
-        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
-      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
-      date: "Wed, September 7, 2022",
-      category: "SPORTS",
-      level: "C1",
-    },
-    {
-      img: "",
-      title:
-        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
-      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
-      date: "Wed, September 7, 2022",
-      category: "SPORTS",
-      level: "A2",
-    },
-    {
-      img: "",
-      title:
-        "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
-      body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
-      date: "Wed, September 7, 2022",
-      category: "SPORTS",
-      level: "A2",
-    },
-  ];
+  const doCategoryFilter = (cidArray) => {
+    setNewsList([]);
+    const categories = [];
+    cidArray.map((i) => {
+      categories.push(category[i]);
+    });
+    setCidArray(cidArray);
+    setSelectedCategory(categories);
+    console.log(category);
+  };
 
   const onLevelClick = useCallback(
     (lv) => () => {
       if (lv === selectedLevel) return;
       setSelectedLevel(lv);
+      setPage(1);
+      setNewsList([]);
+      // 선택한 카테고리 리스트를 삭제해주장
+      setCidArray([]);
+      setSelectedCategory([]);
     },
     [selectedLevel],
   );
+
+  useEffect(() => {
+    console.log("유저정보 찍기 ", user);
+    const fetchData = async () => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${user.accessToken}`;
+      console.log(selectedLevel);
+
+      // 뉴스 목록 불러오기.
+      let data;
+      if (cidArray.length === 0) {
+        data = {
+          startlevel: selectedLevel,
+          endlevel: selectedLevel,
+          page: page,
+        };
+      } else {
+        // cidArray가 있으면
+        data = {
+          startlevel: selectedLevel,
+          endlevel: selectedLevel,
+          page: page,
+          categoryid: cidArray,
+        };
+      }
+
+      const newsListResponse = await axios.post(`/news`, data);
+      const result = newsListResponse.data;
+      setNewsList([...newsList, ...result.newsList]);
+      if (result.totalCnt > newsList.length + result.newsList.length) {
+        setIsExistMoreNews(true);
+      } else {
+        setIsExistMoreNews(false);
+      }
+      setTotalNews(result.totalCnt);
+    };
+
+    fetchData();
+  }, [selectedLevel, page, cidArray]);
 
   return (
     <section className="newslist-container">
       {isMobile && (
         <div className="mobile-level-title">
           <h1 className="LEVEL-title">LEVEL</h1>
-          <Filter />
+          <div onClick={() => setIsFilterModal(true)}>
+            <Filter onClick={() => setIsFilterModal(true)} />
+          </div>
         </div>
       )}
       <LevelContainer
@@ -123,61 +118,99 @@ export default function NewsList() {
       />
       <article className="newslist-body-container">
         <div className="newslist-top-area">
-          <h3 className="hottest-article-depth">
-            A1 Level <b>&gt;</b> SPORTS <b>&gt;</b> LOL
-          </h3>
-          {!isMobile && <Filter />}
-        </div>
-        <div className="newslist-mid-area">
-          <div className="hottest-article">
-            <i
-              className={`hottest-article-level ${
-                news.level.includes("A")
-                  ? "Alv"
-                  : news.level.includes("B")
-                  ? "Blv"
-                  : "Clv"
-              }`}
-            >
-              {news.level}
-            </i>
-            {isMobile && (
-              <div className="hottest-article-category mobile">
-                <FontAwesomeIcon icon={faCircle} />
-                {news.category}
-              </div>
-            )}
-            <span className="hottest-article-img">d</span>
-            <h1 className="hottest-article-title">{news.title}</h1>
-            {!isMobile && (
-              <div className="hottest-article-footer">
-                <div className="hottest-article-category">
-                  <FontAwesomeIcon icon={faCircle} />
-                  {news.category}
-                </div>
-                <FontAwesomeIcon
-                  icon={faBookmark}
-                  className="hottest-article-bookmark"
-                />
-              </div>
-            )}
-          </div>
+          <h3 className="hottest-article-depth">A1 Level {totalNews}건</h3>
           {!isMobile && (
-            <div className="sub-article-container">
-              <NewsCard news={news} />
-              <NewsCard news={news} />
+            <div
+              onClick={() => {
+                setIsFilterModal(true);
+              }}
+            >
+              <Filter />
             </div>
           )}
         </div>
-        <div className="newslist-bot-area">
-          {newses.map((e, i) => (
-            <NewsCard news={e} stretch={!isMobile} key={i} />
-          ))}
-        </div>
-        <div className="newslist-morebtn-container">
-          <button className="newslist-morebtn">더보기</button>
-        </div>
+        {newsList && (
+          <>
+            <div className="newslist-mid-area">
+              {newsList.length > 0 && (
+                <>
+                  <div className="hottest-article">
+                    <i
+                      className={`hottest-article-level ${
+                        level_value[newsList[0].level].includes("A")
+                          ? "Alv"
+                          : level_value[newsList[0].level].includes("B")
+                          ? "Blv"
+                          : "Clv"
+                      }`}
+                    >
+                      {level_value[newsList[0].level]}
+                    </i>
+                    {isMobile && (
+                      <div className="hottest-article-category mobile">
+                        <FontAwesomeIcon icon={faCircle} />
+                        {category[newsList[0].c_id].main}
+                      </div>
+                    )}
+                    <span className="hottest-article-img">
+                      <img src={newsList[0].thumbnail}></img>
+                    </span>
+                    <h1 className="hottest-article-title">
+                      {newsList[0].title}
+                    </h1>
+                    {!isMobile && (
+                      <div className="hottest-article-footer">
+                        <div className="hottest-article-category">
+                          <FontAwesomeIcon icon={faCircle} />
+                          {category[newsList[0].c_id].main}
+                        </div>{" "}
+                        <div className="hottest-article-category sub">
+                          <FontAwesomeIcon icon={faCircle} />
+                          {category[newsList[0].c_id].main}
+                        </div>
+                        <FontAwesomeIcon
+                          icon={faBookmark}
+                          className="hottest-article-bookmark"
+                        />
+                      </div>
+                    )}
+                  </div>
+                  {!isMobile && newsList && (
+                    <div className="sub-article-container">
+                      {newsList.slice(1, 3).map((news, index) => (
+                        <NewsCard news={news} key={index} />
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+            <div className="newslist-bot-area">
+              {newsList.slice(3).map((e, i) => (
+                <NewsCard news={e} stretch={!isMobile} key={i} />
+              ))}
+            </div>
+            {isExistMoreNews && (
+              <div
+                className="newslist-morebtn-container"
+                onClick={() => setPage(page + 1)}
+              >
+                <button className="newslist-morebtn">더보기</button>
+              </div>
+            )}
+          </>
+        )}
       </article>
+      {isFilterModal && (
+        <FilterModal
+          text={"결과 보기"}
+          closeHandler={onCloseClick}
+          sendApi={doCategoryFilter}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
+      )}
+      <TopBtn></TopBtn>
     </section>
   );
 }

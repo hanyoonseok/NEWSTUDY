@@ -19,9 +19,10 @@
       padding: 1% 1% 1% 3%;
       width: 65%;
       border-left: 1px solid #ff9f9f;
+      min-height: rem(50);
+      @include FLEX-ALIGN-CENTER;
 
       > div {
-        @include FLEX-ALIGN-CENTER;
         align-items: baseline;
 
         margin-bottom: 1%;

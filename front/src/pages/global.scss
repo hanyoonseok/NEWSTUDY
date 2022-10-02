@@ -67,9 +67,8 @@ body {
   font-family: $kor-font;
 }
 
-.root {
+#root {
   width: 100%;
-  height: 100%;
 }
 
 textarea {
@@ -95,6 +94,7 @@ h4 {
 }
 i {
   cursor: pointer;
+  font-style: initial;
 }
 li {
   cursor: pointer;
@@ -132,22 +132,6 @@ input:focus {
     border-radius: 4px;
   }
 }
-.article-level {
-  position: absolute;
-  top: 5%;
-  left: 5%;
-  width: 2em;
-  height: 2em;
-  font-size: 1.3rem;
-  background-color: $blue;
-  color: white;
-  @include FLEX-CENTER;
-  border-radius: 30px;
-  @media (max-width: 480px) {
-    width: 1.7em;
-    height: 1.7em;
-  }
-}
 @font-face {
   font-family: "S-CoreDream-5Medium";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff")
@@ -163,6 +147,7 @@ input:focus {
   font-weight: normal;
   font-style: normal;
 }
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap");
 
 @font-face {
   font-family: "AppleSDGothicNeoM";
@@ -176,4 +161,161 @@ input:focus {
   src: url("../fonts/HelveticaLTStd-FractionsBd.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
+}
+
+@keyframes specialFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(-20%, 0, 0);
+    display: none;
+    pointer-events: none;
+  }
+}
+
+@keyframes specialSlideInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(-15%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    pointer-events: all;
+  }
+}
+@keyframes specialSlideInUp {
+  from {
+    transform: translate3d(0, 130px, 0);
+    visibility: visible;
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translate3d(0, 0, 0);
+    pointer-events: all;
+  }
+}
+@keyframes specialSlideOutUp {
+  from {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, -50px, 0);
+    pointer-events: none;
+  }
+}
+@keyframes specialSlideOutDown {
+  from {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(0, 70px, 0);
+    pointer-events: none;
+  }
+}
+
+@keyframes specialFadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(-20%, 0, 0) scale(1.3);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes specialFadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-50px, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes specialFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes FadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes FadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes specialSlideInDown {
+  from {
+    transform: translate3d(0, -50px, 0);
+    visibility: visible;
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translate3d(0, 0, 0);
+    pointer-events: all;
+  }
+}
+.slidein-up {
+  animation-name: specialSlideInUp;
+  animation-delay: 100ms;
+  animation-duration: 1300ms;
+  animation-fill-mode: both;
+}
+
+.slidein-right {
+  animation-name: specialSlideInRight;
+  animation-delay: 400ms;
+  animation-duration: 1500ms;
+  animation-fill-mode: both;
+}
+
+.slide-up {
+  animation-delay: 200ms;
+  animation-name: specialSlideInUp;
+  animation-duration: 400ms;
+  animation-fill-mode: both;
+}
+
+.slideout-down {
+  animation-name: specialSlideOutDown;
+  animation-duration: 400ms;
+  animation-fill-mode: both;
 }

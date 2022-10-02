@@ -1,0 +1,60 @@
+@import "variables.scss";
+
+.search-article {
+  padding: rem(5);
+  @include FLEX-BETWEEN;
+  border-radius: 10px;
+  .search-article-thumbnail {
+    width: 20%;
+    > img {
+      width: 100%;
+      border-radius: 6px;
+      height: 70px;
+    }
+    @media (max-width: 480px) {
+      width: 30%;
+    }
+  }
+  .search-article-title {
+    font-family: $eng-fontB;
+    font-weight: bold;
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: $dark-grey;
+    b {
+      color: $blue;
+    }
+    @media (max-width: 480px) {
+      width: 50%;
+    }
+  }
+  .search-article-level {
+    .newscard-level {
+      width: rem(30);
+      height: rem(30);
+      border-radius: 30px;
+      color: #fff;
+      font-size: rem(12);
+      font-family: $eng-title-font;
+      font-style: initial;
+      padding: rem(8);
+      &.Alv {
+        background-color: $Alv;
+      }
+      &.Blv {
+        background-color: $Blv;
+      }
+      &.Clv {
+        background-color: $Clv;
+      }
+    }
+  }
+
+  transition: all 300ms ease;
+  &:hover {
+    background-color: $lightx2-blue;
+    transform: scale(1.01);
+  }
+}

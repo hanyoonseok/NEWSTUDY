@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Route } from "react-router-dom";
+import React from "react";
 
-import Signup from "pages/Signup";
+import Signup from "pages/Auth";
 import NewsList from "pages/NewsList";
+import Auth from "pages/Auth";
 
 const RedirectComponent = ({ needAuth }) => {
   useEffect(() => {
@@ -13,7 +15,7 @@ const RedirectComponent = ({ needAuth }) => {
   return (
     <>
       {needAuth ? (
-        <Route to="/signup" element={<Signup />} />
+        <Route to="/signup" element={<Auth />} />
       ) : (
         <Route to="/news/list" element={<NewsList />} />
       )}

@@ -1,0 +1,123 @@
+@import "variables.scss";
+
+.hottest-article {
+  width: 24vw;
+  height: rem(360);
+  @include FLEX-COLUMN;
+  position: relative;
+
+  @media (max-width: 480px) {
+    width: 100%;
+    height: rem(300);
+  }
+  a {
+    width: 100%;
+    height: 60%;
+  }
+  .hottest-article-img {
+    @media (max-width: 480px) {
+      height: 75%;
+    }
+    > img {
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+    }
+  }
+
+  .hottest-article-level {
+    width: rem(30);
+    height: rem(30);
+    border-radius: 30px;
+    color: #fff;
+    font-size: rem(16);
+    font-family: $eng-title-font;
+    font-style: initial;
+    position: absolute;
+    @include FLEX-CENTER;
+    top: 20px;
+    left: 20px;
+
+    &.Alv {
+      background-color: $Alv;
+    }
+    &.Blv {
+      background-color: $Blv;
+    }
+    &.Clv {
+      background-color: $Clv;
+    }
+  }
+
+  .hottest-article-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    word-wrap: break-word;
+    color: $default-grey;
+    font-size: rem(22);
+    font-family: $eng-font;
+    margin-top: rem(10);
+    flex-shrink: 0;
+    > a {
+      color: $dark-grey;
+    }
+  }
+
+  .hottest-article-footer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: rem(10);
+
+    .hottest-article-bookmark {
+      font-size: 20px;
+      margin-left: 10px;
+    }
+  }
+  .newscard-categories {
+    @include FLEX-CENTER;
+    @media (max-width: 480px) {
+      justify-content: flex-end;
+      margin: 10px 0;
+    }
+    .newscard-category {
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: rem(14);
+      font-family: $eng-font;
+      border: 1px solid #ff7171;
+      background-color: rgba(255, 185, 185, 0.4);
+      color: #ff7a7a;
+      @include FLEX-CENTER;
+
+      svg {
+        margin-right: 4px;
+        font-size: rem(10);
+      }
+    }
+    .newscard-category-sub {
+      margin-left: 10px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: rem(14);
+      font-family: $eng-font;
+      border: 1px solid $soft-blue;
+      background-color: rgba($soft-blue, 0.4);
+      color: $blue;
+      @include FLEX-CENTER;
+
+      svg {
+        font-size: rem(10);
+        margin-right: 4px;
+      }
+
+      &.sub {
+        border: 1px solid #323232;
+      }
+    }
+  }
+}

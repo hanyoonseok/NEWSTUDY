@@ -7,12 +7,15 @@
   width: 100%;
   height: 100%;
   background-color: rgba(133, 137, 159, 0.3);
+  z-index: 100;
+  font-family: $eng-title-font;
+  font-weight: bold;
+  color: $dark-grey;
   @include FLEX-CENTER;
 }
 
 .modal-container {
   width: rem(400);
-  height: rem(600);
   padding: 20px;
   background-color: #fff;
   border-radius: 18px;
@@ -31,6 +34,7 @@
     width: 100%;
     height: 100%;
     @include FLEX-COLUMN;
+    margin: rem(10) 0;
 
     .main-category-container {
       width: 100%;
@@ -38,19 +42,79 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-row-gap: 16px;
+      border-bottom: 1px solid $light-grey;
+      margin-bottom: rem(20);
+      padding-bottom: rem(10);
 
       .main-category-btn {
         background-color: $lightx2-blue;
         border-radius: 7px;
         width: rem(172);
         height: rem(36);
+        cursor: pointer;
         @include FLEX-CENTER;
+        transition: all 300ms ease;
+        &:hover {
+          background-color: $light-blue;
+        }
+        &.active {
+          background-color: $light-blue;
+        }
+
+        span {
+          margin-right: rem(10);
+        }
       }
     }
 
     .sub-category-container {
       width: 100%;
-      height: 100%;
+      height: rem(155);
+      overflow-y: auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-row-gap: 16px;
+      grid-column-gap: 10px;
+      align-items: start;
+      padding: 0 rem(4);
+
+      @media (max-width: 480px) {
+        grid-row-gap: 10px;
+      }
+      .sub-category-name {
+        width: 100%;
+        font-size: rem(14);
+        position: relative;
+        @include FLEX-CENTER;
+        border-radius: 7px;
+        border: 1px solid $light-blue;
+        cursor: pointer;
+        transition: all 300ms ease;
+        color: $dark-grey;
+        height: rem(40);
+
+        &:hover {
+          background-color: $lightx2-blue;
+        }
+
+        & input[type="checkbox"] {
+          opacity: 0;
+          &:checked ~ span {
+            width: 100%;
+            height: 100%;
+            background-color: #e1e8ff;
+          }
+        }
+
+        span {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          border-radius: 7px;
+          // border: 1px solid #bbcbff;
+          @include FLEX-CENTER;
+        }
+      }
     }
   }
 
@@ -64,6 +128,7 @@
     font-weight: bold;
     @include BTN-COLOR($light-blue);
     @include FLEX-CENTER;
+    cursor: pointer;
     .arrow-btn-wrapper {
       .right-arrow-btn {
         width: 12px;

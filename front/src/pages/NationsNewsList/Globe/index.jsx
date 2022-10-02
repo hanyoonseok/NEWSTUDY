@@ -7,7 +7,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 
 import GlobeImg from "assets/globe_diffuse.jpg";
-import Earth from "assets/earthmap.jpg";
+import Earth from "assets/earthmap_color.png";
 import Kor from "assets/kor.jpg";
 import TrendDesign from "assets/trend-circle-design.png";
 import { useEffect } from "react";
@@ -22,10 +22,11 @@ const options = {
   focusDistanceRadiusScale: 3,
 };
 
-export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
+export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
   const [event, setEvent] = useState(null);
   const [details, setDetails] = useState(null);
   const [focus, setFocus] = useState([37.541, 126.986]);
+  const hashtags = ["코로나", "쌔삥", "페이커"];
 
   useEffect(() => {
     setFocus(markers[selectedIdx].coordinates);
@@ -34,9 +35,9 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
   }, [selectedIdx]);
 
   const onClickMarker = (marker, markerObject, event) => {
-    // console.log("event", event);
-    // console.log("marker", marker.id);
-    // console.log("markerObject", markerObject);
+    console.log("event", event);
+    console.log("marker", marker.id);
+    console.log("markerObject", markerObject);
     setEvent({
       type: "CLICK",
       marker,
@@ -44,7 +45,7 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
       pointerEventPosition: { x: event.clientX, y: event.clientY },
     });
     setDetails(markerTooltipRenderer(marker));
-    setReceiveIdx(marker.id);
+    setSelectedIdx(marker.id);
   };
 
   const onDefocus = (previousFocus) => {
@@ -60,64 +61,23 @@ export default function Globe({ markers, selectedIdx, setReceiveIdx }) {
       {details && (
         <>
           <div className="nation-info-card">
-            <img src={Kor} alt="" className="nation-info-flag" />
+            <img
+              src={markers[selectedIdx].img}
+              alt=""
+              className="nation-info-flag"
+            />
             <h1 className="nation-info-name">
               {markers[selectedIdx].city}, {markers[selectedIdx].kor}{" "}
             </h1>
             <div className="nation-info-taglist">
-              <div className="nation-info-tag">
-                <b>#</b> &nbsp;수빈
-              </div>
-              <div className="nation-info-tag">
-                <b>#</b> &nbsp;수빈
-              </div>
-              <div className="nation-info-tag">
-                <b>#</b> &nbsp;수빈
-              </div>
-              <div className="nation-info-tag">
-                <b>#</b> &nbsp;수빈
-              </div>
-            </div>
-            <div className="nation-info-trendlist">
-              <div className="nation-info-trend">
-                <div className="trend-circle">
-                  <img
-                    src={TrendDesign}
-                    alt=""
-                    className="trend-circle-design"
-                  />
-                </div>
-                <div className="trend-amount">
-                  <FontAwesomeIcon icon={faCircle} /> &nbsp;&nbsp; <b>60 </b>
-                  &nbsp; ▲
-                </div>
-              </div>
-              <div className="nation-info-trend">
-                <div className="trend-circle">
-                  <img
-                    src={TrendDesign}
-                    alt=""
-                    className="trend-circle-design"
-                  />
-                </div>
-                <div className="trend-amount">
-                  <FontAwesomeIcon icon={faCircle} /> &nbsp;&nbsp; <b>60 </b>
-                  &nbsp; ▲
-                </div>
-              </div>
-              <div className="nation-info-trend">
-                <div className="trend-circle">
-                  <img
-                    src={TrendDesign}
-                    alt=""
-                    className="trend-circle-design"
-                  />
-                </div>
-                <div className="trend-amount">
-                  <FontAwesomeIcon icon={faCircle} /> &nbsp;&nbsp; <b>60 </b>
-                  &nbsp; ▲
-                </div>
-              </div>
+              {hashtags.map((tag, i) => {
+                return (
+                  <div className="nation-info-tag" key={i}>
+                    <b>#</b>
+                    {tag}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </>

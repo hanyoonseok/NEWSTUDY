@@ -10,165 +10,6 @@
     height: 100%;
   }
 
-  .left-box {
-    width: 25%;
-    border-radius: 36px;
-    position: relative;
-
-    .info-box {
-      height: 45%;
-      margin: auto 0 0 0;
-      font-size: rem(20);
-      text-align: center;
-
-      .profile-img {
-        background-color: #fff;
-        border-radius: 35px;
-
-        .level-box {
-          position: absolute;
-          left: 80px;
-          top: 20px;
-          width: rem(60);
-          height: rem(65);
-          z-index: 10;
-
-          > img {
-            width: 100%;
-            height: 100%;
-          }
-        }
-
-        .img-box {
-          width: 50%;
-          height: 169px;
-          transform: translateY(10%);
-          margin: auto;
-          position: relative;
-          transition: all 1s;
-          border-radius: 50%;
-          box-shadow: $light-shadow;
-          cursor: pointer;
-
-          img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-          }
-
-          .img-hover {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            color: $white;
-            opacity: 0;
-            font-size: rem(16);
-            @include FLEX-CENTER;
-            border-radius: 50%;
-            background-color: darken(rgba(0, 0, 0, 0.447), 10%);
-          }
-          &:hover {
-            .img-hover {
-              opacity: 1;
-            }
-          }
-        }
-      }
-
-      .name {
-        font-size: rem(24);
-        font-family: $kor-font;
-        font-weight: bold;
-        margin-bottom: 2%;
-        margin-top: 8%;
-      }
-
-      .email {
-        font-family: Arial;
-        .fa-envelope {
-          color: #3f414b;
-        }
-      }
-    }
-
-    .current {
-      height: 20%;
-      background-color: $lightx2-blue;
-      border-radius: 30px;
-      box-shadow: $light-shadow;
-      padding: 2% 10%;
-      margin-bottom: 3%;
-      > div {
-        @include FLEX-BETWEEN;
-        width: 100%;
-        padding: 1% 6%;
-        margin-bottom: 3%;
-
-        .fa-thumbtack {
-          transform: rotate(-45deg);
-          color: $blue;
-        }
-
-        p {
-          font-size: rem(18);
-          &:nth-of-type(1) {
-            width: 60%;
-          }
-          &:nth-of-type(2) {
-            font-weight: bold;
-            color: $grey;
-          }
-        }
-      }
-
-      div:first-of-type {
-        margin-top: 3%;
-      }
-      div:last-of-type {
-        margin-bottom: 0;
-      }
-    }
-
-    .interest {
-      height: 33%;
-      margin-top: 3%;
-      width: 100%;
-      background-color: #fff;
-      border-radius: 30px;
-      box-shadow: $light-shadow;
-
-      .title {
-        width: 100%;
-        height: 25%;
-        margin: auto;
-        font-family: $eng-title-font;
-        font-size: rem(20);
-        font-weight: bold;
-        @include FLEX-CENTER;
-        position: relative;
-
-        b {
-          color: $soft-blue;
-        }
-
-        .fa-pencil {
-          position: absolute;
-          right: 20px;
-          top: 20px;
-          font-size: rem(14);
-          color: #173042;
-        }
-      }
-
-      .list {
-        height: 75%;
-      }
-    }
-  }
-
   .right-box {
     @include FLEX-COLUMN;
     align-self: baseline;
@@ -181,6 +22,8 @@
         width: 25%;
         padding: 2% 3%;
         font-size: rem(18);
+        font-family: $eng-font;
+        font-weight: 500;
         position: relative;
         background-color: #fafafa;
 
@@ -218,81 +61,6 @@
       box-shadow: $light-shadow;
       background-color: #fff;
       border-radius: 0 30px 30px 30px;
-
-      .article-box {
-        width: 100%;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 1.8rem;
-
-        > div {
-          width: 225px;
-          height: 200px;
-          margin: auto;
-          position: relative;
-          border-radius: 20px;
-          padding: 3% 4%;
-
-          &:hover {
-            transform: scale(1.02);
-            background-color: $lightx2-blue;
-            filter: $drop-shadow;
-          }
-
-          span {
-            position: absolute;
-            left: 17px;
-            top: 15px;
-            width: 21px;
-            height: 21px;
-            background-color: $dark-grey;
-            color: $white;
-            border-radius: 50%;
-            text-align: center;
-            line-height: 21px;
-          }
-          .img-box {
-            width: 100%;
-            height: 145px;
-            margin-bottom: 2%;
-            img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-              border-radius: 14px;
-            }
-          }
-
-          p {
-            font-weight: bold;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            word-wrap: break-word;
-          }
-        }
-      }
-
-      .voca-box {
-        .voca {
-          .memorize {
-            width: rem(22);
-            height: rem(22);
-            margin-right: 2%;
-            cursor: pointer;
-          }
-
-          .blue {
-            background-color: $soft-blue;
-          }
-
-          .grey {
-            background-color: $soft-grey;
-          }
-        }
-      }
 
       .wrap {
         @include FLEX-ALIGN-CENTER;
@@ -338,40 +106,6 @@
           }
         }
       }
-
-      .badge-box {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 3rem 2rem;
-        margin: 2% 6%;
-        text-align: center;
-
-        > div {
-          width: 100%;
-          // height: 160px;
-          margin: auto;
-          border-radius: 20px;
-          padding: 3%;
-
-          &:hover {
-            transform: scale(1.02);
-            background-color: $lightx2-blue;
-            filter: $drop-shadow;
-          }
-
-          img {
-            display: block;
-            width: 150px;
-            height: 90%;
-            margin: auto;
-          }
-
-          p {
-            height: 10%;
-            margin-top: 2%;
-          }
-        }
-      }
     }
   }
 }
@@ -382,55 +116,6 @@
     display: block;
     padding: 64px 3% 80px;
     height: 100%;
-
-    .left-box {
-      width: 100%;
-      height: auto;
-
-      .info-box {
-        height: 26%;
-
-        .profile-img {
-          height: 130px;
-
-          .level-box {
-            width: rem(45);
-            height: rem(45);
-            left: 120px;
-            top: 30px;
-          }
-
-          .img-box {
-            width: 35%;
-            height: 120px;
-            transform: translateY(15%);
-          }
-        }
-
-        .name {
-          margin-top: 4%;
-          font-size: rem(22);
-        }
-        .email {
-          font-size: rem(20);
-        }
-      }
-      .current {
-        display: none;
-      }
-
-      .interest {
-        height: 195px;
-
-        .title {
-          font-size: rem(25);
-
-          .fa-pencil {
-            font-size: rem(23);
-          }
-        }
-      }
-    }
 
     .right-box {
       width: 100%;
@@ -485,69 +170,7 @@
         padding: 4%;
         overflow-y: initial;
         margin-bottom: 3%;
-
-        .article-box {
-          display: block;
-
-          .article {
-            width: 100%;
-            height: 103px;
-            @include FLEX-BETWEEN;
-            margin-bottom: 4%;
-
-            &:last-of-type {
-              margin-bottom: 0;
-            }
-
-            .img-box {
-              width: 150px;
-              height: 95px;
-            }
-
-            p {
-              width: 150px;
-              font-size: rem(20);
-              -webkit-line-clamp: 4;
-            }
-
-            span {
-              left: 20px;
-              top: 9px;
-            }
-          }
-        }
-
-        .voca-box {
-          width: 100%;
-          .voca {
-            > div {
-              padding: 4% 2%;
-            }
-
-            .word {
-              width: 40%;
-              font-size: rem(20);
-            }
-
-            .mean {
-              .tag {
-                padding: 2% 2.5%;
-              }
-            }
-
-            .memorize {
-              padding: 1%;
-            }
-          }
-        }
-
-        .badge-box {
-          gap: 2rem;
-          div img {
-            width: 75px;
-            height: 75px;
-          }
-        }
+        min-height: rem(290);
       }
     }
   }

@@ -66,3 +66,21 @@ export const categoryFilter = {
     },
   ],
 };
+
+export const intToLevel = {
+  1: "A1",
+  2: "A2",
+  3: "B1",
+  4: "B2",
+  5: "C1",
+  6: "C2",
+};
+
+export const partToKor = {
+  NOUN: "명",
+  VERB: "동",
+  ADVERB: "부",
+  ADJECTIVE: "형",
+  CONJUNCTION: "접",
+  EXCLAMATION: "감",
+};

@@ -1,0 +1,61 @@
+@import "variables.scss";
+
+@keyframes updown {
+  100% {
+    transform: translate(-50%, -50%);
+  }
+  50% {
+    transform: translate(-50%, -60%);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+.email-modal {
+  z-index: 100;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+
+  .email-modal-body {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: rem(400);
+    height: rem(300);
+    background-color: $white;
+    transform: translate(-50%, -50%);
+    animation: updown 0.3s forwards ease-out;
+    border-radius: 30px;
+    @include FLEX-CENTER;
+    flex-direction: column;
+    font-family: $kor-title-font;
+    font-weight: bold;
+    white-space: pre-wrap;
+
+    .img-box {
+      width: rem(60);
+      height: rem(60);
+      margin-bottom: rem(30);
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    button {
+      font-family: $kor-title-font;
+      width: rem(120);
+      height: rem(35);
+      margin-top: rem(30);
+      border-radius: 10px;
+      font-size: rem(16);
+      @include MAIN-BTN(true);
+      @include BTN-COLOR($light-blue);
+    }
+  }
+}

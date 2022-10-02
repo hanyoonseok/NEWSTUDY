@@ -1,0 +1,29 @@
+@import "variables.scss";
+
+.scroll__container {
+  position: fixed;
+  right: 5%;
+  bottom: 5%;
+  z-index: 1;
+  @media (max-width: 480px) {
+    right: 10%;
+    bottom: 10%;
+  }
+}
+#top {
+  font-weight: bold;
+  font-size: 15px;
+  padding: 15px 10px;
+  background-color: $dark-grey;
+  color: #fff;
+  border: 1px solid rgb(210, 204, 193);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: all 300ms ease;
+  &:hover {
+    background-color: $light-blue;
+    border: 3px solid $soft-blue;
+    color: $dark-grey;
+  }
+}

@@ -1,121 +1,125 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Word from "components/Word";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.scss";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 export default function DailyWordModal({ close }) {
+  const { currentUser } = useSelector((state) => state.user);
+
   const vocas = [
     {
-      word: "Administration",
+      eng: "Administration",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩",
+          done: "수콩수콩수콩수콩수콩수콩수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩",
+          done: "수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩수콩",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
-          mean: "화연연ㅇ여연",
+          done: "화연연ㅇ여연",
         },
       ],
     },
     {
-      word: "SubiniSubiniSi",
+      eng: "SubiniSubiniSi",
       part: [
         {
           id: 0,
-          mean: "수콩수콩수콩",
+          done: "수콩수콩수콩",
         },
         {
           id: 3,
@@ -125,12 +129,34 @@ export default function DailyWordModal({ close }) {
     },
   ];
 
+  // const [vocas, setVocas] = setVocas(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     document.body.style.cssText = `
       position: fixed; 
       top: -${window.scrollY}px;
       overflow-y: none;
       width: 100%;`;
+
+    // const fetchData = async () => {
+    //   axios.defaults.headers.common[
+    //     "Authorization"
+    //   ] = `Bearer ${currentUser.accessToken}`;
+    //   try {
+    //     // 초기화시켜주기
+    //     setVocas(null);
+    //     const vocasResponse = await axios.get(`/daily`);
+    //     console.log("보카", vocasResponse.data);
+    //     setVocas(vocasResponse.data.slice(0, 10));
+    //   } catch (e) {
+    //     setError(e);
+    //   }
+    //   setLoading(false);
+    // };
+
+    // fetchData();
     return () => {
       const scrollY = document.body.style.top;
       document.body.style.cssText = "";

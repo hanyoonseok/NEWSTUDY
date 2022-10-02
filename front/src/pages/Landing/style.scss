@@ -4,14 +4,17 @@
   height: 100%;
   width: 100%;
   padding: 60px 3% 70px 80px;
-  overflow: hidden;
   @media (max-width: 480px) {
     padding: 65px 20px;
+    overflow: hidden;
   }
 
   .landing-header {
     border-bottom: 1px solid $soft-grey;
     font-family: $eng-font;
+    font-weight: 500;
+    color: $grey;
+    margin-top: 10px;
     padding: 10px;
     .logo-img {
       @include FLEX-CENTER;
@@ -20,6 +23,14 @@
         height: auto;
       }
     }
+  }
+  .recommend-word {
+    float: right;
+    margin: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: white;
+    filter: $drop-shadow;
   }
   section {
     @include FLEX-COLUMN;
@@ -59,108 +70,63 @@
     }
   }
   .userfit-articles {
-    margin: 17%;
+    margin: 15%;
     @media (max-width: 480px) {
-    }
-    .carousel {
-      position: relative;
-      @include FLEX-CENTER;
-      perspective: 90vw;
-      transform-style: preserve-3d;
-      @media (max-width: 480px) {
-        height: 20vh;
-      }
-    }
-
-    .card-container {
-      position: absolute;
-      transform: rotateY(calc(var(--offset) * 50deg))
-        scaleY(calc(1 + var(--abs-offset) * -0.4))
-        translateZ(calc(var(--abs-offset) * -30rem))
-        translateX(calc(var(--direction) * -5rem));
-      filter: blur(calc(var(--abs-offset) * 0.7rem));
-      transition: all 0.3s ease-out;
-      @media (max-width: 480px) {
-        transform: rotateX(calc(var(--offset) * 30deg))
-          scaleY(calc(1 + var(--abs-offset) * -0.4))
-          translateZ(calc(var(--abs-offset) * -20rem))
-          translateY(calc(var(--direction) * -10rem));
-        filter: blur(calc(var(--abs-offset) * 0.9rem));
-        transition: all 0.3s ease-out;
-      }
-    }
-
-    .nav {
-      color: rgba($color: $white, $alpha: 0.7);
-      font-size: 3rem;
-      position: absolute;
-      @include FLEX-CENTER;
-      z-index: 2;
-      cursor: pointer;
-      user-select: none;
-      background: unset;
-      border: unset;
-      transition: all 200ms ease;
-
-      &.left {
-        transform: translateX(-25vw) translateY(0);
-        filter: $drop-shadow;
-        &:hover {
-          color: $white;
-        }
-        @media (max-width: 480px) {
-          transform: translateX(0) translateY(-28vw) rotate(90deg);
-        }
-      }
-
-      &.right {
-        filter: $drop-shadow;
-        right: 0;
-        transform: translateX(25vw) translateY(-0%);
-        @media (max-width: 480px) {
-          transform: translateX(50%) translateY(28vw) rotate(90deg);
-        }
-        &:hover {
-          color: $white;
-        }
-      }
     }
   }
   .userfit-order {
     background-color: rgba($color: $dark-grey, $alpha: 0.8);
     color: white;
     padding: 0.3rem 1rem;
+    margin-top: 20px;
     border-radius: 0.7rem;
   }
 
   // 핫토픽
   .hottopic {
+    width: 100%;
+    height: 100%;
+    padding: 0 6vw 0 8vw;
+    @media (max-width: 480px) {
+      padding: 0;
+    }
     .hottopic-articles {
       @include FLEX-CENTER;
       align-items: flex-start;
       @media (max-width: 1000px) {
         @include FLEX-COLUMN;
+        justify-content: center;
+        align-items: center;
       }
       .hottopic-left {
-        width: 35vw;
-        transition: all 300ms ease;
+        height: 100%;
+        width: 100%;
+        padding: rem(20);
         @media (max-width: 1000px) {
           width: 100%;
-        }
-        &:hover {
-          transform: scale(1.02);
-          filter: $drop-shadow;
+          padding: 0;
         }
         .hottopic-img {
+          overflow: hidden;
           position: relative;
-          padding: 0.5vw;
+          width: 37vw;
+          border-radius: 20px;
+          height: 25vw;
+          @media (max-width: 1000px) {
+            width: 100%;
+            height: 48vw;
+          }
           cursor: pointer;
+          transition: all 300ms ease;
+          &:hover {
+            transform: scale(1.02);
+            filter: $drop-shadow;
+          }
           @include FLEX-CENTER;
           > img {
-            width: 34vw;
-            height: 22vw;
+            width: 100%;
+            height: auto;
             overflow: hidden;
-            border-radius: 20px;
             @media (max-width: 1000px) {
               width: 85%;
               height: 35vw;
@@ -170,25 +136,39 @@
               height: 47vw;
             }
           }
+
           .article-level {
+            width: rem(28);
+            height: rem(28);
+            border-radius: 28px;
+            color: #fff;
+            font-size: rem(16);
+            font-family: $eng-title-font;
+            font-style: initial;
             position: absolute;
-            width: 2rem;
-            height: 2rem;
-            font-size: 1.3rem;
-            @media (max-width: 1000px) {
-              left: 15%;
+            @include FLEX-CENTER;
+            top: 15px;
+            left: 15px;
+
+            &.Alv {
+              background-color: $Alv;
             }
-            @media (max-width: 480px) {
-              left: 5%;
+            &.Blv {
+              background-color: $Blv;
+            }
+            &.Clv {
+              background-color: $Clv;
             }
           }
         }
         .hottopic-title {
           @include TEXT-OVERFLOW;
+          padding: 10px;
           cursor: pointer;
+          color: $dark-grey;
+          margin-top: 10px;
           @media (max-width: 1000px) {
             text-align: center;
-            margin: 10px;
           }
           @media (max-width: 480px) {
             -webkit-line-clamp: 1;
@@ -197,9 +177,29 @@
         }
         .article-category {
           float: right;
+          i {
+            cursor: auto;
+          }
+        }
+        .sub {
+          margin-left: rem(7);
+          color: $blue;
+          background-color: rgba($color: $soft-blue, $alpha: 0.3);
+          border: 1px solid $soft-blue;
+          i {
+            font-size: 0.7rem;
+            margin-right: 5px;
+            cursor: auto;
+          }
+          @media (max-width: 480px) {
+            font-size: 0.6rem;
+            padding: 1px 3px;
+            border-radius: 4px;
+          }
         }
       }
       .hottopic-right {
+        width: 100%;
         margin-left: 2.5vw;
         @media (max-width: 480px) {
           margin-top: 2%;

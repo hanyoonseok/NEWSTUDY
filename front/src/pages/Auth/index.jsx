@@ -1,38 +1,24 @@
 import "./style.scss";
-import Input from "./input";
 import { useState } from "react";
 import React from "react";
 
-export default function Signup() {
+import PaperBg from "assets/paper-background.png";
+import Modal from "components/Modal";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+
+export default function Auth() {
   const [activeId, setActiveId] = useState(0);
 
   const onClickSwitchTab = (id) => {
     setActiveId(id);
   };
 
+  const [isEmailModal, setIsEmailModal] = useState(false);
+
   const tabContent = {
-    0: (
-      <form className="login">
-        <p></p>
-        <Input type="email" placeholder="이메일을 입력하세요." />
-        <Input type="password" placeholder="비밀번호를 입력하세요." />
-        <button className="login-btn">로그인</button>
-        <p></p>
-      </form>
-    ),
-    1: (
-      <form className="signup">
-        <div className="email-box">
-          <Input type="email" placeholder="이메일을 입력하세요." />
-          <button>인증</button>
-        </div>
-        <Input type="text" placeholder="인증키를 입력하세요." />
-        <Input type="password" placeholder="비밀번호를 입력하세요." />
-        <Input type="password" placeholder="비밀번호를 다시 입력하세요." />
-        <Input type="text" placeholder="닉네임을 입력하세요." />
-        <button className="signup-btn">가입하기</button>
-      </form>
-    ),
+    0: <SignIn />,
+    1: <SignUp setIsEmailModal={setIsEmailModal} />,
   };
 
   return (
@@ -64,9 +50,17 @@ export default function Signup() {
               회원가입
             </button>
           </div>
-          <div className="content">{tabContent[activeId]}</div>
+          <div className="content"><img src={PaperBg} alt="종이 배경이미지" className="content-backgroundimg"/>{tabContent[activeId]}</div>
         </div>
       </div>
+      {isEmailModal && (
+        <Modal
+          text={
+            "이메일로 인증키가 발송됐습니다.\n인증키를 확인하고 입력해주세요!"
+          }
+          setStatus={setIsEmailModal}
+        />
+      )}
     </>
   );
 }
