@@ -1,8 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import axios from "axios";
 import "./style.scss";
 
 import {
@@ -26,12 +28,13 @@ export default function Sidebar() {
     query: "(max-width:480px)",
   });
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeSearch, setActiveSearch] = useState(false);
   const sidebar = useRef();
   const searchInput = useRef();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const [searchResults, setSearchResults] = useState(null);
   const hoverHandler = () => {
     if (isMobile) {
       sidebar.current.style.left = "0px";
@@ -59,19 +62,14 @@ export default function Sidebar() {
     searchInput.current.value = "";
     setActiveSearch(true);
     searchInput.current.focus();
-    console.log("여기있다 출력해라");
   };
 
   // 검색창 닫엉
-
   const closeSearchBar = () => {
     setActiveSearch(false);
   };
   const searchArticle = (e) => {
-    console.log(e.target.value);
     setSearchQuery(e.target.value);
-
-    // api불러와랑~
   };
   const onSubmitSearch = (e) => {
     console.log("검색해라");
@@ -80,39 +78,34 @@ export default function Sidebar() {
       setActiveSearch(false);
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      if (searchQuery === "") {
+        setSearchResults(null);
+        return;
+      }
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${user.accessToken}`;
 
-  const searchArticles = [
-    {
-      title: "Faker win the world championship !! pleaseㅠㅠ",
-      thumbnail:
-        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
-      level: "A1",
-    },
-    {
-      title: "Faker win the world championship please pleaseㅠㅠ",
-      thumbnail:
-        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
-      level: "A1",
-    },
-    {
-      title: "Faker win the world championship",
-      thumbnail:
-        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
-      level: "A1",
-    },
-    {
-      title: "Faker win the world championship",
-      thumbnail:
-        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
-      level: "A1",
-    },
-    {
-      title: "Faker win the world championship",
-      thumbnail:
-        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
-      level: "A1",
-    },
-  ];
+      const data = {
+        page: 1,
+        titlekeyword: searchQuery,
+        contentkeyword: searchQuery,
+      };
+      const newsListResponse = await axios.post(`/news`, data);
+      const result = newsListResponse.data.newsList;
+      if (result && result.length > 5) {
+        result.splice(0, 5);
+      }
+      console.log("검색결과는 여깄어", result);
+      if (result && result.length === 0) {
+        setSearchResults(null);
+      }
+      setSearchResults(result);
+    };
+    fetchData();
+  }, [searchQuery]);
 
   const onClickLogout = () => {
     dispatch(logoutUser).then((res) => {
@@ -170,20 +163,21 @@ export default function Sidebar() {
                   <FontAwesomeIcon icon={faXmark} />
                 </i>
               </div>
-
-              <div
-                className={`search-list-mobile ${
-                  activeSearch ? "visible" : "hidden"
-                }`}
-              >
-                <ul>
-                  {searchArticles.map((article, index) => (
-                    <li key={index}>
-                      <SearchResult article={article} query={searchQuery} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {searchResults && (
+                <div
+                  className={`search-list-mobile ${
+                    activeSearch ? "visible" : "hidden"
+                  }`}
+                >
+                  <ul>
+                    {searchResults.map((article, index) => (
+                      <li key={index}>
+                        <SearchResult article={article} query={searchQuery} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <>
                 <div className="sidebar-div sidebar" ref={sidebar}>
                   <div>

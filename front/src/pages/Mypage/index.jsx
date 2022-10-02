@@ -79,14 +79,17 @@ export default function Mypage() {
     {
       title: "스크랩한 기사",
       count: myRecords.article,
+      icon: faNewspaper,
     },
     {
       title: "내 단어",
       count: myRecords.voca,
+      icon: faFileWord,
     },
     {
       title: "내 뱃지",
       count: myRecords.badge,
+      icon: faCertificate,
     },
   ];
 

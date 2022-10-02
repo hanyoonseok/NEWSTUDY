@@ -1,10 +1,6 @@
 import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEnvelope,
-  faThumbTack,
-  faPencil,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faPencil } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -178,7 +174,7 @@ export default function MyInfo({
         <div className="current">
           {myRecord.map((item, index) => (
             <div key={index}>
-              <FontAwesomeIcon icon={faThumbTack} />
+              <FontAwesomeIcon icon={item.icon} />
               <p>{item.title}</p>
               <p>{item.count}개</p>
             </div>

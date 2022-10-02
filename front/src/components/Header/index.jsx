@@ -2,11 +2,18 @@ import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
 import { Link, useNavigate } from "react-router-dom";
-
-import { faSearch, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faXmark,
+  faClipboardList,
+} from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useRef } from "react";
 import DailyWordModal from "./DailyWordModal";
 import SearchResult from "./SearchResult";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+
 export default function Header() {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({
@@ -17,19 +24,23 @@ export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const searchInput = useRef();
 
+  const user = useSelector((state) => state.user);
+  const [searchResults, setSearchResults] = useState(null);
   const openModal = () => {
     setModalOpen(true);
   };
   const closeModal = () => {
     setModalOpen(false);
+    setSearchResults(null);
   };
   const searchArticle = (e) => {
-    console.log(e.target.value);
-    setSearchQuery(e.target.value);
-    // api불러와랑~
+    const query = e.target.value;
+    setSearchQuery(query);
   };
+
   // 검색창 열엉~
   const onSearchBar = () => {
+    setSearchResults(null);
     searchInput.current.value = "";
     setActiveSearch(true);
     console.log(searchInput.current);
@@ -45,45 +56,40 @@ export default function Header() {
   };
 
   const onSubmitSearch = (e) => {
-    console.log("검색해라");
     if (e.key === "Enter") {
       navigate(`/search/${searchQuery}`);
       setActiveSearch(false);
     }
   };
 
-  const searchArticles = [
-    {
-      title: "Faker win the world championship !! pleaseㅠㅠ",
-      thumbnail:
-        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
-      level: "A1",
-    },
-    {
-      title: "Faker win the world championship please pleaseㅠㅠ",
-      thumbnail:
-        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
-      level: "A1",
-    },
-    {
-      title: "Faker win the world championship",
-      thumbnail:
-        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
-      level: "A1",
-    },
-    {
-      title: "Faker win the world championship",
-      thumbnail:
-        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
-      level: "A1",
-    },
-    {
-      title: "Faker win the world championship",
-      thumbnail:
-        "https://a57.foxnews.com/static.foxnews.com/foxnews.com/content/uploads/2022/08/348/196/Alek-Manoah2.jpg?ve=1&tl=1",
-      level: "A1",
-    },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      if (searchQuery === "") {
+        setSearchResults(null);
+        return;
+      }
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${user.accessToken}`;
+
+      const data = {
+        page: 1,
+        titlekeyword: searchQuery,
+        contentkeyword: searchQuery,
+      };
+      setSearchResults(null);
+      const newsListResponse = await axios.post(`/news`, data);
+      const result = newsListResponse.data.newsList;
+      if (result && result.length > 5) {
+        result.splice(0, 5);
+      }
+      if (result && result.length === 0) {
+        setSearchResults(null);
+      }
+      setSearchResults(result);
+    };
+    fetchData();
+  }, [searchQuery]);
 
   return (
     <>
@@ -108,6 +114,9 @@ export default function Header() {
           }
         >
           <button className="daily-word" onClick={openModal}>
+            <i>
+              <FontAwesomeIcon icon={faClipboardList} />
+            </i>{" "}
             오늘의 단어
           </button>
           <Link to="/mypage" className="profile-img">
@@ -144,15 +153,19 @@ export default function Header() {
       {activeSearch && (
         <div className="fade-screen" onClick={() => closeSearchBar()}></div>
       )}
-      <div className={`search-list ${activeSearch ? "visible" : "hidden"}`}>
-        <ul>
-          {searchArticles.map((article, index) => (
-            <li key={index}>
-              <SearchResult article={article} query={searchQuery} />
-            </li>
-          ))}
-        </ul>
-      </div>
+      {searchResults && (
+        <div className={`search-list ${activeSearch ? "visible" : "hidden"}`}>
+          <ul>
+            {searchResults.map((article, index) => (
+              <li key={index}>
+                <Link to={`/news/${article.n_id}`}>
+                  <SearchResult article={article} query={searchQuery} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {isMobile && (
         <>
           <div className="mobileHeader-wrapper">

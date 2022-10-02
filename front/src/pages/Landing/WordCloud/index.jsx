@@ -3,8 +3,26 @@ import ReactWordcloud from "react-wordcloud";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import { useMediaQuery } from "react-responsive";
+import { useEffect } from "react";
 
-export default function Wordcloud({ words }) {
+export default function Wordcloud({ wordRanking }) {
+  const words = [];
+
+  const matchWordType = () => {
+    wordRanking.map((word) => {
+      words.push({
+        text: word.eng,
+        category: word.c_id,
+        value: word.cnt,
+      });
+    });
+    console.log(words);
+  };
+
+  useEffect(() => {
+    matchWordType();
+  }, [wordRanking]);
+
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
