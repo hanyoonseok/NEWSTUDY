@@ -2,6 +2,8 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 import "./style.scss";
 import InGame from "./InGame";
@@ -9,111 +11,65 @@ import MyCrossWord from "./MyCrossWord";
 import AnsCrossWord from "./AnsCrossWord";
 
 export default function CrossWord() {
+  const boundR = 15;
+  const boundC = 18;
   const [maxR, setMaxR] = useState(0);
   const [maxC, setMaxC] = useState(0);
   const [inGame, setInGame] = useState(true);
-  const [wordArr, setWordArr] = useState([
-    {
-      index: 1,
-      r: 0,
-      c: 0,
-      d: 1,
-      name: "Squid",
-      hint: "hinthinthi nthint ginthintgint hinthint hinthintgint hintgint hinthinthin thintginthintg int",
-    },
-    {
-      index: 2,
-      r: 0,
-      c: 3,
-      d: -1,
-      name: "index",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 3,
-      r: 2,
-      c: 3,
-      d: 1,
-      name: "discord",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 4,
-      r: 0,
-      c: 7,
-      d: -1,
-      name: "globe",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 5,
-      r: 0,
-      c: 7,
-      d: 1,
-      name: "gather",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 6,
-      r: 6,
-      c: 0,
-      d: 1,
-      name: "banana",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 7,
-      r: 5,
-      c: 0,
-      d: -1,
-      name: "absolute",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 8,
-      r: 6,
-      c: 3,
-      d: -1,
-      name: "apple",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 9,
-      r: 5,
-      c: 5,
-      d: -1,
-      name: "parent",
-      hint: "hinthinthinthintginthintgint",
-    },
-    {
-      index: 10,
-      r: 0,
-      c: 14,
-      d: -1,
-      name: "puzzle",
-      hint: "hinthinthinthintginthintgint",
-    },
-  ]);
+  const [wordArr, setWordArr] = useState([]);
+  const userState = useSelector((state) => state.user);
 
   const crosswordInputs = document.querySelectorAll(".crossword-input");
 
   useEffect(() => {
-    let curr = 0;
-    let curc = 0;
-    wordArr.forEach((e) => {
-      const rlen = e.r + e.name.length;
-      const clen = e.c + e.name.length;
-      curr = Math.max(curr, e.r + 1);
-      curc = Math.max(curc, e.c + 1);
-      e.d === 1 ? (curc = Math.max(curc, clen)) : (curr = Math.max(curr, rlen));
-    });
+    const fetchData = async () => {
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${userState.accessToken}`,
+        },
+      };
+      let crossResponse = await axios.get("/word/game?type=cross", headers);
 
-    setMaxR(curr);
-    setMaxC(curc);
+      while (true) {
+        const isValid = isValidBound(crossResponse.data);
+
+        if (!isValidBound(crossResponse.data)) {
+          crossResponse = await axios.get("/word/game?type=cross", headers);
+          continue;
+        } else {
+          console.log(crossResponse);
+          setWordArr(crossResponse.data);
+          setMaxR(isValid[0]);
+          setMaxC(isValid[1]);
+          break;
+        }
+      }
+    };
+
+    fetchData();
   }, []);
 
   const onLinkMenuClick = () => {
     window.location.href = "/game/menu";
+  };
+
+  const isValidBound = (resp) => {
+    let tempR = 0;
+    let tempC = 0;
+    resp.forEach((e, i) => {
+      e.index = i + 1;
+      const rlen = e.r + e.eng.length;
+      const clen = e.c + e.eng.length;
+      tempR = Math.max(tempR, e.r + 1);
+      tempC = Math.max(tempC, e.c + 1);
+      e.d === 1
+        ? (tempC = Math.max(tempC, clen))
+        : (tempR = Math.max(tempR, rlen));
+    });
+
+    if (tempR >= boundR || tempC >= boundC) return false;
+
+    return [tempR, tempC];
   };
 
   return (

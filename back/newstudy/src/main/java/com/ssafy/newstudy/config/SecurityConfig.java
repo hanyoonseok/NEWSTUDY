@@ -5,12 +5,12 @@ import com.ssafy.newstudy.exception.handler.JwtAccessDeniedHandler;
 import com.ssafy.newstudy.exception.handler.JwtAuthenticationEntryPoint;
 import com.ssafy.newstudy.model.service.CustomUserDetailService;
 import com.ssafy.newstudy.model.service.UserService;
+import com.ssafy.newstudy.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +20,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -77,6 +80,9 @@ public class SecurityConfig{
 
         http
                 .httpBasic().disable()
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
+
                 .csrf().disable()
                 .exceptionHandling()
                 .accessDeniedHandler(accessDeniedHandler)
@@ -94,8 +100,21 @@ public class SecurityConfig{
                 .addFilter(new JwtAuthenticationFilter(authenticationManager(http.getSharedObject(AuthenticationConfiguration.class)), userService)) //HTTP 요청에 JWT 토큰 인증 필터를 거치도록 필터를 추가
                 .authorizeRequests()
                 .antMatchers("/","/auth/login","/user/signup","/user/mail").permitAll()
-                .anyRequest().authenticated()//인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
-                .and().cors();
+                .anyRequest().authenticated(); //인증이 필요한 URL과 필요하지 않은 URL에 대하여 설정
         return http.build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+        configuration.addExposedHeader(JwtTokenUtil.HEADER_STRING);
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

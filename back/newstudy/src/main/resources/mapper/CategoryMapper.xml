@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.newstudy.model.dao.CategoryDao">
+
+    <select id="selectAllCategory" resultType="CategoryResponseDto">
+        SELECT *
+        FROM `CATEGORY`
+    </select>
+
+    <select id="selectCategory" parameterType="int" resultType="categoryResponseDto">
+        SELECT c_id
+        FROM `USER_CATEGORY`
+        WHERE u_id = #{u_id}
+    </select>
+
+    <insert id="insertCategory" parameterType="categoryRequestDto">
+        INSERT INTO `USER_CATEGORY`
+        VALUES (#{u_id}, #{c_id})
+    </insert>
+
+    <delete id="deleteCategory" parameterType="categoryRequestDto">
+        DELETE FROM `USER_CATEGORY`
+        WHERE u_id = #{u_id} and c_id = #{c_id}
+    </delete>
+
+</mapper>

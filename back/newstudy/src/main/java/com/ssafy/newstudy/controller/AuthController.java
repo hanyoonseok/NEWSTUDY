@@ -5,10 +5,12 @@ import com.ssafy.newstudy.model.dto.JWTokenDto;
 import com.ssafy.newstudy.model.dto.UserDto;
 import com.ssafy.newstudy.model.response.Response;
 import com.ssafy.newstudy.model.service.AuthService;
+import com.ssafy.newstudy.model.service.UserService;
 import com.ssafy.newstudy.util.JWToken;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ import io.swagger.annotations.ApiResponse;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 인증 관련 API 요청 처리를 위한 컨트롤러 정의.
@@ -34,6 +38,7 @@ public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
+    private final UserService userService;
     private final Response response;
 //    private final OAuthService oAuthService;
 
@@ -49,43 +54,47 @@ public class AuthController {
 
         JWToken jwt = authService.login(userDto);
 
-        ResponseCookie cookie = ResponseCookie.from("refresh-token", jwt.getRefreshToken())
-                .maxAge(60*60*24*15)
-                .httpOnly(true)
-                .secure(true)
-                .domain("")
-                .path("/")
-                .sameSite("None")
-                .build();
+        int u_id = userService.getUidFromBearerToken("Bearer "+jwt.getAccessToken());
+        authService.saveLoginLog(u_id);
+        authService.checkLoginCnt(u_id);
 
-        resp.setHeader("Set-Cookie", cookie.toString());
-        return response.success(JWTokenDto.of(jwt));
+//        ResponseCookie cookie = ResponseCookie.from("refresh-token", jwt.getRefreshToken())
+//                .maxAge(60*60*24*15)
+//                .httpOnly(true)
+//                .secure(true)
+//                .domain("")
+//                .path("/")
+//                .sameSite("None")
+//                .build();
+//
+//        resp.setHeader("Set-Cookie", cookie.toString());
+        return new ResponseEntity<>(JWTokenDto.of(jwt), HttpStatus.OK);
     }
 
     @GetMapping("/logout")
     public ResponseEntity<?> logout(@CookieValue(value="refresh-token", required = false) String refreshToken, HttpServletResponse resp){
         authService.logout(refreshToken);
 
-        ResponseCookie cookie = ResponseCookie.from("refresh-token",null)
-                .maxAge(0)
-                .httpOnly(true)
-                .secure(true)
-                .domain("")
-                .path("/")
-                .sameSite("None")
-                .build();
-
-        resp.setHeader("Set-Cookie",cookie.toString());
+//        ResponseCookie cookie = ResponseCookie.from("refresh-token",null)
+//                .maxAge(0)
+//                .httpOnly(true)
+//                .secure(true)
+//                .domain("")
+//                .path("/")
+//                .sameSite("None")
+//                .build();
+//
+//        resp.setHeader("Set-Cookie",cookie.toString());
         return response.success("logout success");
     }
 
-    //api docs에 추가해야겠다.
-    //프론트에서 access token 확인한 뒤에 만료됐다면 다시 신청해줘야함.
-    @GetMapping("/reissue")
-    public ResponseEntity<?> reissue(@CookieValue(value="refresh-token", required = false) String refreshToken){
-        JWToken jwt = authService.reissue(refreshToken);
-        return response.success(JWTokenDto.of(jwt));
-    }
+//    //api docs에 추가해야겠다.
+//    //프론트에서 access token 확인한 뒤에 만료됐다면 다시 신청해줘야함.
+//    @GetMapping("/reissue")
+//    public ResponseEntity<?> reissue(@CookieValue(value="refresh-token", required = false) String refreshToken){
+//        JWToken jwt = authService.reissue(refreshToken);
+//        return response.success(JWTokenDto.of(jwt));
+//    }
 
 //    @GetMapping("/oauth2/{type}")
 //    public void socialLogin(@PathVariable String type) throws IOException {

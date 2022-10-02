@@ -1,6 +1,8 @@
 package com.ssafy.newstudy.model.service;
 
 import com.ssafy.newstudy.exception.InvalidEmailAndPasswordException;
+import com.ssafy.newstudy.model.dao.UserDao;
+import com.ssafy.newstudy.model.dto.BadgeRequestDto;
 import com.ssafy.newstudy.model.dto.UserDto;
 import com.ssafy.newstudy.util.JWToken;
 import com.ssafy.newstudy.util.JwtTokenUtil;
@@ -20,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final UserService userService;
+    private final BadgeService badgeService;
+    private final UserDao userDao;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenUtil jwtTokenUtil;
@@ -35,13 +39,23 @@ public class AuthService {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDto.getEmail(), userDto.getPw());
             Authentication auth = authenticationManagerBuilder.getObject().authenticate(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
+
             return jwtTokenUtil.createToken(userDto, auth);
-//            return ResponseEntity.ok(UserLoginPostRes.of(200, "Success", JwtTokenUtil.getToken(loginInfo.getEmail())));
         }
 
-        // 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
-//        return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null));
         throw new InvalidEmailAndPasswordException();
+    }
+
+    public void saveLoginLog(int u_id){
+        userDao.saveLoginLog(u_id);
+    }
+
+    public void checkLoginCnt(int u_id){
+        int cnt = userDao.checkLoginCnt(u_id);
+        if(cnt==1) badgeService.addBadge(new BadgeRequestDto(u_id, 1));
+        if(cnt==50) badgeService.addBadge(new BadgeRequestDto(u_id, 2));
+        if(cnt==100) badgeService.addBadge(new BadgeRequestDto(u_id, 3));
+        //사실... 이거 1, 50, 100 로만 하는게 아니고 뱃지 확인하고 없으면 addbadge를 해주는게 좋아. 나중에 리팩토링 하자.
     }
 
     public boolean checkRightPw(UserDto userDto) {
@@ -50,7 +64,7 @@ public class AuthService {
     }
 
     public void logout(String refreshToken) {
-        redisUtil.delete(refreshToken);
+//        redisUtil.delete(refreshToken);
     }
 
     public JWToken reissue(String refreshToken) {
@@ -63,10 +77,10 @@ public class AuthService {
         }
 
         // 해당 리프레시 토큰으로 이메일을 뽑아왔는데 뽑아온 이메일로 다시 리프레시 토큰을 가져와서 비교하면 당연히 같지. 왜 있는 코드일까?
-        if(!refreshToken.equals(redisUtil.get(email))){
-            //예외처리
-            return null;
-        }
+//        if(!refreshToken.equals(redisUtil.get(email))){
+//            //예외처리
+//            return null;
+//        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         return jwtTokenUtil.reissueAccessToken(email, auth);

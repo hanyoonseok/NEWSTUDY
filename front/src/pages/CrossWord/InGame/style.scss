@@ -112,6 +112,7 @@
   @media (max-width: 480px) {
     width: 100%;
     margin-left: 0;
+    overflow-y: hidden;
   }
 
   .crossword-hint-article {
@@ -119,6 +120,7 @@
     height: 100%;
     @include FLEX-COLUMN;
     overflow: hidden;
+    padding-bottom: rem(32);
   }
 
   .crossword-submit-btn {
@@ -153,7 +155,12 @@
     overflow-y: auto;
     padding: rem(4) rem(4);
     margin-bottom: rem(6);
+    flex-shrink: 0;
     @include FLEX-COLUMN;
+
+    @media (max-width: 480px) {
+      overflow-y: initial;
+    }
 
     .hint-card {
       width: 100%;
@@ -168,6 +175,7 @@
         display: none;
         padding: 25px 15px;
         height: 100%;
+        align-items: initial;
       }
 
       &.row {
@@ -224,9 +232,26 @@
         padding: 10px;
         font-size: rem(18);
         line-height: rem(22);
+        @include FLEX-COLUMN;
 
         @media (max-width: 480px) {
           font-size: rem(24);
+          height: 100%;
+          justify-content: center;
+          overflow-y: auto;
+          display: block;
+        }
+
+        .hint-card-desc-row {
+          line-height: 1.2;
+          display: flex;
+          b {
+            font-size: rem(6);
+            color: $default-grey;
+          }
+        }
+        .hint-card-desc-row + .hint-card-desc-row {
+          margin-top: rem(8);
         }
       }
     }

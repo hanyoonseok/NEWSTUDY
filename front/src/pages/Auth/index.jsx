@@ -1,6 +1,8 @@
 import "./style.scss";
 import { useState } from "react";
 import React from "react";
+
+import PaperBg from "assets/paper-background.png";
 import Modal from "components/Modal";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
@@ -48,7 +50,7 @@ export default function Auth() {
               회원가입
             </button>
           </div>
-          <div className="content">{tabContent[activeId]}</div>
+          <div className="content"><img src={PaperBg} alt="종이 배경이미지" className="content-backgroundimg"/>{tabContent[activeId]}</div>
         </div>
       </div>
       {isEmailModal && (

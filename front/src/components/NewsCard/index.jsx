@@ -5,9 +5,9 @@ import { category } from "constants/category";
 import { Link } from "react-router-dom";
 
 import "./style.scss";
+import { intToLevel } from "constants";
 
 export default function NewsCard({ news, stretch, query }) {
-  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
   return (
     <div className={`newscard-container ${stretch ? "stretch" : ""}`}>
       <div className="newscard-img-container">
@@ -15,14 +15,10 @@ export default function NewsCard({ news, stretch, query }) {
           <img src={news.thumbnail} alt="" className="newscard-img" />
           <i
             className={`newscard-level ${
-              level_value[news.level].includes("A")
-                ? "Alv"
-                : level_value[news.level].includes("B")
-                ? "Blv"
-                : "Clv"
+              news.level <= 2 ? "Alv" : news.level <= 4 ? "Blv" : "Clv"
             }`}
           >
-            {level_value[news.level]}
+            {intToLevel[news.level]}
           </i>
         </Link>
       </div>
@@ -61,6 +57,7 @@ export default function NewsCard({ news, stretch, query }) {
         ) : (
           <h3 className="newscard-body">{news.content}</h3>
         )}
+
         <div className="newscard-footer">
           <div className="newscard-categories">
             <div className="newscard-category">
