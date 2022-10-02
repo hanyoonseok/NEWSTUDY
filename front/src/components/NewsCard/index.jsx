@@ -2,45 +2,47 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 import { category } from "constants/category";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import "./style.scss";
 import { intToLevel } from "constants";
 
 export default function NewsCard({ news, stretch, query }) {
+  const navigate = useNavigate();
+
+  const onLinkClick = () => {
+    navigate(`/news/${news.n_id}`);
+  };
   return (
-    <div className={`newscard-container ${stretch ? "stretch" : ""}`}>
+    <div
+      className={`newscard-container ${stretch ? "stretch" : ""}`}
+      onClick={onLinkClick}
+    >
       <div className="newscard-img-container">
-        <Link to={`/news/${news.n_id}`}>
-          <img src={news.thumbnail} alt="" className="newscard-img" />
-          <i
-            className={`newscard-level ${
-              news.level <= 2 ? "Alv" : news.level <= 4 ? "Blv" : "Clv"
-            }`}
-          >
-            {intToLevel[news.level]}
-          </i>
-        </Link>
+        <img src={news.thumbnail} alt="" className="newscard-img" />
+        <i
+          className={`newscard-level ${
+            news.level <= 2 ? "Alv" : news.level <= 4 ? "Blv" : "Clv"
+          }`}
+        >
+          {intToLevel[news.level]}
+        </i>
       </div>
       <div className="newscard-contents-container">
         {query ? (
           <h1 className="newscard-title">
-            <Link to={`/news/${news.n_id}`}>
-              {news.title.includes(query) ? (
-                <>
-                  {news.title.split(query)[0]}
-                  <b>{query}</b>
-                  {news.title.split(query)[1]}
-                </>
-              ) : (
-                news.title
-              )}
-            </Link>
+            {news.title.includes(query) ? (
+              <>
+                {news.title.split(query)[0]}
+                <b>{query}</b>
+                {news.title.split(query)[1]}
+              </>
+            ) : (
+              news.title
+            )}
           </h1>
         ) : (
-          <h1 className="newscard-title">
-            <Link to={`/news/${news.n_id}`}>{news.title}</Link>
-          </h1>
+          <h1 className="newscard-title">{news.title}</h1>
         )}
         {query ? (
           <h3 className="newscard-body">

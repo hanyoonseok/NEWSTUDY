@@ -12,6 +12,7 @@ import { intToLevel } from "constants";
 import BadgeModal from "components/BadgeModal";
 import Modal from "components/Modal";
 import NewsContent from "./NewsContent";
+import BackBtn from "components/BackBtn";
 
 export default function NewsDetail() {
   const { newsId } = useParams();
@@ -54,10 +55,16 @@ export default function NewsDetail() {
         scrapListResponse.data.filter((e) => e.n_id === parseInt(newsId))
           .length > 0,
       );
+
+      if (!window.scrollY) return;
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     };
 
     fetchData();
-  }, []);
+  }, [newsId]);
 
   const onWordDrugClick = useCallback(
     (word) => {
@@ -95,9 +102,7 @@ export default function NewsDetail() {
 
   return (
     <div className="newsdetail-container">
-      <div className="back-btn-wrapper">
-        <button className="back-btn"></button>
-      </div>
+      <BackBtn />
       <div className="newsdetail-content-div">
         {newsDetail && (
           <>
