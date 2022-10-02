@@ -11,6 +11,8 @@ import TextToSpeech from "./TextToSpeech";
 import { intToLevel } from "constants";
 import BadgeModal from "components/BadgeModal";
 import Modal from "components/Modal";
+import NewsContent from "./NewsContent";
+import BackBtn from "components/BackBtn";
 
 export default function NewsDetail() {
   const { newsId } = useParams();
@@ -26,17 +28,6 @@ export default function NewsDetail() {
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
-
-  const onWordDrugClick = useCallback(
-    (word) => {
-      if (!isMobile) return;
-
-      if (!selectedWord) setSelectedWord(word);
-      else if (word.eng === selectedWord.eng) setSelectedWord(null);
-      else setSelectedWord(word);
-    },
-    [isMobile, selectedWord],
-  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,10 +55,27 @@ export default function NewsDetail() {
         scrapListResponse.data.filter((e) => e.n_id === parseInt(newsId))
           .length > 0,
       );
+
+      if (!window.scrollY) return;
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     };
 
     fetchData();
-  }, []);
+  }, [newsId]);
+
+  const onWordDrugClick = useCallback(
+    (word) => {
+      if (!isMobile) return;
+
+      if (!selectedWord) setSelectedWord(word);
+      else if (word.eng === selectedWord.eng) setSelectedWord(null);
+      else setSelectedWord(word);
+    },
+    [isMobile, selectedWord],
+  );
 
   const onScrapClick = useCallback(async () => {
     const payload = {
@@ -94,9 +102,7 @@ export default function NewsDetail() {
 
   return (
     <div className="newsdetail-container">
-      <div className="back-btn-wrapper">
-        <button className="back-btn"></button>
-      </div>
+      <BackBtn />
       <div className="newsdetail-content-div">
         {newsDetail && (
           <>
@@ -170,7 +176,9 @@ export default function NewsDetail() {
                   />
                 </div>
               )}
-              <p className="news-article">{newsDetail.content}</p>
+              <div className="news-article">
+                <NewsContent content={newsDetail.content} />
+              </div>
             </section>
             <section className="related-article-section">
               <h3 className="news-subtitle">Related Articles</h3>
