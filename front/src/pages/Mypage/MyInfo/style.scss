@@ -16,6 +16,7 @@
       background-color: #fff;
       border-radius: 35px;
       height: 70%;
+      box-shadow: $light-shadow;
 
       .level-box {
         position: absolute;
@@ -140,6 +141,7 @@
       @include FLEX-CENTER;
       position: relative;
       text-align: center;
+      padding: rem(5) 0;
 
       p:nth-of-type(1) {
         width: 87%;

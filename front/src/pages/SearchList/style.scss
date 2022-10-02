@@ -3,7 +3,6 @@
 .searchlist-container {
   padding: 120px 130px 80px 210px;
   @include STRETCH;
-  background-color: $white;
   @include FLEX-COLUMN;
 
   @media (max-width: 480px) {

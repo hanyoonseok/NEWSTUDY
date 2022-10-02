@@ -16,6 +16,7 @@ html {
   padding: 0;
   text-decoration: none;
   list-style: none;
+  transition: 0.1s ease;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -315,6 +316,17 @@ input:focus {
   background-color: map-get($darkColors, main);
   color: map-get($darkColors, font);
 
+  &::-webkit-scrollbar-track {
+    background-color: $dark-mode-black;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $dark-mode-bg;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: darken($soft-blue, 5%);
+  }
+
   // 뉴스 디테일
   .newsdetail-container {
     .newsdetail-content-div .news-section {
@@ -374,14 +386,13 @@ input:focus {
   }
 
   // 랜딩 페이지
-  .landing-wrapper
-    .daily-keyword
-    .daily-wrapper
-    .daily-right
-    .wordcloud-wrapper
-    .wordcloud-nav
-    .word-category {
-    color: $dark-mode-black;
+  .landing-wrapper .daily-keyword .daily-wrapper {
+    .daily-right .wordcloud-wrapper .wordcloud-nav .word-category {
+      color: $dark-mode-black;
+    }
+    .daily-left .key-ranking:hover {
+      background-color: lighten($color: $dark-mode-bg, $amount: 20);
+    }
   }
 
   // 뉴스 리스트
@@ -399,8 +410,168 @@ input:focus {
       }
     }
   }
-
   .newscard-container .newscard-contents-container .newscard-body {
     color: rgba(255, 255, 255, 0.729);
+  }
+
+  // 마이페이지
+  .mypage {
+    .left-box {
+      .info-box .profile-img {
+        background-color: $dark-mode-bg;
+        .email .fa-envelope {
+          color: $white;
+        }
+      }
+
+      .current {
+        background-color: $dark-mode-bg;
+      }
+      .interest {
+        background-color: $dark-mode-bg;
+
+        .title .icon {
+          color: $white;
+        }
+        .list .category-item {
+          background-color: lighten($color: $dark-mode-black, $amount: 30);
+          border: 0;
+        }
+      }
+    }
+    .right-box {
+      .tab {
+        > button {
+          background-color: map-get($darkColors, main);
+          color: $white;
+
+          &:hover {
+            background-color: $dark-mode-bg;
+
+            &::after {
+              background-color: $white;
+            }
+          }
+
+          &.active {
+            background-color: $dark-mode-bg;
+
+            &::after {
+              background-color: $white;
+            }
+          }
+
+          svg {
+            color: $white;
+          }
+        }
+      }
+
+      .content {
+        background-color: $dark-mode-bg;
+      }
+    }
+  }
+
+  //카테고리 필터 모달
+  .filter-modal-container {
+    background-color: $dark-mode-black;
+    .category-area {
+      .main-category-container .main-category-btn {
+        background-color: $dark-mode-bg;
+
+        &.active {
+          color: $dark-mode-black;
+        }
+      }
+      .sub-category-container .sub-category-name {
+        color: $white;
+
+        &:hover {
+          background-color: lighten($color: $dark-mode-bg, $amount: 20);
+        }
+        input[type="checkbox"]:checked ~ span {
+          background-color: lighten($color: $dark-mode-bg, $amount: 20);
+        }
+      }
+    }
+    .modal-submit-btn {
+      color: $dark-mode-black;
+      .arrow-btn-wrapper .right-arrow-btn {
+        border-color: $dark-mode-black;
+      }
+    }
+  }
+
+  //헤더
+  .header-nav {
+    &.active-search {
+      background-color: $dark-mode-bg;
+    }
+    .search-icon-wrapper {
+      background-color: $dark-mode-bg;
+
+      .search-icon {
+        color: $white;
+      }
+    }
+    .search-container .header-search .input-search {
+      background-color: $dark-mode-bg;
+      color: $white;
+    }
+  }
+  //검색 결과
+  .search-list.visible {
+    background-color: $dark-mode-bg;
+    .search-article:hover {
+      background-color: lighten($color: $dark-mode-bg, $amount: 20);
+    }
+  }
+  .searchlist-container {
+    .hottest-article .hottest-article-title {
+      color: $white;
+    }
+    .search-dates .search-date .date-icon {
+      background-color: $dark-mode-bg;
+    }
+  }
+
+  //오늘의 단어
+  .daily-word-modal .daily-word-modal-body {
+    background-color: $dark-mode-black;
+
+    .modal-header .close {
+      color: $white;
+    }
+  }
+
+  //게임
+  .game-container {
+    background-image: url("../assets/leveltest-dark-bg.png");
+    .game-menu-select-page
+      .game-menu-content-container
+      .game-menu-btn-container
+      .game-card
+      .game-card-title {
+      color: $white;
+    }
+  }
+
+  .crossword-container {
+    .back-btn-wrapper .back-btn {
+      border-color: $white;
+    }
+    .crossword-hint-section {
+      .hint-article-title {
+        color: $white;
+      }
+      .hint-article-list .hint-card {
+        background-color: $dark-mode-bg;
+
+        &:hover {
+          background-color: lighten($color: $dark-mode-bg, $amount: 20);
+        }
+      }
+    }
   }
 }

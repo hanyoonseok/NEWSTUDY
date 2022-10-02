@@ -117,6 +117,7 @@
     height: 100%;
     @include FLEX-COLUMN;
     overflow: hidden;
+    margin-bottom: rem(20);
   }
 
   .crossword-submit-btn {

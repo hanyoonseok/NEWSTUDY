@@ -1,6 +1,6 @@
 @import "variables.scss";
 
-.outside-area {
+.filter-outside-area {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   @include FLEX-CENTER;
 }
 
-.modal-container {
+.filter-modal-container {
   width: rem(400);
   padding: 20px;
   background-color: #fff;

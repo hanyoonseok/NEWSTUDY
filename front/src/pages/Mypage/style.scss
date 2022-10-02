@@ -23,6 +23,28 @@
         font-size: rem(18);
         position: relative;
         background-color: $white;
+        transition: 0.3s all;
+        margin-right: rem(10);
+
+        &:hover {
+          font-weight: bold;
+          background-color: #fff;
+
+          span {
+            color: $soft-blue;
+          }
+
+          &::after {
+            content: "";
+            display: block;
+            background-color: $dark-grey;
+            width: 100%;
+            height: 15%;
+            position: absolute;
+            left: 0;
+            top: 0;
+          }
+        }
 
         svg {
           color: #173042;
