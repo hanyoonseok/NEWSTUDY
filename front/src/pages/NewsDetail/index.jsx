@@ -11,6 +11,7 @@ import TextToSpeech from "./TextToSpeech";
 import { intToLevel } from "constants";
 import BadgeModal from "components/BadgeModal";
 import Modal from "components/Modal";
+import NewsContent from "./NewsContent";
 
 export default function NewsDetail() {
   const { newsId } = useParams();
@@ -26,17 +27,6 @@ export default function NewsDetail() {
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
-
-  const onWordDrugClick = useCallback(
-    (word) => {
-      if (!isMobile) return;
-
-      if (!selectedWord) setSelectedWord(word);
-      else if (word.eng === selectedWord.eng) setSelectedWord(null);
-      else setSelectedWord(word);
-    },
-    [isMobile, selectedWord],
-  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,6 +58,17 @@ export default function NewsDetail() {
 
     fetchData();
   }, []);
+
+  const onWordDrugClick = useCallback(
+    (word) => {
+      if (!isMobile) return;
+
+      if (!selectedWord) setSelectedWord(word);
+      else if (word.eng === selectedWord.eng) setSelectedWord(null);
+      else setSelectedWord(word);
+    },
+    [isMobile, selectedWord],
+  );
 
   const onScrapClick = useCallback(async () => {
     const payload = {
@@ -170,7 +171,9 @@ export default function NewsDetail() {
                   />
                 </div>
               )}
-              <p className="news-article">{newsDetail.content}</p>
+              <div className="news-article">
+                <NewsContent content={newsDetail.content} />
+              </div>
             </section>
             <section className="related-article-section">
               <h3 className="news-subtitle">Related Articles</h3>

@@ -1,0 +1,10 @@
+@import "variables.scss";
+.newsdetail-content-img-wrapper {
+  width: 100%;
+  @include FLEX-CENTER;
+}
+.newsdetail-content-subtitle {
+}
+.newsdetail-content-body {
+  white-space: pre-line;
+}
