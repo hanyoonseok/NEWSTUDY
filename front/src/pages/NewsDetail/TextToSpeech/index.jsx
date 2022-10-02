@@ -25,6 +25,7 @@ export default function TextToSpeech({
       console.log("이 브라우저는 음성 합성을 지원하지 않습니다.");
       return;
     }
+
     const utterThis = new SpeechSynthesisUtterance(news.content);
     utterThis.lang = "en-US"; //언어설정
     utterThis.pitch = 1; //피치
