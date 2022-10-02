@@ -31,8 +31,8 @@ export default function LevelContainer({
   return (
     <div className="newslist-level-container">
       <div
-        className={`newslist-level ${selectedLevel === "A1" ? "active" : ""}`}
-        onClick={onLevelClick("A1")}
+        className={`newslist-level ${selectedLevel === 1 ? "active" : ""}`}
+        onClick={onLevelClick(1)}
       >
         <h1 className="level-title Alv">
           <FontAwesomeIcon icon={faCircle} />
@@ -43,8 +43,8 @@ export default function LevelContainer({
         )}
       </div>
       <div
-        className={`newslist-level ${selectedLevel === "A2" ? "active" : ""}`}
-        onClick={onLevelClick("A2")}
+        className={`newslist-level ${selectedLevel === 2 ? "active" : ""}`}
+        onClick={onLevelClick(2)}
       >
         <h1 className="level-title Alv">
           <FontAwesomeIcon icon={faCircle} />
@@ -55,8 +55,8 @@ export default function LevelContainer({
         )}
       </div>
       <div
-        className={`newslist-level ${selectedLevel === "B1" ? "active" : ""}`}
-        onClick={onLevelClick("B1")}
+        className={`newslist-level ${selectedLevel === 3 ? "active" : ""}`}
+        onClick={onLevelClick(3)}
       >
         <h1 className="level-title Blv">
           <FontAwesomeIcon icon={faCircle} />
@@ -67,8 +67,8 @@ export default function LevelContainer({
         )}
       </div>
       <div
-        className={`newslist-level ${selectedLevel === "B2" ? "active" : ""}`}
-        onClick={onLevelClick("B2")}
+        className={`newslist-level ${selectedLevel === 4 ? "active" : ""}`}
+        onClick={onLevelClick(4)}
       >
         <h1 className="level-title Blv">
           <FontAwesomeIcon icon={faCircle} />
@@ -79,8 +79,8 @@ export default function LevelContainer({
         )}
       </div>
       <div
-        className={`newslist-level ${selectedLevel === "C1" ? "active" : ""}`}
-        onClick={onLevelClick("C1")}
+        className={`newslist-level ${selectedLevel === 5 ? "active" : ""}`}
+        onClick={onLevelClick(5)}
       >
         <h1 className="level-title Clv">
           <FontAwesomeIcon icon={faCircle} />
@@ -91,8 +91,8 @@ export default function LevelContainer({
         )}
       </div>
       <div
-        className={`newslist-level ${selectedLevel === "C2" ? "active" : ""}`}
-        onClick={onLevelClick("C2")}
+        className={`newslist-level ${selectedLevel === 6 ? "active" : ""}`}
+        onClick={onLevelClick(6)}
       >
         <h1 className="level-title Clv">
           <FontAwesomeIcon icon={faCircle} />

@@ -1,0 +1,65 @@
+@import "variables.scss";
+
+.carousel {
+  position: relative;
+  @include FLEX-CENTER;
+  perspective: 90vw;
+  transform-style: preserve-3d;
+  @media (max-width: 480px) {
+    height: 20vh;
+  }
+}
+
+.card-container {
+  position: absolute;
+  transform: rotateY(calc(var(--offset) * 50deg))
+    scaleY(calc(1 + var(--abs-offset) * -0.4))
+    translateZ(calc(var(--abs-offset) * -30rem))
+    translateX(calc(var(--direction) * -5rem));
+  filter: blur(calc(var(--abs-offset) * 0.7rem));
+  transition: all 0.3s ease-out;
+  @media (max-width: 480px) {
+    transform: rotateX(calc(var(--offset) * 30deg))
+      scaleY(calc(1 + var(--abs-offset) * -0.4))
+      translateZ(calc(var(--abs-offset) * -20rem))
+      translateY(calc(var(--direction) * -10rem));
+    filter: blur(calc(var(--abs-offset) * 0.9rem));
+    transition: all 0.3s ease-out;
+  }
+}
+
+.nav {
+  color: rgba($color: $white, $alpha: 0.7);
+  font-size: 3rem;
+  position: absolute;
+  @include FLEX-CENTER;
+  z-index: 2;
+  cursor: pointer;
+  user-select: none;
+  background: unset;
+  border: unset;
+  transition: all 200ms ease;
+
+  &.left {
+    transform: translateX(-25vw) translateY(0);
+    filter: $drop-shadow;
+    &:hover {
+      color: $white;
+    }
+    @media (max-width: 480px) {
+      transform: translateX(0) translateY(-28vw) rotate(90deg);
+    }
+  }
+
+  &.right {
+    filter: $drop-shadow;
+    right: 0;
+    transform: translateX(25vw) translateY(-0%);
+    @media (max-width: 480px) {
+      transform: translateX(50%) translateY(28vw) rotate(90deg);
+    }
+    &:hover {
+      color: $white;
+    }
+  }
+}

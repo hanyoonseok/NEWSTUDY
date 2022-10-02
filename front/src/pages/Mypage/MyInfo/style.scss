@@ -77,7 +77,11 @@
       }
 
       .email {
-        font-family: Arial;
+        padding: 10px 5px;
+        border-radius: 10px;
+        font-family: $eng-font;
+        font-size: rem(16);
+        margin-bottom: 10px;
         .fa-envelope {
           color: #3f414b;
         }
@@ -100,8 +104,7 @@
       width: 100%;
       padding: 3% 6%;
 
-      .fa-thumbtack {
-        transform: rotate(-45deg);
+      svg {
         color: $blue;
       }
 

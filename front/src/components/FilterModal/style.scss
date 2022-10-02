@@ -8,6 +8,9 @@
   height: 100%;
   background-color: rgba(133, 137, 159, 0.3);
   z-index: 100;
+  font-family: $eng-title-font;
+  font-weight: bold;
+  color: $dark-grey;
   @include FLEX-CENTER;
 }
 
@@ -50,9 +53,12 @@
         height: rem(36);
         cursor: pointer;
         @include FLEX-CENTER;
-
+        transition: all 300ms ease;
+        &:hover {
+          background-color: $light-blue;
+        }
         &.active {
-          background-color: $soft-blue;
+          background-color: $light-blue;
         }
 
         span {
@@ -77,6 +83,7 @@
       }
       .sub-category-name {
         width: 100%;
+        font-size: rem(14);
         position: relative;
         @include FLEX-CENTER;
         border-radius: 7px;
@@ -95,7 +102,7 @@
           &:checked ~ span {
             width: 100%;
             height: 100%;
-            background-color: #bbcbff;
+            background-color: #e1e8ff;
           }
         }
 
