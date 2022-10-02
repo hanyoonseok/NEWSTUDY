@@ -5,6 +5,10 @@
   right: 5%;
   bottom: 5%;
   z-index: 1;
+  @media (max-width: 480px) {
+    right: 10%;
+    bottom: 10%;
+  }
 }
 #top {
   font-weight: bold;

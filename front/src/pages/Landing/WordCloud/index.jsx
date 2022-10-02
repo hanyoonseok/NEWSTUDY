@@ -6,12 +6,6 @@ import { useMediaQuery } from "react-responsive";
 import { useEffect } from "react";
 
 export default function Wordcloud({ wordRanking }) {
-  // const word = {
-  //   text: words.eng,
-  //   category: words.c_id,
-  //   value: words.cnt,
-  // };
-
   const words = [];
 
   const matchWordType = () => {

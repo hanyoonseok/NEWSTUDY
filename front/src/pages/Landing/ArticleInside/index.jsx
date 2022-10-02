@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { category } from "constants/category";
+import { Link } from "react-router-dom";
 
 export default function ArticleInside({ Article }) {
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
@@ -20,12 +21,14 @@ export default function ArticleInside({ Article }) {
         {activeGoArticle && (
           <div className="article-screen">
             <div className="border"></div>
-            <span>
-              기사보러가기 &nbsp;&nbsp;
-              <i>
-                <FontAwesomeIcon icon={faAnglesRight} />
-              </i>
-            </span>
+            <Link to={`/news/${Article.n_id}`}>
+              <span>
+                기사보러가기 &nbsp;&nbsp;
+                <i>
+                  <FontAwesomeIcon icon={faAnglesRight} />
+                </i>
+              </span>
+            </Link>
           </div>
         )}
         <div className="article-img">
@@ -50,14 +53,27 @@ export default function ArticleInside({ Article }) {
             <img src={require("assets/article.png")} />
           )}
         </div>
-        <span className="article-category">
-          <i>
-            <FontAwesomeIcon icon={faCircle} />
-          </i>
-          {category[c_id].main}
+        <span className="article-categories">
+          <span className="article-category-main">
+            {" "}
+            <i>
+              <FontAwesomeIcon icon={faCircle} />
+            </i>
+            {category[c_id].main}{" "}
+          </span>
+
+          <span className="article-category-sub">
+            <i>
+              <FontAwesomeIcon icon={faCircle} />
+            </i>
+            {category[c_id].sub}
+          </span>
         </span>
+
         <div className="article-info">
-          <h2 className="article-title">{title}</h2>
+          <Link to={`/news/${Article.n_id}`}>
+            <h2 className="article-title">{title}</h2>
+          </Link>
           <div className={`article-content visible`}>{content}</div>
         </div>
       </div>

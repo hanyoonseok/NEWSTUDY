@@ -30,7 +30,9 @@
     .question-desc {
       @include FLEX-CENTER;
       font-family: $eng-font;
-      font-size: rem(26);
+      font-weight: 500;
+      color: $dark-grey;
+      font-size: rem(23);
     }
     @media (max-width: 480px) {
       width: 100%;

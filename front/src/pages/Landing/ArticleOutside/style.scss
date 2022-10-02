@@ -5,7 +5,6 @@
   padding: 0.5vw;
   margin: 10px 0;
 
-  cursor: pointer;
   transition: all 300ms ease;
   border-radius: 20px;
   &:hover {
@@ -31,11 +30,12 @@
   }
 
   .article-level {
-    width: rem(28);
-    height: rem(28);
+    width: rem(30);
+    height: rem(30);
     border-radius: 28px;
     color: #fff;
     font-size: rem(16);
+    font-weight: 600;
     font-family: $eng-title-font;
     font-style: initial;
     position: absolute;
@@ -55,6 +55,24 @@
   }
   .article-category {
     float: right;
+    i {
+      cursor: auto;
+    }
+  }
+  .sub {
+    margin-left: rem(7);
+    color: $blue;
+    background-color: rgba($color: $soft-blue, $alpha: 0.3);
+    border: 1px solid $soft-blue;
+    i {
+      font-size: 0.7rem;
+      margin-right: 5px;
+    }
+    @media (max-width: 480px) {
+      font-size: 0.6rem;
+      padding: 1px 3px;
+      border-radius: 4px;
+    }
   }
   .article-info-desc {
     margin: 0 4%;
@@ -69,6 +87,7 @@
       font-family: $eng-fontB;
       font-weight: 800;
       font-size: 1.3rem;
+      color: $dark-grey;
       margin-bottom: 3%;
       @include TEXT-OVERFLOW;
       @media (max-width: 480px) {

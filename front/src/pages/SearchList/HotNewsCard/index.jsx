@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
 import { category } from "constants/category";
+import { Link } from "react-router-dom";
 
 import React from "react";
 
@@ -21,36 +22,52 @@ function HotNewsCard({ news, isMobile, query }) {
       >
         {level_value[news.level]}
       </i>
-      {isMobile && (
-        <div className="hottest-article-category mobile">
-          <FontAwesomeIcon icon={faCircle} />
-          {news.c_id}
-        </div>
-      )}
-      <span className="hottest-article-img">
-        <img src={news.thumbnail} alt="article"></img>
-      </span>
+      <Link to={`/news/${news.n_id}`}>
+        <span className="hottest-article-img">
+          <img src={news.thumbnail} alt="article"></img>
+        </span>
+      </Link>
       <h1 className="hottest-article-title">
         {news.title.includes(query) ? (
           <>
-            {news.title.split(query)[0]}
-            <b>{query}</b>
-            {news.title.split(query)[1]}
+            <Link to={`/news/${news.n_id}`}>
+              {news.title.split(query)[0]}
+              <b>{query}</b>
+              {news.title.split(query)[1]}
+            </Link>
           </>
         ) : (
-          news.title
+          <Link to={`/news/${news.n_id}`}>news.title</Link>
         )}
       </h1>
       {!isMobile && (
         <div className="hottest-article-footer">
-          <div className="hottest-article-category">
-            <FontAwesomeIcon icon={faCircle} />
-            {category[news.c_id].main}
+          <div className="newscard-categories">
+            <div className="newscard-category">
+              <FontAwesomeIcon icon={faCircle} />
+              {category[news.c_id].main}
+            </div>
+            <div className="newscard-category-sub">
+              <FontAwesomeIcon icon={faCircle} />
+              {category[news.c_id].sub}
+            </div>
           </div>
           <FontAwesomeIcon
             icon={faBookmark}
             className="hottest-article-bookmark"
           />
+        </div>
+      )}
+      {isMobile && (
+        <div className="newscard-categories mobile">
+          <div className="newscard-category ">
+            <FontAwesomeIcon icon={faCircle} />
+            {category[news.c_id].main}
+          </div>
+          <div className="newscard-category-sub">
+            <FontAwesomeIcon icon={faCircle} />
+            {category[news.c_id].sub}
+          </div>
         </div>
       )}
     </div>

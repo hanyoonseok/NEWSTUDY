@@ -10,11 +10,13 @@
     width: 100%;
     height: rem(300);
   }
-  .hottest-article-img {
+  a {
     width: 100%;
     height: 60%;
+  }
+  .hottest-article-img {
     @media (max-width: 480px) {
-      height: 80%;
+      height: 75%;
     }
     > img {
       width: 100%;
@@ -59,6 +61,9 @@
     font-family: $eng-font;
     margin-top: rem(10);
     flex-shrink: 0;
+    > a {
+      color: $dark-grey;
+    }
   }
 
   .hottest-article-footer {
@@ -73,24 +78,46 @@
       margin-left: 10px;
     }
   }
-  .hottest-article-category {
-    padding: 4px 8px;
-    border-radius: 8px;
-    font-size: rem(14);
-    font-family: $eng-font;
-    border: 1px solid #ff7171;
-    background-color: rgba(255, 185, 185, 0.4);
-    color: #ff7a7a;
+  .newscard-categories {
     @include FLEX-CENTER;
-
-    svg {
-      margin-right: 4px;
+    @media (max-width: 480px) {
+      justify-content: flex-end;
+      margin: 10px 0;
     }
+    .newscard-category {
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: rem(14);
+      font-family: $eng-font;
+      border: 1px solid #ff7171;
+      background-color: rgba(255, 185, 185, 0.4);
+      color: #ff7a7a;
+      @include FLEX-CENTER;
 
-    &.mobile {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+      svg {
+        margin-right: 4px;
+        font-size: rem(10);
+      }
+    }
+    .newscard-category-sub {
+      margin-left: 10px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: rem(14);
+      font-family: $eng-font;
+      border: 1px solid $soft-blue;
+      background-color: rgba($soft-blue, 0.4);
+      color: $blue;
+      @include FLEX-CENTER;
+
+      svg {
+        font-size: rem(10);
+        margin-right: 4px;
+      }
+
+      &.sub {
+        border: 1px solid #323232;
+      }
     }
   }
 }

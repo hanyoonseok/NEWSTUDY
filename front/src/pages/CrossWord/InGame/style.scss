@@ -104,6 +104,7 @@
 
 .crossword-hint-section {
   width: 40%;
+  padding: rme(20);
   height: 100%;
   @include FLEX-COLUMN;
   margin-left: rem(30);
@@ -114,6 +115,7 @@
   }
 
   .crossword-hint-article {
+    padding: rem(10);
     height: 100%;
     @include FLEX-COLUMN;
     overflow: hidden;
@@ -218,7 +220,10 @@
       .hint-card-desc {
         font-family: $eng-font;
         word-break: keep-all;
+        font-weight: 500;
+        padding: 10px;
         font-size: rem(18);
+        line-height: rem(22);
 
         @media (max-width: 480px) {
           font-size: rem(24);

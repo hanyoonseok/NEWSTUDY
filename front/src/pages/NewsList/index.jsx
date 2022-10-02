@@ -43,6 +43,7 @@ export default function NewsList() {
     cidArray.map((i) => {
       categories.push(category[i]);
     });
+    setCidArray(cidArray);
     setSelectedCategory(categories);
     console.log(category);
   };
@@ -53,6 +54,9 @@ export default function NewsList() {
       setSelectedLevel(lv);
       setPage(1);
       setNewsList([]);
+      // 선택한 카테고리 리스트를 삭제해주장
+      setCidArray([]);
+      setSelectedCategory([]);
     },
     [selectedLevel],
   );
@@ -157,6 +161,10 @@ export default function NewsList() {
                     {!isMobile && (
                       <div className="hottest-article-footer">
                         <div className="hottest-article-category">
+                          <FontAwesomeIcon icon={faCircle} />
+                          {category[newsList[0].c_id].main}
+                        </div>{" "}
+                        <div className="hottest-article-category sub">
                           <FontAwesomeIcon icon={faCircle} />
                           {category[newsList[0].c_id].main}
                         </div>

@@ -3,6 +3,7 @@ import "./style.scss";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 import {
   faCalendarDays,
   faCircle,
@@ -12,14 +13,14 @@ import Calendar from "react-calendar";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import axios from "axios";
+import { category } from "constants/category";
+
 import NewsCard from "components/NewsCard";
 import HotNewsCard from "./HotNewsCard";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
 import LevelRange from "./LevelRange";
 import TopBtn from "components/TopBtn";
-import { category } from "constants/category";
-
 function SearchList() {
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
@@ -366,9 +367,16 @@ function SearchList() {
                   </i>
                 </div>
                 <div>
-                  <div className="date">
-                    {moment(startDay).format("YYYY년 MM월 DD일")}
-                  </div>
+                  {!isMobile ? (
+                    <div className="date">
+                      {moment(startDay).format("YYYY년 MM월 DD일")}
+                    </div>
+                  ) : (
+                    <div className="date">
+                      {moment(startDay).format("YY.MM.DD")}
+                    </div>
+                  )}
+
                   <div
                     className={`calendar ${
                       activeStartDate ? "visible" : "hidden"
@@ -387,9 +395,15 @@ function SearchList() {
                     <FontAwesomeIcon icon={faCalendarDays} />
                   </i>
                 </div>
-                <div className="date">
-                  {moment(endDay).format("YYYY년 MM월 DD일")}
-                </div>
+                {!isMobile ? (
+                  <div className="date">
+                    {moment(startDay).format("YYYY년 MM월 DD일")}
+                  </div>
+                ) : (
+                  <div className="date">
+                    {moment(startDay).format("YY.MM.DD")}
+                  </div>
+                )}
 
                 <div
                   className={`calendar ${activeEndDate ? "visible" : "hidden"}`}

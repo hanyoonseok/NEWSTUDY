@@ -7,16 +7,15 @@ import "aos/dist/aos.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { category } from "constants/category";
+import { Link } from "react-router-dom";
+
 import {
   faBorderAll,
   faBaseballBatBall,
-  faChevronRight,
-  faChevronLeft,
   faCircle,
   faMicrochip,
   faGlobe,
   faEllipsis,
-  faFileWord,
   faLeaf,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -24,8 +23,7 @@ import Wordcloud from "./WordCloud";
 import ArticleInside from "./ArticleInside";
 import ArticleOutside from "./ArticleOutside";
 import TopBtn from "components/TopBtn";
-
-const MAX_VISIBILITY = 3;
+import UserfitArticle from "./UserfitArticle";
 
 function SectionTitle({ sectionTitle }) {
   const user = useSelector((state) => state.user);
@@ -98,45 +96,6 @@ function KeywordRanking({ item, rank }) {
   );
 }
 
-function UserfitArticle({ children }) {
-  const [active, setActive] = useState(2);
-  const count = React.Children.count(children);
-  return (
-    <div className="carousel">
-      {active > 0 && (
-        <button className="nav left" onClick={() => setActive((i) => i - 1)}>
-          <i>
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </i>
-        </button>
-      )}
-      {React.Children.map(children, (child, i) => (
-        <div
-          key={i}
-          className="card-container"
-          style={{
-            "--active": i === active ? 1 : 0,
-            "--offset": (active - i) / 3,
-            "--direction": Math.sign(active - i),
-            "--abs-offset": Math.abs(active - i) / 3,
-            opacity: Math.abs(active - i) >= MAX_VISIBILITY ? "0" : "1",
-            display: Math.abs(active - i) > MAX_VISIBILITY ? "none" : "block",
-          }}
-        >
-          {child}
-        </div>
-      ))}
-      {active < count - 1 && (
-        <button className="nav right" onClick={() => setActive((i) => i + 1)}>
-          <i>
-            <FontAwesomeIcon icon={faChevronRight} />
-          </i>
-        </button>
-      )}
-    </div>
-  );
-}
-
 function Landing() {
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
   const [user, setUser] = useState(useSelector((state) => state.user));
@@ -145,7 +104,9 @@ function Landing() {
   const [userFitNews, setUserFitNews] = useState(null);
   const [hotNews, setHotNews] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [active, setActive] = useState(1);
   const [error, setError] = useState(null);
+  const [nowDate, setNowDate] = useState(new Date());
 
   const onClickSwitchTab = (id) => {
     setActiveId(id);
@@ -220,31 +181,33 @@ function Landing() {
 
   if (error) return <div>{error} 에러가 발생했습니다.</div>;
   if (loading) return <div>로딩중..</div>;
+
   return (
     <div className="landing-wrapper">
       <div className="landing-header">
-        <div>Wednesday, September 7, 2022</div>
-      </div>
-      <div className="recommend-word">
-        <i>
-          <FontAwesomeIcon icon={faFileWord} />
-        </i>
-        &nbsp;&nbsp; 어떤걸 추가하고싶긴 한데..
+        <div>Date | {nowDate.toUTCString().substring(0, 16)}</div>
       </div>
       {/* 사용자 맞춤 기사 */}
+
       <section className="userfit" data-aos="fade-up" data-aos-delay="300">
         <SectionTitle sectionTitle={sectionTitle[0]}></SectionTitle>
-
-        <div className="userfit-articles">
-          <UserfitArticle>
-            {userFitNews &&
-              userFitNews.map((fitArticle, index) => (
-                <ArticleInside Article={fitArticle} key={index}></ArticleInside>
-              ))}
-          </UserfitArticle>
-        </div>
         {userFitNews && (
-          <div className="userfit-order">1/{userFitNews.length}</div>
+          <>
+            <div className="userfit-articles">
+              <UserfitArticle setActive={setActive} active={active}>
+                {userFitNews &&
+                  userFitNews.map((fitArticle, index) => (
+                    <ArticleInside
+                      Article={fitArticle}
+                      key={index}
+                    ></ArticleInside>
+                  ))}
+              </UserfitArticle>
+            </div>
+            <div className="userfit-order">
+              {active + 1}/{userFitNews.length}
+            </div>
+          </>
         )}
       </section>
       {/* 핫토픽 */}
@@ -260,21 +223,31 @@ function Landing() {
                 data-aos-delay="100"
               >
                 <>
-                  <div className="hottopic-img">
-                    <img src={hotNews[0].thumbnail} alt="article"></img>
-                    <span
-                      className={`article-level ${
-                        level_value[hotNews[0].level].includes("A")
-                          ? "Alv"
-                          : level_value[hotNews[0].level].includes("B")
-                          ? "Blv"
-                          : "Clv"
-                      }`}
-                    >
-                      {level_value[hotNews[0].level]}
-                    </span>
-                  </div>
-                  <h3 className="hottopic-title">{hotNews[0].title}</h3>
+                  <Link to={`/news/${hotNews[0].n_id}`}>
+                    <div className="hottopic-img">
+                      <img src={hotNews[0].thumbnail} alt="article"></img>
+                      <span
+                        className={`article-level ${
+                          level_value[hotNews[0].level].includes("A")
+                            ? "Alv"
+                            : level_value[hotNews[0].level].includes("B")
+                            ? "Blv"
+                            : "Clv"
+                        }`}
+                      >
+                        {level_value[hotNews[0].level]}
+                      </span>
+                    </div>
+                  </Link>{" "}
+                  <Link to={`/news/${hotNews[0].n_id}`}>
+                    <h3 className="hottopic-title">{hotNews[0].title}</h3>
+                  </Link>
+                  <span className="article-category sub">
+                    <i>
+                      <FontAwesomeIcon icon={faCircle} />
+                    </i>
+                    {category[hotNews[0].c_id].main}
+                  </span>{" "}
                   <span className="article-category">
                     <i>
                       <FontAwesomeIcon icon={faCircle} />
@@ -313,7 +286,7 @@ function Landing() {
               })}
           </div>
           <div className="daily-right">
-            <div className="wordcloud-wrapper" data-aos="fade-left">
+            <div className="wordcloud-wrapper" data-aos="fade-in">
               <ul className="wordcloud-nav">
                 <li
                   className={`${

@@ -133,6 +133,7 @@
           @include FLEX-CENTER;
 
           svg {
+            font-size: rem(10);
             margin-right: 4px;
           }
 
@@ -140,6 +141,12 @@
             position: absolute;
             top: 20px;
             right: 20px;
+          }
+          &.sub {
+            margin-left: rem(7);
+            border: 1px solid $soft-blue;
+            background-color: rgba($soft-blue, 0.4);
+            color: $blue;
           }
         }
       }

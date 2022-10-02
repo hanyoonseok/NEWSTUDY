@@ -212,6 +212,10 @@
     .user-select-date {
       margin-top: 20px;
       @include FLEX-CENTER;
+      @media (max-width: 480px) {
+        width: 90%;
+        margin: 10px auto;
+      }
       .search-date {
         @include FLEX-CENTER;
         position: relative;
@@ -255,7 +259,7 @@
           font-size: rem(14);
           margin: 0 15px;
           @media (max-width: 480px) {
-            font-size: rem(18);
+            font-size: rem(15);
           }
         }
       }
@@ -270,6 +274,9 @@
         &:hover {
           transform: scale(1.05);
           background-color: #bdc0cf;
+        }
+        @media (max-width: 480px) {
+          padding: 5px 7px;
         }
       }
       .search-separator {

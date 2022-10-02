@@ -158,7 +158,9 @@ export default function Header() {
           <ul>
             {searchResults.map((article, index) => (
               <li key={index}>
-                <SearchResult article={article} query={searchQuery} />
+                <Link to={`/news/${article.n_id}`}>
+                  <SearchResult article={article} query={searchQuery} />
+                </Link>
               </li>
             ))}
           </ul>

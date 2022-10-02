@@ -49,6 +49,10 @@
   filter: $drop-shadow-dark;
   background-color: #fff;
   touch-action: pan-x;
+  @media (max-width: 480px) {
+    width: 18px;
+    height: 24px;
+  }
 }
 .rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
   border-color: $soft-blue;

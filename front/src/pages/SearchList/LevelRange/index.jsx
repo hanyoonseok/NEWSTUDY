@@ -18,7 +18,6 @@ export default function LevelRange({ getSelectedLevel }) {
 
   return (
     <>
-      {/* <Slider {...sliderProps} /> */}
       <Range
         {...sliderProps}
         onChange={(e) => {
