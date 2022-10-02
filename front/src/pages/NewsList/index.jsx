@@ -62,7 +62,6 @@ export default function NewsList() {
   );
 
   useEffect(() => {
-    console.log("유저정보 찍기 ", user);
     const fetchData = async () => {
       axios.defaults.headers.common[
         "Authorization"
@@ -73,6 +72,7 @@ export default function NewsList() {
       let data;
       if (cidArray.length === 0) {
         data = {
+          per_page: 10,
           startlevel: selectedLevel,
           endlevel: selectedLevel,
           page: page,
@@ -80,6 +80,7 @@ export default function NewsList() {
       } else {
         // cidArray가 있으면
         data = {
+          per_page: 10,
           startlevel: selectedLevel,
           endlevel: selectedLevel,
           page: page,
