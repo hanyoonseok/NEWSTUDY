@@ -157,7 +157,7 @@ export default function Header() {
         <div className={`search-list ${activeSearch ? "visible" : "hidden"}`}>
           <ul>
             {searchResults.slice(0, 5).map((article, index) => (
-              <li key={index}>
+              <li key={index} onClick={() => setActiveSearch(false)}>
                 <Link to={`/news/${article.n_id}`}>
                   <SearchResult article={article} query={searchQuery} />
                 </Link>

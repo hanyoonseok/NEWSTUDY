@@ -170,9 +170,12 @@ export default function Sidebar() {
                   }`}
                 >
                   <ul>
-                    {searchResults.map((article, index) => (
-                      <li key={index}>
-                        <SearchResult article={article} query={searchQuery} />
+                    {searchResults.slice(0, 5).map((article, index) => (
+                      <li key={index} onClick={() => setActiveSearch(false)}>
+                        {" "}
+                        <Link to={`/news/${article.n_id}`}>
+                          <SearchResult article={article} query={searchQuery} />
+                        </Link>
                       </li>
                     ))}
                   </ul>
