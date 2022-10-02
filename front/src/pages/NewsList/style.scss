@@ -29,10 +29,12 @@
     border-radius: 20px;
     box-shadow: $light-shadow;
     padding: rem(30) rem(70);
+    min-height: 65vh;
 
     @media (max-width: 480px) {
       padding: 0;
       box-shadow: none;
+      min-height: 100vh;
     }
 
     .newslist-top-area {
@@ -52,7 +54,7 @@
     }
 
     .newslist-mid-area {
-      margin-top: rem(30);
+      margin: rem(30) 0;
       width: 100%;
       @include FLEX-ALIGN-CENTER;
 

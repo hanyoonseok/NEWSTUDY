@@ -25,14 +25,23 @@ export default function Header({ isDark, setIsDark }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const searchInput = useRef();
+  const localStorageDark = localStorage.getItem("dark");
 
   const clickDarkToggle = (checked) => {
     if (checked) {
       setIsDark(true);
+      localStorage.setItem("dark", true);
     } else {
       setIsDark(false);
+      localStorage.removeItem("dark");
     }
   };
+
+  useEffect(() => {
+    if (localStorageDark === null || localStorageDark === "false")
+      setIsDark(false);
+    else setIsDark(true);
+  }, [localStorageDark]);
 
   const user = useSelector((state) => state.user);
   const [searchResults, setSearchResults] = useState(null);
@@ -142,7 +151,11 @@ export default function Header({ isDark, setIsDark }) {
             오늘의 단어
           </button>
           <Link to="/mypage" className="profile-img">
-            <img src={require("assets/profile.png")} alt="article"></img>
+            {user.src ? (
+              <img src={user.src} alt="article"></img>
+            ) : (
+              <img src={require("assets/user_globe.png")} alt="article"></img>
+            )}
           </Link>
         </div>
         <div

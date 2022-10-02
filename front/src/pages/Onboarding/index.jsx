@@ -12,6 +12,9 @@ import Page5 from "./Page5";
 import Dots from "./Dots";
 import Marker from "assets/marker.jpg";
 import Earth from "assets/earthmap_color.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon } from "@fortawesome/free-solid-svg-icons";
+import DarkToggle from "components/DarkToggle";
 
 export default function Onboarding() {
   const [scrollIdx, setScrollIdx] = useState(1);
@@ -155,8 +158,21 @@ export default function Onboarding() {
     navigate("/signup");
   };
 
+  const localStorageDark = localStorage.getItem("dark");
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    if (localStorageDark === null || localStorageDark === "false")
+      setIsDark(false);
+    else setIsDark(true);
+  }, [localStorageDark]);
+
   return (
-    <div className="main-wrapper" ref={mainWrapperRef}>
+    <div
+      className={`main-wrapper ${isDark ? "dark" : ""}`}
+      ref={mainWrapperRef}
+    >
+      <DarkToggle isDark={isDark} setIsDark={setIsDark} />
       <button className="login-btn" onClick={onLoginClick}>
         로그인
       </button>
@@ -170,7 +186,11 @@ export default function Onboarding() {
           globeCloudsTexture={null}
           options={{
             enableCameraZoom: false,
-            focusDistanceRadiusScale: 3,
+            pointLightPositionRadiusScales: [1, 1, -2],
+            globeGlowCoefficient: 0,
+            globeGlowColor: "#96b2ff",
+            globeGlowPower: 2,
+            globeGlowRadiusScale: 0.07,
           }}
         />
       </div>

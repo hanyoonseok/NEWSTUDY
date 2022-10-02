@@ -63,15 +63,21 @@
       z-index: 15;
       &:hover {
         background-color: $soft-blue;
-        border: 3px solid $blue;
+        transform: scale(1.05);
       }
     }
     .profile-img {
+      width: rem(40);
+      height: rem(40);
+      border-radius: 50%;
       margin-left: 20px;
+      display: flex;
       cursor: pointer;
+
       > img {
-        width: 45px;
-        height: 45px;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
       }
       &:hover {
         transform: scale(1.1);

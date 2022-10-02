@@ -1,11 +1,10 @@
 import "./style.scss";
-import { useState } from "react";
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import PaperBg from "assets/paper-background.png";
 import Modal from "components/Modal";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import DarkToggle from "components/DarkToggle";
 
 export default function Auth() {
   const [activeId, setActiveId] = useState(0);
@@ -21,36 +20,55 @@ export default function Auth() {
     1: <SignUp setIsEmailModal={setIsEmailModal} />,
   };
 
+  const localStorageDark = localStorage.getItem("dark");
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    if (localStorageDark === null || localStorageDark === "false")
+      setIsDark(false);
+    else setIsDark(true);
+  }, [localStorageDark]);
+
   return (
     <>
-      <div className="background-div">
-        <div className="left-div">
-          <div className="logo-img">
-            <img src={require("assets/logo.png")} alt="로고이미지"></img>
+      <div className="auth-div">
+        <DarkToggle isDark={isDark} setIsDark={setIsDark} />
+        <div>
+          <div className="left-div">
+            <div className="logo-img">
+              <img src={require("assets/logo.png")} alt="로고이미지"></img>
+            </div>
+            <div className="earth-img">
+              <img
+                src={require("assets/earth-component.png")}
+                alt="지구 컴포넌트 이미지"
+              ></img>
+            </div>
           </div>
-          <div className="earth-img">
-            <img
-              src={require("assets/earth-component.png")}
-              alt="지구 컴포넌트 이미지"
-            ></img>
+          <div className="right-div">
+            <div className="tab">
+              <button
+                className={`${activeId === 0 ? "active" : ""}`}
+                onClick={() => onClickSwitchTab(0)}
+              >
+                로그인
+              </button>
+              <button
+                className={`${activeId === 1 ? "active" : ""}`}
+                onClick={() => onClickSwitchTab(1)}
+              >
+                회원가입
+              </button>
+            </div>
+            <div className="content">
+              <img
+                src={PaperBg}
+                alt="종이 배경이미지"
+                className="content-backgroundimg"
+              />
+              {tabContent[activeId]}
+            </div>
           </div>
-        </div>
-        <div className="right-div">
-          <div className="tab">
-            <button
-              className={`${activeId === 0 ? "active" : ""}`}
-              onClick={() => onClickSwitchTab(0)}
-            >
-              로그인
-            </button>
-            <button
-              className={`${activeId === 1 ? "active" : ""}`}
-              onClick={() => onClickSwitchTab(1)}
-            >
-              회원가입
-            </button>
-          </div>
-          <div className="content"><img src={PaperBg} alt="종이 배경이미지" className="content-backgroundimg"/>{tabContent[activeId]}</div>
         </div>
       </div>
       {isEmailModal && (

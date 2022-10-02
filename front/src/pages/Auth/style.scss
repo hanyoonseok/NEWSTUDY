@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 /* *************** Web View ********************* */
-.background-div {
+.auth-div {
   @include BACKGROUND-IMAGE("assets/background.png");
   @include FLEX-BETWEEN;
   width: 100%;
@@ -10,7 +10,7 @@
   position: absolute;
   top: 0;
   left: 0;
-
+  flex-direction: column;
 
   > div {
     width: 50%;
@@ -70,27 +70,26 @@
       // @include BACKGROUND-IMAGE("assets/paper-background.png");
       @include FLEX-ALIGN-CENTER;
       width: 100%;
-      max-width:500px;
-      height:initial;
+      max-width: 500px;
+      height: initial;
       background-size: contain;
       padding: 5%;
       align-items: normal;
-      position:relative;
-      display:flex;
+      position: relative;
+      display: flex;
 
-
-      .content-backgroundimg{
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
+      .content-backgroundimg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
       }
 
       .email-box {
-        width:100%;
+        width: 100%;
         @include FLEX-BETWEEN;
-     
+
         button {
           padding: 2% 4%;
           word-break: keep-all;
@@ -144,8 +143,7 @@
         .email-box {
           .input-div {
             margin-bottom: 1%;
-            width:80%;
-
+            width: 80%;
           }
         }
         > div:nth-of-type(2),
@@ -273,6 +271,6 @@
   }
 }
 
-.login{
+.login {
   z-index: 2;
 }

@@ -13,6 +13,7 @@
     background-color: #eef4ff;
     border-radius: 26px;
     @include FLEX-ALIGN-CENTER;
+    box-shadow: $light-shadow;
 
     .question-index {
       @include FLEX-CENTER;
@@ -88,6 +89,7 @@
       font-weight: bold;
       margin-bottom: rem(4);
       margin-right: rem(30);
+      box-shadow: 0 4px 4px rgba(63, 65, 75, 0.3);
 
       @media (max-width: 480px) {
         width: rem(50);

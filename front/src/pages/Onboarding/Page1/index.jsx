@@ -10,11 +10,7 @@ export default function Page1({ activePage }) {
   return (
     <div className="page-div">
       <div className="background-div"></div>
-      <img
-        src={NEWSTUDY}
-        alt=""
-        className={activePage ? "title-img fade-in" : "title-img"}
-      />
+      <div className={activePage ? "title-img fade-in" : "title-img"} />
       <h3 className={activePage ? "subtitle-h3 slidein-up" : "subtitle-h3"}>
         읽&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;어&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;서&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;세&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;속&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;으&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;로
       </h3>

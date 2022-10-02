@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import "./style.scss";
 
 import Check from "assets/check.png";
-import Crossword from "assets/crossword.png";
-import SpeedQuiz from "assets/speedquiz.png";
 
 export default function GameMenu() {
   return (
@@ -27,21 +25,13 @@ export default function GameMenu() {
               <h1 className="game-card-title">
                 <b>CROSS</b>&nbsp;WORD
               </h1>
-              <img
-                src={Crossword}
-                className="game-card-img"
-                alt="낱말퍼즐 이미지"
-              />
+              <div className="game-card-img crossword-img"></div>
             </Link>
             <Link to="/game/speedquiz" className="game-card">
               <h1 className="game-card-title">
                 <b>SPEED</b>&nbsp;QUIZ
               </h1>
-              <img
-                src={SpeedQuiz}
-                className="game-card-img"
-                alt="낱말퍼즐 이미지"
-              />
+              <div className="game-card-img speedquiz-img"></div>
             </Link>
           </div>
         </div>
