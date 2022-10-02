@@ -134,7 +134,7 @@ public class JwtTokenUtil {
 
     public JWToken createToken(UserDto userDto, Authentication auth) {
         Date date = new Date();
-        Long accessExpires = 30*60*1000L; // 30minutes
+        Long accessExpires = 24*60*60*1000L; // 1day
         Long refreshExpires = 60*60*24*15*1000L; // 15days
 
         String authorities = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority)
@@ -155,7 +155,7 @@ public class JwtTokenUtil {
                 .withIssuedAt(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()))
                 .sign(Algorithm.HMAC512(secretKey.getBytes()));
 
-        redisUtil.set(auth.getName(), refreshToken, refreshExpires);
+//        redisUtil.set(auth.getName(), refreshToken, refreshExpires);
 
         return JWToken.builder()
                 .accessToken(accessToken)

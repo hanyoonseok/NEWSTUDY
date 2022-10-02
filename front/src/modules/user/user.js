@@ -43,6 +43,7 @@ export const getUser = async (token) => {
     src: null,
     accessToken: null,
   };
+
   const request = await axios
     .get(`/user`, {
       headers: {
@@ -50,12 +51,12 @@ export const getUser = async (token) => {
       },
     })
     .then((res) => {
-      console.log(res.data.data);
       userInfo.email = res.data.data.email;
       userInfo.level = res.data.data.level;
       userInfo.nickname = res.data.data.nickname;
       userInfo.src = res.data.data.src;
       userInfo.accessToken = token;
+      userInfo.u_id = res.data.data.u_id;
     });
   return {
     type: GET_USER,

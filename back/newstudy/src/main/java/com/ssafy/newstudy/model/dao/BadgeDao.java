@@ -1,13 +1,15 @@
 package com.ssafy.newstudy.model.dao;
 
-import com.ssafy.newstudy.model.dto.BadgeRequest;
-import com.ssafy.newstudy.model.dto.BadgeResponse;
+import com.ssafy.newstudy.model.dto.BadgeRequestDto;
+import com.ssafy.newstudy.model.dto.BadgeResponseDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface BadgeDao {
-    List<BadgeResponse> getBadge(Integer u_id);
-    int addBadge(BadgeRequest badge);
+    List<BadgeResponseDto> selectBadgeList(Integer u_id);
+    List<BadgeResponseDto> selectNewBadgeList(Integer u_id);
+    int insertBadge(BadgeRequestDto badge) throws Exception;
+    void updateBadge(Integer b_id);
 }

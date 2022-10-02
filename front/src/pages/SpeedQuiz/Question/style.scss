@@ -28,9 +28,18 @@
     }
 
     .question-desc {
-      @include FLEX-CENTER;
+      @include FLEX-COLUMN;
+      width: 100%;
       font-family: $eng-font;
-      font-size: rem(26);
+      font-weight: 500;
+      color: $dark-grey;
+      font-size: rem(23);
+      .question-desc-row {
+        line-height: 1.2;
+        b {
+          font-size: rem(12);
+        }
+      }
     }
     @media (max-width: 480px) {
       width: 100%;

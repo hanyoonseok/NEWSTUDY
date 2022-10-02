@@ -1,13 +1,14 @@
 package com.ssafy.newstudy.model.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BadgeRequest {
+public class BadgeRequestDto {
     private Integer u_id;
     private Integer b_id;
 }

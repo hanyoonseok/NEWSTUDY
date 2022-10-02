@@ -9,6 +9,7 @@
   transition: 0.3s ease;
   padding: rem(14) rem(10);
   border-radius: 20px;
+  cursor: pointer;
   &:hover {
     background-color: rgba(180, 201, 254, 0.15);
     transform: scale(1.02);
@@ -30,11 +31,11 @@
     width: 40%;
     height: 100%;
     position: relative;
-    border-radius: 12px;
 
     .newscard-img {
       width: 100%;
       height: 100%;
+      border-radius: 12px;
     }
 
     .newscard-level {
@@ -70,6 +71,9 @@
     margin-left: 20px;
 
     .newscard-title {
+      > a {
+        color: $dark-grey;
+      }
       font-size: rem(20);
       font-family: $eng-fontB;
       width: 100%;
@@ -83,6 +87,7 @@
     .newscard-body {
       font-size: rem(16);
       font-family: $eng-font;
+      line-height: rem(20);
       color: rgba($color: $dark-grey, $alpha: 0.5);
       font-weight: normal;
       width: 100%;
@@ -92,6 +97,11 @@
       -webkit-line-clamp: 2; //라인수 정함
       -webkit-box-orient: vertical;
 
+      lb {
+        color: $soft-blue;
+        font-weight: bold;
+      }
+
       @media (max-width: 480px) {
         -webkit-line-clamp: 3; //라인수 정함
       }
@@ -100,19 +110,42 @@
     .newscard-footer {
       @include FLEX-BETWEEN;
       width: 100%;
-
-      .newscard-category {
-        padding: 4px 8px;
-        border-radius: 8px;
-        font-size: rem(14);
-        font-family: $eng-font;
-        border: 1px solid #ff7171;
-        background-color: rgba(255, 185, 185, 0.4);
-        color: #ff7a7a;
+      .newscard-categories {
         @include FLEX-CENTER;
+        .newscard-category {
+          padding: 4px 8px;
+          border-radius: 8px;
+          font-size: rem(14);
+          font-family: $eng-font;
+          border: 1px solid #ff7171;
+          background-color: rgba(255, 185, 185, 0.4);
+          color: #ff7a7a;
+          @include FLEX-CENTER;
 
-        svg {
-          margin-right: 4px;
+          svg {
+            margin-right: 4px;
+            font-size: rem(10);
+          }
+        }
+        .newscard-category-sub {
+          margin-left: 10px;
+          padding: 4px 8px;
+          border-radius: 8px;
+          font-size: rem(14);
+          font-family: $eng-font;
+          border: 1px solid $soft-blue;
+          background-color: rgba($soft-blue, 0.4);
+          color: $blue;
+          @include FLEX-CENTER;
+
+          svg {
+            font-size: rem(10);
+            margin-right: 4px;
+          }
+
+          &.sub {
+            border: 1px solid #323232;
+          }
         }
       }
 

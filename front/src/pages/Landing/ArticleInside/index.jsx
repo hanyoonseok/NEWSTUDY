@@ -1,27 +1,80 @@
 import React from "react";
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCircle, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import { category } from "constants/category";
+import { Link } from "react-router-dom";
 
 export default function ArticleInside({ Article }) {
-  const { title, content, level, category } = Article;
+  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
 
+  const { title, content, level, c_id, thumbnail } = Article;
+  const [activeGoArticle, setActiveGoArticle] = useState(false);
   return (
     <>
-      <div className="article-wrapper">
+      <div
+        className="article-wrapper"
+        onMouseOver={() => setActiveGoArticle(true)}
+        onMouseLeave={() => setActiveGoArticle(false)}
+      >
+        {activeGoArticle && (
+          <div className="article-screen">
+            <div className="border"></div>
+            <Link to={`/news/${Article.n_id}`}>
+              <span>
+                기사보러가기 &nbsp;&nbsp;
+                <i>
+                  <FontAwesomeIcon icon={faAnglesRight} />
+                </i>
+              </span>
+            </Link>
+          </div>
+        )}
         <div className="article-img">
-          <img src={require("assets/article.png")} alt="article"></img>
+          <span
+            className={`article-level ${
+              level_value[level].includes("A")
+                ? "Alv"
+                : level_value[level].includes("B")
+                ? "Blv"
+                : "Clv"
+            }`}
+          >
+            {level_value[level]}
+          </span>
+          {thumbnail ? (
+            <img
+              src={thumbnail}
+              alt="article"
+              className={activeGoArticle ? "hover" : "normal"}
+            />
+          ) : (
+            <img src={require("assets/article.png")} />
+          )}
         </div>
-        <span className="article-level">{level}</span>
-        <span className="article-category">
-          <i>
-            <FontAwesomeIcon icon={faCircle} />
-          </i>
-          {category}
+        <span className="article-categories">
+          <span className="article-category-main">
+            {" "}
+            <i>
+              <FontAwesomeIcon icon={faCircle} />
+            </i>
+            {category[c_id].main}{" "}
+          </span>
+
+          <span className="article-category-sub">
+            <i>
+              <FontAwesomeIcon icon={faCircle} />
+            </i>
+            {category[c_id].sub}
+          </span>
         </span>
+
         <div className="article-info">
-          <h2 className="article-title">{title}</h2>
-          <div className="article-content">{content}</div>
+          <Link to={`/news/${Article.n_id}`}>
+            <h2 className="article-title">{title}</h2>
+          </Link>
+          <div className={`article-content visible`}>{content}</div>
         </div>
       </div>
     </>

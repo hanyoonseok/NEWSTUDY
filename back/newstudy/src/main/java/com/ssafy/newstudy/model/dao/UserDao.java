@@ -10,4 +10,7 @@ public interface UserDao {
     UserDto selectUserByUid(int uId);
     void insertUser(UserDto userDto);
     void updateUser(UserDto userDto);
+    void saveLoginLog(int u_id);
+    int checkLoginCnt(int u_id);
+    void saveImage(UserDto userDto);
 }

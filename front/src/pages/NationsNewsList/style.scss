@@ -50,13 +50,11 @@
 
       .nation-info-card {
         position: absolute;
-        // top: 30%;
-        // left: -10%;
-        bottom: 0;
-        right: 0;
-        width: rem(390);
-        height: rem(325);
-        background-color: rgba(255, 255, 255, 0.5);
+        top: 50%;
+        right: 10%;
+        // transform: translate(-50%, -50%);
+        width: rem(280);
+        background-color: rgba(255, 255, 255, 0.4);
         border-radius: 30px;
         padding: rem(20) rem(20);
         @include FLEX-COLUMN;
@@ -83,59 +81,23 @@
         }
 
         .nation-info-taglist {
-          margin-top: rem(18);
+          margin-top: rem(10);
           width: 100%;
           @include FLEX-ALIGN-CENTER;
+          flex-wrap: wrap;
 
           .nation-info-tag {
             padding: rem(6);
             background-color: rgba(195, 230, 255, 0.45);
             border-radius: 6px;
+            font-family: $kor-font;
+            font-weight: 550;
             b {
-              color: #7cb8ff;
+              color: $blue;
             }
           }
           .nation-info-tag + .nation-info-tag {
             margin-left: 6px;
-          }
-        }
-
-        .nation-info-trendlist {
-          @include FLEX-BETWEEN;
-          width: 100%;
-          margin-top: rem(30);
-
-          .nation-info-trend {
-            @include FLEX-COLUMN;
-
-            .trend-circle {
-              width: rem(90);
-              height: rem(90);
-              position: relative;
-              background-color: rgba(255, 255, 255, 0.5);
-              border-radius: 999px;
-
-              .trend-circle-design {
-                position: absolute;
-                top: rem(4.45);
-                left: rem(4.45);
-                width: rem(69.68);
-                height: rem(82.34);
-              }
-            }
-
-            .trend-amount {
-              font-family: $kor-font;
-              font-size: rem(12);
-              color: #c5ffb6;
-              @include FLEX-CENTER;
-              b {
-                color: #000;
-              }
-              svg {
-                color: #b2c3ff;
-              }
-            }
           }
         }
       }
@@ -235,12 +197,42 @@
 
     .nationsnews-list {
       @include STRETCH;
-      overflow-y: auto;
+      overflow-y: hidden;
       @include FLEX-COLUMN;
 
       @media (max-width: 480px) {
         overflow-y: initial;
         margin-top: rem(20);
+      }
+
+      .nationsnews-list-list {
+        width: 100%;
+        overflow-y: auto;
+        padding: 0 0.5rem;
+      }
+    }
+
+    .nationsnews-btn-wrapper {
+      width: 100%;
+      margin-top: rem(10);
+      @include FLEX-CENTER;
+      .nationsnews-morebtn {
+        width: rem(160);
+        height: rem(40);
+        border-radius: 15px;
+        @include FLEX-CENTER;
+        border: 1px solid #a0b8ff;
+        background-color: #fff;
+        font-size: rem(20);
+        font-family: $kor-font;
+        color: #6a6a6a;
+        transition: 0.3s ease;
+        font-weight: bold;
+
+        &:hover {
+          background-color: #a0b8ff;
+          color: #fff;
+        }
       }
     }
   }

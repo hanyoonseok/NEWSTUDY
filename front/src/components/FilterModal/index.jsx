@@ -1,7 +1,6 @@
 import "./style.scss";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLeaf,
@@ -11,16 +10,16 @@ import {
   faGlobe,
   faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
+
+import { category } from "constants/category";
+
 export default function FilterModal({
   text,
   closeHandler,
   sendApi,
   selectedCategory,
-  setSelectedCategory,
 }) {
   // sendApi는 선택 다 한다음 체크된 리스트 가지고 api처리하기 위한 props
-  const user = useSelector((state) => state.user);
-  const [allCategory, setAllCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
   const [active, setActive] = useState("");
   const [cidArray, setCidArray] = useState(
@@ -29,8 +28,11 @@ export default function FilterModal({
     }),
   );
 
-  const addCheckList = (checked, id) => {
-    console.log("지금 체크된 id", id);
+  useEffect(() => {
+    console.log(selectedCategory, cidArray);
+  }, []);
+
+  const addCheckList = (id) => {
     if (cidArray.includes(id)) {
       setCidArray(cidArray.filter((item) => item !== id));
     } else {
@@ -47,25 +49,9 @@ export default function FilterModal({
     faGlobe,
     faEllipsis,
   ];
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .get("/category", {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          setAllCategory(res.data);
-        });
-    };
-    fetchData();
-    return () => {};
-  }, []);
 
   const openSub = (main) => {
-    setSubCategory(allCategory.filter((category) => category.main === main)); //대분류에 맞춰 소분류 설정
+    setSubCategory(category.filter((c) => c && c.main === main)); //대분류에 맞춰 소분류 설정
   };
 
   return (
@@ -101,7 +87,7 @@ export default function FilterModal({
                     type="checkbox"
                     name={sub.c_id}
                     checked={cidArray.includes(sub.c_id)}
-                    onChange={(e) => addCheckList(e.target.checked, sub.c_id)}
+                    onChange={(e) => addCheckList(sub.c_id)}
                   />
                   <span>{sub.sub.replace(/^./, sub.sub[0].toUpperCase())}</span>
                 </label>

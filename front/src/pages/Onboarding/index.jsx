@@ -11,7 +11,7 @@ import Page4 from "./Page4";
 import Page5 from "./Page5";
 import Dots from "./Dots";
 import Marker from "assets/marker.jpg";
-import Earth from "assets/earthmap.jpg";
+import Earth from "assets/earthmap_color.png";
 
 export default function Onboarding() {
   const [scrollIdx, setScrollIdx] = useState(1);
@@ -108,7 +108,7 @@ export default function Onboarding() {
           if (isMobile) {
             globe.current.style.bottom = "-50vh";
           } else {
-            globe.current.style.bottom = "-60vh";
+            globe.current.style.bottom = "-65vh";
           }
           globe.current.style.transform = "translate(-50%, 0) scale(1.5)";
           globe.current.style.left = "50%";

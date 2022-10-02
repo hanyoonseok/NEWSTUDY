@@ -9,12 +9,15 @@ import {
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function TextToSpeech({ news }) {
-  console.log(news);
+export default function TextToSpeech({
+  news,
+  onScrapClick,
+  isScrapped,
+  setIsScrapped,
+}) {
   const synth = window.speechSynthesis;
 
   const textToSpeech = () => {
-    console.log("textToSpeech");
     if (
       typeof SpeechSynthesisUtterance === "undefined" ||
       typeof synth === "undefined"
@@ -22,7 +25,7 @@ export default function TextToSpeech({ news }) {
       console.log("이 브라우저는 음성 합성을 지원하지 않습니다.");
       return;
     }
-    const utterThis = new SpeechSynthesisUtterance(news.body);
+    const utterThis = new SpeechSynthesisUtterance(news.content);
     utterThis.lang = "en-US"; //언어설정
     utterThis.pitch = 1; //피치
     utterThis.rate = 1; //속도
@@ -115,11 +118,12 @@ export default function TextToSpeech({ news }) {
         </i>
         <div className="icon-desc">번역보기</div>
       </div>
-      <div className="icon-row">
+
+      <div className="icon-row" onClick={onScrapClick}>
         <i>
           <FontAwesomeIcon icon={faBookmark} />
         </i>
-        <div className="icon-desc">스크랩</div>
+        <div className="icon-desc">{isScrapped ? "스크랩 취소" : "스크랩"}</div>
       </div>
     </section>
   );

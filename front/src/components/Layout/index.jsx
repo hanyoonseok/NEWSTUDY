@@ -9,7 +9,6 @@ export default function Layout({ children, isDark, setIsDark }) {
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
-    console.log(localStorageItem);
     if (localStorageItem === null || localStorageItem === "false")
       setIsLogin(false);
     else setIsLogin(true);

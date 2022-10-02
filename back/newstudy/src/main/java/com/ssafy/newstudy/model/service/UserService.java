@@ -73,13 +73,7 @@ public class UserService {
         return userDao.selectUidByEmail(jwtTokenUtil.getEmailFromBearerToken(BearerToken));
     }
 
-//    public User getUserById(Long id) {
-//        Optional<User> user = userRepository.findUserById(id);
-//        if (!user.isPresent()) throw new UsernameNotFoundException("존재하지 않는 유저입니다.");
-//        return user.get();
-//    }
-
-    public String saveImage(MultipartFile multipartFile) throws IOException {
+    public void saveImage(int u_id, MultipartFile multipartFile) throws IOException {
         String path = System.getProperty("user.dir")+"\\"+LocalDateTime.now().getMonthValue();
         logger.info("path : {}",path);
         String fileName = UUID.randomUUID().toString().substring(0, 10)+multipartFile.getOriginalFilename();
@@ -90,6 +84,8 @@ public class UserService {
         }
         multipartFile.transferTo(dest);
 
-        return LocalDateTime.now().getMonthValue()+"`"+fileName;
+        String src = LocalDateTime.now().getMonthValue()+"`"+fileName;
+
+        userDao.saveImage(new UserDto().builder().u_id(u_id).src(src).build());
     }
 }

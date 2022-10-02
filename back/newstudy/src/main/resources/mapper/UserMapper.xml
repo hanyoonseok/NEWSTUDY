@@ -18,10 +18,10 @@
     <select id="selectUserByUid" resultType="userDto">
         SELECT u_id, email, pw, level, nickname, src
         FROM user
-        WHERE u_id = #{uId}
+        WHERE u_id = #{u_id}
     </select>
 
-    <select id="selectUidByEmail">
+    <select id="selectUidByEmail" resultType="int">
         SELECT u_id
         FROM user
         WHERE email = #{email}
@@ -32,19 +32,22 @@
         SET pw = #{pw}, level = #{level},  nickname = #{nickname}, src = #{src}
         where email = #{email}
     </update>
+    
+    <insert id="saveLoginLog">
+        insert into `login_log` (u_id, date)
+        values (#{u_id}, date(now()))
+    </insert>
 
-<!--    <select id="selectUser" resultType="userDto">-->
-<!--        SELECT id, nickname, introduce-->
-<!--        FROM userDto-->
-<!--        WHERE id = #{id}-->
-<!--          AND password = #{password}-->
-<!--    </select>-->
+    <select id="checkLoginCnt" resultType="int">
+        select count(distinct date)
+        from login_log
+        where u_id = #{u_id}
+    </select>
 
-
-
-<!--    <delete id="deleteUser">-->
-<!--        DELETE FROM userDto-->
-<!--        WHERE id = #{id}-->
-<!--    </delete>-->
+    <update id="saveImage" parameterType="userDto">
+        UPDATE user
+        SET src = #{src}
+        WHERE u_id = #{u_id}
+    </update>
 
 </mapper>

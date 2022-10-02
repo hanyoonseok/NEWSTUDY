@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.newstudy.model.dao.VocabularyDao">
+
+    <select id="selectVocabulary" parameterType="int" resultType="vocabularyResponseDto">
+        SELECT v_id, eng, kor, done
+        FROM `USER_VOCA`
+        WHERE u_id = #{u_id}
+    </select>
+
+    <insert id="insertVocabulary" parameterType="vocabularyRequestDto">
+        INSERT INTO `USER_VOCA`(u_id, eng, kor)
+        VALUES (#{u_id}, #{eng}, #{kor})
+    </insert>
+
+    <update id="updateVocabulary" parameterType="vocabularyRequestDto">
+        UPDATE `USER_VOCA`
+        SET done = !done
+        where u_id = #{u_id} and v_id = #{v_id}
+    </update>
+
+    <delete id="deleteVocabulary" parameterType="vocabularyRequestDto">
+        DELETE FROM `USER_VOCA`
+        where u_id = #{u_id} and v_id = #{v_id}
+    </delete>
+
+</mapper>
