@@ -108,7 +108,7 @@ export default function Onboarding() {
           if (isMobile) {
             globe.current.style.bottom = "-50vh";
           } else {
-            globe.current.style.bottom = "-60vh";
+            globe.current.style.bottom = "-65vh";
           }
           globe.current.style.transform = "translate(-50%, 0) scale(1.5)";
           globe.current.style.left = "50%";

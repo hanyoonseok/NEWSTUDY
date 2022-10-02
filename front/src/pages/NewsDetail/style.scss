@@ -66,9 +66,28 @@
       padding: rem(25) rem(40);
 
       .news-title {
-        text-align: center;
+        @include FLEX-CENTER;
         font-size: rem(32);
         font-family: $eng-fontB;
+      }
+
+      .news-title-level {
+        width: rem(40);
+        height: rem(40);
+        border-radius: 45px;
+        @include FLEX-CENTER;
+        color: $white;
+        font-size: rem(20);
+        font-family: $eng-title-font;
+        &.Alv {
+          background-color: $Alv;
+        }
+        &.Blv {
+          background-color: $Blv;
+        }
+        &.Clv {
+          background-color: $Clv;
+        }
       }
 
       .news-date {
@@ -134,6 +153,17 @@
 
         @media (max-width: 480px) {
           flex-direction: column;
+        }
+      }
+      .newsdetail-thumbnail-wrapper {
+        margin-top: rem(10);
+        @include FLEX-CENTER;
+        width: 100%;
+        .newsdetail-thumbnail {
+          width: 60%;
+          @media (max-width: 480px) {
+            width: 100%;
+          }
         }
       }
 

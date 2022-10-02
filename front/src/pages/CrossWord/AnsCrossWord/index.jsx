@@ -11,7 +11,7 @@ export default function AnsCrossWord({ maxR, maxC, wordArr, crosswordInputs }) {
     (e) => {
       const words = e.target.dataset.word.split(" ");
       const word = words.length > 1 ? words[1] : words[0];
-      const wordInfo = wordArr.filter((e) => e.name.toLowerCase() === word);
+      const wordInfo = wordArr.filter((e) => e.eng.toLowerCase() === word);
 
       setSelectedWord(wordInfo[0]);
     },

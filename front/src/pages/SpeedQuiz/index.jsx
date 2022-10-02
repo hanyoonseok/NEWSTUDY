@@ -1,120 +1,45 @@
-import React, { useCallback, useEffect, useState } from "react";
-import BackBtn from "components/BackBtn";
-import "./style.scss";
+import React, { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
+import "./style.scss";
+import BackBtn from "components/BackBtn";
 import Check from "assets/check.png";
 import Question from "./Question";
 import Result from "./Result";
+import { useCallback } from "react";
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
 
 export default function SpeedQuiz() {
   const [index, setIndedx] = useState(0);
+  const [takenTime, setTakenTime] = useState(0);
   const [timer, setTimer] = useState(null);
-  const questions = [
-    {
-      desc: "Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "형", level: "A1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "명", level: "A2", trans: "현명함, 지혜" },
-      ],
-      index: 1,
-      answer: "wise",
-      correct: false,
-    },
-    {
-      desc: "1Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 2,
-      answer: "wiseman",
-      correct: false,
-    },
-    {
-      desc: "2Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 3,
-      answer: "ant",
-      correct: false,
-    },
-    {
-      desc: "3Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 4,
-      answer: "horsehosasdss",
-      correct: false,
-    },
-    {
-      desc: "4Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 5,
-      answer: "penguin",
-      correct: false,
-    },
-    {
-      desc: "5Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 6,
-      answer: "newyork",
-      correct: false,
-    },
-    {
-      desc: "6Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 7,
-      answer: "korea",
-      correct: false,
-    },
-    {
-      desc: "7Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 8,
-      answer: "taiwan",
-      correct: false,
-    },
-    {
-      desc: "8Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 9,
-      answer: "japan",
-      correct: false,
-    },
-    {
-      desc: "9Having or showing the ability to make good judgments, based on a deep understanding and experience of life",
-      translate: [
-        { part: "adjective", level: "B1", trans: "지혜로운, 현명한, 슬기로운" },
-        { part: "noun", level: "C1", trans: "현명함, 지혜" },
-      ],
-      index: 10,
-      answer: "china",
-      correct: false,
-    },
-  ];
-
+  const [questions, setQuestions] = useState([]);
   const [answer, setAnswer] = useState([]);
+  const userState = useSelector((state) => state.user);
 
-  const addValueToAnswer = () => {
+  useInterval(() => {
+    if (index >= 10) return;
+    setTakenTime((prev) => prev + 1);
+  }, 1000);
+
+  const addValueToAnswer = useCallback(() => {
     initDomElement();
     if (index >= 0) {
       let curAnswer = "";
@@ -129,43 +54,59 @@ export default function SpeedQuiz() {
           ...questions[index],
           user: curAnswer,
           correct:
-            curAnswer.toUpperCase() === questions[index].answer.toUpperCase()
+            curAnswer.toUpperCase() === questions[index].eng.toUpperCase()
               ? true
               : false,
+          index: index + 1,
         },
       ]);
     }
-  };
+  }, [questions, answer]);
 
-  useEffect(() => {
-    if (timer) clearTimeout(timer);
-
-    if (index >= 10) return;
-    setTimer(
-      setTimeout(() => {
-        if (index >= 10) return;
-        addValueToAnswer();
-        setIndedx((prev) => prev + 1);
-      }, 10000),
-    );
-
-    return () => clearTimeout(timer);
-  }, [index]);
+  const onNextClick = useCallback(() => {
+    addValueToAnswer();
+    setIndedx((prev) => prev + 1);
+  }, [addValueToAnswer]);
 
   const initDomElement = () => {
     document.querySelector(".question-timer-container").replaceChildren();
     document.querySelector(".question-kor-trans").style.display = "none";
   };
 
-  const onNextClick = () => {
-    addValueToAnswer();
-    setIndedx((prev) => prev + 1);
-  };
+  useEffect(() => {
+    if (timer) clearTimeout(timer);
+
+    if (index >= 10) return;
+
+    setTimer(
+      setTimeout(() => {
+        if (index >= 10) return;
+        onNextClick(10);
+      }, 10000),
+    );
+
+    return () => clearTimeout(timer);
+  }, [index, questions, onNextClick]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const headers = {
+        headers: {
+          Authorization: `Bearer ${userState.accessToken}`,
+        },
+      };
+      const questionResponse = await axios.get("/word/game", headers);
+      setQuestions(questionResponse.data);
+      console.log(questionResponse.data);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="speedquiz-container">
       <BackBtn />
-      {index < 10 ? (
+      {index < 10 && questions.length > 0 ? (
         <section className="speedquiz-content-container">
           <h1 className="speedquiz-title">
             <b>SPEED</b> QUIZ
@@ -187,7 +128,7 @@ export default function SpeedQuiz() {
           />
         </section>
       ) : (
-        <Result answer={answer} />
+        <Result answer={answer} takenTime={takenTime} userState={userState} />
       )}
     </div>
   );

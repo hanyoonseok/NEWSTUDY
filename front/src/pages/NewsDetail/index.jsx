@@ -1,42 +1,31 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";
 import TextToSpeech from "./TextToSpeech";
+import { intToLevel } from "constants";
+import BadgeModal from "components/BadgeModal";
+import Modal from "components/Modal";
 
 export default function NewsDetail() {
+  const { newsId } = useParams();
   const [selectedWord, setSelectedWord] = useState(null);
+  const [newsDetail, setNewsDetail] = useState(null);
+  const [newsKeywords, setNewsKeywords] = useState([]);
+  const [relatedNews, setRelatedNews] = useState([]);
+  const [isScrapped, setIsScrapped] = useState(false);
+  const [newBadgeInfo, setNewBadgeInfo] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const userState = useSelector((state) => state.user);
 
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
-
-  const news = {
-    img: "",
-    title:
-      "An Overseas news story that fits the difficulty An Overseas news story that fits the difficulty",
-    body: "My time with SKT has already been such an amazing journey, and Im thankful for every day of it. Earlier this year, I felt myselfgradually getting weaker. It was like my skills were getting worseand the rest of the world was gaining on me. I’ve often wonderedwhat makes me great at League of Legends, and the best way I candescribe it is that I structure my playstyle through calculation andintuition. I’m always learning new things. I can predict eventsbefore they happen, and that helps me to be in the right place andmake the right play a step sooner than everyone else. For a whilethere it felt like my intuition was off, and I didn’t know if Icould recover. But right now I feel like I can play forever. At the",
-    date: "Wed, September 7, 2022",
-    category: "SPORTS",
-    level: "c",
-  };
-
-  const words = [
-    {
-      id: 1,
-      eng: "ant",
-      mean: "개미",
-    },
-    { id: 2, eng: "champion", mean: "탬피언" },
-    { id: 3, eng: "world biggest fan", mean: "세계 제일 큰 팬" },
-    { id: 4, eng: "ant1", mean: "개미1" },
-    { id: 5, eng: "champion1", mean: "탬피언1" },
-    { id: 6, eng: "world biggest fan1", mean: "세계 제일 큰 팬1" },
-    { id: 7, eng: "ant2", mean: "개미2" },
-    { id: 8, eng: "champion2", mean: "탬피언2" },
-    { id: 9, eng: "world biggest fan2", mean: "세계 제일 큰 팬2" },
-  ];
 
   const onWordDrugClick = useCallback(
     (word) => {
@@ -49,70 +38,163 @@ export default function NewsDetail() {
     [isMobile, selectedWord],
   );
 
+  useEffect(() => {
+    const fetchData = async () => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${userState.accessToken}`;
+      const newsDetailResponse = await axios.get(`/news/${newsId}`);
+      newsDetailResponse.data.date = moment(
+        newsDetailResponse.data.date,
+      ).format("ddd, MMMM, DD, YYYY");
+      setNewsDetail(newsDetailResponse.data);
+      console.log("뉴스 상세 : ", newsDetailResponse);
+
+      const newsKeywordsResponse = await axios.get(`/news/keyword/${newsId}`);
+      setNewsKeywords(newsKeywordsResponse.data);
+      console.log("키워드 리스트 : ", newsKeywordsResponse);
+
+      const relatedNewsResponse = await axios.get(`/news/related/${newsId}`);
+      setRelatedNews(relatedNewsResponse.data);
+      console.log("관련 기사 : ", relatedNewsResponse);
+
+      const scrapListResponse = await axios.get("/scrap");
+
+      setIsScrapped(
+        scrapListResponse.data.filter((e) => e.n_id === parseInt(newsId))
+          .length > 0,
+      );
+    };
+
+    fetchData();
+  }, []);
+
+  const onScrapClick = useCallback(async () => {
+    const payload = {
+      n_id: parseInt(newsId),
+    };
+    isScrapped
+      ? await axios.delete(`/scrap/${newsId}`, payload)
+      : await axios.post("/scrap", payload);
+
+    if (!isScrapped) {
+      setIsModalOpen(true);
+
+      setTimeout(async () => {
+        setIsModalOpen(false);
+
+        axios.get("/badge/new").then((res) => {
+          res.data.length > 0 && setNewBadgeInfo(res.data[0]);
+        });
+      }, 1200);
+    }
+
+    setIsScrapped((prev) => !prev);
+  }, [isScrapped]);
+
   return (
     <div className="newsdetail-container">
       <div className="back-btn-wrapper">
         <button className="back-btn"></button>
       </div>
       <div className="newsdetail-content-div">
-        <section className="news-section">
-          <h1 className="news-title">
-            An Overseas news story that fits the difficulty
-          </h1>
-          <p className="news-date">Wed, September 7, 2022</p>
-          {isMobile && <TextToSpeech news={news} />}
-          <h3 className="news-subtitle change">VOCABULARY</h3>
-          <div className="news-hot-word">
-            <section className="words-container">
-              {words.map((e) => {
-                return (
-                  <div
-                    className={`word-drug ${
-                      selectedWord && selectedWord.eng === e.eng ? "on" : ""
-                    }`}
-                    onClick={() => onWordDrugClick(e)}
-                    key={e.id}
-                  >
-                    {e.eng}
+        {newsDetail && (
+          <>
+            <section className="news-section">
+              <h1 className="news-title">
+                {" "}
+                <i
+                  className={`news-title-level ${
+                    newsDetail.level <= 2
+                      ? "Alv"
+                      : newsDetail.level <= 4
+                      ? "Blv"
+                      : "Clv"
+                  }`}
+                >
+                  {intToLevel[newsDetail.level]}
+                </i>
+                &nbsp; {newsDetail.title}
+              </h1>
+              <p className="news-date">{newsDetail.date}</p>
+              {isMobile && (
+                <TextToSpeech
+                  isScrapped={isScrapped}
+                  setIsScrapped={setIsScrapped}
+                  news={newsDetail}
+                  onScrapClick={onScrapClick}
+                />
+              )}
+              <h3 className="news-subtitle change">VOCABULARY</h3>
+              <div className="news-hot-word">
+                <section className="words-container">
+                  {newsKeywords.length > 0 &&
+                    newsKeywords.map((e, i) => {
+                      return (
+                        <div
+                          className={`word-drug ${
+                            selectedWord && selectedWord.eng === e.eng
+                              ? "on"
+                              : ""
+                          }`}
+                          onClick={() => onWordDrugClick(e)}
+                          key={i}
+                        >
+                          {e}
+                        </div>
+                      );
+                    })}
+                </section>
+                {!isMobile && (
+                  <TextToSpeech
+                    isScrapped={isScrapped}
+                    setIsScrapped={setIsScrapped}
+                    news={newsDetail}
+                    onScrapClick={onScrapClick}
+                  />
+                )}
+                {selectedWord && (
+                  <div className="word-mean-container">
+                    <h3 className="word-mean-title">{selectedWord.eng}</h3>
+                    <h4 className="word-mean">{selectedWord.mean}</h4>
                   </div>
-                );
-              })}
-            </section>
-            {!isMobile && <TextToSpeech news={news} />}
-            {selectedWord && (
-              <div className="word-mean-container">
-                <h3 className="word-mean-title">{selectedWord.eng}</h3>
-                <h4 className="word-mean">{selectedWord.mean}</h4>
+                )}
               </div>
-            )}
-          </div>
-          {isMobile && <h3 className="news-subtitle change">ARTICLE</h3>}
-          <p className="news-article">
-            This weekend, we’ll be back at STAPLES Center going against Samsung
-            Galaxy in the world championship final. As always, we expect to win.
-            <br />
-            My time with SKT has already been such an amazing journey, and I’m
-            thankful for every day of it. Earlier this year, I felt myself
-            gradually getting weaker. It was like my skills were getting worse
-            and the rest of the world was gaining on me. I’ve often wondered
-            what makes me great at League of Legends, and the best way I can
-            describe it is that I structure my playstyle through calculation and
-            intuition. I’m always learning new things. I can predict events
-            before they happen, and that helps me to be in the right place and
-            make the right play a step sooner than everyone else. For a while
-            there it felt like my intuition was off, and I didn’t know if I
-            could recover. But right now I feel like I can play forever. At the
-          </p>
-        </section>
-        <section className="related-article-section">
-          <h3 className="news-subtitle">Related Articles</h3>
-          <div className="news-card-wrapper">
-            <NewsCard news={news} />
-            <NewsCard news={news} />
-            <NewsCard news={news} />
-          </div>
-        </section>
+              {isMobile && <h3 className="news-subtitle change">ARTICLE</h3>}
+              {newsDetail.thumbnail && (
+                <div className="newsdetail-thumbnail-wrapper">
+                  <img
+                    src={newsDetail.thumbnail}
+                    alt="뉴스 상세 썸네일"
+                    className="newsdetail-thumbnail"
+                  />
+                </div>
+              )}
+              <p className="news-article">{newsDetail.content}</p>
+            </section>
+            <section className="related-article-section">
+              <h3 className="news-subtitle">Related Articles</h3>
+              <div className="news-card-wrapper">
+                {relatedNews.length > 0 &&
+                  relatedNews.map((e) => {
+                    return <NewsCard news={e} key={e.n_id} />;
+                  })}
+              </div>
+            </section>
+          </>
+        )}
       </div>
+      {newBadgeInfo && (
+        <BadgeModal
+          index={newBadgeInfo.b_id}
+          text={newBadgeInfo.name}
+          setStatus={setNewBadgeInfo}
+        />
+      )}
+
+      {isModalOpen && (
+        <Modal text="스크랩 되었습니다!" setStatus={setIsModalOpen} />
+      )}
     </div>
   );
 }

@@ -9,6 +9,10 @@
   @include FLEX-CENTER;
   z-index: 10;
 
+  @media (max-width: 480px) {
+    width: 90%;
+  }
+
   .wordmodal-word-title {
     font-size: rem(50);
     font-family: $eng-title-font;
@@ -61,7 +65,8 @@
     }
 
     .wordmodal-desc {
-      @include FLEX-CENTER;
+      @include FLEX-COLUMN;
+      width: 100%;
       font-family: $eng-font;
       font-size: rem(24);
     }
@@ -138,4 +143,15 @@
       background-color: darken($default-grey, 10%);
     }
   }
+}
+.hint-card-desc-row {
+  line-height: 1.2;
+  width: 100%;
+  b {
+    font-size: rem(6);
+    color: $default-grey;
+  }
+}
+.hint-card-desc-row + .hint-card-desc-row {
+  margin-top: rem(8);
 }
