@@ -126,7 +126,6 @@ export default function NewsDetail() {
               {isMobile && (
                 <TextToSpeech
                   isScrapped={isScrapped}
-                  setIsScrapped={setIsScrapped}
                   news={newsDetail}
                   onScrapClick={onScrapClick}
                 />
@@ -154,7 +153,6 @@ export default function NewsDetail() {
                 {!isMobile && (
                   <TextToSpeech
                     isScrapped={isScrapped}
-                    setIsScrapped={setIsScrapped}
                     news={newsDetail}
                     onScrapClick={onScrapClick}
                   />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faVolumeUp,
@@ -8,21 +8,25 @@ import {
   faStop,
   faPlay,
 } from "@fortawesome/free-solid-svg-icons";
+import { useCallback } from "react";
 
-export default function TextToSpeech({
-  news,
-  onScrapClick,
-  isScrapped,
-  setIsScrapped,
-}) {
+export default function TextToSpeech({ news, onScrapClick, isScrapped }) {
   const synth = window.speechSynthesis;
 
-  const textToSpeech = () => {
+  const textToSpeech = useCallback(() => {
     if (
       typeof SpeechSynthesisUtterance === "undefined" ||
       typeof synth === "undefined"
     ) {
-      console.log("이 브라우저는 음성 합성을 지원하지 않습니다.");
+      alert("이 브라우저는 음성 합성을 지원하지 않습니다.");
+      return;
+    }
+    const byteLength = news.content.replace(
+      /[\0-\x7f]:([0-\u07ff]:(.))/g,
+      "$&$1$2",
+    ).length;
+    if (byteLength >= 32000) {
+      alert("너무 길어서 지원이 안됩니다 ㅠㅠ");
       return;
     }
 
@@ -31,7 +35,7 @@ export default function TextToSpeech({
     utterThis.pitch = 1; //피치
     utterThis.rate = 1; //속도
     synth.speak(utterThis);
-  };
+  }, [news.content]);
 
   const speechPause = () => {
     //일시정지
@@ -50,6 +54,10 @@ export default function TextToSpeech({
 
   const [isTextToSpeechStatus, setIsTextToSpeechStatus] = useState(false); //발음듣기 상태 여부
   const [isPauseStatus, setIsPauseStatus] = useState(false); //일시정지 버튼 누른 여부
+
+  useEffect(() => {
+    speechStop();
+  }, []);
 
   return (
     <section className="functions-container">

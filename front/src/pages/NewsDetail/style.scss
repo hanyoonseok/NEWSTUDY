@@ -138,7 +138,7 @@
         }
       }
       .newsdetail-thumbnail-wrapper {
-        margin-top: rem(10);
+        margin-top: rem(20);
         @include FLEX-CENTER;
         width: 100%;
         .newsdetail-thumbnail {
@@ -172,7 +172,9 @@
 
     .newsdetail-content-footer {
       width: 100%;
+      font-family: $kor-font;
       margin-top: rem(30);
+      color: $grey;
       @include FLEX-ALIGN-CENTER;
       justify-content: flex-end;
     }
