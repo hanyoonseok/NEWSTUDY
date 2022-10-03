@@ -8,6 +8,7 @@ import LevelContainer from "./LevelContainer";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
 import { category } from "constants/category";
+import { useNavigate } from "react-router-dom";
 
 import NewsCard from "components/NewsCard";
 import axios from "axios";
@@ -15,6 +16,7 @@ import axios from "axios";
 import TopBtn from "components/TopBtn";
 
 export default function NewsList() {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [selectedLevel, setSelectedLevel] = useState(
     user.level === 0 ? 1 : user.level,
@@ -36,6 +38,10 @@ export default function NewsList() {
   const onCloseClick = useCallback(() => {
     setIsFilterModal(false);
   }, []);
+
+  const onLinkClick = (n_id) => {
+    navigate(`/news/${n_id}`);
+  };
 
   const doCategoryFilter = (cidArray) => {
     setNewsList([]);
@@ -135,7 +141,10 @@ export default function NewsList() {
             <div className="newslist-mid-area">
               {newsList.length > 0 && (
                 <>
-                  <div className="hottest-article">
+                  <div
+                    className="hottest-article"
+                    onClick={() => onLinkClick(newsList[0].n_id)}
+                  >
                     <i
                       className={`hottest-article-level ${
                         level_value[newsList[0].level].includes("A")

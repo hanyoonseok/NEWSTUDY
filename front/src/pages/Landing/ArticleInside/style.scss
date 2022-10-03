@@ -56,6 +56,8 @@
     border-radius: 25px;
     transition: all 300ms ease;
     @include FADE-IN(600ms);
+    z-index: 4;
+    cursor: pointer;
     color: white;
     @include FLEX-CENTER;
     .border {
@@ -63,16 +65,14 @@
       width: 96%;
       height: 93%;
       border-radius: 20px;
-      cursor: pointer;
       border: 3px solid rgba($color: #ffffff, $alpha: 0.1);
     }
-    > a {
+    > span {
       @include SLIDE-UP(500ms);
       color: $white;
       padding: 10px 20px;
       background-color: rgba($color: white, $alpha: 0.2);
       border-radius: 10px;
-      cursor: pointer;
       transition: all 300ms ease;
       &:hover {
         background-color: rgba($color: white, $alpha: 0.4);
@@ -130,7 +130,7 @@
         font-size: 1.5rem;
       }
       &:hover {
-        transform: scale(1.05);
+        transform: scale(1.01);
       }
     }
     .article-content {

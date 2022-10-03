@@ -19,17 +19,17 @@ export default function ArticleInside({ Article }) {
         onMouseLeave={() => setActiveGoArticle(false)}
       >
         {activeGoArticle && (
-          <div className="article-screen">
-            <div className="border"></div>
-            <Link to={`/news/${Article.n_id}`}>
+          <Link to={`/news/${Article.n_id}`}>
+            <div className="article-screen">
+              <div className="border"></div>
               <span>
                 기사보러가기 &nbsp;&nbsp;
                 <i>
                   <FontAwesomeIcon icon={faAnglesRight} />
                 </i>
               </span>
-            </Link>
-          </div>
+            </div>
+          </Link>
         )}
         <div className="article-img">
           <span
