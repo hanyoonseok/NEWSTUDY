@@ -15,6 +15,7 @@
     overflow-y: hidden;
     max-height: 150px;
     @include FLEX-ALIGN-CENTER;
+    box-shadow: $light-shadow;
 
     .question-index {
       @include FLEX-CENTER;
@@ -27,6 +28,10 @@
       border-radius: 20px;
       margin-right: rem(10);
       flex-shrink: 0;
+
+      @media (max-width: 480px) {
+        margin-right: rem(10);
+      }
     }
 
     .question-desc {
@@ -92,6 +97,7 @@
       font-weight: bold;
       margin-bottom: rem(4);
       margin-right: rem(30);
+      box-shadow: 0 4px 4px rgba(63, 65, 75, 0.3);
 
       @media (max-width: 480px) {
         width: rem(50);

@@ -38,6 +38,7 @@ export default function TextToSpeech({ news, onScrapClick, isScrapped }) {
   }, [texts]);
 
   const speechPause = () => {
+    console.log(synth.pending);
     //일시정지
     synth.pause();
   };

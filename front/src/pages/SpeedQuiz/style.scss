@@ -18,6 +18,10 @@
   @include STRETCH;
   align-items: center;
 
+  @media (max-width: 480px) {
+    padding: 0 rem(10);
+  }
+
   .speedquiz-title {
     font-family: $eng-title-font;
     font-size: rem(50);

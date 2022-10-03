@@ -3,7 +3,6 @@
 .searchlist-container {
   padding: 120px 130px 80px 210px;
   @include STRETCH;
-  background-color: #fbfbfb;
   @include FLEX-COLUMN;
 
   @media (max-width: 480px) {
@@ -133,7 +132,7 @@
     }
   }
   .search-top-news {
-    @include FLEX-CENTER;
+    display: flex;
     margin: 15px 0px;
     @media (max-width: 480px) {
       @include FLEX-COLUMN;

@@ -120,7 +120,7 @@ export default function NewsDetail() {
                 >
                   {intToLevel[newsDetail.level]}
                 </i>
-                &nbsp; {newsDetail.title}
+                 {newsDetail.title}
               </h1>
               <p className="news-date">{newsDetail.date}</p>
               {isMobile && (

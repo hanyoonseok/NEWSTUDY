@@ -16,6 +16,7 @@
       background-color: #fff;
       border-radius: 35px;
       height: 70%;
+      box-shadow: $light-shadow;
 
       .level-box {
         position: absolute;
@@ -77,11 +78,9 @@
       }
 
       .email {
-        padding: 10px 5px;
         border-radius: 10px;
         font-family: $eng-font;
         font-size: rem(16);
-        margin-bottom: 10px;
         .fa-envelope {
           color: #3f414b;
         }
@@ -143,6 +142,7 @@
       @include FLEX-CENTER;
       position: relative;
       text-align: center;
+      padding: rem(5) 0;
 
       p:nth-of-type(1) {
         width: 87%;

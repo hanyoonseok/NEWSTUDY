@@ -271,21 +271,20 @@
         @media (max-width: 480px) {
           width: 100%;
           margin-top: 5%;
+          margin-left: 0;
         }
         .wordcloud-wrapper {
           @include FLEX-COLUMN;
           .wordcloud-nav {
-            @include FLEX-AROUND;
-            width: 50vw;
+            @include FLEX-BETWEEN;
             @media (max-width: 480px) {
               width: 100%;
             }
 
             .word-category {
               background-color: $lightx2-blue;
-              width: 100%;
-              margin: 0 1%;
               padding: 1%;
+              width: 16%;
               font-weight: bold;
               @include FLEX-CENTER;
               border-radius: 10px 10px 0 0;
@@ -310,11 +309,11 @@
             width: 50vw;
             height: 400px;
             background-color: white;
-            border-radius: 30px;
+            border-radius: 0 0 30px 30px;
             @media (max-width: 480px) {
               width: 100%;
               height: 350px;
-              border-radius: 20px;
+              border-radius: 0 0 20px 20px;
             }
 
             > div {
