@@ -77,6 +77,33 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
     if (curIdx < selectedWord.length - 1) resultArr[curIdx + 1].focus();
   };
 
+  const inputKeyDown = useCallback(
+    (e) => {
+      let curIdx = -1;
+      const resultArr = [];
+
+      if (e.key === "Backspace") {
+        const inputArr = document.querySelectorAll(`[data-word]`);
+        const er = e.currentTarget.dataset.row;
+        const ec = e.currentTarget.dataset.col;
+
+        inputArr.forEach((el, i) => {
+          el.className = "crossword-input";
+          if (el.dataset.word === selectedWord) resultArr.push(el);
+          else if (el.dataset.word.indexOf(selectedWord) >= 0)
+            resultArr.push(el);
+        });
+
+        resultArr.forEach((el, i) => {
+          if (el.dataset.row === er && el.dataset.col === ec) curIdx = i;
+        });
+      }
+      if (curIdx > 0 && resultArr[curIdx].value.length === 0)
+        resultArr[curIdx - 1].focus();
+    },
+    [selectedWord],
+  );
+
   const drawCrossword = () => {
     const result = [];
 
@@ -114,6 +141,7 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
                 data-word={wordPos[i]}
                 onClick={onInputClick}
                 onChange={onInputChange}
+                onKeyDown={inputKeyDown}
               />
             )}
             {dotArr.map((e, j) =>
@@ -240,7 +268,7 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
                               <b>
                                 <FontAwesomeIcon icon={faCircle} />
                               </b>
-                            )}{" "}
+                            )}
                             {desc}
                           </span>
                         ),

@@ -137,8 +137,13 @@
   @media (max-width: 480px) {
     width: 100%;
     padding: 25px;
-
     font-size: 1.2rem;
+    align-items: flex-start;
+
+    .mylevel {
+      width: 120px;
+      height: 100%;
+    }
   }
 }
 .start-leveltest-wrapper {

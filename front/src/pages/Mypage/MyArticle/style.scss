@@ -30,11 +30,22 @@
       top: 15px;
       width: 21px;
       height: 21px;
-      background-color: $dark-grey;
       color: $white;
       border-radius: 50%;
       text-align: center;
       line-height: 21px;
+      font-size: rem(14);
+      font-family: $eng-title-font;
+
+      &.Alv {
+        background-color: $Alv;
+      }
+      &.Blv {
+        background-color: $Blv;
+      }
+      &.Clv {
+        background-color: $Clv;
+      }
     }
     .img-box {
       width: 100%;

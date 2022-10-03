@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { intToLevel } from "constants";
 import "./style.scss";
 
 export default function MyArticle() {
@@ -27,36 +28,18 @@ export default function MyArticle() {
       });
   };
 
-  const changeLevel = (level) => {
-    switch (level) {
-      case 1:
-        return "A1";
-      case 2:
-        return "A2";
-      case 3:
-        return "B1";
-      case 4:
-        return "B2";
-      case 5:
-        return "C1";
-      case 6:
-        return "C2";
-      default:
-        break;
-    }
-  };
-
   return (
     <div className="article-box">
       {userArticles.length > 0 &&
         userArticles.map((article, index) => (
-          <Link
-            to="/news/:id"
-            params={{ id: article.n_id }}
-            className="article"
-            key={index}
-          >
-            <span>{changeLevel(article.level)}</span>
+          <Link to={`/news/${article.n_id}`} className="article" key={index}>
+            <span
+              className={`${
+                article.level <= 2 ? "Alv" : article.level <= 4 ? "Blv" : "Clv"
+              }`}
+            >
+              {intToLevel[article.level]}
+            </span>
             <div className="img-box">
               <img src={require("assets/test.png")} alt="기사 이미지"></img>
             </div>

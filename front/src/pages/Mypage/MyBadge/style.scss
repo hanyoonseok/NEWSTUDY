@@ -13,11 +13,11 @@
     margin: auto;
     border-radius: 20px;
     padding: 3%;
+    cursor: pointer;
+    transition: all 0.1s;
 
     &:hover {
-      transform: scale(1.02);
-      background-color: $lightx2-blue;
-      filter: $drop-shadow;
+      transform: scale(1.12);
     }
 
     img {

@@ -3,7 +3,6 @@
 .newsdetail-container {
   padding: 120px 80px 80px 160px;
   @include STRETCH;
-  background-color: #fbfbfb;
   display: flex;
 
   @media (max-width: 480px) {
@@ -18,7 +17,6 @@
 
     .news-subtitle {
       font-size: rem(20);
-      color: $default-grey;
       font-family: $eng-title-font;
       margin-top: rem(60);
       width: 100%;
@@ -60,6 +58,14 @@
         color: $white;
         font-size: rem(20);
         font-family: $eng-title-font;
+        flex-shrink: 0;
+        margin-right: rem(20);
+
+        @media (max-width: 480px) {
+          width: rem(30);
+          height: rem(30);
+          padding: rem(3);
+        }
         &.Alv {
           background-color: $Alv;
         }
@@ -137,7 +143,7 @@
         }
       }
       .newsdetail-thumbnail-wrapper {
-        margin-top: rem(10);
+        margin-top: rem(20);
         @include FLEX-CENTER;
         width: 100%;
         .newsdetail-thumbnail {
@@ -167,6 +173,15 @@
         @include FLEX-BETWEEN;
         flex-wrap: wrap;
       }
+    }
+
+    .newsdetail-content-footer {
+      width: 100%;
+      font-family: $kor-font;
+      margin-top: rem(30);
+      color: $grey;
+      @include FLEX-ALIGN-CENTER;
+      justify-content: flex-end;
     }
   }
 }

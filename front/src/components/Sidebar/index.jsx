@@ -20,8 +20,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SearchResult from "components/Header/SearchResult";
 import { logoutUser } from "modules/user/user";
+import DarkToggle from "components/DarkToggle";
 
-export default function Sidebar() {
+export default function Sidebar({ isDark, setIsDark }) {
   const dispatch = useDispatch();
 
   const isMobile = useMediaQuery({
@@ -112,6 +113,14 @@ export default function Sidebar() {
       window.location.replace("/");
     });
   };
+
+  const localStorageDark = localStorage.getItem("dark");
+
+  useEffect(() => {
+    if (localStorageDark === null || localStorageDark === "false")
+      setIsDark(false);
+    else setIsDark(true);
+  }, [localStorageDark]);
 
   return (
     <>
@@ -221,7 +230,11 @@ export default function Sidebar() {
                       <Link to="/game/menu">영어 게임</Link>
                     </div>
                   </div>
-                  <div className="nav-content nav-desc">
+                  <DarkToggle isDark={isDark} setIsDark={setIsDark} />
+                  <div
+                    className="nav-content nav-desc bottom"
+                    onClick={() => onClickLogout()}
+                  >
                     <i>
                       <FontAwesomeIcon icon={faRightFromBracket} />
                     </i>

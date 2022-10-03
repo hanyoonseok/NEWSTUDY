@@ -16,7 +16,7 @@ export default function NationsNewsList() {
   const [nations, setNations] = useState([]); //국가 정보 담긴 배열
   const [dataIdx, setDataIdx] = useState(1);
   const [userScrapList, setUserScrapList] = useState([]);
-  // const [selectedCategory, setSelectedCategory] = useState([]);
+  const [hasMoreNews, setHasMoreNews] = useState(false);
   const userState = useSelector((state) => state.user);
   const hexValues = [
     0,
@@ -82,6 +82,7 @@ export default function NationsNewsList() {
         page: 1,
       });
       setNationsNews(nationsNewsResponse.data.newsList);
+      setHasMoreNews(nationsNewsResponse.data.newsList.length === 30);
       setDataIdx(2);
     };
 
@@ -105,21 +106,6 @@ export default function NationsNewsList() {
   const onNextClick = useCallback(() => {
     setSelectedIdx((prev) => (prev === nations.length - 1 ? 0 : prev + 1));
   }, [nations.length]);
-
-  // const onFilterClick = useCallback(() => {
-  //   setIsModalOpen(true);
-  // }, []);
-
-  // const onCloseClick = useCallback(() => {
-  //   setIsModalOpen(false);
-  // }, []);
-
-  // const confirmCategory = useCallback((cidArray) => {
-  //   const categoryArr = cidArray.map((e) => {
-  //     return category[e];
-  //   });
-  //   setSelectedCategory(categoryArr);
-  // }, []);
 
   return (
     <section className="nationsnews-container">
@@ -161,22 +147,19 @@ export default function NationsNewsList() {
                       />
                     );
                   })}
-              </div>
-              <div className="nationsnews-btn-wrapper">
-                <button className="nationsnews-morebtn" onClick={onMoreClick}>
-                  더보기
-                </button>
+                {hasMoreNews && (
+                  <div className="nationsnews-btn-wrapper">
+                    <button
+                      className="nationsnews-morebtn"
+                      onClick={onMoreClick}
+                    >
+                      더보기
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </article>
-          {/* {isModalOpen && (
-            <FilterModal
-              closeHandler={onCloseClick}
-              text={"필터추가"}
-              sendApi={confirmCategory}
-              selectedCategory={selectedCategory}
-            />
-          )} */}
         </>
       )}
     </section>

@@ -19,6 +19,12 @@
     filter: $drop-shadow;
   }
 
+  .dark-toggle {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+
   @include FLEX-BETWEEN;
 
   .login-btn {
@@ -63,15 +69,21 @@
       z-index: 15;
       &:hover {
         background-color: $soft-blue;
-        border: 3px solid $blue;
+        transform: scale(1.05);
       }
     }
     .profile-img {
+      width: rem(40);
+      height: rem(40);
+      border-radius: 50%;
       margin-left: 20px;
+      display: flex;
       cursor: pointer;
+
       > img {
-        width: 45px;
-        height: 45px;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
       }
       &:hover {
         transform: scale(1.1);
@@ -106,11 +118,23 @@
   font-size: 1.3rem;
   padding: 10px 70px;
   @include FLEX-BETWEEN;
-  .earth-img {
+  .profile-img {
+    width: rem(40);
+    height: rem(40);
+    border-radius: 50%;
+    margin-left: 20px;
+    display: flex;
+    cursor: pointer;
+
     > img {
-      width: 30px;
-      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
     }
+    &:hover {
+      transform: scale(1.1);
+    }
+    transition: all 300ms ease;
   }
 }
 

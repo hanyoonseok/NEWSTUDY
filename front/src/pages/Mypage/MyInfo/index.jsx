@@ -10,12 +10,12 @@ import "./style.scss";
 import { category } from "constants/category";
 
 import DefaultUserImage from "assets/user_globe.png";
-import A1 from "assets/A1.png";
-import A2 from "assets/A2.png";
-import B1 from "assets/B1.png";
-import B2 from "assets/B2.png";
-import C1 from "assets/C1.png";
-import C2 from "assets/C2.png";
+import A1 from "assets/level_A1.png";
+import A2 from "assets/level_A2.png";
+import B1 from "assets/level_B1.png";
+import B2 from "assets/level_B2.png";
+import C1 from "assets/level_C1.png";
+import C2 from "assets/level_C2.png";
 import { useCallback } from "react";
 export default function MyInfo({
   myRecord,
@@ -34,31 +34,8 @@ export default function MyInfo({
     if (user && !user.src) {
       setUserImage(DefaultUserImage);
     } else {
-      setUserImage(
-        `${process.env.REACT_APP_LOCAL_API_URL}/${
-          user.src.substring(0, 2) + user.src.substring(12, user.src.length)
-        }`,
-      );
+      setUserImage(user.src);
     }
-    const fetchData = async () => {
-      const headers = {
-        headers: {
-          Authorization: `Bearer ${user.accessToken}`,
-        },
-      };
-      const testWordsResponse = await axios.get(`/user/avatar`, headers);
-      console.log(testWordsResponse);
-      console.log(
-        testWordsResponse.data.substring(0, 2) +
-          testWordsResponse.data.substring(12, testWordsResponse.data.length),
-      );
-      setUserImage(
-        testWordsResponse.data.substring(0, 2) +
-          testWordsResponse.data.substring(12, testWordsResponse.data.length),
-      );
-    };
-
-    fetchData();
     getCategory();
     return () => {};
   }, []);
@@ -153,7 +130,7 @@ export default function MyInfo({
                   fileInput.current.click();
                 }}
               >
-                이미지 수정{user.src}
+                이미지 수정
               </div>
               <input
                 type="file"

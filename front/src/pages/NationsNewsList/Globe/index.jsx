@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import ReactGlobe from "react-globe";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
 // import optional tippy styles for tooltip support
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 
 import GlobeImg from "assets/globe_diffuse.jpg";
 import Earth from "assets/earthmap_color.png";
-import Kor from "assets/kor.jpg";
-import TrendDesign from "assets/trend-circle-design.png";
 import { useEffect } from "react";
 
 function markerTooltipRenderer(marker) {
@@ -20,6 +16,11 @@ const options = {
   markerTooltipRenderer,
   enableCameraZoom: false,
   focusDistanceRadiusScale: 3,
+  pointLightPositionRadiusScales: [1, 1, -2],
+  globeGlowCoefficient: 0,
+  globeGlowColor: "#96b2ff",
+  globeGlowPower: 1,
+  globeGlowRadiusScale: 0.07,
 };
 
 export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
@@ -85,7 +86,7 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
       <ReactGlobe
         height="100%"
         globeBackgroundTexture={null}
-        // globeTexture={GlobeImg}
+        globeCloudsTexture={null}
         globeTexture={Earth}
         markers={markers}
         options={options}

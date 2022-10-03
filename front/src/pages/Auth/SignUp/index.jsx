@@ -12,6 +12,7 @@ export default function SignUp({ setIsEmailModal }) {
 
   const [Email, setEmail] = useState("");
   const [isDuplicateEmail, setIsDuplicateEmail] = useState(false); //이메일 중복 여부
+  const [isCorrectEmail, setIsCorrectEmail] = useState(false); //이메일 형식 여부
   const [AuthKey, setAuthKey] = useState("");
   const [receiveAuthKey, setReceiveAuthKey] = useState("1"); //백에서 보내줄 인증키
   const [isAuthKey, setIsAuthKey] = useState(true); //인증키 일치 여부
@@ -58,25 +59,34 @@ export default function SignUp({ setIsEmailModal }) {
     setConfirmPw(e.currentTarget.value);
   };
   const onClickAuthEmail = async (e) => {
-    e.preventDefault();
-    console.log("이메일 인증 클릭함");
-    await axios
-      .post(`/user/mail`, {
-        email: Email,
-      })
-      .then((res) => {
-        console.log("res", res);
-        setReceiveAuthKey(res.data.data.tempPassword); // 여기서 넘어오는 key를 receiveAuthKey에 저장
-        setIsDuplicateEmail(false);
-        setIsEmailModal(true);
-        console.log("AuthKey", AuthKey);
-      })
-      .catch((error) => {
-        // 중복검사 했는데 중복 이메일일 경우
-        console.log("error", error);
-        setIsDuplicateEmail(true);
-        setIsEmailModal(false);
-      });
+    // e.preventDefault();
+    console.log("이메일 인증 클릭함", Email);
+    var reg_email =
+      /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+    console.log(reg_email.test(Email));
+    if (Email.length === 0 || reg_email.test(Email) === false) {
+      setIsCorrectEmail(true);
+      return;
+    } else {
+      setIsCorrectEmail(false);
+      await axios
+        .post(`/user/mail`, {
+          email: Email,
+        })
+        .then((res) => {
+          console.log("res", res);
+          setReceiveAuthKey(res.data.data.tempPassword); // 여기서 넘어오는 key를 receiveAuthKey에 저장
+          setIsDuplicateEmail(false);
+          setIsEmailModal(true);
+          console.log("AuthKey", AuthKey);
+        })
+        .catch((error) => {
+          // 중복검사 했는데 중복 이메일일 경우
+          console.log("error", error);
+          setIsDuplicateEmail(true);
+          setIsEmailModal(false);
+        });
+    }
   };
   const onSignupHandler = (e) => {
     e.preventDefault();
@@ -113,13 +123,24 @@ export default function SignUp({ setIsEmailModal }) {
         </div>
         <button onClick={(e) => onClickAuthEmail(e)}>인증</button>
       </div>
-      {isDuplicateEmail ? (
+      {isCorrectEmail ? (
         <p className="error">
-          <FontAwesomeIcon icon={faTriangleExclamation} /> 중복된 이메일입니다.
+          <FontAwesomeIcon icon={faTriangleExclamation} /> 올바른 이메일을
+          입력해주세요.{" "}
         </p>
       ) : (
-        <p>&nbsp;</p>
+        <>
+          {isDuplicateEmail ? (
+            <p className="error">
+              <FontAwesomeIcon icon={faTriangleExclamation} /> 중복된
+              이메일입니다.
+            </p>
+          ) : (
+            <p>&nbsp;</p>
+          )}
+        </>
       )}
+
       <div className="input-div">
         <div className="box"></div>
         <input

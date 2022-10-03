@@ -4,7 +4,6 @@
   @include FLEX-BETWEEN;
   height: 100vh;
   padding: 80px 3% 1% 130px;
-  background-color: #fafafa;
 
   > div {
     height: 100%;
@@ -25,7 +24,29 @@
         font-family: $eng-font;
         font-weight: 500;
         position: relative;
-        background-color: #fafafa;
+        background-color: $white;
+        transition: 0.3s all;
+        margin-right: rem(10);
+
+        &:hover {
+          font-weight: bold;
+          background-color: #fff;
+
+          span {
+            color: $soft-blue;
+          }
+
+          &::after {
+            content: "";
+            display: block;
+            background-color: $dark-grey;
+            width: 100%;
+            height: 15%;
+            position: absolute;
+            left: 0;
+            top: 0;
+          }
+        }
 
         svg {
           color: #173042;
@@ -167,7 +188,7 @@
 
       .content {
         border-radius: 30px;
-        padding: 4%;
+        padding: 6% 4%;
         overflow-y: initial;
         margin-bottom: 3%;
         min-height: rem(290);
