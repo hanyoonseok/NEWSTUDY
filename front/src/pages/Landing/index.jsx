@@ -41,7 +41,6 @@ function SectionTitle({ sectionTitle }) {
           },
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data.length > 0) {
             setBadgeContent({
               text: res.data[0].name,
@@ -178,9 +177,6 @@ function Landing() {
 
     fetchData();
   }, []);
-
-  if (error) return <div>{error} 에러가 발생했습니다.</div>;
-  if (loading) return <div>로딩중..</div>;
 
   return (
     <div className="landing-wrapper">
