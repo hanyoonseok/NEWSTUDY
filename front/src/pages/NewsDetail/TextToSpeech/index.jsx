@@ -27,6 +27,7 @@ export default function TextToSpeech({
     }
 
     const utterThis = new SpeechSynthesisUtterance(news.content);
+    console.log("들어오나아ㅏㅏ", news.content);
     utterThis.lang = "en-US"; //언어설정
     utterThis.pitch = 1; //피치
     utterThis.rate = 1; //속도
@@ -34,6 +35,7 @@ export default function TextToSpeech({
   };
 
   const speechPause = () => {
+    console.log(synth.pending);
     //일시정지
     synth.pause();
   };

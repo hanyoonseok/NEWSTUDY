@@ -3,7 +3,7 @@
   z-index: 100;
   position: fixed;
   top: rem(50);
-  left: rem(20);
+  left: rem(30);
   @include FLEX-CENTER;
   width: rem(130);
   margin: 0 5px;
@@ -16,7 +16,7 @@
     font-weight: bold;
     font-size: rem(14);
     margin-right: 10px;
-    color: $default-grey;
+    color: $soft-blue;
     @media (max-width: 480px) {
       font-size: rem(16);
       margin-right: 5px;

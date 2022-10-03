@@ -27,10 +27,14 @@
     @include FLEX-COLUMN;
     align-items: center;
 
+    @media (max-width: 480px) {
+      width: 95%;
+    }
+
     .wordmodal-btn-wrapper {
       width: 100%;
       @include FLEX-ALIGN-CENTER;
-      justify-content: flex-start;
+      justify-content: flex-end;
 
       &.end {
         justify-content: flex-end;

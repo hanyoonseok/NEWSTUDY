@@ -37,7 +37,8 @@ $eng-fontB: "HelveticaB"; //영어 본문
 
 // 그림자
 $shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
-$light-shadow: 0 4px 4px rgba(63, 65, 75, 0.1);
+$dark-shadow: 0 4px 4px rgba(255, 255, 255, 0.042);
+$light-shadow: 4px 4px 4px rgba(63, 65, 75, 0.1);
 $drop-shadow-light: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.05));
 $drop-shadow: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.1));
 $drop-shadow-dark: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.3));
@@ -103,6 +104,22 @@ $drop-shadow-dark: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.3));
   padding: 4px 30px;
   transition: 0.3s ease;
   @include FLEX-CENTER();
+}
+
+@mixin DARK-BTN() {
+  background-color: transparent;
+  border-radius: 10px;
+  color: $white;
+  border: 1px solid $white;
+  padding: 1% 5%;
+  margin-bottom: rem(10);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  &.active {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 }
 
 @mixin ELLIPSIS() {

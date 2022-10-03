@@ -5,6 +5,9 @@ import Modal from "components/Modal";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import DarkToggle from "components/DarkToggle";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 export default function Auth() {
   const [activeId, setActiveId] = useState(0);
@@ -30,14 +33,17 @@ export default function Auth() {
   }, [localStorageDark]);
 
   return (
-    <>
-      <div className="auth-div">
-        <DarkToggle isDark={isDark} setIsDark={setIsDark} />
-        <div>
+    <div className={`auth-wrapper ${isDark ? "dark" : ""}`}>
+      <div className="auth-body">
+        <div className="auth-top-div">
+          <DarkToggle isDark={isDark} setIsDark={setIsDark} />
+          <Link to="/" className="home">
+            <FontAwesomeIcon icon={faHome} />
+          </Link>
+        </div>
+        <div className="auth-bottom-div">
           <div className="left-div">
-            <div className="logo-img">
-              <img src={require("assets/logo.png")} alt="로고이미지"></img>
-            </div>
+            <div className="logo-img"></div>
             <div className="earth-img">
               <img
                 src={require("assets/earth-component.png")}
@@ -79,6 +85,6 @@ export default function Auth() {
           setStatus={setIsEmailModal}
         />
       )}
-    </>
+    </div>
   );
 }

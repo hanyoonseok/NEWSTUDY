@@ -26,6 +26,10 @@
       border-radius: 20px;
       margin-right: rem(10);
       flex-shrink: 0;
+
+      @media (max-width: 480px) {
+        margin-right: rem(10);
+      }
     }
 
     .question-desc {

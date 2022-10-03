@@ -2,15 +2,13 @@
   background-color: map-get($darkColors, main);
   color: map-get($darkColors, font);
 
-  &::-webkit-scrollbar-track {
-    background-color: $dark-mode-black;
+  .dark-toggle > div {
+    color: $white;
   }
-  &::-webkit-scrollbar-thumb {
-    background-color: $dark-mode-bg;
-    border-radius: 10px;
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: darken($soft-blue, 5%);
+
+  // 모바일뷰 하단 헤더
+  .mobileHeader-wrapper {
+    background-color: $dark-grey;
   }
 
   // 뉴스 디테일
@@ -22,12 +20,21 @@
     .functions-container .icon-row .icon-desc {
       color: $white;
     }
+    .newsdetail-content-div .news-subtitle.change {
+      @media (max-width: 480px) {
+        color: $default-grey;
+        background-color: $soft-grey;
+      }
+    }
 
     .news-hot-word {
       color: $dark-mode-black;
     }
     .back-btn-wrapper .back-btn {
       border-color: $white;
+    }
+    .newscard-container:hover {
+      background-color: lighten($color: $dark-mode-bg, $amount: 10);
     }
   }
 
@@ -57,6 +64,9 @@
         .level-img {
           background-color: transparent;
         }
+      }
+      .before-leveltest-wrapper .level-container .levels .level-img.active {
+        background-color: lighten($color: $dark-mode-bg, $amount: 20);
       }
     }
   }
@@ -99,6 +109,9 @@
 
   // 뉴스 리스트
   .newslist-container {
+    @media (max-width: 480px) {
+      background-color: transparent;
+    }
     .newslist-level-container {
       .newslist-level {
         &:hover,
@@ -114,14 +127,21 @@
     }
     .newslist-body-container {
       background-color: $dark-mode-bg;
+      @media (max-width: 480px) {
+        background-color: transparent;
+      }
 
       .newslist-mid-area .hottest-article {
         .hottest-article-title {
           color: $white;
         }
+        .hottest-article-category,
         .hottest-article-category.sub {
           background-color: transparent;
         }
+      }
+      .newslist-morebtn-container .newslist-morebtn {
+        @include DARK-BTN;
       }
     }
     .newscard-container {
@@ -188,6 +208,12 @@
           &.active {
             background-color: $dark-mode-bg;
 
+            @media (max-width: 480px) {
+              span {
+                color: $soft-blue;
+              }
+            }
+
             &::after {
               background-color: $white;
             }
@@ -195,6 +221,10 @@
 
           svg {
             color: $white;
+
+            @media (max-width: 480px) {
+              color: $default-grey;
+            }
           }
         }
       }
@@ -223,7 +253,8 @@
       .main-category-container .main-category-btn {
         background-color: $dark-mode-black;
         border: 1px solid $grey;
-        &.active {
+        &.active,
+        &:hover {
           color: $dark-mode-black;
         }
       }
@@ -279,6 +310,9 @@
     }
   }
   .searchlist-container {
+    @media (max-width: 480px) {
+      background-color: transparent;
+    }
     .hottest-article .hottest-article-title > a {
       color: $white;
     }
@@ -287,6 +321,15 @@
     }
     .search-dates-container .user-select-date .search-date .date-icon {
       color: $dark-mode-black;
+    }
+    .newslist-morebtn-container .newslist-morebtn {
+      @include DARK-BTN;
+    }
+  }
+  .search-list-mobile.visible {
+    background-color: $dark-grey;
+    .search-article .search-article-title {
+      color: $white;
     }
   }
 
@@ -314,10 +357,20 @@
         &.crossword-img {
           background: url("../assets/crossword-dark.png");
           background-size: cover;
+          background-repeat: no-repeat;
+          @media (max-width: 480px) {
+            background-size: contain;
+            background-position-x: center;
+          }
         }
         &.speedquiz-img {
           background: url("../assets/speedquiz-dark.png");
           background-size: cover;
+          background-repeat: no-repeat;
+          @media (max-width: 480px) {
+            background-size: contain;
+            background-position-x: center;
+          }
         }
       }
     }
@@ -402,6 +455,7 @@
 
   .wordmodal-container .wordmodal-content-container {
     background-color: $dark-mode-black;
+    border: 3px solid $dark-grey;
     .wordmodal-desc-container {
       color: $dark-grey;
     }
@@ -416,16 +470,22 @@
   }
 
   // 나라 리스트
-  .nationsnews-container
-    .nationsnews-globe-container
-    .globe-box
-    .nation-info-card {
-    color: #000;
+  .nationsnews-container {
+    .nationsnews-globe-container .globe-box .nation-info-card {
+      color: #000;
+    }
+    .nationsnews-list-container .nationsnews-btn-wrapper .nationsnews-morebtn {
+      @include DARK-BTN;
+    }
   }
 
   // 공통 모달
   .alert-modal {
-    background-color: $dark-mode-black;
+    .alert-modal-body {
+      background-color: map-get($darkColors, main);
+      font-weight: normal;
+      box-shadow: $dark-shadow;
+    }
   }
   .newscard-container .newscard-contents-container .newscard-title > a {
     color: $white;
@@ -433,12 +493,21 @@
   .newscard-container .newscard-contents-container .newscard-body {
     color: $light-grey;
   }
-
-  //회원가입 & 로그인
 }
 
 //온보딩
 .main-wrapper.dark {
+  .login-btn {
+    @include DARK-BTN;
+    border-radius: 17px;
+    padding: 4px 30px;
+
+    @media (max-width: 480px) {
+      margin-bottom: 0;
+      border-radius: 0;
+      background-color: lighten($color: $dark-mode-bg, $amount: 30);
+    }
+  }
   .divider {
     background-color: map-get($darkColors, main);
   }
@@ -498,5 +567,60 @@
   }
   .iconset-div .icon-row .icon-desc {
     color: $white;
+  }
+}
+
+// 회원가입 & 로그인
+.auth-wrapper.dark {
+  .auth-body {
+    @include BACKGROUND-IMAGE("../assets/background-dark.png");
+    .auth-top-div {
+      .dark-toggle > div,
+      .home {
+        color: $white;
+      }
+    }
+    .auth-bottom-div {
+      .left-div .logo-img {
+        background-image: url("../assets/logo-dark.png");
+      }
+      .right-div {
+        .tab {
+          margin-bottom: rem(10);
+          button {
+            @include DARK-BTN;
+          }
+        }
+        .content {
+          padding: 0;
+          .content-backgroundimg {
+            display: none;
+          }
+
+          form {
+            padding: rem(10) rem(30);
+            background-color: rgba(255, 255, 255, 0.088);
+            border-radius: 27px;
+
+            button {
+              @include DARK-BTN;
+
+              &.login-btn,
+              &.signup-btn {
+                padding: 3% 6%;
+              }
+            }
+          }
+
+          .signup {
+            height: 521px;
+            padding: rem(30) rem(20) rem(20);
+            @media (max-width: 480px) {
+              height: auto;
+            }
+          }
+        }
+      }
+    }
   }
 }

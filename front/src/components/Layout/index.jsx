@@ -27,7 +27,7 @@ export default function Layout({ children }) {
       {isLogin && (
         <>
           <Header isDark={isDark} setIsDark={setIsDark} />
-          <Sidebar />
+          <Sidebar isDark={isDark} setIsDark={setIsDark} />
         </>
       )}
       {children}

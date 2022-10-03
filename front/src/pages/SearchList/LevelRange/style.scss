@@ -80,6 +80,10 @@
   left: 0;
   width: 100%;
   font-size: 12px;
+
+  .rc-slider-mark-text:last-of-type {
+    left: 99% !important;
+  }
 }
 .rc-slider-mark-text {
   position: absolute;
@@ -101,6 +105,9 @@
   width: 100%;
   height: 4px;
   background: transparent;
+  .rc-slider-dot:last-of-type {
+    left: 98% !important;
+  }
 }
 .rc-slider-dot {
   position: absolute;

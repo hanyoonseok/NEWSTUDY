@@ -90,7 +90,7 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
       <ReactGlobe
         height="100%"
         globeBackgroundTexture={null}
-        // globeTexture={GlobeImg}
+        globeCloudsTexture={null}
         globeTexture={Earth}
         markers={markers}
         options={options}

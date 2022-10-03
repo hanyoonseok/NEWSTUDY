@@ -19,6 +19,12 @@
     filter: $drop-shadow;
   }
 
+  .dark-toggle {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+
   @include FLEX-BETWEEN;
 
   .login-btn {
@@ -112,11 +118,23 @@
   font-size: 1.3rem;
   padding: 10px 70px;
   @include FLEX-BETWEEN;
-  .earth-img {
+  .profile-img {
+    width: rem(40);
+    height: rem(40);
+    border-radius: 50%;
+    margin-left: 20px;
+    display: flex;
+    cursor: pointer;
+
     > img {
-      width: 30px;
-      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
     }
+    &:hover {
+      transform: scale(1.1);
+    }
+    transition: all 300ms ease;
   }
 }
 
@@ -186,84 +204,5 @@
 
   &.hidden {
     display: none;
-  }
-}
-
-.dark-toggle {
-  @include FLEX-CENTER;
-  width: rem(130);
-  margin: 0 5px;
-  @media (max-width: 480px) {
-    width: 28vw;
-  }
-  > div {
-    font-family: $kor-font;
-    font-weight: bold;
-    font-size: rem(14);
-    margin-right: 10px;
-    @media (max-width: 480px) {
-      font-size: rem(16);
-      margin-right: 5px;
-    }
-  }
-
-  input[type="checkbox"] {
-    height: 0;
-    width: 0;
-    visibility: hidden;
-  }
-
-  label {
-    content: "";
-    cursor: pointer;
-    text-indent: -9999px;
-    width: 70px;
-    height: 30px;
-    background: $soft-grey;
-    filter: $drop-shadow;
-    display: block;
-    border-radius: 100px;
-    position: relative;
-    @media (max-width: 480px) {
-      width: 60px;
-      height: 30px;
-    }
-  }
-
-  label:after {
-    content: "";
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 7px;
-    height: 7px;
-    background: transparent;
-    border: 7px solid white;
-    border-radius: 90px;
-    transition: 0.3s;
-    @media (max-width: 480px) {
-      width: 8px;
-      height: 8px;
-      border: 6px solid white;
-    }
-  }
-
-  input:checked + label {
-    content: "off";
-    background: white;
-    filter: $drop-shadow;
-  }
-
-  input:checked + label:after {
-    left: calc(100% - 5px);
-    transform: translateX(-100%);
-    border: 7px solid $soft-blue;
-    @media (max-width: 480px) {
-      border: 6px solid $soft-blue;
-    }
-  }
-
-  label:active:after {
-    width: 25px;
   }
 }

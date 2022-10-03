@@ -132,7 +132,7 @@
     }
   }
   .search-top-news {
-    @include FLEX-CENTER;
+    display: flex;
     margin: 15px 0px;
     @media (max-width: 480px) {
       @include FLEX-COLUMN;

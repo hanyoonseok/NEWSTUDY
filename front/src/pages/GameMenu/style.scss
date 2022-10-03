@@ -58,7 +58,7 @@
         @include FLEX-COLUMN;
 
         @media (max-width: 480px) {
-          height: rem(300);
+          height: rem(350);
         }
 
         &:hover {
@@ -77,14 +77,25 @@
         .game-card-img {
           width: rem(467);
           height: rem(403);
+
           &.crossword-img {
             background: url("../../assets/crossword.png");
             background-size: cover;
+            background-repeat: no-repeat;
+            @media (max-width: 480px) {
+              background-size: contain;
+              background-position-x: center;
+            }
           }
 
           &.speedquiz-img {
             background: url("../../assets/speedquiz.png");
             background-size: cover;
+            background-repeat: no-repeat;
+            @media (max-width: 480px) {
+              background-size: contain;
+              background-position-x: center;
+            }
           }
         }
       }

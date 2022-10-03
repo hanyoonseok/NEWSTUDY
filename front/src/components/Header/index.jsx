@@ -15,6 +15,7 @@ import SearchResult from "./SearchResult";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import DarkToggle from "components/DarkToggle";
 
 export default function Header({ isDark, setIsDark }) {
   const navigate = useNavigate();
@@ -113,8 +114,6 @@ export default function Header({ isDark, setIsDark }) {
   return (
     <>
       <nav className={activeSearch ? "header-nav active-search" : "header-nav"}>
-        {/* <div className="header-search">
-          <input className="input-search" placeholder="검색어를 입력하세요." /> */}
         <div
           className={
             activeSearch ? "search-icon-wrapper hidden" : "search-icon-wrapper"
@@ -125,25 +124,12 @@ export default function Header({ isDark, setIsDark }) {
             <FontAwesomeIcon icon={faSearch} />
           </i>
         </div>
-        {/* </div> */}
-
         <div
           className={
             activeSearch ? "header-right hidden" : "header-right visible"
           }
         >
-          <div className="dark-toggle" key={"darkmode"}>
-            <div>
-              <FontAwesomeIcon icon={faMoon} />
-            </div>
-            <input
-              type="checkbox"
-              id="darkmode"
-              checked={isDark}
-              onChange={(e) => clickDarkToggle(e.target.checked)}
-            />
-            <label htmlFor="darkmode"></label>
-          </div>
+          <DarkToggle isDark={isDark} setIsDark={setIsDark} />
           <button className="daily-word" onClick={openModal}>
             <i>
               <FontAwesomeIcon icon={faClipboardList} />
@@ -207,8 +193,12 @@ export default function Header({ isDark, setIsDark }) {
             <div className="mobileHeader-dailyword" onClick={openModal}>
               오늘의단어
             </div>
-            <Link to="/mypage" className="earth-img">
-              <img src={require("assets/user_globe.png")} alt="article"></img>
+            <Link to="/mypage" className="profile-img">
+              {user.src ? (
+                <img src={user.src} alt="article"></img>
+              ) : (
+                <img src={require("assets/user_globe.png")} alt="article"></img>
+              )}
             </Link>
           </div>
         </>

@@ -58,6 +58,13 @@
         color: $white;
         font-size: rem(20);
         font-family: $eng-title-font;
+        margin-right: rem(20);
+
+        @media (max-width: 480px) {
+          width: rem(30);
+          height: rem(30);
+          padding: rem(3);
+        }
         &.Alv {
           background-color: $Alv;
         }
