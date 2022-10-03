@@ -8,4 +8,8 @@
 }
 .newsdetail-content-body {
   white-space: pre-line;
+
+  .newsdetail-content-keyword {
+    color: $soft-blue;
+  }
 }

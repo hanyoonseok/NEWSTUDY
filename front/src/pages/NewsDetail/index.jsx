@@ -42,7 +42,7 @@ export default function NewsDetail() {
       console.log("뉴스 상세 : ", newsDetailResponse);
 
       const newsKeywordsResponse = await axios.get(`/news/keyword/${newsId}`);
-      setNewsKeywords(newsKeywordsResponse.data);
+      setNewsKeywords(newsKeywordsResponse.data.map((e) => e.toUpperCase()));
       console.log("키워드 리스트 : ", newsKeywordsResponse);
 
       const relatedNewsResponse = await axios.get(`/news/related/${newsId}`);
@@ -126,7 +126,6 @@ export default function NewsDetail() {
               {isMobile && (
                 <TextToSpeech
                   isScrapped={isScrapped}
-                  setIsScrapped={setIsScrapped}
                   news={newsDetail}
                   onScrapClick={onScrapClick}
                 />
@@ -154,7 +153,6 @@ export default function NewsDetail() {
                 {!isMobile && (
                   <TextToSpeech
                     isScrapped={isScrapped}
-                    setIsScrapped={setIsScrapped}
                     news={newsDetail}
                     onScrapClick={onScrapClick}
                   />
@@ -177,8 +175,14 @@ export default function NewsDetail() {
                 </div>
               )}
               <div className="news-article">
-                <NewsContent content={newsDetail.content} />
+                <NewsContent
+                  content={newsDetail.content}
+                  newsKeywords={newsKeywords}
+                />
               </div>
+              <footer className="newsdetail-content-footer">
+                {`[출처 : ${newsDetail.origin.toUpperCase()}]`}
+              </footer>
             </section>
             <section className="related-article-section">
               <h3 className="news-subtitle">Related Articles</h3>

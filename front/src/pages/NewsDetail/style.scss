@@ -58,6 +58,7 @@
         color: $white;
         font-size: rem(20);
         font-family: $eng-title-font;
+        flex-shrink: 0;
         margin-right: rem(20);
 
         @media (max-width: 480px) {
@@ -142,7 +143,7 @@
         }
       }
       .newsdetail-thumbnail-wrapper {
-        margin-top: rem(10);
+        margin-top: rem(20);
         @include FLEX-CENTER;
         width: 100%;
         .newsdetail-thumbnail {
@@ -172,6 +173,15 @@
         @include FLEX-BETWEEN;
         flex-wrap: wrap;
       }
+    }
+
+    .newsdetail-content-footer {
+      width: 100%;
+      font-family: $kor-font;
+      margin-top: rem(30);
+      color: $grey;
+      @include FLEX-ALIGN-CENTER;
+      justify-content: flex-end;
     }
   }
 }

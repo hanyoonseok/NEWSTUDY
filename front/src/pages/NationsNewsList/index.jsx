@@ -15,6 +15,7 @@ export default function NationsNewsList() {
   const [nationsNews, setNationsNews] = useState([]); //선택 국가의 뉴스 담긴 배열
   const [nations, setNations] = useState([]); //국가 정보 담긴 배열
   const [dataIdx, setDataIdx] = useState(1);
+  const [hasMoreNews, setHasMoreNews] = useState(false);
   // const [selectedCategory, setSelectedCategory] = useState([]);
   const userState = useSelector((state) => state.user);
   const hexValues = [
@@ -68,6 +69,7 @@ export default function NationsNewsList() {
         page: 1,
       });
       setNationsNews(nationsNewsResponse.data.newsList);
+      setHasMoreNews(nationsNewsResponse.data.newsList.length === 30);
       setDataIdx(2);
     };
 
@@ -141,11 +143,16 @@ export default function NationsNewsList() {
                   nationsNews.map((e, i) => {
                     return <NewsCard news={e} key={i} />;
                   })}
-              </div>
-              <div className="nationsnews-btn-wrapper">
-                <button className="nationsnews-morebtn" onClick={onMoreClick}>
-                  더보기
-                </button>
+                {hasMoreNews && (
+                  <div className="nationsnews-btn-wrapper">
+                    <button
+                      className="nationsnews-morebtn"
+                      onClick={onMoreClick}
+                    >
+                      더보기
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </article>

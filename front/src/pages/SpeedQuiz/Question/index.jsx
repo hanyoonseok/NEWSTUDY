@@ -30,10 +30,14 @@ export default function Question({
     [inputHTML],
   );
 
-  const submitAnswer = useCallback(
-    (e) => {
+  const inputKeyDown = useCallback(
+    (e, idx) => {
+      console.log(e);
       if (e.key === "Enter") {
-        onNextClick();
+        if (idx === inputHTML.current.length - 1) onNextClick();
+        else inputHTML.current[idx + 1].focus();
+      } else if (e.key === "Backspace" && idx !== 0) {
+        inputHTML.current[idx - 1].focus();
       }
     },
     [onNextClick],
@@ -41,6 +45,7 @@ export default function Question({
 
   const renderInput = useCallback(() => {
     const input = [];
+    inputHTML.current = [];
     for (let i = 0; i < question.eng.length; i++) {
       input.push(
         <input
@@ -49,14 +54,14 @@ export default function Question({
           maxLength="1"
           key={i}
           onChange={(e) => onInputChange(e, i)}
-          onKeyPress={i === question.eng.length - 1 ? submitAnswer : null}
+          onKeyUp={(e) => inputKeyDown(e, i)}
           ref={(el) => (inputHTML.current[i] = el)}
         />,
       );
     }
 
     return input;
-  }, [question, onInputChange]);
+  }, [question, onInputChange, inputKeyDown]);
 
   useEffect(() => {
     initDomElement();

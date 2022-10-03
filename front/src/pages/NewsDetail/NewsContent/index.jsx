@@ -2,7 +2,25 @@ import React from "react";
 
 import "./style.scss";
 
-export default function NewsContent({ content }) {
+export default function NewsContent({ content, newsKeywords }) {
+  const highlightKeywords = (string) => {
+    const parsedContent = [];
+    string = string.replace(/(?:\r\n|\r|\n)/g, "\n\n"); //줄바꿈을 문자열에 적용
+
+    //키워드에 포함된 단어에 하이라이팅
+    string.split(" ").forEach((element, i) => {
+      if (newsKeywords.includes(element.toUpperCase())) {
+        parsedContent.push(
+          <b className="newsdetail-content-keyword" key={i}>{`${element} `}</b>,
+        );
+      } else {
+        parsedContent.push(`${element} `);
+      }
+    });
+
+    return parsedContent;
+  };
+
   return (
     <>
       {content.split("@@div").map((e, i) =>
@@ -20,7 +38,7 @@ export default function NewsContent({ content }) {
           </h3>
         ) : (
           <p className="newsdetail-content-body" key={i}>
-            {e.replace(/(?:\r\n|\r|\n)/g, "\n\n")}
+            {highlightKeywords(e)}
           </p>
         ),
       )}
