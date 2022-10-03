@@ -12,8 +12,7 @@ import Page5 from "./Page5";
 import Dots from "./Dots";
 import Marker from "assets/marker.jpg";
 import Earth from "assets/earthmap_color.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon } from "@fortawesome/free-solid-svg-icons";
+import Countrycard from "assets/country-card.jpg";
 import DarkToggle from "components/DarkToggle";
 
 export default function Onboarding() {
@@ -195,6 +194,12 @@ export default function Onboarding() {
         />
       </div>
       <img src={Marker} alt="marker" className="marker" ref={marker} />
+      <img
+        src={Countrycard}
+        alt="countrycard"
+        className="countrycard"
+        ref={countrycard}
+      />
       <div className="main-item">
         <Page1
           scrollIdx={scrollIdx}
