@@ -10,12 +10,12 @@ import "./style.scss";
 import { category } from "constants/category";
 
 import DefaultUserImage from "assets/user_globe.png";
-import A1 from "assets/A1.png";
-import A2 from "assets/A2.png";
-import B1 from "assets/B1.png";
-import B2 from "assets/B2.png";
-import C1 from "assets/C1.png";
-import C2 from "assets/C2.png";
+import A1 from "assets/level_A1.png";
+import A2 from "assets/level_A2.png";
+import B1 from "assets/level_B1.png";
+import B2 from "assets/level_B2.png";
+import C1 from "assets/level_C1.png";
+import C2 from "assets/level_C2.png";
 import { useCallback } from "react";
 export default function MyInfo({
   myRecord,

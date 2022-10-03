@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import ReactGlobe from "react-globe";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle } from "@fortawesome/free-solid-svg-icons";
 // import optional tippy styles for tooltip support
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 
 import GlobeImg from "assets/globe_diffuse.jpg";
 import Earth from "assets/earthmap_color.png";
-import Kor from "assets/kor.jpg";
-import TrendDesign from "assets/trend-circle-design.png";
 import { useEffect } from "react";
 
 function markerTooltipRenderer(marker) {
