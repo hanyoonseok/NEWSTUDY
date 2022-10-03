@@ -1,18 +1,19 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import { faBookmark as faBookmarkone } from "@fortawesome/free-regular-svg-icons";
+import React, { useEffect } from "react";
 import { category } from "constants/category";
 import { useNavigate } from "react-router-dom";
 
 import "./style.scss";
 import { intToLevel } from "constants";
 
-export default function NewsCard({ news, stretch, query }) {
+export default function NewsCard({ news, stretch, query, isScrap }) {
   const navigate = useNavigate();
-
   const onLinkClick = () => {
     navigate(`/news/${news.n_id}`);
   };
+
   return (
     <div
       className={`newscard-container ${stretch ? "stretch" : ""}`}
@@ -73,7 +74,11 @@ export default function NewsCard({ news, stretch, query }) {
           </div>
           <div className="newscard-footer-right">
             <i>{news.date.substring(0, 10)}</i>{" "}
-            <FontAwesomeIcon icon={faBookmark} />
+            {isScrap ? (
+              <FontAwesomeIcon icon={faBookmark} />
+            ) : (
+              <FontAwesomeIcon icon={faBookmarkone} />
+            )}
           </div>
         </div>
       </div>

@@ -177,8 +177,8 @@ export default function Header({ isDark, setIsDark }) {
       {searchResults && (
         <div className={`search-list ${activeSearch ? "visible" : "hidden"}`}>
           <ul>
-            {searchResults.map((article, index) => (
-              <li key={index}>
+            {searchResults.slice(0, 5).map((article, index) => (
+              <li key={index} onClick={() => setActiveSearch(false)}>
                 <Link to={`/news/${article.n_id}`}>
                   <SearchResult article={article} query={searchQuery} />
                 </Link>

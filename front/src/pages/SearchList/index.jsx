@@ -38,6 +38,7 @@ function SearchList() {
   const [isFilterModal, setIsFilterModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [filter, setFilter] = useState({
+    per_page: 10,
     page: 1,
     titlekeyword: params.query,
     contentkeyword: params.query,

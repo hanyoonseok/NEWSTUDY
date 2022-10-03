@@ -59,6 +59,11 @@
       @include FLEX-ALIGN-CENTER;
 
       .hottest-article {
+        &:hover {
+          transform: scale(1.03);
+        }
+        transition: all 300ms ease;
+        cursor: pointer;
         width: 85%;
         height: rem(360);
         @include FLEX-COLUMN;

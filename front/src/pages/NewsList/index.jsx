@@ -8,6 +8,7 @@ import LevelContainer from "./LevelContainer";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
 import { category } from "constants/category";
+import { useNavigate } from "react-router-dom";
 
 import NewsCard from "components/NewsCard";
 import axios from "axios";
@@ -15,6 +16,7 @@ import axios from "axios";
 import TopBtn from "components/TopBtn";
 
 export default function NewsList() {
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const [selectedLevel, setSelectedLevel] = useState(
     user.level === 0 ? 1 : user.level,
@@ -27,6 +29,7 @@ export default function NewsList() {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [totalNews, setTotalNews] = useState(0);
   const [cidArray, setCidArray] = useState([]);
+  const [userScrapList, setUserScrapList] = useState([]);
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
 
   const isMobile = useMediaQuery({
@@ -36,6 +39,10 @@ export default function NewsList() {
   const onCloseClick = useCallback(() => {
     setIsFilterModal(false);
   }, []);
+
+  const onLinkClick = (n_id) => {
+    navigate(`/news/${n_id}`);
+  };
 
   const doCategoryFilter = (cidArray) => {
     setNewsList([]);
@@ -57,22 +64,22 @@ export default function NewsList() {
       // 선택한 카테고리 리스트를 삭제해주장
       setCidArray([]);
       setSelectedCategory([]);
+      setUserScrapList([]);
     },
     [selectedLevel],
   );
 
   useEffect(() => {
-    console.log("유저정보 찍기 ", user);
     const fetchData = async () => {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${user.accessToken}`;
-      console.log(selectedLevel);
 
       // 뉴스 목록 불러오기.
       let data;
       if (cidArray.length === 0) {
         data = {
+          per_page: 10,
           startlevel: selectedLevel,
           endlevel: selectedLevel,
           page: page,
@@ -80,6 +87,7 @@ export default function NewsList() {
       } else {
         // cidArray가 있으면
         data = {
+          per_page: 10,
           startlevel: selectedLevel,
           endlevel: selectedLevel,
           page: page,
@@ -90,6 +98,7 @@ export default function NewsList() {
       const newsListResponse = await axios.post(`/news`, data);
       const result = newsListResponse.data;
       setNewsList([...newsList, ...result.newsList]);
+
       if (result.totalCnt > newsList.length + result.newsList.length) {
         setIsExistMoreNews(true);
       } else {
@@ -97,9 +106,23 @@ export default function NewsList() {
       }
       setTotalNews(result.totalCnt);
     };
-
     fetchData();
   }, [selectedLevel, page, cidArray]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${user.accessToken}`;
+      const userScrapResponse = await axios.get(`/scrap`);
+      setUserScrapList(
+        userScrapResponse.data.map((news) => {
+          return news.n_id;
+        }),
+      );
+    };
+    fetchData();
+  }, []);
 
   return (
     <section className="newslist-container">
@@ -134,7 +157,10 @@ export default function NewsList() {
             <div className="newslist-mid-area">
               {newsList.length > 0 && (
                 <>
-                  <div className="hottest-article">
+                  <div
+                    className="hottest-article"
+                    onClick={() => onLinkClick(newsList[0].n_id)}
+                  >
                     <i
                       className={`hottest-article-level ${
                         level_value[newsList[0].level].includes("A")
@@ -166,7 +192,7 @@ export default function NewsList() {
                         </div>{" "}
                         <div className="hottest-article-category sub">
                           <FontAwesomeIcon icon={faCircle} />
-                          {category[newsList[0].c_id].main}
+                          {category[newsList[0].c_id].sub}
                         </div>
                         <FontAwesomeIcon
                           icon={faBookmark}
@@ -178,7 +204,11 @@ export default function NewsList() {
                   {!isMobile && newsList && (
                     <div className="sub-article-container">
                       {newsList.slice(1, 3).map((news, index) => (
-                        <NewsCard news={news} key={index} />
+                        <NewsCard
+                          news={news}
+                          key={index}
+                          isScrap={userScrapList.includes(news.n_id)}
+                        />
                       ))}
                     </div>
                   )}
@@ -187,7 +217,12 @@ export default function NewsList() {
             </div>
             <div className="newslist-bot-area">
               {newsList.slice(3).map((e, i) => (
-                <NewsCard news={e} stretch={!isMobile} key={i} />
+                <NewsCard
+                  news={e}
+                  stretch={!isMobile}
+                  key={i}
+                  isScrap={userScrapList.includes(e.n_id)}
+                />
               ))}
             </div>
             {isExistMoreNews && (
