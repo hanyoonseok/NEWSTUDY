@@ -15,6 +15,7 @@ export default function NationsNewsList() {
   const [nationsNews, setNationsNews] = useState([]); //선택 국가의 뉴스 담긴 배열
   const [nations, setNations] = useState([]); //국가 정보 담긴 배열
   const [dataIdx, setDataIdx] = useState(1);
+  const [userScrapList, setUserScrapList] = useState([]);
   // const [selectedCategory, setSelectedCategory] = useState([]);
   const userState = useSelector((state) => state.user);
   const hexValues = [
@@ -58,6 +59,19 @@ export default function NationsNewsList() {
       });
       setNations(worldArr);
     }
+
+    const fetchData = async () => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${userState.accessToken}`;
+      const userScrapResponse = await axios.get(`/scrap`);
+      setUserScrapList(
+        userScrapResponse.data.map((news) => {
+          return news.n_id;
+        }),
+      );
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -139,7 +153,13 @@ export default function NationsNewsList() {
               <div className="nationsnews-list-list">
                 {nationsNews.length > 0 &&
                   nationsNews.map((e, i) => {
-                    return <NewsCard news={e} key={i} />;
+                    return (
+                      <NewsCard
+                        news={e}
+                        key={i}
+                        isScrap={userScrapList.includes(e.n_id)}
+                      />
+                    );
                   })}
               </div>
               <div className="nationsnews-btn-wrapper">
