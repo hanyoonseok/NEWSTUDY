@@ -482,7 +482,7 @@
   // 공통 모달
   .alert-modal {
     .alert-modal-body {
-      background-color: map-get($darkColors, main);
+      background-color: $grey;
       font-weight: normal;
       box-shadow: $dark-shadow;
     }
@@ -505,7 +505,7 @@
     @media (max-width: 480px) {
       margin-bottom: 0;
       border-radius: 0;
-      background-color: lighten($color: $dark-mode-bg, $amount: 30);
+      background-color: map-get($darkColors, main);
     }
   }
   .divider {
