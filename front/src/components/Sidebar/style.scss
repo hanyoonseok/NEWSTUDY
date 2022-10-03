@@ -30,6 +30,10 @@
       padding: 0 20px;
       height: 60px;
       @include FLEX-BETWEEN;
+
+      .logo-img {
+        overflow: 1;
+      }
     }
     .search-container {
       position: fixed;
@@ -141,11 +145,27 @@
     left: -320px;
     width: 320px;
     opacity: 0;
+
+    .dark-toggle {
+      position: relative;
+      margin-top: rem(270);
+      flex-direction: row-reverse;
+      padding: 0 rem(50);
+      @include FLEX-BETWEEN;
+      > div {
+        color: $white;
+        font-size: rem(22);
+      }
+      label {
+        width: 50px;
+      }
+    }
   }
   .nav-desc {
     width: 250px;
     transition: all 300ms ease;
     cursor: pointer;
+
     @media (max-width: 480px) {
       width: 320px;
       font-size: 1.5rem;

@@ -22,6 +22,7 @@
   width: 100%;
   height: 100%;
   padding-left: 10%;
+
   @include FLEX-COLUMN;
   @media (max-width: 480px) {
     justify-content: space-between;
@@ -35,6 +36,7 @@
     width: 100%;
     font-size: rem(40);
     font-family: $kor-title-font;
+    color: $default-grey;
     b {
       color: $soft-blue;
     }

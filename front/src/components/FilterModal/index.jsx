@@ -55,8 +55,8 @@ export default function FilterModal({
   };
 
   return (
-    <div className="outside-area" onClick={closeHandler}>
-      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+    <div className="filter-outside-area" onClick={closeHandler}>
+      <div className="filter-modal-container" onClick={(e) => e.stopPropagation()}>
         <h1 className="filter-modal-title">Category</h1>
         <div className="category-area">
           <article className="main-category-container">

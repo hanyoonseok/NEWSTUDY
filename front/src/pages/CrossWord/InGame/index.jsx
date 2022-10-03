@@ -240,7 +240,7 @@ export default function InGame({ maxR, maxC, wordArr, setInGame }) {
                               <b>
                                 <FontAwesomeIcon icon={faCircle} />
                               </b>
-                            )}{" "}
+                            )}
                             {desc}
                           </span>
                         ),
