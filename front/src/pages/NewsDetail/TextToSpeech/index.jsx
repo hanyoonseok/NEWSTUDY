@@ -11,7 +11,11 @@ import {
 import { useCallback } from "react";
 
 export default function TextToSpeech({ news, onScrapClick, isScrapped }) {
+  const [isTextToSpeechStatus, setIsTextToSpeechStatus] = useState(false); //발음듣기 상태 여부
+  const [isPauseStatus, setIsPauseStatus] = useState(false); //일시정지 버튼 누른 여부
+  const [texts, setTexts] = useState([]);
   const synth = window.speechSynthesis;
+  let textIdx = 0;
 
   const textToSpeech = useCallback(() => {
     if (
@@ -21,21 +25,17 @@ export default function TextToSpeech({ news, onScrapClick, isScrapped }) {
       alert("이 브라우저는 음성 합성을 지원하지 않습니다.");
       return;
     }
-    const byteLength = news.content.replace(
-      /[\0-\x7f]:([0-\u07ff]:(.))/g,
-      "$&$1$2",
-    ).length;
-    if (byteLength >= 32000) {
-      alert("너무 길어서 지원이 안됩니다 ㅠㅠ");
-      return;
-    }
+    if (textIdx >= texts.length) return;
 
-    const utterThis = new SpeechSynthesisUtterance(news.content);
-    utterThis.lang = "en-US"; //언어설정
-    utterThis.pitch = 1; //피치
-    utterThis.rate = 1; //속도
-    synth.speak(utterThis);
-  }, [news.content]);
+    texts.forEach((e) => {
+      const utterThis = new SpeechSynthesisUtterance(e);
+
+      utterThis.lang = "en-US"; //언어설정
+      utterThis.pitch = 1; //피치
+      utterThis.rate = 1; //속도
+      synth.speak(utterThis);
+    });
+  }, [texts]);
 
   const speechPause = () => {
     //일시정지
@@ -52,11 +52,25 @@ export default function TextToSpeech({ news, onScrapClick, isScrapped }) {
     synth.resume();
   };
 
-  const [isTextToSpeechStatus, setIsTextToSpeechStatus] = useState(false); //발음듣기 상태 여부
-  const [isPauseStatus, setIsPauseStatus] = useState(false); //일시정지 버튼 누른 여부
+  const makeTexts = () => {
+    const parseArr = news.content.split(" ");
+    let curText = "";
+    const arr = [];
+
+    parseArr.forEach((e) => {
+      if (e.length + curText.length < 250) curText += e + " ";
+      else {
+        arr.push(curText);
+        curText = e + " ";
+      }
+    });
+    arr.push(curText);
+    setTexts(arr);
+  };
 
   useEffect(() => {
     speechStop();
+    makeTexts();
   }, []);
 
   return (
