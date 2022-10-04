@@ -114,7 +114,7 @@
                `date`,
                thumbnail
         FROM `news`
-        WHERE c_id = (SELECT c_id FROM `NEWS` WHERE n_id = #{n_id})
+        WHERE c_id = (SELECT c_id FROM `news` WHERE n_id = #{n_id})
         ORDER BY cnt DESC
         LIMIT 0, 6
     </select>
