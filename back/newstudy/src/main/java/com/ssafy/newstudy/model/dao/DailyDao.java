@@ -8,4 +8,5 @@ import java.util.List;
 @Mapper
 public interface DailyDao {
     public List<DailyResponseDto> selectDailyKeyword(Integer c_id);
+    public List<DailyResponseDto> selectWorldKeyword(Integer c_id);
 }

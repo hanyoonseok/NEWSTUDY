@@ -1,18 +1,16 @@
 package com.ssafy.newstudy.model.dto;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class NewsRequestDto {
     private Integer page = 1;
     private Integer start_no = 0;
-    private final Integer per_page = 10;
+    private Integer per_page = 30;
     private Integer total_cnt;  // 해당 카테고리 전체 뉴스 수
 
     private Integer n_id;
