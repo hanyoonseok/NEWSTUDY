@@ -7,27 +7,27 @@
         SELECT u_id,
                b_id,
                `name`
-        FROM `USER_BADGE`
-        LEFT JOIN `BADGE`
+        FROM `user_badge`
+        LEFT JOIN `badge`
         USING (`b_id`)
         WHERE u_id = #{u_id}
     </select>
     <insert id="insertBadge" parameterType="badgeRequestDto">
-        INSERT INTO `USER_BADGE`(u_id, b_id)
+        INSERT INTO `user_badge`(u_id, b_id)
         VALUES (#{u_id}, #{b_id})
     </insert>
     <select id="selectNewBadgeList" parameterType="int" resultType="badgeResponseDto">
         SELECT u_id,
                b_id,
                `name`
-        FROM `USER_BADGE`
-        LEFT JOIN `BADGE`
+        FROM `user_badge`
+        LEFT JOIN `badge`
         USING (`b_id`)
         WHERE u_id = #{u_id}
           AND `done` = 0
     </select>
     <update id="updateBadge" parameterType="badgeResponseDto">
-        UPDATE `USER_BADGE`
+        UPDATE `user_badge`
            SET `done` = 1
          WHERE b_id = #{b_id}
     </update>
