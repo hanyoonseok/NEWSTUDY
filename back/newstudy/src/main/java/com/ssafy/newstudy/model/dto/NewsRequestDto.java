@@ -1,14 +1,12 @@
 package com.ssafy.newstudy.model.dto;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
 public class NewsRequestDto {
     private Integer page = 1;
     private Integer start_no = 0;

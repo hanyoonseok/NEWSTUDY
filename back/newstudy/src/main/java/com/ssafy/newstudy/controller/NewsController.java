@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 뉴스 관련 처리를 위한 컨트롤러
@@ -24,6 +25,9 @@ import java.util.List;
 public class NewsController {
     private final NewsService newsService;
     private final UserService userService;
+
+    private int[] category_start_id = {1, 20, 28, 40, 62, 67};
+    private int[] category_end_id = {19, 27, 39, 61, 66, 97};
 
     @GetMapping("/{n_id}")
     @ApiOperation(value = "뉴스 상세 내용", notes = "n_id로 뉴스 기사를 가져온다")
@@ -81,6 +85,30 @@ public class NewsController {
         HashMap map = new HashMap();
         map.put("newsList", responseArray);
         map.put("totalCnt", total_cnt);
+
+        //키워드 검색일 경우
+        if((newsRequestDto.getContentkeyword() != null && !newsRequestDto.getContentkeyword().equals(""))
+                || (newsRequestDto.getTitlekeyword() != null && !newsRequestDto.getTitlekeyword().equals(""))) {
+            HashMap<Integer, Integer> categoryCnt = new HashMap<>();
+
+            //키워드 찾기
+            String keyword = "";
+            if(newsRequestDto.getContentkeyword() != null && !newsRequestDto.getContentkeyword().equals(""))
+                keyword = newsRequestDto.getContentkeyword();
+            else
+                keyword = newsRequestDto.getTitlekeyword();
+
+            //카테고리 범위 모두 다
+            for(int i = 0 ; i < 6 ; i++){
+                HashMap tmp_map = new HashMap();
+                tmp_map.put("startcategoryid", category_start_id[i]);
+                tmp_map.put("endcategoryid", category_end_id[i]);
+                tmp_map.put("search", keyword);
+                int result = newsService.selectNewsCountByCategory(tmp_map);
+                categoryCnt.put(category_start_id[i], result);
+            }
+            map.put("categoryCnt", categoryCnt);
+        }
         return new ResponseEntity<HashMap>(map, HttpStatus.OK);
     }
 

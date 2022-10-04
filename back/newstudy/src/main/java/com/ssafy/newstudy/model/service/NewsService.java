@@ -6,6 +6,7 @@ import com.ssafy.newstudy.model.dto.NewsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -81,5 +82,14 @@ public class NewsService {
      */
     public void updateViewCnt(Integer n_id){
         newsDao.updateViewCnt(n_id);
+    }
+
+    /**
+     * categoryid로 title 또는 content를 센다
+     * @param map
+     * @return
+     */
+    public Integer selectNewsCountByCategory(HashMap map){
+        return newsDao.selectNewsCountByCategory(map);
     }
 }

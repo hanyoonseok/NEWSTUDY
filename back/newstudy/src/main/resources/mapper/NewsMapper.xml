@@ -138,4 +138,15 @@
         SET    cnt = cnt + 1
         WHERE  n_id = #{n_id}
     </update>
+    <select id="selectNewsCountByCategory" parameterType="map" resultType="int">
+        SELECT count(distinct n_id)
+        FROM `NEWS`
+        WHERE c_id between #{startcategoryid} and #{endcategoryid}
+            AND level between 1 and 6
+            AND (
+                title like '%${search}%'
+                OR
+                content like '%${search}%'
+                )
+    </select>
 </mapper>
