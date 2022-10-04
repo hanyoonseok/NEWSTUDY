@@ -1,13 +1,10 @@
 # NEWSTUDY
-
-## 👇 NEWSTUDY 소개 및 UCC 👇
-
-<img src="https://user-images.githubusercontent.com/33210124/192981357-3cd360ed-1a54-4663-ba4b-7a44d3c1b894.png"><br>
-[UCC]()
+<img src="https://user-images.githubusercontent.com/33210124/192981357-3cd360ed-1a54-4663-ba4b-7a44d3c1b894.png" width="50%"><br>
 
 ## ✨ Overview
 
 난이도에 맞는 해외 뉴스 기사를 통해 영어를 공부할 수 있는 웹 서비스
+[UCC]()
 
 ## ✨ NEWSTUDY의 모토
 
