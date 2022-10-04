@@ -54,8 +54,8 @@ export default function Header({ isDark, setIsDark }) {
     setSearchResults(null);
   };
   const searchArticle = (e) => {
-    // const query = e.target.value;
-    // setSearchQuery(query);
+    const query = e.target.value;
+    setSearchQuery(query);
   };
 
   // 검색창 열엉~
