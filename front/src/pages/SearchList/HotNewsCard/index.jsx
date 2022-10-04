@@ -42,7 +42,7 @@ function HotNewsCard({ news, isMobile, query, isScrap }) {
             </Link>
           </>
         ) : (
-          <Link to={`/news/${news.n_id}`}>news.title</Link>
+          <Link to={`/news/${news.n_id}`}>{news.title}</Link>
         )}
       </h1>
       {!isMobile && (

@@ -34,7 +34,9 @@ export default function ArticleInside({ Article }) {
         <div className="article-img">
           <span
             className={`article-level ${
-              level_value[level].includes("A")
+              !level
+                ? "Alv"
+                : level_value[level].includes("A")
                 ? "Alv"
                 : level_value[level].includes("B")
                 ? "Blv"

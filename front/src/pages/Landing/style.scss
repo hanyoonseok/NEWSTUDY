@@ -93,6 +93,7 @@
     .hottopic-articles {
       @include FLEX-CENTER;
       align-items: flex-start;
+      width: 100%;
       @media (max-width: 1000px) {
         @include FLEX-COLUMN;
         justify-content: center;
@@ -109,7 +110,7 @@
         .hottopic-img {
           overflow: hidden;
           position: relative;
-          width: 37vw;
+          width: 100%;
           border-radius: 20px;
           height: 25vw;
           @media (max-width: 1000px) {
@@ -125,7 +126,8 @@
           @include FLEX-CENTER;
           > img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             overflow: hidden;
             @media (max-width: 1000px) {
               width: 85%;
@@ -162,11 +164,12 @@
           }
         }
         .hottopic-title {
-          @include TEXT-OVERFLOW;
+          @include ELLIPSIS-LINE(2);
           padding: 10px;
           cursor: pointer;
           color: $dark-grey;
           margin-top: 10px;
+          width: 100%;
           @media (max-width: 1000px) {
             text-align: center;
           }

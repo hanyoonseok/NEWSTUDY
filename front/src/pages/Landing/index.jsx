@@ -24,6 +24,7 @@ import ArticleInside from "./ArticleInside";
 import ArticleOutside from "./ArticleOutside";
 import TopBtn from "components/TopBtn";
 import UserfitArticle from "./UserfitArticle";
+import NewsCard from "components/NewsCard";
 
 function SectionTitle({ sectionTitle }) {
   const user = useSelector((state) => state.user);
@@ -100,7 +101,7 @@ function Landing() {
   const [user, setUser] = useState(useSelector((state) => state.user));
   const [activeId, setActiveId] = useState(0);
   const [wordRanking, setWordRanking] = useState(null);
-  const [userFitNews, setUserFitNews] = useState(null);
+  const [userFitNews, setUserFitNews] = useState([]);
   const [hotNews, setHotNews] = useState(null);
   const [loading, setLoading] = useState(false);
   const [active, setActive] = useState(1);
@@ -152,7 +153,7 @@ function Landing() {
         // 로딩값을 true로 변경
         setLoading(true);
         // 초기화시켜주기
-        setUserFitNews(null);
+        setUserFitNews([]);
         setHotNews(null);
         setWordRanking(null);
         // setAllRanking(null);
@@ -187,11 +188,11 @@ function Landing() {
 
       <section className="userfit" data-aos="fade-up" data-aos-delay="300">
         <SectionTitle sectionTitle={sectionTitle[0]}></SectionTitle>
-        {userFitNews && (
+        {userFitNews.length > 0 && (
           <>
             <div className="userfit-articles">
               <UserfitArticle setActive={setActive} active={active}>
-                {userFitNews &&
+                {userFitNews.length > 0 &&
                   userFitNews.map((fitArticle, index) => (
                     <ArticleInside
                       Article={fitArticle}
@@ -213,31 +214,28 @@ function Landing() {
         {hotNews && hotNews.length > 0 && (
           <>
             <div className="hottopic-articles">
-              <div
+              <Link
+                to={`/news/${hotNews[0].n_id}`}
                 className="hottopic-left"
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
                 <>
-                  <Link to={`/news/${hotNews[0].n_id}`}>
-                    <div className="hottopic-img">
-                      <img src={hotNews[0].thumbnail} alt="article"></img>
-                      <span
-                        className={`article-level ${
-                          level_value[hotNews[0].level].includes("A")
-                            ? "Alv"
-                            : level_value[hotNews[0].level].includes("B")
-                            ? "Blv"
-                            : "Clv"
-                        }`}
-                      >
-                        {level_value[hotNews[0].level]}
-                      </span>
-                    </div>
-                  </Link>{" "}
-                  <Link to={`/news/${hotNews[0].n_id}`}>
-                    <h3 className="hottopic-title">{hotNews[0].title}</h3>
-                  </Link>
+                  <div className="hottopic-img">
+                    <img src={hotNews[0].thumbnail} alt="article"></img>
+                    <span
+                      className={`article-level ${
+                        level_value[hotNews[0].level].includes("A")
+                          ? "Alv"
+                          : level_value[hotNews[0].level].includes("B")
+                          ? "Blv"
+                          : "Clv"
+                      }`}
+                    >
+                      {level_value[hotNews[0].level]}
+                    </span>
+                  </div>
+                  <h3 className="hottopic-title">{hotNews[0].title}</h3>
                   <span className="article-category sub">
                     <i>
                       <FontAwesomeIcon icon={faCircle} />
@@ -251,14 +249,15 @@ function Landing() {
                     {category[hotNews[0].c_id].main}
                   </span>
                 </>
-              </div>
+              </Link>
               <div
                 className="hottopic-right"
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
                 {hotNews.slice(1, 4).map((news, index) => (
-                  <ArticleOutside Article={news} key={index}></ArticleOutside>
+                  <NewsCard news={news} key={index} isScrap={false} />
+                  // <ArticleOutside Article={news} key={index}></ArticleOutside>
                 ))}
               </div>
             </div>
