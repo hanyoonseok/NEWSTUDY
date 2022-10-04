@@ -31,30 +31,6 @@ function SectionTitle({ sectionTitle }) {
   const user = useSelector((state) => state.user);
 
   const { blueTitle, blackTitle, desc } = sectionTitle;
-  const [badgeContent, setBadgeContent] = useState({});
-  const [isBadgeModal, setIsBadgeModal] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .get("/badge/new", {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        })
-        .then((res) => {
-          if (res.data.length > 0) {
-            setBadgeContent({
-              text: res.data[0].name,
-              index: res.data[0].b_id,
-            });
-            setIsBadgeModal(true);
-          }
-        });
-    };
-    fetchData();
-    return () => {};
-  }, []);
   return (
     <>
       <div className="section">
@@ -71,13 +47,6 @@ function SectionTitle({ sectionTitle }) {
           ></img>
         </div>
       </div>
-      {isBadgeModal && (
-        <BadgeModal
-          setStatus={setIsBadgeModal}
-          text={badgeContent.text}
-          index={badgeContent.index}
-        />
-      )}
     </>
   );
 }
@@ -114,6 +83,8 @@ function Landing() {
   const [nowDate, setNowDate] = useState(new Date());
   const [keywordArticle, setKeywordArticle] = useState(null);
   const [selectedKeyword, setSelectedKeyword] = useState(null);
+  const [badgeContent, setBadgeContent] = useState({});
+  const [isBadgeModal, setIsBadgeModal] = useState(false);
 
   const onClickSwitchTab = (id) => {
     setActiveId(id);
@@ -149,14 +120,10 @@ function Landing() {
       try {
         // 로딩값을 true로 변경
         setLoading(true);
-        // 초기화시켜주기
-        // setUserFitNews(null);
-        // setHotNews(null);
-        // setWordRanking(null);
-        // setAllRanking(null);
 
         // 사용자 맞춤 기사
         const fitNewsResponse = await axios.get(`/news/recommend`);
+        console.log(fitNewsResponse.data);
         setUserFitNews(fitNewsResponse.data);
         // 핫토픽 기사
         const hotNewsResponse = await axios.get(`/news/hot`);
@@ -172,6 +139,25 @@ function Landing() {
     };
 
     fetchData();
+
+    const getBadge = async () => {
+      await axios
+        .get("/badge/new", {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.length > 0) {
+            setBadgeContent({
+              text: res.data[0].name,
+              index: res.data[0].b_id,
+            });
+            setIsBadgeModal(true);
+          }
+        });
+    };
+    getBadge();
   }, []);
 
   // 워드 클라우드 데이터 가져오는 함수
@@ -232,7 +218,7 @@ function Landing() {
           <>
             <div className="userfit-articles">
               <UserfitArticle setActive={setActive} active={active}>
-                {userFitNews &&
+                {userFitNews.length > 0 &&
                   userFitNews.map((fitArticle, index) => (
                     <ArticleInside
                       Article={fitArticle}
@@ -419,6 +405,13 @@ function Landing() {
         </div>
       </section>
       <TopBtn></TopBtn>
+      {isBadgeModal && (
+        <BadgeModal
+          setStatus={setIsBadgeModal}
+          text={badgeContent.text}
+          index={badgeContent.index}
+        />
+      )}
     </div>
   );
 }
