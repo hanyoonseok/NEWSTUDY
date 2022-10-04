@@ -76,7 +76,12 @@ export default function ArticleInside({ Article }) {
           <Link to={`/news/${Article.n_id}`}>
             <h2 className="article-title">{title}</h2>
           </Link>
-          <div className={`article-content visible`}>{content}</div>
+          <div className={`article-content visible`}>
+            {content
+              .replaceAll(/@@divsubtitle/g, "")
+              .replaceAll(/@@divimg/g, "")
+              .replaceAll(/@@div/g, "")}
+          </div>
         </div>
       </div>
     </>

@@ -109,10 +109,11 @@ export default function NewsDetail() {
     } else {
       if (korContent === "") {
         const transResponse = await axios.post("/translate", {
-          additionalProp1: engContent,
+          input: engContent,
         });
         console.log(transResponse);
-        setKorContent(transResponse.data);
+        setKorContent(transResponse.data.message.result.translatedText);
+        setIsTranslated(true);
       } else setIsTranslated(true);
     }
   }, [engContent, korContent, isTranslated]);
@@ -146,6 +147,7 @@ export default function NewsDetail() {
                   news={newsDetail}
                   onScrapClick={onScrapClick}
                   onTransClick={onTransClick}
+                  isTranslated={isTranslated}
                 />
               )}
               <h3 className="news-subtitle change">VOCABULARY</h3>
@@ -174,6 +176,7 @@ export default function NewsDetail() {
                     news={newsDetail}
                     onScrapClick={onScrapClick}
                     onTransClick={onTransClick}
+                    isTranslated={isTranslated}
                   />
                 )}
                 {selectedWord && (

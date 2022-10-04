@@ -14,7 +14,6 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
   const onLinkClick = () => {
     navigate(`/news/${news.n_id}`);
   };
-
   return (
     <div
       className={`newscard-container ${stretch ? "stretch" : ""}`}
@@ -60,10 +59,18 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
               </>
             ) : (
               news.content
+                .replaceAll(/@@divsubtitle/g, "")
+                .replaceAll(/@@divimg/g, "")
+                .replaceAll(/@@div/g, "")
             )}
           </h3>
         ) : (
-          <h3 className="newscard-body">{news.content}</h3>
+          <h3 className="newscard-body">
+            {news.content
+              .replaceAll(/@@divsubtitle/g, "")
+              .replaceAll(/@@divimg/g, "")
+              .replaceAll(/@@div/g, "")}
+          </h3>
         )}
 
         <div className="newscard-footer">

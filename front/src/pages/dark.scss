@@ -90,12 +90,32 @@
       .daily-right .wordcloud-wrapper .wordcloud-nav .word-category {
         color: $dark-mode-black;
       }
-      .daily-left .key-ranking:hover {
-        background-color: lighten($color: $dark-mode-bg, $amount: 20);
+      .daily-left .key-ranking {
+        &.active,
+        &:hover {
+          background-color: lighten($color: $dark-mode-bg, $amount: 20);
+        }
       }
     }
     .hottopic .hottopic-articles .hottopic-left .hottopic-title {
       color: $white;
+    }
+    .newscard-container:hover {
+      background-color: lighten($color: $dark-mode-bg, $amount: 20);
+    }
+    .newscard-container
+      .newscard-contents-container
+      .newscard-footer
+      .newscard-categories
+      > div {
+      background-color: transparent;
+    }
+    .daily-keyword
+      .wordcloud-article
+      .newscard-container
+      .newscard-contents-container
+      .newscard-body {
+      color: $grey;
     }
   }
   .article-wrapper-side {
@@ -482,7 +502,7 @@
   // 공통 모달
   .alert-modal {
     .alert-modal-body {
-      background-color: $grey;
+      background-color: #3b3d48;
       font-weight: normal;
       box-shadow: $dark-shadow;
     }

@@ -15,6 +15,7 @@ export default function TextToSpeech({
   onScrapClick,
   isScrapped,
   onTransClick,
+  isTranslated,
 }) {
   const [isTextToSpeechStatus, setIsTextToSpeechStatus] = useState(false); //발음듣기 상태 여부
   const [isPauseStatus, setIsPauseStatus] = useState(false); //일시정지 버튼 누른 여부
@@ -145,7 +146,9 @@ export default function TextToSpeech({
         <i>
           <FontAwesomeIcon icon={faGlobe} />
         </i>
-        <div className="icon-desc">번역보기</div>
+        <div className="icon-desc">
+          {isTranslated ? "영문보기" : "번역보기"}
+        </div>
       </div>
 
       <div className="icon-row" onClick={onScrapClick}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./style.scss";
 import { useSelector } from "react-redux";
 import BadgeModal from "components/BadgeModal";
@@ -21,7 +21,6 @@ import {
 
 import Wordcloud from "./WordCloud";
 import ArticleInside from "./ArticleInside";
-import ArticleOutside from "./ArticleOutside";
 import TopBtn from "components/TopBtn";
 import UserfitArticle from "./UserfitArticle";
 import NewsCard from "components/NewsCard";
@@ -30,30 +29,6 @@ function SectionTitle({ sectionTitle }) {
   const user = useSelector((state) => state.user);
 
   const { blueTitle, blackTitle, desc } = sectionTitle;
-  const [badgeContent, setBadgeContent] = useState({});
-  const [isBadgeModal, setIsBadgeModal] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .get("/badge/new", {
-          headers: {
-            Authorization: `Bearer ${user.accessToken}`,
-          },
-        })
-        .then((res) => {
-          if (res.data.length > 0) {
-            setBadgeContent({
-              text: res.data[0].name,
-              index: res.data[0].b_id,
-            });
-            setIsBadgeModal(true);
-          }
-        });
-    };
-    fetchData();
-    return () => {};
-  }, []);
   return (
     <>
       <div className="section">
@@ -70,21 +45,18 @@ function SectionTitle({ sectionTitle }) {
           ></img>
         </div>
       </div>
-      {isBadgeModal && (
-        <BadgeModal
-          setStatus={setIsBadgeModal}
-          text={badgeContent.text}
-          index={badgeContent.index}
-        />
-      )}
     </>
   );
 }
 
-function KeywordRanking({ item, rank }) {
+function KeywordRanking({ item, rank, selectedKeyword }) {
   return (
     <>
-      <div className="key-ranking">
+      <div
+        className={`key-ranking ${
+          selectedKeyword === item.eng ? "active" : ""
+        }`}
+      >
         <div className="rank">{rank}</div>
         <div className="rank-content">
           <div className="keyword">{item.eng}</div>
@@ -98,15 +70,17 @@ function KeywordRanking({ item, rank }) {
 
 function Landing() {
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
-  const [user, setUser] = useState(useSelector((state) => state.user));
+  const user = useSelector((state) => state.user);
   const [activeId, setActiveId] = useState(0);
   const [wordRanking, setWordRanking] = useState(null);
   const [userFitNews, setUserFitNews] = useState([]);
-  const [hotNews, setHotNews] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [hotNews, setHotNews] = useState([]);
   const [active, setActive] = useState(1);
-  const [error, setError] = useState(null);
   const [nowDate, setNowDate] = useState(new Date());
+  const [keywordArticle, setKeywordArticle] = useState(null);
+  const [selectedKeyword, setSelectedKeyword] = useState(null);
+  const [badgeContent, setBadgeContent] = useState({});
+  const [isBadgeModal, setIsBadgeModal] = useState(false);
 
   const onClickSwitchTab = (id) => {
     setActiveId(id);
@@ -129,17 +103,7 @@ function Landing() {
     },
   ];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${user.accessToken}`;
-      const wordCloudResponse = await axios.get(`/daily/${activeId}`);
-      console.log(wordCloudResponse.data);
-      setWordRanking(wordCloudResponse.data);
-    };
-    fetchData();
-  }, [activeId]);
+  const categoryNumber = [0, 1, 62, 67, 40, 28];
 
   useEffect(() => {
     AOS.init({
@@ -151,10 +115,9 @@ function Landing() {
       ] = `Bearer ${user.accessToken}`;
       try {
         // 로딩값을 true로 변경
-        setLoading(true);
         // 초기화시켜주기
         setUserFitNews([]);
-        setHotNews(null);
+        setHotNews([]);
         setWordRanking(null);
         // setAllRanking(null);
 
@@ -164,20 +127,83 @@ function Landing() {
         setUserFitNews(fitNewsResponse.data);
         // 핫토픽 기사
         const hotNewsResponse = await axios.get(`/news/hot`);
-        console.log(hotNewsResponse.data);
         setHotNews(hotNewsResponse.data);
         // 데일리 워드클라우드
-        const wordCloudResponse = await axios.get(`/daily/${activeId}`);
-        setWordRanking(wordCloudResponse.data);
-        console.log("워드데이터", wordCloudResponse.data);
-      } catch (e) {
-        setError(e);
-      }
-      setLoading(false);
+        getWordCloud();
+        setSelectedKeyword(wordRanking.length > 0 ? wordRanking[0].eng : ""); //키워드 첫번째꺼로 설정
+        getSelectedKeywordArticle();
+      } catch (e) {}
     };
 
     fetchData();
+
+    const getBadge = async () => {
+      await axios
+        .get("/badge/new", {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        })
+        .then((res) => {
+          if (res.data.length > 0) {
+            setBadgeContent({
+              text: res.data[0].name,
+              index: res.data[0].b_id,
+            });
+            setIsBadgeModal(true);
+          }
+        });
+    };
+    getBadge();
   }, []);
+
+  // 워드 클라우드 데이터 가져오는 함수
+  const getWordCloud = useCallback(async () => {
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${user.accessToken}`;
+    const wordCloudResponse = await axios.get(
+      `/daily/${categoryNumber[activeId]}`,
+    );
+
+    console.log(wordCloudResponse.data);
+    setWordRanking(wordCloudResponse.data);
+    setSelectedKeyword(
+      wordCloudResponse.data.length > 0 ? wordCloudResponse.data[0].eng : "",
+    );
+  }, [activeId]);
+
+  useEffect(() => {
+    console.log("activeID", activeId);
+    getWordCloud();
+  }, [activeId]);
+
+  // 현재 선택한 키워드에 대한 기사 4개 가져오기
+  const getSelectedKeywordArticle = async () => {
+    if (selectedKeyword) {
+      console.log("selectedKeyword", selectedKeyword);
+      const filter = {
+        per_page: 10,
+        page: 1,
+        titlekeyword: selectedKeyword,
+      };
+      console.log("filter", filter);
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${user.accessToken}`;
+      const keywordArticleResponse = await axios.post("/news", filter);
+      console.log(
+        "가져온 기사덜",
+        keywordArticleResponse.data.newsList.slice(0, 4),
+      );
+      setKeywordArticle(keywordArticleResponse.data.newsList.slice(0, 4));
+    }
+  };
+
+  useEffect(() => {
+    // 선택한 키워드 바뀔때마다 제목에 키워드 들어간 기사 가져오기
+    getSelectedKeywordArticle();
+  }, [selectedKeyword]);
 
   return (
     <div className="landing-wrapper">
@@ -272,11 +298,19 @@ function Landing() {
             {wordRanking &&
               wordRanking.slice(0, 5).map((item, index) => {
                 return (
-                  <KeywordRanking
-                    item={item}
-                    rank={index + 1}
+                  <div
                     key={index}
-                  ></KeywordRanking>
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedKeyword(item.eng);
+                    }}
+                  >
+                    <KeywordRanking
+                      selectedKeyword={selectedKeyword}
+                      item={item}
+                      rank={index + 1}
+                    />
+                  </div>
                 );
               })}
           </div>
@@ -358,8 +392,24 @@ function Landing() {
             </div>
           </div>
         </div>
+        <div className="wordcloud-article">
+          {keywordArticle &&
+            keywordArticle.length > 0 &&
+            keywordArticle.map((item, index) => {
+              return (
+                <NewsCard news={item} key={index} query={selectedKeyword} />
+              );
+            })}
+        </div>
       </section>
       <TopBtn></TopBtn>
+      {isBadgeModal && (
+        <BadgeModal
+          setStatus={setIsBadgeModal}
+          text={badgeContent.text}
+          index={badgeContent.index}
+        />
+      )}
     </div>
   );
 }

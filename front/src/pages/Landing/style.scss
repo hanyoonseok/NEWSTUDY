@@ -3,7 +3,7 @@
 .landing-wrapper {
   height: 100%;
   width: 100%;
-  padding: 60px 3% 70px 80px;
+  padding: 60px rem(50) 70px rem(80);
   @media (max-width: 480px) {
     padding: 65px 20px;
     overflow: hidden;
@@ -214,13 +214,14 @@
   // 데일리 키워드
   .daily-keyword {
     .daily-wrapper {
+      width: 80%;
       @include FLEX-CENTER;
-      justify-content: flex-start;
       @media (max-width: 480px) {
         @include FLEX-COLUMN;
         width: 100%;
       }
       .daily-left {
+        margin-right: rem(10);
         @media (max-width: 480px) {
           width: 90%;
         }
@@ -229,8 +230,10 @@
           transition: all 300ms ease;
           margin: 3% 0;
           padding: 0 1em;
+          cursor: pointer;
+          &.active,
           &:hover {
-            transform: scale(1.05);
+            transform: scale(1.001);
             background-color: white;
             border-radius: 30px;
             filter: $drop-shadow;
@@ -270,7 +273,6 @@
         }
       }
       .daily-right {
-        margin-left: 3%;
         @media (max-width: 480px) {
           width: 100%;
           margin-top: 5%;
@@ -332,6 +334,49 @@
               }
             }
           }
+        }
+      }
+    }
+
+    .wordcloud-article {
+      width: 80%;
+      @include FLEX-CENTER;
+      flex-direction: column;
+      margin-top: rem(10);
+
+      @media (max-width: 480px) {
+        width: 100%;
+      }
+
+      .newscard-container {
+        max-width: 100%;
+        height: rem(200);
+        @media (max-width: 480px) {
+          height: rem(170);
+        }
+        .newscard-img-container {
+          width: 35%;
+
+          @media (max-width: 480px) {
+            width: 50%;
+          }
+        }
+        .newscard-contents-container {
+          width: 100%;
+          @media (max-width: 480px) {
+            width: 70%;
+            .newscard-body {
+              -webkit-line-clamp: 2;
+            }
+          }
+
+          .newscard-footer .newscard-footer-right svg {
+            display: none;
+          }
+        }
+
+        b {
+          color: $blue;
         }
       }
     }
