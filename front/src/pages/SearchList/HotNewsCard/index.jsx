@@ -6,6 +6,7 @@ import { category } from "constants/category";
 import { Link } from "react-router-dom";
 
 import React from "react";
+import DefaultThumb from "assets/default-thumb.png";
 
 function HotNewsCard({ news, isMobile, query, isScrap }) {
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
@@ -25,7 +26,10 @@ function HotNewsCard({ news, isMobile, query, isScrap }) {
       </i>
       <Link to={`/news/${news.n_id}`}>
         <span className="hottest-article-img">
-          <img src={news.thumbnail} alt="article"></img>
+          <img
+            src={news.thumbnail ? news.thumbnail : DefaultThumb}
+            alt="article"
+          ></img>
         </span>
       </Link>
       <h1 className="hottest-article-title">

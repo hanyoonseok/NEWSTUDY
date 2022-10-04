@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 import "./style.scss";
 import { intToLevel } from "constants";
+import DefaultThumb from "assets/default-thumb.png";
 
 export default function NewsCard({ news, stretch, query, isScrap }) {
   const navigate = useNavigate();
@@ -20,7 +21,11 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
       onClick={onLinkClick}
     >
       <div className="newscard-img-container">
-        <img src={news.thumbnail} alt="" className="newscard-img" />
+        <img
+          src={news.thumbnail ? news.thumbnail : DefaultThumb}
+          alt=""
+          className="newscard-img"
+        />
         <i
           className={`newscard-level ${
             news.level <= 2 ? "Alv" : news.level <= 4 ? "Blv" : "Clv"
