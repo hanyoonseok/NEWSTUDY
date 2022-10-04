@@ -127,6 +127,7 @@ function SearchList() {
 
   // 뉴스리스트 가져오는 함수들
   const getMoreNewsList = async (data) => {
+    console.log("????", data);
     axios.defaults.headers.common[
       "Authorization"
     ] = `Bearer ${user.accessToken}`;
