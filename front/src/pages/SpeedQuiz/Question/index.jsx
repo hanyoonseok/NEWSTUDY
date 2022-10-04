@@ -32,7 +32,6 @@ export default function Question({
 
   const inputKeyDown = useCallback(
     (e, idx) => {
-      console.log(e);
       if (e.key === "Enter") {
         if (idx === inputHTML.current.length - 1) onNextClick();
         else inputHTML.current[idx + 1].focus();

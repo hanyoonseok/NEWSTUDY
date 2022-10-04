@@ -7,20 +7,24 @@ import { useNavigate } from "react-router-dom";
 
 import "./style.scss";
 import { intToLevel } from "constants";
+import DefaultThumb from "assets/default-thumb.png";
 
 export default function NewsCard({ news, stretch, query, isScrap }) {
   const navigate = useNavigate();
   const onLinkClick = () => {
     navigate(`/news/${news.n_id}`);
   };
-  console.log(isScrap);
   return (
     <div
       className={`newscard-container ${stretch ? "stretch" : ""}`}
       onClick={onLinkClick}
     >
       <div className="newscard-img-container">
-        <img src={news.thumbnail} alt="" className="newscard-img" />
+        <img
+          src={news.thumbnail ? news.thumbnail : DefaultThumb}
+          alt=""
+          className="newscard-img"
+        />
         <i
           className={`newscard-level ${
             news.level <= 2 ? "Alv" : news.level <= 4 ? "Blv" : "Clv"
@@ -50,15 +54,23 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
             {news.content.includes(query) ? (
               <>
                 {news.content.split(query)[0]}
-                <lb>{query}</lb>
+                <b>{query}</b>
                 {news.content.split(query)[1]}
               </>
             ) : (
               news.content
+                .replaceAll(/@@divsubtitle/g, "")
+                .replaceAll(/@@divimg/g, "")
+                .replaceAll(/@@div/g, "")
             )}
           </h3>
         ) : (
-          <h3 className="newscard-body">{news.content}</h3>
+          <h3 className="newscard-body">
+            {news.content
+              .replaceAll(/@@divsubtitle/g, "")
+              .replaceAll(/@@divimg/g, "")
+              .replaceAll(/@@div/g, "")}
+          </h3>
         )}
 
         <div className="newscard-footer">

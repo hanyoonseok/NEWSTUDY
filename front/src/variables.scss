@@ -133,6 +133,7 @@ $drop-shadow-dark: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.3));
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: $line; //라인수 정함
+  -webkit-box-orient: vertical;
 }
 
 @mixin FADE-IN($delay) {

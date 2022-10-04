@@ -10,7 +10,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useCallback } from "react";
 
-export default function TextToSpeech({ news, onScrapClick, isScrapped }) {
+export default function TextToSpeech({
+  news,
+  onScrapClick,
+  isScrapped,
+  onTransClick,
+  isTranslated,
+}) {
   const [isTextToSpeechStatus, setIsTextToSpeechStatus] = useState(false); //발음듣기 상태 여부
   const [isPauseStatus, setIsPauseStatus] = useState(false); //일시정지 버튼 누른 여부
   const [texts, setTexts] = useState([]);
@@ -136,11 +142,13 @@ export default function TextToSpeech({ news, onScrapClick, isScrapped }) {
         </>
       )}
 
-      <div className="icon-row">
+      <div className="icon-row" onClick={onTransClick}>
         <i>
           <FontAwesomeIcon icon={faGlobe} />
         </i>
-        <div className="icon-desc">번역보기</div>
+        <div className="icon-desc">
+          {isTranslated ? "영문보기" : "번역보기"}
+        </div>
       </div>
 
       <div className="icon-row" onClick={onScrapClick}>

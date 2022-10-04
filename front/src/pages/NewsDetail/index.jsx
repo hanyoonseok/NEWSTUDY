@@ -20,9 +20,13 @@ export default function NewsDetail() {
   const [newsDetail, setNewsDetail] = useState(null);
   const [newsKeywords, setNewsKeywords] = useState([]);
   const [relatedNews, setRelatedNews] = useState([]);
+  const [scrapList, setScrapList] = useState([]);
   const [isScrapped, setIsScrapped] = useState(false);
   const [newBadgeInfo, setNewBadgeInfo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTranslated, setIsTranslated] = useState(false);
+  const [engContent, setEngContent] = useState("");
+  const [korContent, setKorContent] = useState("");
   const userState = useSelector((state) => state.user);
 
   const isMobile = useMediaQuery({
@@ -39,6 +43,7 @@ export default function NewsDetail() {
         newsDetailResponse.data.date,
       ).format("ddd, MMMM, DD, YYYY");
       setNewsDetail(newsDetailResponse.data);
+      setEngContent(newsDetailResponse.data.content);
       console.log("뉴스 상세 : ", newsDetailResponse);
 
       const newsKeywordsResponse = await axios.get(`/news/keyword/${newsId}`);
@@ -50,11 +55,9 @@ export default function NewsDetail() {
       console.log("관련 기사 : ", relatedNewsResponse);
 
       const scrapListResponse = await axios.get("/scrap");
-
-      setIsScrapped(
-        scrapListResponse.data.filter((e) => e.n_id === parseInt(newsId))
-          .length > 0,
-      );
+      const scrapListNidArr = scrapListResponse.data.map((e) => e.n_id);
+      setScrapList(scrapListNidArr);
+      setIsScrapped(scrapListNidArr.includes(parseInt(newsId)));
 
       if (!window.scrollY) return;
       window.scrollTo({
@@ -100,6 +103,21 @@ export default function NewsDetail() {
     setIsScrapped((prev) => !prev);
   }, [isScrapped]);
 
+  const onTransClick = useCallback(async () => {
+    if (isTranslated) {
+      setIsTranslated(false);
+    } else {
+      if (korContent === "") {
+        const transResponse = await axios.post("/translate", {
+          input: engContent,
+        });
+        console.log(transResponse);
+        setKorContent(transResponse.data.message.result.translatedText);
+        setIsTranslated(true);
+      } else setIsTranslated(true);
+    }
+  }, [engContent, korContent, isTranslated]);
+
   return (
     <div className="newsdetail-container">
       <BackBtn />
@@ -120,7 +138,7 @@ export default function NewsDetail() {
                 >
                   {intToLevel[newsDetail.level]}
                 </i>
-                 {newsDetail.title}
+                {newsDetail.title}
               </h1>
               <p className="news-date">{newsDetail.date}</p>
               {isMobile && (
@@ -128,6 +146,8 @@ export default function NewsDetail() {
                   isScrapped={isScrapped}
                   news={newsDetail}
                   onScrapClick={onScrapClick}
+                  onTransClick={onTransClick}
+                  isTranslated={isTranslated}
                 />
               )}
               <h3 className="news-subtitle change">VOCABULARY</h3>
@@ -155,6 +175,8 @@ export default function NewsDetail() {
                     isScrapped={isScrapped}
                     news={newsDetail}
                     onScrapClick={onScrapClick}
+                    onTransClick={onTransClick}
+                    isTranslated={isTranslated}
                   />
                 )}
                 {selectedWord && (
@@ -176,8 +198,9 @@ export default function NewsDetail() {
               )}
               <div className="news-article">
                 <NewsContent
-                  content={newsDetail.content}
+                  content={isTranslated ? korContent : engContent}
                   newsKeywords={newsKeywords}
+                  isTranslated={isTranslated}
                 />
               </div>
               <footer className="newsdetail-content-footer">
@@ -189,7 +212,13 @@ export default function NewsDetail() {
               <div className="news-card-wrapper">
                 {relatedNews.length > 0 &&
                   relatedNews.map((e) => {
-                    return <NewsCard news={e} key={e.n_id} />;
+                    return (
+                      <NewsCard
+                        news={e}
+                        key={e.n_id}
+                        isScrap={scrapList.includes(e.n_id)}
+                      />
+                    );
                   })}
               </div>
             </section>

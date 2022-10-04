@@ -119,9 +119,13 @@
   .search-analysis {
     margin: 30px 0px;
     width: 100%;
-    background-color: $light-grey;
     height: 350px;
     border-radius: 20px;
+    @include FLEX-CENTER;
+    canvas {
+      height: inherit !important;
+      width: auto !important;
+    }
   }
   .search-newslist {
     .news-result {

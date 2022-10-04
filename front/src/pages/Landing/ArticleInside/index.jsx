@@ -6,6 +6,8 @@ import { useState } from "react";
 import { category } from "constants/category";
 import { Link } from "react-router-dom";
 
+import DefaultThumb from "assets/default-thumb.png";
+
 export default function ArticleInside({ Article }) {
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
 
@@ -34,7 +36,9 @@ export default function ArticleInside({ Article }) {
         <div className="article-img">
           <span
             className={`article-level ${
-              level_value[level].includes("A")
+              !level
+                ? "Alv"
+                : level_value[level].includes("A")
                 ? "Alv"
                 : level_value[level].includes("B")
                 ? "Blv"
@@ -43,15 +47,12 @@ export default function ArticleInside({ Article }) {
           >
             {level_value[level]}
           </span>
-          {thumbnail ? (
-            <img
-              src={thumbnail}
-              alt="article"
-              className={activeGoArticle ? "hover" : "normal"}
-            />
-          ) : (
-            <img src={require("assets/article.png")} />
-          )}
+
+          <img
+            src={thumbnail ? thumbnail : DefaultThumb}
+            alt="article"
+            className={activeGoArticle ? "hover" : "normal"}
+          />
         </div>
         <span className="article-categories">
           <span className="article-category-main">
@@ -74,7 +75,12 @@ export default function ArticleInside({ Article }) {
           <Link to={`/news/${Article.n_id}`}>
             <h2 className="article-title">{title}</h2>
           </Link>
-          <div className={`article-content visible`}>{content}</div>
+          <div className={`article-content visible`}>
+            {content
+              .replaceAll(/@@divsubtitle/g, "")
+              .replaceAll(/@@divimg/g, "")
+              .replaceAll(/@@div/g, "")}
+          </div>
         </div>
       </div>
     </>
