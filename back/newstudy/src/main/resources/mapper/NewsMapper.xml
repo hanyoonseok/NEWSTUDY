@@ -114,9 +114,8 @@
                `date`,
                thumbnail
         FROM `news`
-        WHERE c_id = (SELECT c_id FROM `news` WHERE n_id = #{n_id})
-        ORDER BY cnt DESC
-        LIMIT 0, 6
+        WHERE n_id in (SELECT recommend FROM `ref_news` WHERE n_id = #{n_id})
+        ORDER BY cnt DESC LIMIT 0, 6;
     </select>
     <select id="selectRecommendNewsList" resultType="newsResponseDto">
         SELECT n_id,
