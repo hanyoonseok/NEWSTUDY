@@ -54,7 +54,7 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
             {news.content.includes(query) ? (
               <>
                 {news.content.split(query)[0]}
-                <lb>{query}</lb>
+                <b>{query}</b>
                 {news.content.split(query)[1]}
               </>
             ) : (

@@ -21,6 +21,9 @@ import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
 import LevelRange from "./LevelRange";
 import TopBtn from "components/TopBtn";
+import AnalysisChart from "./AnalysisChart";
+import PieChart from "./PieChart";
+
 function SearchList() {
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
@@ -30,6 +33,7 @@ function SearchList() {
   const [scrapList, setScrapList] = useState([]);
   const [totalCnt, setTotalCnt] = useState(0);
   const [isExistMoreNews, setIsExistMoreNews] = useState(false);
+  const [categoryCnt, setCategoryCnt] = useState(null);
   const params = useParams();
 
   // 검색 필터 관련
@@ -134,7 +138,7 @@ function SearchList() {
     ] = `Bearer ${user.accessToken}`;
     const newsListResponse = await axios.post(`/news`, data);
     const result = newsListResponse.data;
-
+    setCategoryCnt(newsListResponse.data.categoryCnt);
     setNewsList([...newsList, ...result.newsList]);
     setTotalCnt(result.totalCnt);
 
@@ -269,7 +273,10 @@ function SearchList() {
       <h4>
         검색어 <b>{params.query}</b>(으)로 검색한 결과입니다.
       </h4>
-      <div className="search-analysis"></div>
+      <div className="search-analysis">
+        {/* {categoryCnt && <AnalysisChart categoryCnt={categoryCnt} />} */}
+        {categoryCnt && <PieChart categoryCnt={categoryCnt} />}
+      </div>
       <div className="search-header">
         <div className="filter-title">KEY</div>
         <div className="search-toggle">
