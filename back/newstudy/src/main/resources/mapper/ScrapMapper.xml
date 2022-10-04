@@ -8,23 +8,23 @@
                title,
                `level`,
                n_id
-        FROM `NEWS_SCRAP`
+        FROM `news_scrap`
         LEFT JOIN `NEWS`
         USING (n_id)
         WHERE u_id = #{u_id}
     </select>
     <insert id="insertScrap" parameterType="scrapRequestDto">
-        INSERT INTO `NEWS_SCRAP`(u_id, n_id)
+        INSERT INTO `news_scrap`(u_id, n_id)
         VALUES (#{u_id}, #{n_id})
     </insert>
     <delete id="deleteScrap" parameterType="scrapRequestDto">
-        DELETE FROM `NEWS_SCRAP`
+        DELETE FROM `news_scrap`
          WHERE u_id = #{u_id}
            AND n_id = #{n_id}
     </delete>
     <select id="selectScrapCnt" parameterType="scrapRequestDto" resultType="int">
         SELECT count(*)
-          FROM `NEWS_SCRAP`
+          FROM `news_scrap`
          WHERE u_id = #{u_id}
     </select>
 </mapper>

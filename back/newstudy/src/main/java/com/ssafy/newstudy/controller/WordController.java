@@ -46,7 +46,5 @@ public class WordController {
         }
         // 기본적으로 speed라 생각한다
         return new ResponseEntity<List<WordResponseDto>>(list, HttpStatus.OK);
-
-
     }
 }
