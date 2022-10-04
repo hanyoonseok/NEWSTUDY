@@ -4,19 +4,21 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 import { useMediaQuery } from "react-responsive";
 import { useEffect } from "react";
+import { useState } from "react";
 
 export default function Wordcloud({ wordRanking }) {
-  const words = [];
+  const [words, setWords] = useState([]);
 
   const matchWordType = () => {
-    wordRanking.map((word) => {
-      words.push({
-        text: word.eng,
-        category: word.c_id,
-        value: word.cnt,
-      });
-    });
-    console.log(words);
+    setWords(
+      wordRanking.map((word) => {
+        return {
+          text: word.eng,
+          category: word.c_id,
+          value: word.cnt,
+        };
+      }),
+    );
   };
 
   useEffect(() => {

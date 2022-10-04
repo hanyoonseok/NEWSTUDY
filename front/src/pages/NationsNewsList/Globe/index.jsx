@@ -16,11 +16,11 @@ const options = {
   markerTooltipRenderer,
   enableCameraZoom: false,
   focusDistanceRadiusScale: 3,
-  pointLightPositionRadiusScales: [1, 1, -2],
-  globeGlowCoefficient: 0,
-  globeGlowColor: "#96b2ff",
-  globeGlowPower: 1,
-  globeGlowRadiusScale: 0.07,
+  // pointLightPositionRadiusScales: [1, 1, -2],
+  // globeGlowCoefficient: 0,
+  // globeGlowColor: "#96b2ff",
+  // globeGlowPower: 1,
+  // globeGlowRadiusScale: 0.07,
 };
 
 export default function Globe({ markers, selectedIdx, setSelectedIdx }) {

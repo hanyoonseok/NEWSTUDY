@@ -13,7 +13,7 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
   const onLinkClick = () => {
     navigate(`/news/${news.n_id}`);
   };
-
+  console.log(isScrap);
   return (
     <div
       className={`newscard-container ${stretch ? "stretch" : ""}`}
