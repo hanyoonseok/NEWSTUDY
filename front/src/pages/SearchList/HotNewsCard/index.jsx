@@ -1,12 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark as faBookmarkEmpty } from "@fortawesome/free-regular-svg-icons";
 import "./style.scss";
 import { category } from "constants/category";
 import { Link } from "react-router-dom";
 
 import React from "react";
 
-function HotNewsCard({ news, isMobile, query }) {
+function HotNewsCard({ news, isMobile, query, isScrap }) {
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
 
   return (
@@ -52,10 +53,17 @@ function HotNewsCard({ news, isMobile, query }) {
               {category[news.c_id].sub}
             </div>
           </div>
-          <FontAwesomeIcon
-            icon={faBookmark}
-            className="hottest-article-bookmark"
-          />
+          {isScrap ? (
+            <FontAwesomeIcon
+              icon={faBookmark}
+              className="hottest-article-bookmark"
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={faBookmarkEmpty}
+              className="hottest-article-bookmark"
+            />
+          )}
         </div>
       )}
       {isMobile && (

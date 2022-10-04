@@ -8,11 +8,11 @@ import LevelContainer from "./LevelContainer";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
 import { category } from "constants/category";
+import { intToLevel } from "constants";
 import { useNavigate } from "react-router-dom";
 
 import NewsCard from "components/NewsCard";
 import axios from "axios";
-
 import TopBtn from "components/TopBtn";
 
 export default function NewsList() {
@@ -141,7 +141,9 @@ export default function NewsList() {
       />
       <article className="newslist-body-container">
         <div className="newslist-top-area">
-          <h3 className="hottest-article-depth">A1 Level {totalNews}건</h3>
+          <h3 className="hottest-article-depth">
+            {intToLevel[selectedLevel]} Level {totalNews}건
+          </h3>
           {!isMobile && (
             <div
               onClick={() => {

@@ -27,6 +27,7 @@ function SearchList() {
   });
   const user = useSelector((state) => state.user);
   const [newsList, setNewsList] = useState([]);
+  const [scrapList, setScrapList] = useState([]);
   const [totalCnt, setTotalCnt] = useState(0);
   const [isExistMoreNews, setIsExistMoreNews] = useState(false);
   const params = useParams();
@@ -219,6 +220,12 @@ function SearchList() {
     setIsFilterModal(false);
   }, []);
 
+  const getScrapList = async () => {
+    const scrapListResponse = await axios.get("/scrap");
+
+    setScrapList(scrapListResponse.data.map((e) => e.n_id));
+  };
+
   // search query가 변했을 때. scroll을 맨위로 올려준다.
   useEffect(() => {
     window.scrollTo({
@@ -234,6 +241,7 @@ function SearchList() {
     });
     console.log("필터", filter);
     getMoreNewsList(filter);
+    getScrapList();
   }, [params.query]);
 
   // more버튼을 눌렀을 때.
@@ -249,6 +257,7 @@ function SearchList() {
   useEffect(() => {
     console.log("filter 찍어봐라", filter);
     getMoreNewsList(filter);
+    getScrapList();
   }, [filter]);
 
   return (
@@ -441,6 +450,7 @@ function SearchList() {
                     news={news}
                     isMobile={isMobile}
                     query={params.query}
+                    isScrap={scrapList.includes(news.n_id)}
                   ></HotNewsCard>
                 </div>
               ))}
@@ -450,7 +460,12 @@ function SearchList() {
             {newsList &&
               newsList.slice(3).map((e, i) => (
                 <div className="news-result" key={i}>
-                  <NewsCard news={e} stretch={!isMobile} query={params.query} />
+                  <NewsCard
+                    news={e}
+                    stretch={!isMobile}
+                    query={params.query}
+                    isScrap={scrapList.includes(e.n_id)}
+                  />
                 </div>
               ))}
           </div>

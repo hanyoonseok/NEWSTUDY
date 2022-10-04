@@ -20,6 +20,7 @@ export default function NewsDetail() {
   const [newsDetail, setNewsDetail] = useState(null);
   const [newsKeywords, setNewsKeywords] = useState([]);
   const [relatedNews, setRelatedNews] = useState([]);
+  const [scrapList, setScrapList] = useState([]);
   const [isScrapped, setIsScrapped] = useState(false);
   const [newBadgeInfo, setNewBadgeInfo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,11 +51,9 @@ export default function NewsDetail() {
       console.log("관련 기사 : ", relatedNewsResponse);
 
       const scrapListResponse = await axios.get("/scrap");
-
-      setIsScrapped(
-        scrapListResponse.data.filter((e) => e.n_id === parseInt(newsId))
-          .length > 0,
-      );
+      const scrapListNidArr = scrapListResponse.data.map((e) => e.n_id);
+      setScrapList(scrapListNidArr);
+      setIsScrapped(scrapListNidArr.includes(parseInt(newsId)));
 
       if (!window.scrollY) return;
       window.scrollTo({
@@ -120,7 +119,7 @@ export default function NewsDetail() {
                 >
                   {intToLevel[newsDetail.level]}
                 </i>
-                 {newsDetail.title}
+                {newsDetail.title}
               </h1>
               <p className="news-date">{newsDetail.date}</p>
               {isMobile && (
@@ -189,7 +188,13 @@ export default function NewsDetail() {
               <div className="news-card-wrapper">
                 {relatedNews.length > 0 &&
                   relatedNews.map((e) => {
-                    return <NewsCard news={e} key={e.n_id} />;
+                    return (
+                      <NewsCard
+                        news={e}
+                        key={e.n_id}
+                        isScrap={scrapList.includes(e.n_id)}
+                      />
+                    );
                   })}
               </div>
             </section>
