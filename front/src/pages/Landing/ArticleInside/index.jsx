@@ -6,6 +6,8 @@ import { useState } from "react";
 import { category } from "constants/category";
 import { Link } from "react-router-dom";
 
+import DefaultThumb from "assets/default-thumb.png";
+
 export default function ArticleInside({ Article }) {
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
 
@@ -45,15 +47,12 @@ export default function ArticleInside({ Article }) {
           >
             {level_value[level]}
           </span>
-          {thumbnail ? (
-            <img
-              src={thumbnail}
-              alt="article"
-              className={activeGoArticle ? "hover" : "normal"}
-            />
-          ) : (
-            <img src={require("assets/article.png")} />
-          )}
+
+          <img
+            src={thumbnail ? thumbnail : DefaultThumb}
+            alt="article"
+            className={activeGoArticle ? "hover" : "normal"}
+          />
         </div>
         <span className="article-categories">
           <span className="article-category-main">
