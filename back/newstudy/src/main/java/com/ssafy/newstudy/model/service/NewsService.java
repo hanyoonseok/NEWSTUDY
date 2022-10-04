@@ -72,8 +72,8 @@ public class NewsService {
      * @param
      * @return 뉴스 리스트
      */
-    public List<NewsResponseDto> getNewsRecommend() {
-        return newsDao.selectRecommendNewsList();
+    public List<NewsResponseDto> getNewsRecommend(NewsRequestDto newsRequestDto) {
+        return newsDao.selectRecommendNewsList(newsRequestDto);
     }
 
     /**

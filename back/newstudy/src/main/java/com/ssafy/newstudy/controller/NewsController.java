@@ -1,8 +1,7 @@
 package com.ssafy.newstudy.controller;
 
-import com.ssafy.newstudy.model.dto.NewsRequestDto;
-import com.ssafy.newstudy.model.dto.NewsResponseDto;
-import com.ssafy.newstudy.model.dto.UserDto;
+import com.ssafy.newstudy.model.dto.*;
+import com.ssafy.newstudy.model.service.CategoryService;
 import com.ssafy.newstudy.model.service.NewsService;
 import com.ssafy.newstudy.model.service.UserService;
 import io.swagger.annotations.*;
@@ -25,6 +24,7 @@ import java.util.Map;
 public class NewsController {
     private final NewsService newsService;
     private final UserService userService;
+    private final CategoryService categoryService;
 
     private int[] category_start_id = {1, 20, 28, 40, 62, 67};
     private int[] category_end_id = {19, 27, 39, 61, 66, 97};
@@ -103,6 +103,12 @@ public class NewsController {
                 HashMap tmp_map = new HashMap();
                 tmp_map.put("startcategoryid", category_start_id[i]);
                 tmp_map.put("endcategoryid", category_end_id[i]);
+
+                Integer[] categoryid = new Integer[category_end_id[i]-category_start_id[i]+1];
+                for(int j = 0 ; j < categoryid.length ; j++){
+                    categoryid[j] = j+category_start_id[i];
+                }
+                tmp_map.put("categoryid", categoryid);
                 tmp_map.put("search", keyword);
                 int result = newsService.selectNewsCountByCategory(tmp_map);
                 categoryCnt.put(category_start_id[i], result);
@@ -156,8 +162,21 @@ public class NewsController {
             @ApiResponse(code = 401, message="로그인정보 없음"),
             @ApiResponse(code = 500, message="서버오류")
     })
-    public ResponseEntity<List<NewsResponseDto>> getNewsRecommend(){
-        List<NewsResponseDto> responseArray = newsService.getNewsRecommend();
+    public ResponseEntity<List<NewsResponseDto>> getNewsRecommend(@ApiParam(value = "로그인된 유저 정보", required = true) @RequestHeader("Authorization") String bearerToken){
+        NewsRequestDto newsRequestDto = new NewsRequestDto();
+        UserDto user = userService.getUserByUid(userService.getUidFromBearerToken(bearerToken));
+
+        //유저 레벨 넣고
+        newsRequestDto.setStartlevelAndEndlevel(user.getLevel(), user.getLevel());
+        //유저 카테고리 넣고
+        List<CategoryResponseDto> tmp = categoryService.getCategorys(user.getU_id());
+        Integer[] categorys = null;
+        if(tmp != null && !tmp.isEmpty()) {
+            categorys = tmp.toArray(new Integer[0]);
+            newsRequestDto.setCategoryid(categorys);
+        }
+
+        List<NewsResponseDto> responseArray = newsService.getNewsRecommend(newsRequestDto);
         return new ResponseEntity<List<NewsResponseDto>>(responseArray, HttpStatus.OK);
     }
 }

@@ -6,22 +6,22 @@
 
     <select id="selectAllCategory" resultType="CategoryResponseDto">
         SELECT *
-        FROM `CATEGORY`
+        FROM `category`
     </select>
 
     <select id="selectCategory" parameterType="int" resultType="categoryResponseDto">
         SELECT c_id
-        FROM `USER_CATEGORY`
+        FROM `user_category`
         WHERE u_id = #{u_id}
     </select>
 
     <insert id="insertCategory" parameterType="categoryRequestDto">
-        INSERT INTO `USER_CATEGORY`
+        INSERT INTO `user_category`
         VALUES (#{u_id}, #{c_id})
     </insert>
 
     <delete id="deleteCategory" parameterType="categoryRequestDto">
-        DELETE FROM `USER_CATEGORY`
+        DELETE FROM `user_category`
         WHERE u_id = #{u_id} and c_id = #{c_id}
     </delete>
 

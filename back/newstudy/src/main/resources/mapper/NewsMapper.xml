@@ -19,23 +19,23 @@
     </select>
     <select id="selectNewsList" parameterType="newsRequestDto" resultType="newsResponseDto">
         SELECT n_id,
-               c_id,
-               title,
-               content,
-               origin,
-               url,
-               `level`,
-               cnt,
-               `date`,
-               thumbnail
+        c_id,
+        title,
+        content,
+        origin,
+        url,
+        `level`,
+        cnt,
+        `date`,
+        thumbnail
         FROM `news`
-        WHERE level between #{startlevel} and #{endlevel}
+        WHERE 1 = 1
+        <if test="startdate != null and enddate != null">
+            AND `date` between #{startdate} and #{enddate}
+        </if>
         <if test="categoryid != null">
             AND c_id IN
             <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
-        </if>
-        <if test="startdate != null and enddate != null">
-            AND date(`date`) between #{startdate} and #{enddate}
         </if>
         <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
             AND (
@@ -52,18 +52,20 @@
         <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
             )
         </if>
+        and level between #{startlevel} and #{endlevel}
+        ORDER BY `date` DESC, cnt DESC
         LIMIT #{start_no}, #{per_page}
     </select>
     <select id="selectNewsListCnt" parameterType="newsRequestDto" resultType="int">
         SELECT count(*)
         FROM `news`
-        WHERE level between #{startlevel} and #{endlevel}
+        WHERE 1 = 1
+        <if test="startdate != null and enddate != null">
+            AND `date` between #{startdate} and #{enddate}
+        </if>
         <if test="categoryid != null">
             AND c_id IN
             <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
-        </if>
-        <if test="startdate != null and enddate != null">
-            AND date(`date`) between #{startdate} and #{enddate}
         </if>
         <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
             AND (
@@ -80,11 +82,13 @@
         <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
             )
         </if>
+        and level between #{startlevel} and #{endlevel}
     </select>
     <select id="getNewsKeyword" parameterType="int" resultType="string">
         SELECT eng
         FROM `keyword`
         WHERE n_id = #{n_id}
+        ORDER BY eng
     </select>
     <select id="selectNewsListOrderByCnt" resultType="newsResponseDto">
         SELECT n_id,
@@ -100,7 +104,7 @@
         FROM `news`
         WHERE `date` BETWEEN DATE(DATE_SUB(now(), INTERVAL 1 DAY)) AND now()
         ORDER BY cnt DESC
-        LIMIT 0, 10
+            LIMIT 0, 10
     </select>
     <select id="selectRelatedNewsList" parameterType="int" resultType="newsResponseDto">
         SELECT n_id,
@@ -116,9 +120,9 @@
         FROM `news`
         WHERE c_id = (SELECT c_id FROM `news` WHERE n_id = #{n_id})
         ORDER BY cnt DESC
-        LIMIT 0, 6
+            LIMIT 0, 6
     </select>
-    <select id="selectRecommendNewsList" resultType="newsResponseDto">
+    <select id="selectRecommendNewsList" parameterType="newsRequestDto" resultType="newsResponseDto">
         SELECT n_id,
         c_id,
         title,
@@ -130,8 +134,14 @@
         `date`,
         thumbnail
         FROM `news`
-        ORDER BY cnt DESC
-        LIMIT 0, 20
+        WHERE 1 = 1
+        <if test="categoryid != null">
+            AND c_id IN
+            <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
+        </if>
+        AND `level` BETWEEN #{startlevel} AND #{endlevel}
+        ORDER BY `date` DESC, cnt DESC
+        LIMIT 0, 10
     </select>
     <update id="updateViewCnt" parameterType="int">
         UPDATE `news`
@@ -141,12 +151,12 @@
     <select id="selectNewsCountByCategory" parameterType="map" resultType="int">
         SELECT count(distinct n_id)
         FROM `news`
-        WHERE c_id between #{startcategoryid} and #{endcategoryid}
-            AND level between 1 and 6
-            AND (
-                title like '%${search}%'
-                OR
-                content like '%${search}%'
-                )
+        WHERE c_id IN <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
+        AND (
+        title like '%${search}%'
+        OR
+        content like '%${search}%'
+        )
+        AND level between 1 and 6
     </select>
 </mapper>
