@@ -17,6 +17,7 @@ import BadgeModal from "components/BadgeModal";
 export default function WordModal({ info, setSelectedModal }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newBadgeInfo, setNewBadgeInfo] = useState(null);
+  const [modalText, setModalText] = useState("");
   const userState = useSelector((state) => state.user);
 
   const renderMyAnswer = () => {
@@ -68,18 +69,30 @@ export default function WordModal({ info, setSelectedModal }) {
         Authorization: `Bearer ${userState.accessToken}`,
       },
     };
-    await axios.post("/vocaburary", { eng: info.eng }, headers).then(() => {
-      setIsModalOpen(true);
-      setTimeout(() => {
-        setIsModalOpen(false);
+    await axios
+      .post("/vocaburary", { eng: info.eng }, headers)
+      .then(() => {
+        setModalText("단어장에 추가 완료");
+        setIsModalOpen(true);
+        setTimeout(() => {
+          setIsModalOpen(false);
 
-        axios.get("/badge/new", headers).then((res) => {
-          if (res.data.length > 0) {
-            setNewBadgeInfo(res.data[0]);
-          }
-        });
-      }, 1500);
-    });
+          axios.get("/badge/new", headers).then((res) => {
+            if (res.data.length > 0) {
+              setNewBadgeInfo(res.data[0]);
+            }
+          });
+        }, 1200);
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setModalText("이미 추가된 단어입니다");
+          setIsModalOpen(true);
+          setTimeout(() => {
+            setIsModalOpen(false);
+          }, 1200);
+        }
+      });
   }, []);
 
   return (
@@ -148,9 +161,7 @@ export default function WordModal({ info, setSelectedModal }) {
         </article>
       </div>
 
-      {isModalOpen && (
-        <Modal text="단어장에 추가 완료" setStatus={setIsModalOpen} />
-      )}
+      {isModalOpen && <Modal text={modalText} setStatus={setIsModalOpen} />}
 
       {newBadgeInfo && (
         <BadgeModal
