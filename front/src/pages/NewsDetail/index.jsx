@@ -24,6 +24,9 @@ export default function NewsDetail() {
   const [isScrapped, setIsScrapped] = useState(false);
   const [newBadgeInfo, setNewBadgeInfo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isTranslated, setIsTranslated] = useState(false);
+  const [engContent, setEngContent] = useState("");
+  const [korContent, setKorContent] = useState("");
   const userState = useSelector((state) => state.user);
 
   const isMobile = useMediaQuery({
@@ -40,6 +43,7 @@ export default function NewsDetail() {
         newsDetailResponse.data.date,
       ).format("ddd, MMMM, DD, YYYY");
       setNewsDetail(newsDetailResponse.data);
+      setEngContent(newsDetailResponse.data.content);
       console.log("뉴스 상세 : ", newsDetailResponse);
 
       const newsKeywordsResponse = await axios.get(`/news/keyword/${newsId}`);
@@ -99,6 +103,20 @@ export default function NewsDetail() {
     setIsScrapped((prev) => !prev);
   }, [isScrapped]);
 
+  const onTransClick = useCallback(async () => {
+    if (isTranslated) {
+      setIsTranslated(false);
+    } else {
+      if (korContent === "") {
+        const transResponse = await axios.post("/translate", {
+          additionalProp1: engContent,
+        });
+        console.log(transResponse);
+        setKorContent(transResponse.data);
+      } else setIsTranslated(true);
+    }
+  }, [engContent, korContent, isTranslated]);
+
   return (
     <div className="newsdetail-container">
       <BackBtn />
@@ -127,6 +145,7 @@ export default function NewsDetail() {
                   isScrapped={isScrapped}
                   news={newsDetail}
                   onScrapClick={onScrapClick}
+                  onTransClick={onTransClick}
                 />
               )}
               <h3 className="news-subtitle change">VOCABULARY</h3>
@@ -154,6 +173,7 @@ export default function NewsDetail() {
                     isScrapped={isScrapped}
                     news={newsDetail}
                     onScrapClick={onScrapClick}
+                    onTransClick={onTransClick}
                   />
                 )}
                 {selectedWord && (
@@ -175,8 +195,9 @@ export default function NewsDetail() {
               )}
               <div className="news-article">
                 <NewsContent
-                  content={newsDetail.content}
+                  content={isTranslated ? korContent : engContent}
                   newsKeywords={newsKeywords}
+                  isTranslated={isTranslated}
                 />
               </div>
               <footer className="newsdetail-content-footer">
