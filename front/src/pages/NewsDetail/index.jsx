@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";
@@ -13,6 +15,8 @@ import BadgeModal from "components/BadgeModal";
 import Modal from "components/Modal";
 import NewsContent from "./NewsContent";
 import BackBtn from "components/BackBtn";
+import WordDrug from "./WordDrug";
+import Loading from "components/Loading";
 
 export default function NewsDetail() {
   const { newsId } = useParams();
@@ -23,10 +27,13 @@ export default function NewsDetail() {
   const [scrapList, setScrapList] = useState([]);
   const [isScrapped, setIsScrapped] = useState(false);
   const [newBadgeInfo, setNewBadgeInfo] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState("");
   const [isTranslated, setIsTranslated] = useState(false);
   const [engContent, setEngContent] = useState("");
-  const [korContent, setKorContent] = useState("");
+  const [korContent, setKorContent] = useState([]);
+  const [isAlertOpen, setIsAlertOpen] = useState("");
+  const [vocaSet, setVocaSet] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
   const userState = useSelector((state) => state.user);
 
   const isMobile = useMediaQuery({
@@ -47,7 +54,7 @@ export default function NewsDetail() {
       console.log("뉴스 상세 : ", newsDetailResponse);
 
       const newsKeywordsResponse = await axios.get(`/news/keyword/${newsId}`);
-      setNewsKeywords(newsKeywordsResponse.data.map((e) => e.toUpperCase()));
+      setNewsKeywords(newsKeywordsResponse.data);
       console.log("키워드 리스트 : ", newsKeywordsResponse);
 
       const scrapListResponse = await axios.get("/scrap");
@@ -71,15 +78,64 @@ export default function NewsDetail() {
   }, [newsId]);
 
   const onWordDrugClick = useCallback(
-    (word) => {
-      if (!isMobile) return;
+    async (word) => {
+      if (isMobile) return;
 
-      if (!selectedWord) setSelectedWord(word);
-      else if (word.eng === selectedWord.eng) setSelectedWord(null);
-      else setSelectedWord(word);
+      setIsLoading(true);
+      if (vocaSet[word]) {
+        setSelectedWord({ eng: word, kor: vocaSet[word] });
+        setIsLoading(false);
+      } else {
+        await axios
+          .post("/translate", {
+            input: word,
+          })
+          .then((res) => {
+            const kor = res.data.message.result.translatedText;
+            setVocaSet({ ...vocaSet, [word]: kor });
+            setSelectedWord({ eng: word, kor });
+            setIsLoading(false);
+          });
+      }
     },
-    [isMobile, selectedWord],
+    [isMobile, vocaSet],
   );
+
+  const onWordDrugEmptyClick = useCallback(() => {
+    console.log(selectedWord);
+    console.log("hi");
+    setSelectedWord(null);
+  }, []);
+
+  const onAddWordClick = useCallback(async () => {
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${userState.accessToken}`,
+      },
+    };
+    await axios
+      .post("/vocaburary", { eng: selectedWord.eng }, headers)
+      .then(() => {
+        setIsModalOpen("단어장에 추가 완료");
+        setTimeout(() => {
+          setIsModalOpen("");
+
+          axios.get("/badge/new", headers).then((res) => {
+            if (res.data.length > 0) {
+              setNewBadgeInfo(res.data[0]);
+            }
+          });
+        }, 1200);
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          setIsModalOpen("이미 추가된 단어입니다");
+          setTimeout(() => {
+            setIsModalOpen("");
+          }, 1200);
+        }
+      });
+  }, [selectedWord]);
 
   const onScrapClick = useCallback(async () => {
     const payload = {
@@ -90,10 +146,10 @@ export default function NewsDetail() {
       : await axios.post("/scrap", payload);
 
     if (!isScrapped) {
-      setIsModalOpen(true);
+      setIsModalOpen("스크랩 되었습니다!");
 
       setTimeout(async () => {
-        setIsModalOpen(false);
+        setIsModalOpen("");
 
         axios.get("/badge/new").then((res) => {
           res.data.length > 0 && setNewBadgeInfo(res.data[0]);
@@ -108,12 +164,76 @@ export default function NewsDetail() {
     if (isTranslated) {
       setIsTranslated(false);
     } else {
-      if (korContent === "") {
-        const transResponse = await axios.post("/translate", {
-          input: engContent,
-        });
-        console.log(transResponse);
-        setKorContent(transResponse.data.message.result.translatedText);
+      if (korContent.length === 0) {
+        const korArchitect = [];
+
+        const splitDetail = newsDetail.content.split("@@div");
+        for (let i = 0; i < splitDetail.length; i++) {
+          if (splitDetail[i] !== "") {
+            if (splitDetail[i].substring(0, 3) === "img") {
+              if (
+                splitDetail[i].substring(
+                  splitDetail[i].length - (splitDetail[i].length - 3) !==
+                    newsDetail.thumbnail,
+                )
+              ) {
+                korArchitect.push(
+                  <div className="newsdetail-content-img-wrapper" key={i}>
+                    <img
+                      src={splitDetail[i].substring(
+                        splitDetail[i].length - (splitDetail[i].length - 3),
+                      )}
+                      alt="기사 본문 이미지"
+                      className="newsdetail-content-img"
+                    />
+                  </div>,
+                );
+              }
+            } else if (splitDetail[i].substring(0, 8) === "subtitle") {
+              const kor = await axios.post("/translate", {
+                input: splitDetail[i].substring(
+                  splitDetail[i].length - (splitDetail[i].length - 8),
+                ),
+              });
+
+              if (kor.data.errorCode === "010") {
+                setIsAlertOpen(
+                  "일일 쿼리 한도를 초과해서 해석이 불가합니다 ㅜㅜ",
+                );
+                setTimeout(() => {
+                  setIsAlertOpen("");
+                }, 1200);
+                return;
+              }
+
+              korArchitect.push(
+                <h3 className="newsdetail-content-subtitle" key={i}>
+                  <b>“</b> {kor.data.message.result.translatedText} <b>”</b>
+                </h3>,
+              );
+            } else {
+              const kor = await axios.post("/translate", {
+                input: splitDetail[i],
+              });
+              if (kor.data.errorCode === "010") {
+                setIsAlertOpen(
+                  "일일 쿼리 한도를 초과해서 해석이 불가합니다 ㅜㅜ",
+                );
+                setTimeout(() => {
+                  setIsAlertOpen("");
+                }, 1200);
+                return;
+              }
+              korArchitect.push(
+                <p className="newsdetail-content-body" key={i}>
+                  {kor.data.message.result.translatedText}
+                </p>,
+              );
+            }
+          }
+        }
+
+        setKorContent(korArchitect);
         setIsTranslated(true);
       } else setIsTranslated(true);
     }
@@ -157,17 +277,14 @@ export default function NewsDetail() {
                   {newsKeywords.length > 0 &&
                     newsKeywords.map((e, i) => {
                       return (
-                        <div
-                          className={`word-drug ${
-                            selectedWord && selectedWord.eng === e.eng
-                              ? "on"
-                              : ""
-                          }`}
-                          onClick={() => onWordDrugClick(e)}
+                        <WordDrug
+                          word={e}
+                          selectedWord={selectedWord}
+                          onWordDrugClick={onWordDrugClick}
+                          onWordDrugEmptyClick={onWordDrugEmptyClick}
+                          onAddWordClick={onAddWordClick}
                           key={i}
-                        >
-                          {e}
-                        </div>
+                        />
                       );
                     })}
                 </section>
@@ -180,13 +297,24 @@ export default function NewsDetail() {
                     isTranslated={isTranslated}
                   />
                 )}
-                {selectedWord && (
-                  <div className="word-mean-container">
-                    <h3 className="word-mean-title">{selectedWord.eng}</h3>
-                    <h4 className="word-mean">{selectedWord.mean}</h4>
-                  </div>
-                )}
               </div>
+              {isLoading ? (
+                <Loading />
+              ) : (
+                selectedWord && (
+                  <div className="news-voca-container">
+                    <h3 className="news-subtitle change">MEAN ?</h3>
+                    <label className="news-selectedword-kor">
+                      <FontAwesomeIcon
+                        icon={faPlus}
+                        className="selectedword-addbtn"
+                        onClick={onAddWordClick}
+                      />
+                      &nbsp;{selectedWord.kor}
+                    </label>
+                  </div>
+                )
+              )}
               {isMobile && <h3 className="news-subtitle change">ARTICLE</h3>}
               {newsDetail.thumbnail && (
                 <div className="newsdetail-thumbnail-wrapper">
@@ -202,6 +330,7 @@ export default function NewsDetail() {
                   content={isTranslated ? korContent : engContent}
                   newsKeywords={newsKeywords}
                   isTranslated={isTranslated}
+                  thumbnail={newsDetail.thumbnail}
                 />
               </div>
               <footer className="newsdetail-content-footer">
@@ -234,8 +363,12 @@ export default function NewsDetail() {
         />
       )}
 
-      {isModalOpen && (
-        <Modal text="스크랩 되었습니다!" setStatus={setIsModalOpen} />
+      {isAlertOpen !== "" && (
+        <Modal text={isAlertOpen} setStatus={setIsAlertOpen} />
+      )}
+
+      {isModalOpen !== "" && (
+        <Modal text={isModalOpen} setStatus={setIsModalOpen} />
       )}
     </div>
   );

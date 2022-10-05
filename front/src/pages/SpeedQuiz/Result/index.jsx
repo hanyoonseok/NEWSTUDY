@@ -13,7 +13,6 @@ export default function Result({ answer, takenTime, userState }) {
   console.log("answer", answer);
   const [selectedWord, setSelectedWord] = useState(null);
   const [newBadgeInfo, setNewBadgeInfo] = useState(null);
-
   const onResultColClick = useCallback((word) => {
     setSelectedWord(word);
   }, []);

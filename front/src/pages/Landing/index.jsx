@@ -81,6 +81,7 @@ function Landing() {
   const [selectedKeyword, setSelectedKeyword] = useState(null);
   const [badgeContent, setBadgeContent] = useState({});
   const [isBadgeModal, setIsBadgeModal] = useState(false);
+  const [scrapList, setScrapList] = useState([]);
 
   const onClickSwitchTab = (id) => {
     setActiveId(id);
@@ -154,7 +155,14 @@ function Landing() {
           }
         });
     };
+
+    const getScrapList = async () => {
+      const scrapListResponse = await axios.get("/scrap");
+      console.log(scrapListResponse);
+      setScrapList(scrapListResponse.data.map((e) => e.n_id));
+    };
     getBadge();
+    getScrapList();
   }, []);
   // 워드 클라우드 데이터 가져오는 함수
   const getWordCloud = useCallback(async () => {
@@ -281,8 +289,11 @@ function Landing() {
                 data-aos-delay="300"
               >
                 {hotNews.slice(1, 4).map((news, index) => (
-                  <NewsCard news={news} key={index} isScrap={false} />
-                  // <ArticleOutside Article={news} key={index}></ArticleOutside>
+                  <NewsCard
+                    news={news}
+                    key={index}
+                    isScrap={scrapList.includes(news.n_id)}
+                  />
                 ))}
               </div>
             </div>

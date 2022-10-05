@@ -29,6 +29,7 @@ function SearchList() {
     query: "(max-width:480px)",
   });
   const user = useSelector((state) => state.user);
+
   const [newsList, setNewsList] = useState([]);
   const [scrapList, setScrapList] = useState([]);
   const [totalCnt, setTotalCnt] = useState(0);
@@ -40,12 +41,13 @@ function SearchList() {
   const [flag, setFlag] = useState(false);
 
   // 검색 필터 관련
-  const [page, setPage] = useState(1);
-  const [activeTitleBtn, setActiveTitleBtn] = useState(true);
-  const [activeContentBtn, setActiveContentBtn] = useState(true);
-  const [isFilterModal, setIsFilterModal] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [page, setPage] = useState(1); // 기사 불러온 페이지
+  const [activeTitleBtn, setActiveTitleBtn] = useState(true); // 필터 제목 활성화 여부
+  const [activeContentBtn, setActiveContentBtn] = useState(true); //필터 본문 활성화 여부
+  const [isFilterModal, setIsFilterModal] = useState(false); //필터 모달 활성화 여부
+  const [selectedCategory, setSelectedCategory] = useState([]); // 필터에서 선택한 카테고리
   const [filter, setFilter] = useState({
+    // api body에 들어갈 필터 옵션
     per_page: 10,
     page: 1,
     startlevel: 1,
@@ -53,14 +55,15 @@ function SearchList() {
     titlekeyword: params.query,
     contentkeyword: params.query,
   });
+
   const [dataZero, setDataZero] = useState(false);
 
   // 달력 관련
-  const [activeSelectDate, setActiveSelectDate] = useState(false);
-  const [startDay, setStartDay] = useState(new Date());
-  const [endDay, setEndDay] = useState(new Date());
-  const [activeStartDate, setActiveStartDate] = useState(false);
-  const [activeEndDate, setActiveEndDate] = useState(false);
+  const [activeSelectDate, setActiveSelectDate] = useState(false); //달력 열려있는지 여부
+  const [startDay, setStartDay] = useState(new Date()); //시작 날짜
+  const [endDay, setEndDay] = useState(new Date()); // 끝 날짜
+  const [activeStartDate, setActiveStartDate] = useState(false); //시작 달력 활성화 여부
+  const [activeEndDate, setActiveEndDate] = useState(false); //끝 달력 활성화 여부
 
   // 캘린더 관련 함수들
   const showSelectDate = (checked) => {
@@ -185,7 +188,7 @@ function SearchList() {
       setInitialization();
       setFilter(data);
     }
-    setActiveTitleBtn(!activeTitleBtn);
+    setActiveTitleBtn((prev) => !prev);
   };
 
   const getSelectedLevel = (startLevel, endLevel) => {

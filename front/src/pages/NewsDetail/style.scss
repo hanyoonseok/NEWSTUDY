@@ -44,6 +44,10 @@
       box-shadow: $light-shadow;
       padding: rem(25) rem(75);
 
+      @media (max-width: 480px) {
+        padding: rem(25) rem(25);
+      }
+
       .news-title {
         filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
         @include FLEX-CENTER;
@@ -104,38 +108,66 @@
 
           .word-drug {
             font-size: rem(20);
-            font-family: $eng-font;
+            font-family: $eng-fontB;
             padding: rem(10) rem(30);
             border-radius: 10px;
             background-color: $light-blue;
             margin-right: 15px;
             margin-top: 10px;
+            position: relative;
 
+            .word-drug-empty {
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+            }
+
+            .word-drug-trans-container {
+              display: none;
+            }
             &.on {
               background-color: darken($light-blue, 10%);
+
+              .word-drug-trans-container {
+                @include FLEX-ALIGN-CENTER;
+                transition: 0.3s ease;
+                color: #fff;
+                position: absolute;
+                top: -55px;
+                right: -20px;
+                min-width: 100px;
+                text-align: center;
+                .word-drug-balloon {
+                  padding: 12px;
+                  position: relative;
+                  background: #3f414b;
+                  @include FLEX-ALIGN-CENTER;
+                  border-radius: 0.4em;
+                  white-space: nowrap;
+                  font-size: rem(14);
+
+                  &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: 0;
+                    left: 25%;
+                    width: 0;
+                    height: 0;
+                    border: 15px solid transparent;
+                    border-top-color: #3f414b;
+                    border-bottom: 0;
+                    margin-left: -10px;
+                    margin-bottom: -10px;
+                  }
+                }
+              }
             }
           }
 
           @media (max-width: 480px) {
             width: 100%;
-          }
-        }
-
-        .word-mean-container {
-          @include FLEX-COLUMN;
-          width: 100%;
-          font-family: $eng-font;
-          margin-top: 24px;
-
-          .word-mean-title {
-            font-weight: bold;
-            font-size: rem(22);
-            line-height: 2;
-          }
-
-          .word-mean {
-            font-size: rem(20);
-            font-weight: initial;
           }
         }
 
@@ -232,5 +264,29 @@
   @media (max-width: 480px) {
     width: 100%;
     margin-top: rem(30);
+  }
+}
+
+.news-voca-container {
+  @include FLEX-COLUMN;
+  width: 100%;
+
+  .news-selectedword-kor {
+    margin-top: rem(10);
+  }
+
+  .selectedword-addbtn {
+    cursor: pointer;
+    width: rem(20);
+    height: rem(20);
+    font-size: rem(18);
+    font-weight: bold;
+    transition: 0.3s ease;
+    &:hover {
+      border-radius: 30px;
+      background-color: #3f414b;
+      color: #fff;
+      transform: scale(1.05);
+    }
   }
 }
