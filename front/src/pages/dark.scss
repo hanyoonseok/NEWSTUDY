@@ -345,6 +345,14 @@
     .newslist-morebtn-container .newslist-morebtn {
       @include DARK-BTN;
     }
+    .search-analysis {
+      > div > div > svg > g > g > g > text {
+        fill: $white !important;
+      }
+      > div > div > svg > g > g:nth-child(3) > g > text {
+        fill: $default-grey !important;
+      }
+    }
   }
   .search-list-mobile.visible {
     background-color: $dark-grey;
