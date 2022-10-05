@@ -135,26 +135,15 @@ function SearchList() {
 
   // 뉴스리스트 가져오는 함수들
   const getMoreNewsList = async (data) => {
-    console.log(
-      "뉴스 리스트 가져오기 시작=================================",
-      data,
-    );
     axios.defaults.headers.common[
       "Authorization"
     ] = `Bearer ${user.accessToken}`;
     const newsListResponse = await axios.post(`/news`, data);
     const result = newsListResponse.data;
-    console.log("뉴스 결과아아아", result.newsList);
     if (result.newsList.length === 0) {
-      console.log("데이터 제로임ㅜ");
       setDataZero(true);
     } else {
-      console.log("데이터 제로아님");
       setDataZero(false);
-      console.log(
-        "카테고리 분석 결과 가져오앙",
-        newsListResponse.data.categoryCnt,
-      );
       setCategoryCnt(newsListResponse.data.categoryCnt);
       setNewsList([...newsList, ...result.newsList]);
       setTotalCnt(result.totalCnt);
@@ -164,7 +153,6 @@ function SearchList() {
       } else {
         setIsExistMoreNews(false);
       }
-      console.log("뉴스 리스트 가져오기 끝=================================");
     }
     setIsLoading(false);
   };
@@ -228,7 +216,6 @@ function SearchList() {
     setActiveContentBtn(!activeContentBtn);
   };
   const doCategoryFilter = (cidArray) => {
-    console.log("카테고리 필터 바꾼다");
     const categories = [];
     cidArray.map((i) => {
       categories.push(category[i]);
@@ -247,7 +234,9 @@ function SearchList() {
   }, []);
 
   const getScrapList = async () => {
-    console.log("스크랩 기사 가져옴");
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${user.accessToken}`;
     const scrapListResponse = await axios.get("/scrap");
 
     setScrapList(scrapListResponse.data.map((e) => e.n_id));
@@ -257,23 +246,31 @@ function SearchList() {
   useEffect(() => {
     setIsLoading(true);
     setIsChartLoading(true);
-    console.log("검색 키워드 바뀜");
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
     setInitialization();
     setFilter((current) => {
-      console.log("검색어 바꼈을때 필터 바꾸러 들어옴");
       let newCondition = { ...current };
       newCondition["titlekeyword"] = params.query;
       newCondition["contentkeyword"] = params.query;
       return newCondition;
     });
-    console.log("검색어 바꼈을때 필터임", filter);
     getScrapList();
     getMoreNewsList(filter);
+    getCategoryChart(filter);
   }, [params.query]);
+
+  // 키워드별 카테고리 언급량
+  const getCategoryChart = async (data) => {
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${user.accessToken}`;
+    const categoryChartResponse = await axios.post(`/news/chart`, data);
+    setCategoryCnt(categoryChartResponse.data);
+    setIsChartLoading(false);
+  };
 
   // more버튼을 눌렀을 때.
   useEffect(() => {
