@@ -36,9 +36,6 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
   }, [selectedIdx]);
 
   const onClickMarker = (marker, markerObject, event) => {
-    console.log("event", event);
-    console.log("marker", marker.id);
-    console.log("markerObject", markerObject);
     setEvent({
       type: "CLICK",
       marker,
