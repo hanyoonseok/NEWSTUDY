@@ -74,6 +74,7 @@ public class NewsController {
 
         //레벨 범위 있으면 그대로
         List<NewsResponseDto> responseArray = newsService.getNewsList(newsRequestDto);
+
         //카운트 세기
         Integer total_cnt = 0;
         if(newsRequestDto.getTotal_cnt() == null) {
@@ -86,10 +87,24 @@ public class NewsController {
         map.put("newsList", responseArray);
         map.put("totalCnt", total_cnt);
 
+        return new ResponseEntity<HashMap>(map, HttpStatus.OK);
+    }
+
+
+    @PostMapping("/chart")
+    @ApiOperation(value = "뉴스 차트", notes = "뉴스 리스트와 동일하게 보내주면 된다")
+    @ApiResponses({
+            @ApiResponse(code = 200, message="성공", response = List.class),
+            @ApiResponse(code = 401, message="로그인정보 없음"),
+            @ApiResponse(code = 500, message="서버오류")
+    })
+    public ResponseEntity<HashMap<Integer, Integer>> getNewsChart(@ApiParam(value = "로그인된 유저 정보", required = true) @RequestHeader("Authorization") String bearerToken,
+                                               @RequestBody NewsRequestDto newsRequestDto){
+        HashMap<Integer, Integer> categoryCnt = new HashMap<>();
         //키워드 검색일 경우
         if((newsRequestDto.getContentkeyword() != null && !newsRequestDto.getContentkeyword().equals(""))
                 || (newsRequestDto.getTitlekeyword() != null && !newsRequestDto.getTitlekeyword().equals(""))) {
-            HashMap<Integer, Integer> categoryCnt = new HashMap<>();
+
 
             //키워드 찾기
             String keyword = "";
@@ -113,9 +128,8 @@ public class NewsController {
                 int result = newsService.selectNewsCountByCategory(tmp_map);
                 categoryCnt.put(category_start_id[i], result);
             }
-            map.put("categoryCnt", categoryCnt);
         }
-        return new ResponseEntity<HashMap>(map, HttpStatus.OK);
+        return new ResponseEntity<HashMap<Integer, Integer>>(categoryCnt, HttpStatus.OK);
     }
 
     @GetMapping("/keyword/{n_id}")
