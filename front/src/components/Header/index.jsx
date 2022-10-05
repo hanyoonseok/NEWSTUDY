@@ -45,7 +45,7 @@ export default function Header({ isDark, setIsDark }) {
   }, [localStorageDark]);
 
   const user = useSelector((state) => state.user);
-  const [searchResults, setSearchResults] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
   const openModal = () => {
     setModalOpen(true);
   };
@@ -60,7 +60,7 @@ export default function Header({ isDark, setIsDark }) {
 
   // 검색창 열엉~
   const onSearchBar = () => {
-    setSearchResults(null);
+    setSearchResults([]);
     searchInput.current.value = "";
     setActiveSearch(true);
     console.log(searchInput.current);
@@ -85,7 +85,7 @@ export default function Header({ isDark, setIsDark }) {
   useEffect(() => {
     const fetchData = async () => {
       if (searchQuery === "") {
-        setSearchResults(null);
+        setSearchResults([]);
         return;
       }
       axios.defaults.headers.common[
@@ -97,14 +97,14 @@ export default function Header({ isDark, setIsDark }) {
         titlekeyword: searchQuery,
         contentkeyword: searchQuery,
       };
-      setSearchResults(null);
+      setSearchResults([]);
       const newsListResponse = await axios.post(`/news`, data);
       const result = newsListResponse.data.newsList;
       if (result && result.length > 5) {
         result.splice(0, 5);
       }
       if (result && result.length === 0) {
-        setSearchResults(null);
+        setSearchResults([]);
       }
       setSearchResults(result);
     };
@@ -174,7 +174,7 @@ export default function Header({ isDark, setIsDark }) {
       {activeSearch && (
         <div className="fade-screen" onClick={() => closeSearchBar()}></div>
       )}
-      {searchResults && (
+      {searchResults.length > 0 && (
         <div className={`search-list ${activeSearch ? "visible" : "hidden"}`}>
           <ul>
             {searchResults.slice(0, 5).map((article, index) => (

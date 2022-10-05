@@ -193,7 +193,6 @@ function Landing() {
         per_page: 10,
         page: 1,
         titlekeyword: selectedKeyword,
-        contentkeyword: selectedKeyword,
       };
       console.log("filter", filter);
       axios.defaults.headers.common[
@@ -274,7 +273,7 @@ function Landing() {
                     <i>
                       <FontAwesomeIcon icon={faCircle} />
                     </i>
-                    {category[hotNews[0].c_id].main}
+                    {category[hotNews[0].c_id].sub}
                   </span>{" "}
                   <span className="article-category">
                     <i>

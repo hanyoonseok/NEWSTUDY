@@ -126,6 +126,11 @@
       height: inherit !important;
       width: auto !important;
     }
+
+    @media (max-width: 480px) {
+      margin: 0;
+      height: 330px;
+    }
   }
   .search-newslist {
     .news-result {

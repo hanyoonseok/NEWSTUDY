@@ -209,7 +209,7 @@ export default function Sidebar({ isDark, setIsDark }) {
                       <i>
                         <FontAwesomeIcon icon={faSpellCheck} />
                       </i>
-                      <Link to="/leveltest">단어테스트</Link>
+                      <Link to="/leveltest">레벨 테스트</Link>
                     </div>
                     <div className="nav-content nav-desc">
                       <i>
@@ -275,7 +275,7 @@ export default function Sidebar({ isDark, setIsDark }) {
                     HOME
                   </Link>
                   <Link className="nav-content nav-desc" to="/leveltest">
-                    단어테스트
+                    레벨 테스트
                   </Link>
                   <Link className="nav-content nav-desc" to="/news/list">
                     기사목록
