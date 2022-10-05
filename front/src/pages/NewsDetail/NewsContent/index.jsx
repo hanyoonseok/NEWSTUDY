@@ -37,7 +37,7 @@ export default function NewsContent({ content, newsKeywords, isTranslated }) {
             </div>
           ) : e.substring(0, 8) === "subtitle" ? (
             <h3 className="newsdetail-content-subtitle" key={i}>
-              {e.substring(e.length - (e.length - 8))}
+              <b>“</b> {e.substring(e.length - (e.length - 8))} <b>”</b>
             </h3>
           ) : (
             <p className="newsdetail-content-body" key={i}>

@@ -48,6 +48,8 @@ function SearchList() {
   const [filter, setFilter] = useState({
     per_page: 10,
     page: 1,
+    startlevel: 1,
+    endlvel: 1,
     titlekeyword: params.query,
     contentkeyword: params.query,
   });
@@ -492,11 +494,11 @@ function SearchList() {
                         </div>
                         {!isMobile ? (
                           <div className="date">
-                            {moment(startDay).format("YYYY년 MM월 DD일")}
+                            {moment(endDay).format("YYYY년 MM월 DD일")}
                           </div>
                         ) : (
                           <div className="date">
-                            {moment(startDay).format("YY.MM.DD")}
+                            {moment(endDay).format("YY.MM.DD")}
                           </div>
                         )}
 
