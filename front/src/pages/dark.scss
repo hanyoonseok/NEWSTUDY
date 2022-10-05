@@ -330,6 +330,11 @@
     }
   }
   .searchlist-container {
+    .searchlist-not {
+      .icon {
+        color: $white;
+      }
+    }
     @media (max-width: 480px) {
       background-color: transparent;
     }

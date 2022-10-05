@@ -1,0 +1,6 @@
+@import "variables.scss";
+.loading {
+  width: 100%;
+  @include FLEX-CENTER;
+  background-color: #000;
+}
