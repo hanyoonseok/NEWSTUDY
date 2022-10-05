@@ -138,7 +138,10 @@
             AND c_id IN
             <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
         </if>
-        AND `level` BETWEEN #{startlevel} AND #{endlevel}
+        <if test="categoryid == null">
+            AND `date` BETWEEN DATE(DATE_SUB(now(), INTERVAL 30 DAY)) AND now()
+        </if>
+        AND `level` = #{startlevel}
         ORDER BY `date` DESC, cnt DESC
         LIMIT 0, 10
     </select>
