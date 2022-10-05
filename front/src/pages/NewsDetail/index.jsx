@@ -243,52 +243,29 @@ export default function NewsDetail() {
     <div className="newsdetail-container">
       <BackBtn />
       <div className="newsdetail-content-div">
-        {newsDetail && (
-          <>
-            <section className="news-section">
-              <h1 className="news-title">
-                {" "}
-                <i
-                  className={`news-title-level ${
-                    newsDetail.level <= 2
-                      ? "Alv"
-                      : newsDetail.level <= 4
-                      ? "Blv"
-                      : "Clv"
-                  }`}
-                >
-                  {intToLevel[newsDetail.level]}
-                </i>
-                {newsDetail.title}
-              </h1>
-              <p className="news-date">{newsDetail.date}</p>
-              {isMobile && (
-                <TextToSpeech
-                  isScrapped={isScrapped}
-                  news={newsDetail}
-                  onScrapClick={onScrapClick}
-                  onTransClick={onTransClick}
-                  isTranslated={isTranslated}
-                />
-              )}
-              <h3 className="news-subtitle change">VOCABULARY</h3>
-              <div className="news-hot-word">
-                <section className="words-container">
-                  {newsKeywords.length > 0 &&
-                    newsKeywords.map((e, i) => {
-                      return (
-                        <WordDrug
-                          word={e}
-                          selectedWord={selectedWord}
-                          onWordDrugClick={onWordDrugClick}
-                          onWordDrugEmptyClick={onWordDrugEmptyClick}
-                          onAddWordClick={onAddWordClick}
-                          key={i}
-                        />
-                      );
-                    })}
-                </section>
-                {!isMobile && (
+        {isLoading ? (
+          <Loading />
+        ) : (
+          newsDetail && (
+            <>
+              <section className="news-section">
+                <h1 className="news-title">
+                  {" "}
+                  <i
+                    className={`news-title-level ${
+                      newsDetail.level <= 2
+                        ? "Alv"
+                        : newsDetail.level <= 4
+                        ? "Blv"
+                        : "Clv"
+                    }`}
+                  >
+                    {intToLevel[newsDetail.level]}
+                  </i>
+                  {newsDetail.title}
+                </h1>
+                <p className="news-date">{newsDetail.date}</p>
+                {isMobile && (
                   <TextToSpeech
                     isScrapped={isScrapped}
                     news={newsDetail}
@@ -297,62 +274,89 @@ export default function NewsDetail() {
                     isTranslated={isTranslated}
                   />
                 )}
-              </div>
-              {isLoading ? (
-                <Loading />
-              ) : (
-                selectedWord && (
-                  <div className="news-voca-container">
-                    <h3 className="news-subtitle change">MEAN ?</h3>
-                    <label className="news-selectedword-kor">
-                      <FontAwesomeIcon
-                        icon={faPlus}
-                        className="selectedword-addbtn"
-                        onClick={onAddWordClick}
-                      />
-                      &nbsp;{selectedWord.kor}
-                    </label>
+                <h3 className="news-subtitle change">VOCABULARY</h3>
+                <div className="news-hot-word">
+                  <section className="words-container">
+                    {newsKeywords.length > 0 &&
+                      newsKeywords.map((e, i) => {
+                        return (
+                          <WordDrug
+                            word={e}
+                            selectedWord={selectedWord}
+                            onWordDrugClick={onWordDrugClick}
+                            onWordDrugEmptyClick={onWordDrugEmptyClick}
+                            onAddWordClick={onAddWordClick}
+                            key={i}
+                          />
+                        );
+                      })}
+                  </section>
+                  {!isMobile && (
+                    <TextToSpeech
+                      isScrapped={isScrapped}
+                      news={newsDetail}
+                      onScrapClick={onScrapClick}
+                      onTransClick={onTransClick}
+                      isTranslated={isTranslated}
+                    />
+                  )}
+                </div>
+                {isLoading ? (
+                  <Loading />
+                ) : (
+                  selectedWord && (
+                    <div className="news-voca-container">
+                      <h3 className="news-subtitle change">MEAN ?</h3>
+                      <label className="news-selectedword-kor">
+                        <FontAwesomeIcon
+                          icon={faPlus}
+                          className="selectedword-addbtn"
+                          onClick={onAddWordClick}
+                        />
+                        &nbsp;{selectedWord.kor}
+                      </label>
+                    </div>
+                  )
+                )}
+                {isMobile && <h3 className="news-subtitle change">ARTICLE</h3>}
+                {newsDetail.thumbnail && (
+                  <div className="newsdetail-thumbnail-wrapper">
+                    <img
+                      src={newsDetail.thumbnail}
+                      alt="뉴스 상세 썸네일"
+                      className="newsdetail-thumbnail"
+                    />
                   </div>
-                )
-              )}
-              {isMobile && <h3 className="news-subtitle change">ARTICLE</h3>}
-              {newsDetail.thumbnail && (
-                <div className="newsdetail-thumbnail-wrapper">
-                  <img
-                    src={newsDetail.thumbnail}
-                    alt="뉴스 상세 썸네일"
-                    className="newsdetail-thumbnail"
+                )}
+                <div className="news-article">
+                  <NewsContent
+                    content={isTranslated ? korContent : engContent}
+                    newsKeywords={newsKeywords}
+                    isTranslated={isTranslated}
+                    thumbnail={newsDetail.thumbnail}
                   />
                 </div>
-              )}
-              <div className="news-article">
-                <NewsContent
-                  content={isTranslated ? korContent : engContent}
-                  newsKeywords={newsKeywords}
-                  isTranslated={isTranslated}
-                  thumbnail={newsDetail.thumbnail}
-                />
-              </div>
-              <footer className="newsdetail-content-footer">
-                {`[출처 : ${newsDetail.origin.toUpperCase()}]`}
-              </footer>
-            </section>
-            <section className="related-article-section">
-              <h3 className="news-subtitle">Related Articles</h3>
-              <div className="news-card-wrapper">
-                {relatedNews.length > 0 &&
-                  relatedNews.map((e) => {
-                    return (
-                      <NewsCard
-                        news={e}
-                        key={e.n_id}
-                        isScrap={scrapList.includes(e.n_id)}
-                      />
-                    );
-                  })}
-              </div>
-            </section>
-          </>
+                <footer className="newsdetail-content-footer">
+                  {`[출처 : ${newsDetail.origin.toUpperCase()}]`}
+                </footer>
+              </section>
+              <section className="related-article-section">
+                <h3 className="news-subtitle">Related Articles</h3>
+                <div className="news-card-wrapper">
+                  {relatedNews.length > 0 &&
+                    relatedNews.map((e) => {
+                      return (
+                        <NewsCard
+                          news={e}
+                          key={e.n_id}
+                          isScrap={scrapList.includes(e.n_id)}
+                        />
+                      );
+                    })}
+                </div>
+              </section>
+            </>
+          )
         )}
       </div>
       {newBadgeInfo && (
