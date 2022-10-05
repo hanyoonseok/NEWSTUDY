@@ -657,3 +657,12 @@
     }
   }
 }
+
+.selectedword-addbtn {
+  &:hover {
+    border-radius: 30px;
+    background-color: #fff;
+    color: #3f414b;
+    transform: scale(1.05);
+  }
+}
