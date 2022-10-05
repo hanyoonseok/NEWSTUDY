@@ -173,7 +173,8 @@
         font-family: $eng-font;
         padding: 5px;
         background-color: $lightx2-blue;
-        border: 1px solid $light-blue;
+        filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.05));
+
         border-radius: 7px;
         height: 100%;
         @include FLEX-CENTER;

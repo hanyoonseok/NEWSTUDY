@@ -1,23 +1,32 @@
 @import "variables.scss";
 
 .voca-box {
+  transition: all 300ms ease;
   .voca {
     .memorize {
       width: rem(22);
       height: rem(22);
       margin-right: 2%;
       cursor: pointer;
-    }
-    .word {
-      font-family: $eng-font;
+      transition: all 300ms ease;
     }
 
+    .word {
+      font-family: $eng-font;
+      padding: 20px 0;
+    }
     .blue {
       background-color: $soft-blue;
+      &:hover {
+        background-color: $soft-grey;
+      }
     }
 
     .grey {
       background-color: $soft-grey;
+      &:hover {
+        background-color: $soft-blue;
+      }
     }
   }
 }
@@ -32,7 +41,6 @@
       }
 
       .word {
-        font-family: $eng-font;
         width: 40%;
         font-size: rem(20);
       }
