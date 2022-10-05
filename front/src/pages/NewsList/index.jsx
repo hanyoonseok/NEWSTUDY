@@ -4,18 +4,20 @@ import { faBookmark as faBookmarkEmpty } from "@fortawesome/free-regular-svg-ico
 import { useMediaQuery } from "react-responsive";
 import React, { useState, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
+
 import "./style.scss";
 import LevelContainer from "./LevelContainer";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
 import { category } from "constants/category";
 import { intToLevel } from "constants";
-import { useNavigate } from "react-router-dom";
-
 import NewsCard from "components/NewsCard";
 import DefaultThumb from "assets/default-thumb.png";
-import axios from "axios";
 import TopBtn from "components/TopBtn";
+import Loading from "components/Loading";
 
 export default function NewsList() {
   const navigate = useNavigate();
@@ -32,6 +34,7 @@ export default function NewsList() {
   const [totalNews, setTotalNews] = useState(0);
   const [cidArray, setCidArray] = useState([]);
   const [userScrapList, setUserScrapList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
 
   const isMobile = useMediaQuery({
@@ -77,6 +80,7 @@ export default function NewsList() {
         "Authorization"
       ] = `Bearer ${user.accessToken}`;
 
+      setIsLoading(true);
       // 뉴스 목록 불러오기.
       let data;
       if (cidArray.length === 0) {
@@ -85,6 +89,8 @@ export default function NewsList() {
           startlevel: selectedLevel,
           endlevel: selectedLevel,
           page: page,
+          startdate: moment().subtract(3, "months").format("YYYY-MM-DD"),
+          enddate: moment().format("YYYY-MM-DD"),
         };
       } else {
         // cidArray가 있으면
@@ -97,16 +103,18 @@ export default function NewsList() {
         };
       }
 
-      const newsListResponse = await axios.post(`/news`, data);
-      const result = newsListResponse.data;
-      setNewsList([...newsList, ...result.newsList]);
+      await axios.post(`/news`, data).then((res) => {
+        const result = res.data;
+        setNewsList([...newsList, ...result.newsList]);
 
-      if (result.totalCnt > newsList.length + result.newsList.length) {
-        setIsExistMoreNews(true);
-      } else {
-        setIsExistMoreNews(false);
-      }
-      setTotalNews(result.totalCnt);
+        if (result.totalCnt > newsList.length + result.newsList.length) {
+          setIsExistMoreNews(true);
+        } else {
+          setIsExistMoreNews(false);
+        }
+        setTotalNews(result.totalCnt);
+        setIsLoading(false);
+      });
     };
     fetchData();
   }, [selectedLevel, page, cidArray]);
@@ -142,114 +150,120 @@ export default function NewsList() {
         selectedLevel={selectedLevel}
       />
       <article className="newslist-body-container">
-        <div className="newslist-top-area">
-          <h3 className="hottest-article-depth">
-            {intToLevel[selectedLevel]} Level {totalNews}건
-          </h3>
-          {!isMobile && (
-            <div
-              onClick={() => {
-                setIsFilterModal(true);
-              }}
-            >
-              <Filter filterCnt={cidArray.length} />
-            </div>
-          )}
-        </div>
-        {newsList && (
+        {isLoading ? (
+          <Loading />
+        ) : (
           <>
-            <div className="newslist-mid-area">
-              {newsList.length > 0 && (
-                <>
-                  <div
-                    className="hottest-article"
-                    onClick={() => onLinkClick(newsList[0].n_id)}
-                  >
-                    <i
-                      className={`hottest-article-level ${
-                        level_value[newsList[0].level].includes("A")
-                          ? "Alv"
-                          : level_value[newsList[0].level].includes("B")
-                          ? "Blv"
-                          : "Clv"
-                      }`}
-                    >
-                      {level_value[newsList[0].level]}
-                    </i>
-                    {isMobile && (
-                      <div className="hottest-article-category mobile">
-                        <FontAwesomeIcon icon={faCircle} />
-                        {category[newsList[0].c_id].main}
-                      </div>
-                    )}
-                    <span className="hottest-article-img">
-                      <img
-                        src={
-                          newsList[0].thumbnail
-                            ? newsList[0].thumbnail
-                            : DefaultThumb
-                        }
-                        alt="hottest article 이미지"
-                      ></img>
-                    </span>
-                    <h1 className="hottest-article-title">
-                      {newsList[0].title}
-                    </h1>
-                    {!isMobile && (
-                      <div className="hottest-article-footer">
-                        <div className="hottest-article-category">
-                          <FontAwesomeIcon icon={faCircle} />
-                          {category[newsList[0].c_id].main}
-                        </div>{" "}
-                        <div className="hottest-article-category sub">
-                          <FontAwesomeIcon icon={faCircle} />
-                          {category[newsList[0].c_id].sub}
-                        </div>
-                        {userScrapList.includes(newsList[0].n_id) ? (
-                          <FontAwesomeIcon
-                            icon={faBookmark}
-                            className="hottest-article-bookmark"
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faBookmarkEmpty}
-                            className="hottest-article-bookmark"
-                          />
-                        )}
-                      </div>
-                    )}
-                  </div>
-                  {!isMobile && newsList && (
-                    <div className="sub-article-container">
-                      {newsList.slice(1, 3).map((news, index) => (
-                        <NewsCard
-                          news={news}
-                          key={index}
-                          isScrap={userScrapList.includes(news.n_id)}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </>
+            <div className="newslist-top-area">
+              <h3 className="hottest-article-depth">
+                {intToLevel[selectedLevel]} Level {totalNews}건
+              </h3>
+              {!isMobile && (
+                <div
+                  onClick={() => {
+                    setIsFilterModal(true);
+                  }}
+                >
+                  <Filter />
+                </div>
               )}
             </div>
-            <div className="newslist-bot-area">
-              {newsList.slice(3).map((e, i) => (
-                <NewsCard
-                  news={e}
-                  stretch={!isMobile}
-                  key={i}
-                  isScrap={userScrapList.includes(e.n_id)}
-                />
-              ))}
-            </div>
-            {isExistMoreNews && (
-              <div
-                className="newslist-morebtn-container"
-                onClick={() => setPage(page + 1)}
-              >
-                <button className="newslist-morebtn">더보기</button>
-              </div>
+            {newsList && (
+              <>
+                <div className="newslist-mid-area">
+                  {newsList.length > 0 && (
+                    <>
+                      <div
+                        className="hottest-article"
+                        onClick={() => onLinkClick(newsList[0].n_id)}
+                      >
+                        <i
+                          className={`hottest-article-level ${
+                            level_value[newsList[0].level].includes("A")
+                              ? "Alv"
+                              : level_value[newsList[0].level].includes("B")
+                              ? "Blv"
+                              : "Clv"
+                          }`}
+                        >
+                          {level_value[newsList[0].level]}
+                        </i>
+                        {isMobile && (
+                          <div className="hottest-article-category mobile">
+                            <FontAwesomeIcon icon={faCircle} />
+                            {category[newsList[0].c_id].main}
+                          </div>
+                        )}
+                        <span className="hottest-article-img">
+                          <img
+                            src={
+                              newsList[0].thumbnail
+                                ? newsList[0].thumbnail
+                                : DefaultThumb
+                            }
+                            alt="hottest article 이미지"
+                          ></img>
+                        </span>
+                        <h1 className="hottest-article-title">
+                          {newsList[0].title}
+                        </h1>
+                        {!isMobile && (
+                          <div className="hottest-article-footer">
+                            <div className="hottest-article-category">
+                              <FontAwesomeIcon icon={faCircle} />
+                              {category[newsList[0].c_id].main}
+                            </div>{" "}
+                            <div className="hottest-article-category sub">
+                              <FontAwesomeIcon icon={faCircle} />
+                              {category[newsList[0].c_id].sub}
+                            </div>
+                            {userScrapList.includes(newsList[0].n_id) ? (
+                              <FontAwesomeIcon
+                                icon={faBookmark}
+                                className="hottest-article-bookmark"
+                              />
+                            ) : (
+                              <FontAwesomeIcon
+                                icon={faBookmarkEmpty}
+                                className="hottest-article-bookmark"
+                              />
+                            )}
+                          </div>
+                        )}
+                      </div>
+                      {!isMobile && newsList && (
+                        <div className="sub-article-container">
+                          {newsList.slice(1, 3).map((news, index) => (
+                            <NewsCard
+                              news={news}
+                              key={index}
+                              isScrap={userScrapList.includes(news.n_id)}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+                <div className="newslist-bot-area">
+                  {newsList.slice(3).map((e, i) => (
+                    <NewsCard
+                      news={e}
+                      stretch={!isMobile}
+                      key={i}
+                      isScrap={userScrapList.includes(e.n_id)}
+                    />
+                  ))}
+                </div>
+                {isExistMoreNews && (
+                  <div
+                    className="newslist-morebtn-container"
+                    onClick={() => setPage(page + 1)}
+                  >
+                    <button className="newslist-morebtn">더보기</button>
+                  </div>
+                )}
+              </>
             )}
           </>
         )}

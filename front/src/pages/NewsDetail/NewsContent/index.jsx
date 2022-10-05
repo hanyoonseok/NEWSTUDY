@@ -2,7 +2,12 @@ import React from "react";
 
 import "./style.scss";
 
-export default function NewsContent({ content, newsKeywords, isTranslated }) {
+export default function NewsContent({
+  content,
+  newsKeywords,
+  isTranslated,
+  thumbnail,
+}) {
   const highlightKeywords = (string) => {
     const parsedContent = [];
     string = string.replace(/(?:\r\n|\r|\n)/g, "\n\n"); //줄바꿈을 문자열에 적용
@@ -21,20 +26,26 @@ export default function NewsContent({ content, newsKeywords, isTranslated }) {
     return parsedContent;
   };
 
+  const renderContent = () => {
+    return content;
+  };
+
   return (
     <>
       {isTranslated ? (
-        <p className="newsdetail-content-body">{content}</p>
+        <>{renderContent()}</>
       ) : (
         content.split("@@div").map((e, i) =>
           e.substring(0, 3) === "img" ? (
-            <div className="newsdetail-content-img-wrapper" key={i}>
-              <img
-                src={e.substring(e.length - (e.length - 3))}
-                alt="기사 본문 이미지"
-                className="newsdetail-content-img"
-              />
-            </div>
+            e.substring(e.length - (e.length - 3)) !== thumbnail && (
+              <div className="newsdetail-content-img-wrapper" key={i}>
+                <img
+                  src={e.substring(e.length - (e.length - 3))}
+                  alt="기사 본문 이미지"
+                  className="newsdetail-content-img"
+                />
+              </div>
+            )
           ) : e.substring(0, 8) === "subtitle" ? (
             <h3 className="newsdetail-content-subtitle" key={i}>
               <b>“</b> {e.substring(e.length - (e.length - 8))} <b>”</b>

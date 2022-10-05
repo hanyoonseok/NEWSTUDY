@@ -4,8 +4,7 @@ import { useSelector } from "react-redux";
 
 import "./style.scss";
 import NewsCard from "components/NewsCard";
-import Filter from "components/Filter";
-import FilterModal from "components/FilterModal";
+import Loading from "components/Loading";
 import Globe from "./Globe";
 import { category } from "constants/category";
 
@@ -17,6 +16,7 @@ export default function NationsNewsList() {
   const [dataIdx, setDataIdx] = useState(1);
   const [userScrapList, setUserScrapList] = useState([]);
   const [hasMoreNews, setHasMoreNews] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const userState = useSelector((state) => state.user);
   const hexValues = [
     0,
@@ -75,15 +75,18 @@ export default function NationsNewsList() {
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     // selectedIdx가 바뀔 때마다 해당 국가의 뉴스 리스트를 받아온다
     const fetchData = async () => {
       const nationsNewsResponse = await axios.post("/news", {
         categoryid: [selectedIdx + idxGap],
         page: 1,
       });
+      console.log(nationsNewsResponse);
       setNationsNews(nationsNewsResponse.data.newsList);
       setHasMoreNews(nationsNewsResponse.data.newsList.length === 30);
       setDataIdx(2);
+      setIsLoading(false);
     };
 
     fetchData();
@@ -96,6 +99,7 @@ export default function NationsNewsList() {
       page: dataIdx,
     });
     setNationsNews(nationsNews.concat(moreNewsResponse.data.newsList));
+    setHasMoreNews(moreNewsResponse.data.newsList.length === 30);
     setDataIdx((prev) => prev + 1);
   }, [dataIdx, nationsNews, selectedIdx]);
 
@@ -136,28 +140,32 @@ export default function NationsNewsList() {
               <Filter clickHandler={onFilterClick} />
             </div> */}
             <div className="nationsnews-list">
-              <div className="nationsnews-list-list">
-                {nationsNews.length > 0 &&
-                  nationsNews.map((e, i) => {
-                    return (
-                      <NewsCard
-                        news={e}
-                        key={i}
-                        isScrap={userScrapList.includes(e.n_id)}
-                      />
-                    );
-                  })}
-                {hasMoreNews && (
-                  <div className="nationsnews-btn-wrapper">
-                    <button
-                      className="nationsnews-morebtn"
-                      onClick={onMoreClick}
-                    >
-                      더보기
-                    </button>
-                  </div>
-                )}
-              </div>
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <div className="nationsnews-list-list">
+                  {nationsNews.length > 0 &&
+                    nationsNews.map((e, i) => {
+                      return (
+                        <NewsCard
+                          news={e}
+                          key={i}
+                          isScrap={userScrapList.includes(e.n_id)}
+                        />
+                      );
+                    })}
+                  {hasMoreNews && (
+                    <div className="nationsnews-btn-wrapper">
+                      <button
+                        className="nationsnews-morebtn"
+                        onClick={onMoreClick}
+                      >
+                        더보기
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </article>
         </>

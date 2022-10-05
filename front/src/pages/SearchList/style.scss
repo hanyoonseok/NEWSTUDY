@@ -4,11 +4,35 @@
   padding: 120px 130px 80px 210px;
   @include STRETCH;
   @include FLEX-COLUMN;
+  min-height: 100vh;
 
   @media (max-width: 480px) {
     padding: 100px 16px;
     background-color: #fff;
     width: 100%;
+  }
+
+  .searchlist-not {
+    @include FLEX-CENTER;
+    font-size: rem(28);
+    width: 100%;
+    height: 50vh;
+    flex-direction: column;
+
+    .icon {
+      font-size: rem(80);
+      color: $default-grey;
+      margin-right: rem(10);
+      margin-bottom: rem(10);
+    }
+
+    @media (max-width: 480px) {
+      text-align: center;
+
+      span {
+        display: block;
+      }
+    }
   }
   > h4 {
     font-size: rem(24);
@@ -125,6 +149,11 @@
     canvas {
       height: inherit !important;
       width: auto !important;
+    }
+
+    @media (max-width: 480px) {
+      margin: 0;
+      height: 330px;
     }
   }
   .search-newslist {

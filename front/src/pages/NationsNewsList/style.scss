@@ -9,6 +9,7 @@
   @media (max-width: 480px) {
     flex-direction: column;
     padding: rem(100) rem(12);
+    height: 100%;
   }
 
   .nationsnews-globe-container {
@@ -91,12 +92,10 @@
             border-radius: 6px;
             font-family: $kor-font;
             font-weight: 550;
+            margin: 0 6px 6px 0;
             b {
               color: $blue;
             }
-          }
-          .nation-info-tag + .nation-info-tag {
-            margin-left: 6px;
           }
         }
       }

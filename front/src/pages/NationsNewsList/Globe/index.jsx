@@ -4,9 +4,10 @@ import ReactGlobe from "react-globe";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/scale.css";
 
-import GlobeImg from "assets/globe_diffuse.jpg";
 import Earth from "assets/earthmap_color.png";
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 function markerTooltipRenderer(marker) {
   return `CITY: ${marker.city}`;
@@ -27,18 +28,17 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
   const [event, setEvent] = useState(null);
   const [details, setDetails] = useState(null);
   const [focus, setFocus] = useState([37.541, 126.986]);
-  const hashtags = ["코로나", "쌔삥", "페이커"];
+  const [hashtags, setHashTags] = useState([]);
+  const userState = useSelector((state) => state.user);
 
   useEffect(() => {
     setFocus(markers[selectedIdx].coordinates);
     setDetails(markerTooltipRenderer(markers[selectedIdx]));
+    getNationKeywords(markers[selectedIdx].c_id);
     return () => {};
   }, [selectedIdx]);
 
   const onClickMarker = (marker, markerObject, event) => {
-    console.log("event", event);
-    console.log("marker", marker.id);
-    console.log("markerObject", markerObject);
     setEvent({
       type: "CLICK",
       marker,
@@ -47,6 +47,7 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
     });
     setDetails(markerTooltipRenderer(marker));
     setSelectedIdx(marker.id);
+    getNationKeywords(marker.c_id);
   };
 
   const onDefocus = (previousFocus) => {
@@ -56,6 +57,19 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
     });
     setDetails(null);
   };
+
+  const getNationKeywords = useCallback(async (cid) => {
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${userState.accessToken}`,
+      },
+    };
+    const nationKeywordsResponse = await axios.get(
+      `/daily/world/${cid}`,
+      headers,
+    );
+    setHashTags(nationKeywordsResponse.data.map((e) => e.eng).slice(0, 3));
+  }, []);
 
   return (
     <div className="globe-box">
@@ -75,7 +89,7 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
                 return (
                   <div className="nation-info-tag" key={i}>
                     <b>#</b>
-                    {tag}
+                    {tag.replace(/^./, tag[0].toUpperCase())}
                   </div>
                 );
               })}

@@ -90,12 +90,12 @@ export const logoutUser = async () => {
   };
 };
 
-export const changeLevel = async (level) => {
+export const changeLevel = async (level, token) => {
   console.log("changeLevel");
   const request = await axios
     .put(`/user/level/${level}`, null, {
       headers: {
-        Authorization: `Bearer ${user.accessToken}`,
+        Authorization: `Bearer ${token}`,
       },
     })
     .then((res) => console.log(res));

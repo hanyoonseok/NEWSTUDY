@@ -14,6 +14,7 @@ import Marker from "assets/marker.jpg";
 import Earth from "assets/earthmap_color.png";
 import Countrycard from "assets/country-card.jpg";
 import DarkToggle from "components/DarkToggle";
+import { useCallback } from "react";
 
 export default function Onboarding() {
   const [scrollIdx, setScrollIdx] = useState(1);
@@ -146,7 +147,7 @@ export default function Onboarding() {
     };
 
     const wrapperRefCurrent = mainWrapperRef.current;
-    wrapperRefCurrent.addEventListener("wheel", wheelHandler);
+    !isMobile && wrapperRefCurrent.addEventListener("wheel", wheelHandler);
 
     return () => {
       wrapperRefCurrent.removeEventListener("wheel", wheelHandler);
@@ -156,6 +157,60 @@ export default function Onboarding() {
   const onLoginClick = () => {
     navigate("/signup");
   };
+
+  const onTopAreaClick = useCallback(() => {
+    const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
+
+    if (scrollIdx > 1) {
+      //현재 1페이지
+      mainWrapperRef.current.scrollTo({
+        top: pageHeight * (scrollIdx - 2) + DIVIDER_HEIGHT * (scrollIdx - 2),
+        left: 0,
+        behavior: "smooth",
+      });
+      if (scrollIdx === 2) {
+        globe.current.style.bottom = "-50vh";
+        globe.current.style.transform = "translate(-50%, 0) scale(1.5)";
+        globe.current.style.left = "50%";
+        marker.current.style.opacity = 0;
+        countrycard.current.style.opacity = 0;
+      } else if (scrollIdx === 3) {
+        globe.current.style.opacity = "1";
+        marker.current.style.opacity = 1;
+        countrycard.current.style.opacity = 1;
+        countrycard.current.style.right = "8%";
+      }
+      setScrollIdx((prev) => prev - 1);
+    }
+  }, [scrollIdx]);
+
+  const onBotAreaClick = useCallback(() => {
+    const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
+
+    if (scrollIdx < 5) {
+      //현재 1페이지
+      mainWrapperRef.current.scrollTo({
+        top: pageHeight * scrollIdx + DIVIDER_HEIGHT * scrollIdx,
+        left: 0,
+        behavior: "smooth",
+      });
+
+      if (scrollIdx === 1) {
+        globe.current.style.transform = "translate(-50%, 50%) scale(0.5)";
+        globe.current.style.left = "50%";
+        globe.current.style.bottom = "50%";
+        marker.current.style.opacity = 1;
+        countrycard.current.style.opacity = 1;
+        countrycard.current.style.right = "8%";
+      } else if (scrollIdx === 2) {
+        globe.current.style.opacity = "0";
+        marker.current.style.opacity = 0;
+        countrycard.current.style.opacity = 0;
+      }
+
+      setScrollIdx((prev) => prev + 1);
+    }
+  }, [scrollIdx]);
 
   const localStorageDark = localStorage.getItem("dark");
   const [isDark, setIsDark] = useState(false);
@@ -226,6 +281,19 @@ export default function Onboarding() {
       <div className="main-item">
         <Page5 activePage={scrollIdx === 5 ? true : false} />
       </div>
+
+      {isMobile && (
+        <section className="onboarding-mobile-section">
+          <div
+            className="onboarding-mobile-area"
+            onClick={onTopAreaClick}
+          ></div>
+          <div
+            className="onboarding-mobile-area"
+            onClick={onBotAreaClick}
+          ></div>
+        </section>
+      )}
     </div>
   );
 }

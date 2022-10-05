@@ -51,7 +51,7 @@ function DoLevelTest({ getResult, user, setLevelAvg }) {
       setLevelAvg(6);
       level = 6;
     }
-    dispatch(changeLevel(level)).then(async (res) => {
+    dispatch(changeLevel(level, user.accessToken)).then(async (res) => {
       console.log(res);
       // 회원 배지 목록 가져오기
       await axios

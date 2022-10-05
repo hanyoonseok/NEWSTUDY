@@ -1,0 +1,7 @@
+@import "variables.scss";
+.loading {
+  @include FLEX-CENTER;
+  @include BACKGROUND-IMAGE("assets/white-loading.gif");
+  background-size: contain;
+  background-position-x: center;
+}

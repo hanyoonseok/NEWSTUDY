@@ -49,6 +49,7 @@ export default function Sidebar({ isDark, setIsDark }) {
   };
 
   const outHandler = () => {
+    console.log("isMobile????", isMobile);
     if (isMobile) {
       sidebar.current.style.left = "-320px";
       sidebar.current.style.opacity = "0";
@@ -199,31 +200,46 @@ export default function Sidebar({ isDark, setIsDark }) {
                         alt="article"
                       ></img>
                     </div>
-                    <div className="nav-content nav-desc">
+                    <div
+                      className="nav-content nav-desc"
+                      onClick={() => outHandler()}
+                    >
                       <i>
                         <FontAwesomeIcon icon={faHome} />
                       </i>
                       <Link to="/landing">HOME</Link>
                     </div>
-                    <div className="nav-content nav-desc">
+                    <div
+                      className="nav-content nav-desc"
+                      onClick={() => outHandler()}
+                    >
                       <i>
                         <FontAwesomeIcon icon={faSpellCheck} />
                       </i>
-                      <Link to="/leveltest">단어테스트</Link>
+                      <Link to="/leveltest">레벨 테스트</Link>
                     </div>
-                    <div className="nav-content nav-desc">
+                    <div
+                      className="nav-content nav-desc"
+                      onClick={() => outHandler()}
+                    >
                       <i>
                         <FontAwesomeIcon icon={faRectangleList} />
                       </i>
                       <Link to="/news/list">기사목록</Link>
                     </div>
-                    <div className="nav-content nav-desc">
+                    <div
+                      className="nav-content nav-desc"
+                      onClick={() => outHandler()}
+                    >
                       <i>
                         <FontAwesomeIcon icon={faGlobe} />
                       </i>
                       <Link to="nationsnews">나라별 기사목록</Link>
                     </div>
-                    <div className="nav-content nav-desc">
+                    <div
+                      className="nav-content nav-desc"
+                      onClick={() => outHandler()}
+                    >
                       <i>
                         <FontAwesomeIcon icon={faPuzzlePiece} />
                       </i>
@@ -275,7 +291,7 @@ export default function Sidebar({ isDark, setIsDark }) {
                     HOME
                   </Link>
                   <Link className="nav-content nav-desc" to="/leveltest">
-                    단어테스트
+                    레벨 테스트
                   </Link>
                   <Link className="nav-content nav-desc" to="/news/list">
                     기사목록
