@@ -1,236 +1,263 @@
 @import "variables.scss";
 
 /* *************** Web View ********************* */
-.background-div {
-  @include BACKGROUND-IMAGE("assets/background.png");
-  @include FLEX-BETWEEN;
-  width: 100%;
+.auth-wrapper {
   height: 100vh;
-  background-color: #f3f5ff;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-
-  > div {
-    width: 50%;
-    height: 100%;
-    margin: auto;
-    @include FLEX-CENTER;
-    flex-direction: column;
-  }
-
-  .left-div {
-    > div {
-      @include FLEX-CENTER;
-      justify-content: flex-end;
-    }
-    .logo-img {
-      width: 90%;
-      padding-top: 4%;
-      img {
-        width: 80%;
-      }
-    }
-
-    .earth-img {
-      width: 90%;
-
-      img {
-        width: 85%;
-      }
-    }
-  }
-
-  .right-div {
-    margin-left: 1%;
-    align-items: flex-start;
-
-    .tab {
-      width: 100%;
-      display: flex;
-      align-items: flex-end;
-
-      button {
-        @include BTN-COLOR($soft-grey);
-
-        padding: 2% 5%;
-        font-size: rem(16);
-        font-family: $kor-font;
-        border-radius: 10px 10px 0 0;
-        margin-right: 3%;
-
-        &.active {
-          background-color: $soft-blue;
-        }
-      }
-    }
-
-    .content {
-      // @include BACKGROUND-IMAGE("assets/paper-background.png");
-      @include FLEX-ALIGN-CENTER;
-      width: 100%;
-      max-width:500px;
-      height:initial;
-      background-size: contain;
-      padding: 5%;
-      align-items: normal;
-      position:relative;
-      display:flex;
-
-
-      .content-backgroundimg{
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-      }
-
-      .email-box {
-        width:100%;
-        @include FLEX-BETWEEN;
-     
-        button {
-          padding: 2% 4%;
-          word-break: keep-all;
-        }
-      }
-
-      p {
-        width: 100%;
-        padding: 14%;
-      }
-
-      button {
-        @include BTN-COLOR($soft-blue);
-        padding: 3% 9%;
-        font-size: rem(16);
-        font-family: $kor-font;
-        border-radius: 10px;
-      }
-
-      .signup-btn {
-        float: right;
-      }
-
-      .login-btn {
-        width: 100%;
-      }
-
-      > form {
-        width: 100%;
-        height: 100%;
-      }
-
-      .login {
-        .error {
-          padding: 0;
-          font-size: rem(14);
-          margin: 2% 0 7%;
-          color: rgb(252, 113, 113);
-          text-align: right;
-        }
-
-        p {
-          &:nth-of-type(2) {
-            padding: 0;
-          }
-        }
-      }
-
-      .signup {
-        z-index: 2;
-        .email-box {
-          .input-div {
-            margin-bottom: 1%;
-            width:80%;
-
-          }
-        }
-        > div:nth-of-type(2),
-        > div:nth-of-type(4) {
-          margin-bottom: 1%;
-        }
-
-        p {
-          padding: 0;
-          font-size: rem(12);
-          margin: 2% 0;
-          text-align: right;
-        }
-        .error {
-          color: rgb(252, 113, 113);
-        }
-        .correct {
-          color: rgb(56, 157, 56);
-        }
-      }
-    }
-  }
-}
-
-/* *************** Mobile View ********************* */
-@media only screen and (max-width: 480px) {
-  .background-div {
+  .auth-body {
+    @include BACKGROUND-IMAGE("assets/background.png");
     width: 100%;
     height: 100vh;
-    flex-direction: column;
+    background-color: #f3f5ff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    .auth-top-div {
+      .home {
+        position: fixed;
+        top: rem(50);
+        right: rem(70);
+        color: $soft-blue;
+        font-size: rem(18);
+        width: rem(40);
+        height: 30px;
+        @include FLEX-ALIGN-CENTER;
 
-    > div {
-      height: auto;
-    }
-
-    .left-div {
-      width: 100%;
-      flex-direction: column-reverse;
-      .earth-img {
-        margin-left: 25%;
-        width: 75%;
-
-        img {
-          width: 100%;
+        @media (max-width: 480px) {
+          right: rem(40);
+          font-size: rem(20);
         }
       }
 
-      .logo-img {
-        width: 90%;
+      .dark-toggle > div {
+        color: $soft-blue;
+      }
+    }
+    .auth-bottom-div {
+      height: 100%;
+      @include FLEX-ALIGN-CENTER;
+      > div {
+        width: 50%;
+        height: 100%;
         margin: auto;
+        @include FLEX-CENTER;
+        flex-direction: column;
+      }
 
-        img {
+      .left-div {
+        padding: rem(55) rem(55) 0;
+        > div {
+          @include FLEX-CENTER;
+          justify-content: flex-end;
+        }
+        .logo-img {
+          @include BACKGROUND-IMAGE("assets/NEWSTUDY.jpg");
+          background-size: contain;
+          background-position-y: bottom;
+          width: 80%;
+          padding-top: 4%;
+          height: rem(150);
+        }
+
+        .earth-img {
           width: 100%;
+
+          img {
+            width: 85%;
+          }
         }
       }
-    }
 
-    .right-div {
-      width: 90%;
-      height: 90%;
-      margin: auto;
+      .right-div {
+        margin-left: 1%;
+        align-items: flex-start;
 
-      .content {
-        width: 100%;
-        height: 80%;
-        display: flex;
-        padding: 8%;
+        .tab {
+          width: 100%;
+          display: flex;
+          align-items: flex-end;
 
-        > div {
-          width: 95%;
-          padding: 8% 5% 8% 8%;
+          button {
+            @include BTN-COLOR($soft-grey);
+
+            padding: 2% 5%;
+            font-size: rem(16);
+            font-family: $kor-font;
+            border-radius: 10px 10px 0 0;
+            margin-right: 3%;
+
+            &.active {
+              background-color: $soft-blue;
+            }
+          }
         }
 
-        .input-div {
-          margin-bottom: 7%;
-          .box {
-            width: 20px;
-            height: 20px;
+        .content {
+          // @include BACKGROUND-IMAGE("assets/paper-background.png");
+          @include FLEX-ALIGN-CENTER;
+          width: 100%;
+          max-width: 500px;
+          height: initial;
+          background-size: contain;
+          padding: 5%;
+          align-items: normal;
+          position: relative;
+          display: flex;
+
+          .content-backgroundimg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+          }
+
+          .email-box {
+            width: 100%;
+            @include FLEX-BETWEEN;
+
+            button {
+              padding: 2% 4%;
+              word-break: keep-all;
+            }
+          }
+
+          p {
+            width: 100%;
+            padding: 14%;
+          }
+
+          button {
+            @include BTN-COLOR($soft-blue);
+            padding: 3% 9%;
+            font-size: rem(16);
+            font-family: $kor-font;
+            border-radius: 10px;
+          }
+
+          .signup-btn {
+            float: right;
+          }
+
+          .login-btn {
+            width: 100%;
+          }
+
+          > form {
+            width: 100%;
+            height: 100%;
+          }
+
+          .login {
+            .error {
+              padding: 0;
+              font-size: rem(14);
+              margin: 2% 0 7%;
+              color: rgb(252, 113, 113);
+              text-align: right;
+            }
+
+            p {
+              &:nth-of-type(2) {
+                padding: 0;
+              }
+            }
+          }
+
+          .signup {
+            z-index: 2;
+            .email-box {
+              .input-div {
+                margin-bottom: 1%;
+                width: 80%;
+              }
+            }
+            > div:nth-of-type(2),
+            > div:nth-of-type(4) {
+              margin-bottom: 1%;
+            }
+
+            p {
+              padding: 0;
+              font-size: rem(12);
+              margin: 2% 0;
+              text-align: right;
+            }
+            .error {
+              color: rgb(252, 113, 113);
+            }
+            .correct {
+              color: rgb(56, 157, 56);
+            }
           }
         }
       }
     }
   }
 }
+/* *************** Mobile View ********************* */
+@media only screen and (max-width: 480px) {
+  .auth-wrapper {
+    .auth-body {
+      width: 100%;
+      height: 100vh;
+      flex-direction: column;
+      .auth-bottom-div {
+        flex-direction: column;
+        > div {
+          height: auto;
+        }
 
+        .left-div {
+          width: 100%;
+          flex-direction: column-reverse;
+          .earth-img {
+            margin-left: 25%;
+            width: 75%;
+
+            img {
+              width: 100%;
+            }
+          }
+
+          .logo-img {
+            width: 90%;
+            margin: auto;
+
+            img {
+              width: 100%;
+            }
+          }
+        }
+
+        .right-div {
+          width: 90%;
+          height: 90%;
+          margin: auto;
+
+          .content {
+            width: 100%;
+            height: 80%;
+            display: flex;
+            padding: 8%;
+
+            > div {
+              width: 95%;
+              padding: 8% 5% 8% 8%;
+            }
+
+            .input-div {
+              margin-bottom: 7%;
+              .box {
+                width: 20px;
+                height: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 .input-div {
   display: flex;
   border-bottom: 1px solid #4d4d4db7;
@@ -273,6 +300,6 @@
   }
 }
 
-.login{
+.login {
   z-index: 2;
 }

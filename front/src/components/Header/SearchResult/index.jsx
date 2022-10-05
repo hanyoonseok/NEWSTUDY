@@ -1,5 +1,6 @@
 import React from "react";
 import "./style.scss";
+import DefaultThumb from "assets/default-thumb.png";
 
 function SearchResult({ article, query }) {
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
@@ -7,7 +8,10 @@ function SearchResult({ article, query }) {
   return (
     <div className="search-article">
       <div className="search-article-thumbnail">
-        <img src={article.thumbnail} alt="article"></img>
+        <img
+          src={article.thumbnail ? article.thumbnail : DefaultThumb}
+          alt="article"
+        />
       </div>
       <div className="search-article-title">
         {article.title.includes(query) ? (

@@ -1,0 +1,31 @@
+@import "variables.scss";
+.newsdetail-content-img-wrapper {
+  width: 100%;
+  margin-top: rem(40);
+  @include FLEX-CENTER;
+}
+
+.newsdetail-content-img-wrapper {
+  > img {
+    border-radius: 15px;
+  }
+  margin: 20px 0;
+}
+.newsdetail-content-subtitle {
+  font-family: $eng-title-font;
+
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+  margin: 20px 0;
+  b {
+    color: $blue;
+  }
+}
+.newsdetail-content-body {
+  font-size: rem(18.5);
+  padding: 20px 0;
+  white-space: pre-line;
+
+  .newsdetail-content-keyword {
+    color: $soft-blue;
+  }
+}

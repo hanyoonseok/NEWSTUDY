@@ -20,8 +20,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SearchResult from "components/Header/SearchResult";
 import { logoutUser } from "modules/user/user";
+import DarkToggle from "components/DarkToggle";
 
-export default function Sidebar() {
+export default function Sidebar({ isDark, setIsDark }) {
   const dispatch = useDispatch();
 
   const isMobile = useMediaQuery({
@@ -113,6 +114,14 @@ export default function Sidebar() {
     });
   };
 
+  const localStorageDark = localStorage.getItem("dark");
+
+  useEffect(() => {
+    if (localStorageDark === null || localStorageDark === "false")
+      setIsDark(false);
+    else setIsDark(true);
+  }, [localStorageDark]);
+
   return (
     <>
       <nav
@@ -170,9 +179,12 @@ export default function Sidebar() {
                   }`}
                 >
                   <ul>
-                    {searchResults.map((article, index) => (
-                      <li key={index}>
-                        <SearchResult article={article} query={searchQuery} />
+                    {searchResults.slice(0, 5).map((article, index) => (
+                      <li key={index} onClick={() => setActiveSearch(false)}>
+                        {" "}
+                        <Link to={`/news/${article.n_id}`}>
+                          <SearchResult article={article} query={searchQuery} />
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -218,7 +230,11 @@ export default function Sidebar() {
                       <Link to="/game/menu">영어 게임</Link>
                     </div>
                   </div>
-                  <div className="nav-content nav-desc">
+                  <DarkToggle isDark={isDark} setIsDark={setIsDark} />
+                  <div
+                    className="nav-content nav-desc bottom"
+                    onClick={() => onClickLogout()}
+                  >
                     <i>
                       <FontAwesomeIcon icon={faRightFromBracket} />
                     </i>

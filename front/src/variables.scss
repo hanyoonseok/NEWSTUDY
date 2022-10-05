@@ -14,9 +14,18 @@ $light-grey: #e8e9ef;
 $default-grey: #3f414b;
 $white: #fbfbfb;
 
+$dark-mode-black: #2f2f2f;
+$dark-mode-bg: #303135;
+
 $Alv: #a9dd75;
 $Blv: #96b2ff;
 $Clv: #debbff;
+
+// 다크모드
+$darkColors: (
+  main: #1a1b1f,
+  font: $white,
+);
 
 $kor-title-font: "S-CoreDream-5Medium"; //한글 큰 제목(거의 온보딩)
 $kor-light-font: "S-CoreDream-1Thin"; //한글 큰 제목중에서 얇은거
@@ -28,7 +37,8 @@ $eng-fontB: "HelveticaB"; //영어 본문
 
 // 그림자
 $shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
-$light-shadow: 0 4px 4px rgba(63, 65, 75, 0.1);
+$dark-shadow: 0 4px 4px rgba(255, 255, 255, 0.042);
+$light-shadow: 4px 4px 4px rgba(63, 65, 75, 0.1);
 $drop-shadow-light: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.05));
 $drop-shadow: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.1));
 $drop-shadow-dark: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.3));
@@ -96,6 +106,22 @@ $drop-shadow-dark: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.3));
   @include FLEX-CENTER();
 }
 
+@mixin DARK-BTN() {
+  background-color: transparent;
+  border-radius: 10px;
+  color: $white;
+  border: 1px solid $white;
+  padding: 1% 5%;
+  margin-bottom: rem(10);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  &.active {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+}
+
 @mixin ELLIPSIS() {
   white-space: nowrap;
   overflow: hidden;
@@ -107,6 +133,7 @@ $drop-shadow-dark: drop-shadow(3px 3px 4px rgba(0, 0, 0, 0.3));
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: $line; //라인수 정함
+  -webkit-box-orient: vertical;
 }
 
 @mixin FADE-IN($delay) {

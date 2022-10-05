@@ -2,9 +2,11 @@ import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMediaQuery } from "react-responsive";
 import { Link, useNavigate } from "react-router-dom";
+
 import {
   faSearch,
   faXmark,
+  faMoon,
   faClipboardList,
 } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useRef } from "react";
@@ -13,8 +15,9 @@ import SearchResult from "./SearchResult";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import DarkToggle from "components/DarkToggle";
 
-export default function Header() {
+export default function Header({ isDark, setIsDark }) {
   const navigate = useNavigate();
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
@@ -23,6 +26,23 @@ export default function Header() {
   const [modalOpen, setModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const searchInput = useRef();
+  const localStorageDark = localStorage.getItem("dark");
+
+  const clickDarkToggle = (checked) => {
+    if (checked) {
+      setIsDark(true);
+      localStorage.setItem("dark", true);
+    } else {
+      setIsDark(false);
+      localStorage.removeItem("dark");
+    }
+  };
+
+  useEffect(() => {
+    if (localStorageDark === null || localStorageDark === "false")
+      setIsDark(false);
+    else setIsDark(true);
+  }, [localStorageDark]);
 
   const user = useSelector((state) => state.user);
   const [searchResults, setSearchResults] = useState(null);
@@ -94,8 +114,6 @@ export default function Header() {
   return (
     <>
       <nav className={activeSearch ? "header-nav active-search" : "header-nav"}>
-        {/* <div className="header-search">
-          <input className="input-search" placeholder="검색어를 입력하세요." /> */}
         <div
           className={
             activeSearch ? "search-icon-wrapper hidden" : "search-icon-wrapper"
@@ -106,13 +124,12 @@ export default function Header() {
             <FontAwesomeIcon icon={faSearch} />
           </i>
         </div>
-        {/* </div> */}
-
         <div
           className={
             activeSearch ? "header-right hidden" : "header-right visible"
           }
         >
+          <DarkToggle isDark={isDark} setIsDark={setIsDark} />
           <button className="daily-word" onClick={openModal}>
             <i>
               <FontAwesomeIcon icon={faClipboardList} />
@@ -120,7 +137,11 @@ export default function Header() {
             오늘의 단어
           </button>
           <Link to="/mypage" className="profile-img">
-            <img src={require("assets/profile.png")} alt="article"></img>
+            {user.src ? (
+              <img src={user.src} alt="article"></img>
+            ) : (
+              <img src={require("assets/user_globe.png")} alt="article"></img>
+            )}
           </Link>
         </div>
         <div
@@ -156,8 +177,8 @@ export default function Header() {
       {searchResults && (
         <div className={`search-list ${activeSearch ? "visible" : "hidden"}`}>
           <ul>
-            {searchResults.map((article, index) => (
-              <li key={index}>
+            {searchResults.slice(0, 5).map((article, index) => (
+              <li key={index} onClick={() => setActiveSearch(false)}>
                 <Link to={`/news/${article.n_id}`}>
                   <SearchResult article={article} query={searchQuery} />
                 </Link>
@@ -172,8 +193,12 @@ export default function Header() {
             <div className="mobileHeader-dailyword" onClick={openModal}>
               오늘의단어
             </div>
-            <Link to="/mypage" className="earth-img">
-              <img src={require("assets/user_globe.png")} alt="article"></img>
+            <Link to="/mypage" className="profile-img">
+              {user.src ? (
+                <img src={user.src} alt="article"></img>
+              ) : (
+                <img src={require("assets/user_globe.png")} alt="article"></img>
+              )}
             </Link>
           </div>
         </>

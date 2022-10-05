@@ -1,4 +1,5 @@
 @import "variables.scss";
+@import "dark.scss";
 
 html {
   width: 100%;
@@ -46,6 +47,7 @@ a {
   text-decoration: none;
 }
 a:visited {
+  color: $dark-grey;
   text-decoration: none;
 }
 a:hover {
@@ -132,6 +134,22 @@ input:focus {
     border-radius: 4px;
   }
 }
+.article-level {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 2em;
+  height: 2em;
+  font-size: 1.3rem;
+  background-color: $blue;
+  color: white;
+  @include FLEX-CENTER;
+  border-radius: 30px;
+  @media (max-width: 480px) {
+    width: 1.7em;
+    height: 1.7em;
+  }
+}
 @font-face {
   font-family: "S-CoreDream-5Medium";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff")
@@ -139,6 +157,7 @@ input:focus {
   font-weight: normal;
   font-style: normal;
 }
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@100;300;400;500;600;700;800&display=swap");
 
 @font-face {
   font-family: "S-CoreDream-1Thin";
@@ -147,7 +166,6 @@ input:focus {
   font-weight: normal;
   font-style: normal;
 }
-@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap");
 
 @font-face {
   font-family: "AppleSDGothicNeoM";
@@ -190,7 +208,7 @@ input:focus {
 }
 @keyframes specialSlideInUp {
   from {
-    transform: translate3d(0, 130px, 0);
+    transform: translate3d(0, 150px, 0);
     visibility: visible;
     opacity: 0;
   }
@@ -212,19 +230,6 @@ input:focus {
   to {
     opacity: 0;
     transform: translate3d(0, -50px, 0);
-    pointer-events: none;
-  }
-}
-@keyframes specialSlideOutDown {
-  from {
-    transform: translate3d(0, 0, 0);
-    visibility: visible;
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-    transform: translate3d(0, 70px, 0);
     pointer-events: none;
   }
 }
@@ -296,7 +301,7 @@ input:focus {
 .slidein-up {
   animation-name: specialSlideInUp;
   animation-delay: 100ms;
-  animation-duration: 1300ms;
+  animation-duration: 1500ms;
   animation-fill-mode: both;
 }
 
@@ -304,18 +309,5 @@ input:focus {
   animation-name: specialSlideInRight;
   animation-delay: 400ms;
   animation-duration: 1500ms;
-  animation-fill-mode: both;
-}
-
-.slide-up {
-  animation-delay: 200ms;
-  animation-name: specialSlideInUp;
-  animation-duration: 400ms;
-  animation-fill-mode: both;
-}
-
-.slideout-down {
-  animation-name: specialSlideOutDown;
-  animation-duration: 400ms;
   animation-fill-mode: both;
 }

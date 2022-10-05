@@ -3,31 +3,11 @@
 .newsdetail-container {
   padding: 120px 80px 80px 160px;
   @include STRETCH;
-  background-color: #fbfbfb;
   display: flex;
 
   @media (max-width: 480px) {
     padding: 80px 13px;
     flex-direction: column;
-  }
-
-  .back-btn-wrapper {
-    margin-right: rem(25);
-    .back-btn {
-      width: 20px;
-      height: 20px;
-      border-top: 4px solid $dark-grey;
-      border-left: 4px solid $dark-grey;
-      transform: rotate(-45deg);
-      content: "";
-      background-color: transparent;
-      border-color: $dark-grey;
-      border-radius: 2px;
-    }
-
-    @media (max-width: 480px) {
-      margin-bottom: rem(25);
-    }
   }
 
   .newsdetail-content-div {
@@ -37,7 +17,6 @@
 
     .news-subtitle {
       font-size: rem(20);
-      color: $default-grey;
       font-family: $eng-title-font;
       margin-top: rem(60);
       width: 100%;
@@ -63,12 +42,13 @@
       @include FLEX-COLUMN;
       background-color: #fff;
       box-shadow: $light-shadow;
-      padding: rem(25) rem(40);
+      padding: rem(25) rem(75);
 
       .news-title {
+        filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
         @include FLEX-CENTER;
-        font-size: rem(32);
-        font-family: $eng-fontB;
+        font-size: rem(28);
+        font-family: $eng-title-font;
       }
 
       .news-title-level {
@@ -79,6 +59,14 @@
         color: $white;
         font-size: rem(20);
         font-family: $eng-title-font;
+        flex-shrink: 0;
+        margin-right: rem(20);
+
+        @media (max-width: 480px) {
+          width: rem(30);
+          height: rem(30);
+          padding: rem(3);
+        }
         &.Alv {
           background-color: $Alv;
         }
@@ -156,10 +144,11 @@
         }
       }
       .newsdetail-thumbnail-wrapper {
-        margin-top: rem(10);
+        margin-top: rem(20);
         @include FLEX-CENTER;
         width: 100%;
         .newsdetail-thumbnail {
+          border-radius: 15px;
           width: 60%;
           @media (max-width: 480px) {
             width: 100%;
@@ -187,6 +176,15 @@
         flex-wrap: wrap;
       }
     }
+
+    .newsdetail-content-footer {
+      width: 100%;
+      font-family: $kor-font;
+      margin-top: rem(30);
+      color: $grey;
+      @include FLEX-ALIGN-CENTER;
+      justify-content: flex-end;
+    }
   }
 }
 
@@ -207,6 +205,9 @@
       border-radius: 100px;
       @include FLEX-CENTER;
       font-size: rem(25);
+      &.active {
+        color: $soft-blue;
+      }
     }
     .icon-desc {
       color: #585858;

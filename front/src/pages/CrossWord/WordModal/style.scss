@@ -27,10 +27,14 @@
     @include FLEX-COLUMN;
     align-items: center;
 
+    @media (max-width: 480px) {
+      width: 95%;
+    }
+
     .wordmodal-btn-wrapper {
       width: 100%;
       @include FLEX-ALIGN-CENTER;
-      justify-content: flex-start;
+      justify-content: flex-end;
 
       &.end {
         justify-content: flex-end;
@@ -131,12 +135,13 @@
     .add-btn-circle {
       @include FLEX-CENTER;
       background-color: #a0a3b5;
-      width: rem(35);
-      height: rem(35);
+      width: rem(25);
+      height: rem(25);
       border-radius: 35px;
+      margin-right: rem(5);
     }
     .wordmodal-add-btn-icon {
-      font-size: rem(35);
+      font-size: rem(25);
     }
 
     &:hover {
@@ -145,6 +150,8 @@
   }
 }
 .hint-card-desc-row {
+  font-size: rem(18);
+  font-weight: 500;
   line-height: 1.2;
   width: 100%;
   b {

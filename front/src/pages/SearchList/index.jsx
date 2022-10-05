@@ -3,7 +3,6 @@ import "./style.scss";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 import {
   faCalendarDays,
   faCircle,
@@ -13,22 +12,26 @@ import Calendar from "react-calendar";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import axios from "axios";
-import { category } from "constants/category";
 
+import { category } from "constants/category";
 import NewsCard from "components/NewsCard";
 import HotNewsCard from "./HotNewsCard";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
 import LevelRange from "./LevelRange";
 import TopBtn from "components/TopBtn";
+import PieChart from "./PieChart";
+
 function SearchList() {
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
   });
   const user = useSelector((state) => state.user);
   const [newsList, setNewsList] = useState([]);
+  const [scrapList, setScrapList] = useState([]);
   const [totalCnt, setTotalCnt] = useState(0);
   const [isExistMoreNews, setIsExistMoreNews] = useState(false);
+  const [categoryCnt, setCategoryCnt] = useState(null);
   const params = useParams();
 
   // 검색 필터 관련
@@ -38,7 +41,10 @@ function SearchList() {
   const [isFilterModal, setIsFilterModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [filter, setFilter] = useState({
+    per_page: 10,
     page: 1,
+    startlevel: 1,
+    endlvel: 1,
     titlekeyword: params.query,
     contentkeyword: params.query,
   });
@@ -126,12 +132,13 @@ function SearchList() {
 
   // 뉴스리스트 가져오는 함수들
   const getMoreNewsList = async (data) => {
+    console.log("????", data);
     axios.defaults.headers.common[
       "Authorization"
     ] = `Bearer ${user.accessToken}`;
     const newsListResponse = await axios.post(`/news`, data);
     const result = newsListResponse.data;
-
+    setCategoryCnt(newsListResponse.data.categoryCnt);
     setNewsList([...newsList, ...result.newsList]);
     setTotalCnt(result.totalCnt);
 
@@ -218,6 +225,12 @@ function SearchList() {
     setIsFilterModal(false);
   }, []);
 
+  const getScrapList = async () => {
+    const scrapListResponse = await axios.get("/scrap");
+
+    setScrapList(scrapListResponse.data.map((e) => e.n_id));
+  };
+
   // search query가 변했을 때. scroll을 맨위로 올려준다.
   useEffect(() => {
     window.scrollTo({
@@ -233,6 +246,7 @@ function SearchList() {
     });
     console.log("필터", filter);
     getMoreNewsList(filter);
+    getScrapList();
   }, [params.query]);
 
   // more버튼을 눌렀을 때.
@@ -248,6 +262,7 @@ function SearchList() {
   useEffect(() => {
     console.log("filter 찍어봐라", filter);
     getMoreNewsList(filter);
+    getScrapList();
   }, [filter]);
 
   return (
@@ -258,7 +273,9 @@ function SearchList() {
       <h4>
         검색어 <b>{params.query}</b>(으)로 검색한 결과입니다.
       </h4>
-      <div className="search-analysis"></div>
+      <div className="search-analysis">
+        {categoryCnt && <PieChart categoryCnt={categoryCnt} />}
+      </div>
       <div className="search-header">
         <div className="filter-title">KEY</div>
         <div className="search-toggle">
@@ -397,11 +414,11 @@ function SearchList() {
                 </div>
                 {!isMobile ? (
                   <div className="date">
-                    {moment(startDay).format("YYYY년 MM월 DD일")}
+                    {moment(endDay).format("YYYY년 MM월 DD일")}
                   </div>
                 ) : (
                   <div className="date">
-                    {moment(startDay).format("YY.MM.DD")}
+                    {moment(endDay).format("YY.MM.DD")}
                   </div>
                 )}
 
@@ -440,6 +457,7 @@ function SearchList() {
                     news={news}
                     isMobile={isMobile}
                     query={params.query}
+                    isScrap={scrapList.includes(news.n_id)}
                   ></HotNewsCard>
                 </div>
               ))}
@@ -449,7 +467,12 @@ function SearchList() {
             {newsList &&
               newsList.slice(3).map((e, i) => (
                 <div className="news-result" key={i}>
-                  <NewsCard news={e} stretch={!isMobile} query={params.query} />
+                  <NewsCard
+                    news={e}
+                    stretch={!isMobile}
+                    query={params.query}
+                    isScrap={scrapList.includes(e.n_id)}
+                  />
                 </div>
               ))}
           </div>

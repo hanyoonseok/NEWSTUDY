@@ -19,13 +19,17 @@
   }
 
   .title-img {
-    width: 50%;
-    height: auto;
+    width: rem(784);
+    height: rem(157);
     z-index: 101;
+    background: url("../../../assets/NEWSTUDY.jpg");
+    background-size: contain;
 
+    background-repeat: no-repeat;
     @media (max-width: 480px) {
       width: 90%;
       margin-top: 160px;
+      background-position-x: rem(-10);
     }
   }
   .fade-in {

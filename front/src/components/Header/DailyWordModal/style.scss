@@ -26,7 +26,7 @@
 
       h2 {
         position: relative;
-        width: 90%;
+        width: 96%;
         font-family: $eng-title-font;
 
         span::after {
@@ -37,12 +37,12 @@
           background-color: $soft-blue;
           opacity: 0.3;
           position: absolute;
-          right: rem(130);
+          right: rem(145);
           top: rem(8);
         }
       }
       .close {
-        width: 10%;
+        width: 4%;
         background-color: transparent;
 
         svg {
@@ -57,10 +57,14 @@
       margin-top: rem(30);
       height: 100%;
       overflow-y: auto;
+      padding: 0 rem(10);
 
       .voca {
         .memorize {
           display: none;
+        }
+        .mean {
+          width: 60%;
         }
       }
     }

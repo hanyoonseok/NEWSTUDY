@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
@@ -6,11 +6,13 @@ import { useState } from "react";
 import { category } from "constants/category";
 import { Link } from "react-router-dom";
 
-export default function ArticleInside({ Article }) {
-  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
+import DefaultThumb from "assets/default-thumb.png";
 
+export default function ArticleInside({ Article, isDark }) {
+  const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
   const { title, content, level, c_id, thumbnail } = Article;
   const [activeGoArticle, setActiveGoArticle] = useState(false);
+  useEffect(() => {});
   return (
     <>
       <div
@@ -19,22 +21,24 @@ export default function ArticleInside({ Article }) {
         onMouseLeave={() => setActiveGoArticle(false)}
       >
         {activeGoArticle && (
-          <div className="article-screen">
-            <div className="border"></div>
-            <Link to={`/news/${Article.n_id}`}>
+          <Link to={`/news/${Article.n_id}`}>
+            <div className="article-screen">
+              <div className="border"></div>
               <span>
                 기사보러가기 &nbsp;&nbsp;
                 <i>
                   <FontAwesomeIcon icon={faAnglesRight} />
                 </i>
               </span>
-            </Link>
-          </div>
+            </div>
+          </Link>
         )}
         <div className="article-img">
           <span
             className={`article-level ${
-              level_value[level].includes("A")
+              !level
+                ? "Alv"
+                : level_value[level].includes("A")
                 ? "Alv"
                 : level_value[level].includes("B")
                 ? "Blv"
@@ -43,14 +47,14 @@ export default function ArticleInside({ Article }) {
           >
             {level_value[level]}
           </span>
-          {thumbnail ? (
+          {!isDark ? (
             <img
-              src={thumbnail}
+              src={thumbnail ? thumbnail : DefaultThumb}
               alt="article"
               className={activeGoArticle ? "hover" : "normal"}
             />
           ) : (
-            <img src={require("assets/article.png")} />
+            <></>
           )}
         </div>
         <span className="article-categories">
@@ -74,7 +78,12 @@ export default function ArticleInside({ Article }) {
           <Link to={`/news/${Article.n_id}`}>
             <h2 className="article-title">{title}</h2>
           </Link>
-          <div className={`article-content visible`}>{content}</div>
+          <div className={`article-content visible`}>
+            {content
+              .replaceAll(/@@divsubtitle/g, "")
+              .replaceAll(/@@divimg/g, "")
+              .replaceAll(/@@div/g, "")}
+          </div>
         </div>
       </div>
     </>

@@ -3,7 +3,6 @@
 .crossword-game-section {
   @include BACKGROUND-IMAGE("assets/crossword-background.png");
   @include FLEX-COLUMN;
-  // max-width: rem(824);
   border-radius: 25px;
   padding: rem(10);
 
@@ -116,7 +115,7 @@
   }
 
   .crossword-hint-article {
-    padding: rem(10);
+    padding: rem(15) 0;
     height: 100%;
     @include FLEX-COLUMN;
     overflow: hidden;
@@ -133,6 +132,7 @@
     font-family: $kor-font;
     font-weight: bold;
     @include BTN-COLOR($light-blue);
+    margin-top: rem(10);
 
     @media (max-width: 480px) {
       height: 40px;
@@ -226,12 +226,12 @@
       }
 
       .hint-card-desc {
-        font-family: $eng-font;
         word-break: keep-all;
         font-weight: 500;
         padding: 10px;
-        font-size: rem(18);
+        font-size: rem(15);
         line-height: rem(22);
+
         @include FLEX-COLUMN;
 
         @media (max-width: 480px) {
@@ -243,11 +243,14 @@
         }
 
         .hint-card-desc-row {
+          font-family: $eng-font;
+          font-size: rem(19);
           line-height: 1.2;
           display: flex;
           b {
             font-size: rem(6);
             color: $default-grey;
+            margin-right: rem(5);
           }
         }
         .hint-card-desc-row + .hint-card-desc-row {
