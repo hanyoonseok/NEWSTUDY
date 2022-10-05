@@ -1,6 +1,15 @@
 import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faPencil } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faPencil,
+  faLeaf,
+  faNewspaper,
+  faBaseballBatBall,
+  faMicrochip,
+  faGlobe,
+  faEllipsis,
+} from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -29,6 +38,14 @@ export default function MyInfo({
   const [user, setUser] = useState(useSelector((state) => state.user));
   const [isFilterModal, setIsFilterModal] = useState(false);
   const [userCategory, setUserCategory] = useState([]);
+  const icon = {
+    life: faLeaf,
+    news: faNewspaper,
+    sports: faBaseballBatBall,
+    tech: faMicrochip,
+    world: faGlobe,
+    other: faEllipsis,
+  };
 
   useEffect(() => {
     if (user && !user.src) {
@@ -173,8 +190,13 @@ export default function MyInfo({
             {userCategory.length > 0 &&
               userCategory.map((c) => (
                 <div key={c.c_id} className="category-item">
-                  <p>{category[c.c_id].main}</p>
-                  {category[c.c_id].sub}
+                  <div className="main-category">
+                    <i>
+                      <FontAwesomeIcon icon={icon[category[c.c_id].main]} />
+                    </i>
+                    <p>{category[c.c_id].main}</p>
+                  </div>
+                  <span>{category[c.c_id].sub}</span>
                 </div>
               ))}
           </div>

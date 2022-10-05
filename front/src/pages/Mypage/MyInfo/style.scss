@@ -9,7 +9,7 @@
 
   .info-box {
     margin: auto 0 rem(10) 0;
-    font-size: rem(20);
+    font-size: rem(18);
     text-align: center;
 
     .profile-img {
@@ -94,7 +94,7 @@
     border-radius: 30px;
     box-shadow: $light-shadow;
     padding: 2% 10%;
-    margin-bottom: 3%;
+    margin: 3% 0;
     @include FLEX-CENTER;
     flex-direction: column;
 
@@ -108,7 +108,7 @@
       }
 
       p {
-        font-size: rem(18);
+        font-size: rem(16);
         &:nth-of-type(1) {
           width: 60%;
         }
@@ -170,16 +170,32 @@
       overflow-y: auto;
 
       .category-item {
+        font-family: $eng-font;
+        padding: 5px;
         background-color: $lightx2-blue;
-        border: 1px solid $light-blue;
+        filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.05));
+
         border-radius: 7px;
-        height: rem(40);
+        height: 100%;
         @include FLEX-CENTER;
         flex-direction: column;
-
+        .main-category {
+          background-color: darken($color: $lightx2-blue, $amount: 5);
+          border-radius: 5px;
+          @include FLEX-CENTER;
+          padding: 3px;
+          > i {
+            margin-right: 5px;
+            color: $blue;
+          }
+          border-bottom: 2px solid $light-blue;
+        }
         p {
-          color: $blue;
           font-weight: bold;
+        }
+        > span {
+          font-weight: 500;
+          padding: 3px;
         }
       }
     }

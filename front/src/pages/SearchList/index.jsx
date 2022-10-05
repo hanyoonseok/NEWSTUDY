@@ -49,6 +49,8 @@ function SearchList() {
     // api body에 들어갈 필터 옵션
     per_page: 10,
     page: 1,
+    startlevel: 1,
+    endlvel: 1,
     titlekeyword: params.query,
     contentkeyword: params.query,
   });

@@ -82,6 +82,7 @@ export default function NationsNewsList() {
         categoryid: [selectedIdx + idxGap],
         page: 1,
       });
+      console.log(nationsNewsResponse);
       setNationsNews(nationsNewsResponse.data.newsList);
       setHasMoreNews(nationsNewsResponse.data.newsList.length === 30);
       setDataIdx(2);
@@ -98,6 +99,7 @@ export default function NationsNewsList() {
       page: dataIdx,
     });
     setNationsNews(nationsNews.concat(moreNewsResponse.data.newsList));
+    setHasMoreNews(moreNewsResponse.data.newsList.length === 30);
     setDataIdx((prev) => prev + 1);
   }, [dataIdx, nationsNews, selectedIdx]);
 

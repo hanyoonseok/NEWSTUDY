@@ -158,12 +158,12 @@ function Landing() {
 
     const getScrapList = async () => {
       const scrapListResponse = await axios.get("/scrap");
+      console.log(scrapListResponse);
       setScrapList(scrapListResponse.data.map((e) => e.n_id));
     };
     getBadge();
     getScrapList();
   }, []);
-
   // 워드 클라우드 데이터 가져오는 함수
   const getWordCloud = useCallback(async () => {
     axios.defaults.headers.common[

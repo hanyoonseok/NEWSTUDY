@@ -42,12 +42,13 @@
       @include FLEX-COLUMN;
       background-color: #fff;
       box-shadow: $light-shadow;
-      padding: rem(25) rem(40);
+      padding: rem(25) rem(75);
 
       .news-title {
+        filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
         @include FLEX-CENTER;
-        font-size: rem(32);
-        font-family: $eng-fontB;
+        font-size: rem(28);
+        font-family: $eng-title-font;
       }
 
       .news-title-level {
@@ -147,6 +148,7 @@
         @include FLEX-CENTER;
         width: 100%;
         .newsdetail-thumbnail {
+          border-radius: 15px;
           width: 60%;
           @media (max-width: 480px) {
             width: 100%;
@@ -203,6 +205,9 @@
       border-radius: 100px;
       @include FLEX-CENTER;
       font-size: rem(25);
+      &.active {
+        color: $soft-blue;
+      }
     }
     .icon-desc {
       color: #585858;

@@ -143,7 +143,7 @@ export default function TextToSpeech({
       )}
 
       <div className="icon-row" onClick={onTransClick}>
-        <i>
+        <i className={isTranslated ? "active" : "notActive"}>
           <FontAwesomeIcon icon={faGlobe} />
         </i>
         <div className="icon-desc">
@@ -152,7 +152,7 @@ export default function TextToSpeech({
       </div>
 
       <div className="icon-row" onClick={onScrapClick}>
-        <i>
+        <i className={isScrapped ? "active" : "notActive"}>
           <FontAwesomeIcon icon={faBookmark} />
         </i>
         <div className="icon-desc">{isScrapped ? "스크랩 취소" : "스크랩"}</div>
