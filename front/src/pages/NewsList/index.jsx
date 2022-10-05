@@ -75,12 +75,12 @@ export default function NewsList() {
   );
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${user.accessToken}`;
 
-      setIsLoading(true);
       // 뉴스 목록 불러오기.
       let data;
       if (cidArray.length === 0) {
