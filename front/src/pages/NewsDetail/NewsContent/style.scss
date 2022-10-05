@@ -4,9 +4,25 @@
   margin-top: rem(40);
   @include FLEX-CENTER;
 }
+
+.newsdetail-content-img-wrapper {
+  > img {
+    border-radius: 15px;
+  }
+  margin: 20px 0;
+}
 .newsdetail-content-subtitle {
+  font-family: $eng-title-font;
+
+  filter: $drop-shadow;
+  margin: 20px 0;
+  b {
+    color: $blue;
+  }
 }
 .newsdetail-content-body {
+  font-size: rem(18.5);
+  padding: 20px 0;
   white-space: pre-line;
 
   .newsdetail-content-keyword {

@@ -230,8 +230,9 @@
         word-break: keep-all;
         font-weight: 500;
         padding: 10px;
-        font-size: rem(18);
+        font-size: rem(17);
         line-height: rem(22);
+
         @include FLEX-COLUMN;
 
         @media (max-width: 480px) {
@@ -243,6 +244,8 @@
         }
 
         .hint-card-desc-row {
+          font-size: rem(21);
+          font-weight: 500;
           line-height: 1.2;
           display: flex;
           b {
