@@ -38,6 +38,7 @@ function SearchList() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [isChartLoading, setIsChartLoading] = useState(false);
+  const [flag, setFlag] = useState(false);
 
   // 검색 필터 관련
   const [page, setPage] = useState(1); // 기사 불러온 페이지
@@ -140,37 +141,25 @@ function SearchList() {
 
   // 뉴스리스트 가져오는 함수들
   const getMoreNewsList = async (data) => {
-    console.log(
-      "뉴스 리스트 가져오기 시작=================================",
-      data,
-    );
+    console.log("flag", flag);
+    console.log("필터필터", data);
     axios.defaults.headers.common[
       "Authorization"
     ] = `Bearer ${user.accessToken}`;
     const newsListResponse = await axios.post(`/news`, data);
     const result = newsListResponse.data;
-    console.log("뉴스 결과아아아", result.newsList);
-    if (result.newsList.length === 0) {
-      console.log("데이터 제로임ㅜ");
-      setDataZero(true);
-    } else {
-      console.log("데이터 제로아님");
-      setDataZero(false);
-      console.log(
-        "카테고리 분석 결과 가져오앙",
-        newsListResponse.data.categoryCnt,
-      );
-      setCategoryCnt(newsListResponse.data.categoryCnt);
-      setNewsList([...newsList, ...result.newsList]);
-      setTotalCnt(result.totalCnt);
+    console.log("뉴스리스트", result);
 
-      if (result.totalCnt > newsList.length + result.newsList.length) {
-        setIsExistMoreNews(true);
-      } else {
-        setIsExistMoreNews(false);
-      }
-      console.log("뉴스 리스트 가져오기 끝=================================");
+    setDataZero(false);
+    setNewsList([...newsList, ...result.newsList]);
+    setTotalCnt(result.totalCnt);
+
+    if (result.totalCnt > newsList.length + result.newsList.length) {
+      setIsExistMoreNews(true);
+    } else {
+      setIsExistMoreNews(false);
     }
+
     setIsLoading(false);
   };
 
@@ -233,7 +222,6 @@ function SearchList() {
     setActiveContentBtn(!activeContentBtn);
   };
   const doCategoryFilter = (cidArray) => {
-    console.log("카테고리 필터 바꾼다");
     const categories = [];
     cidArray.map((i) => {
       categories.push(category[i]);
@@ -252,33 +240,44 @@ function SearchList() {
   }, []);
 
   const getScrapList = async () => {
-    console.log("스크랩 기사 가져옴");
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${user.accessToken}`;
     const scrapListResponse = await axios.get("/scrap");
 
     setScrapList(scrapListResponse.data.map((e) => e.n_id));
   };
 
   // search query가 변했을 때. scroll을 맨위로 올려준다.
-  useEffect(() => {
-    setIsLoading(true);
-    setIsChartLoading(true);
-    console.log("검색 키워드 바뀜");
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    setInitialization();
-    setFilter((current) => {
-      console.log("검색어 바꼈을때 필터 바꾸러 들어옴");
-      let newCondition = { ...current };
-      newCondition["titlekeyword"] = params.query;
-      newCondition["contentkeyword"] = params.query;
-      return newCondition;
-    });
-    console.log("검색어 바꼈을때 필터임", filter);
-    getScrapList();
-    getMoreNewsList(filter);
-  }, [params.query]);
+  // useEffect(() => {
+  //   // setFlag(true);
+  //   setIsLoading(true);
+  //   setIsChartLoading(true);
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "smooth",
+  //   });
+  //   setInitialization();
+  //   setFilter((current) => {
+  //     let newCondition = { ...current };
+  //     newCondition["titlekeyword"] = params.query;
+  //     newCondition["contentkeyword"] = params.query;
+  //     return newCondition;
+  //   });
+  //   getScrapList();
+  //   getCategoryChart(filter);
+  //   getMoreNewsList(filter);
+  // }, [params.query]);
+
+  // 키워드별 카테고리 언급량
+  const getCategoryChart = useCallback(async (data) => {
+    axios.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${user.accessToken}`;
+    const categoryChartResponse = await axios.post(`/news/chart`, data);
+    setCategoryCnt(categoryChartResponse.data);
+    setIsChartLoading(false);
+  }, []);
 
   // more버튼을 눌렀을 때.
   useEffect(() => {
@@ -296,6 +295,38 @@ function SearchList() {
     getMoreNewsList(filter);
     getScrapList();
   }, [filter]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    setIsChartLoading(true);
+    const fetchData = async () => {
+      axios.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${user.accessToken}`;
+      await axios
+        .post(`/news`, {
+          per_page: 10,
+          page: 1,
+          titlekeyword: params.query,
+          contentkeyword: params.query,
+        })
+        .then((res) => {
+          const result = res.data;
+          if (result.length < 1) {
+            setDataZero(true);
+          }
+          setIsLoading(false);
+        });
+    };
+    fetchData();
+    getScrapList();
+    getCategoryChart({
+      per_page: 10,
+      page: 1,
+      titlekeyword: params.query,
+      contentkeyword: params.query,
+    });
+  }, []);
 
   return (
     <div className="searchlist-container">
@@ -466,11 +497,11 @@ function SearchList() {
                         </div>
                         {!isMobile ? (
                           <div className="date">
-                            {moment(startDay).format("YYYY년 MM월 DD일")}
+                            {moment(endDay).format("YYYY년 MM월 DD일")}
                           </div>
                         ) : (
                           <div className="date">
-                            {moment(startDay).format("YY.MM.DD")}
+                            {moment(endDay).format("YY.MM.DD")}
                           </div>
                         )}
 

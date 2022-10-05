@@ -51,7 +51,7 @@ export default function Header({ isDark, setIsDark }) {
   };
   const closeModal = () => {
     setModalOpen(false);
-    setSearchResults(null);
+    setSearchResults([]);
   };
   const searchArticle = (e) => {
     const query = e.target.value;
