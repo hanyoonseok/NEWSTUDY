@@ -172,7 +172,10 @@ public class NewsController {
         List<CategoryResponseDto> tmp = categoryService.getCategorys(user.getU_id());
         Integer[] categorys = null;
         if(tmp != null && !tmp.isEmpty()) {
-            categorys = tmp.toArray(new Integer[0]);
+            categorys = new Integer[tmp.size()];
+            for(int i = 0 ; i < tmp.size() ; i++){
+                categorys[i] = tmp.get(i).getC_id();
+            }
             newsRequestDto.setCategoryid(categorys);
         }
 
