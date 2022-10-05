@@ -77,8 +77,8 @@ export default function Header({ isDark, setIsDark }) {
 
   const onSubmitSearch = (e) => {
     if (e.key === "Enter") {
-      navigate(`/search/${searchQuery}`);
       setActiveSearch(false);
+      window.location.href = `/search/${searchQuery}`;
     }
   };
 
