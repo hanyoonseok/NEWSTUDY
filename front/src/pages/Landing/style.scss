@@ -218,6 +218,7 @@
       @include FLEX-CENTER;
       @media (max-width: 480px) {
         @include FLEX-COLUMN;
+        flex-direction: column-reverse;
         width: 100%;
       }
       .daily-left {
@@ -290,7 +291,6 @@
               background-color: $lightx2-blue;
               padding: 1%;
               width: 16%;
-              font-weight: bold;
               @include FLEX-CENTER;
               border-radius: 10px 10px 0 0;
               transition: all 300ms ease;
@@ -301,6 +301,8 @@
                 background-color: $soft-blue;
               }
               .category-name {
+                font-family: $eng-font;
+                font-weight: 600;
                 @media (max-width: 1000px) {
                   display: none;
                 }

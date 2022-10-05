@@ -152,7 +152,7 @@ export default function NewsList() {
                 setIsFilterModal(true);
               }}
             >
-              <Filter />
+              <Filter filterCnt={cidArray.length} />
             </div>
           )}
         </div>
