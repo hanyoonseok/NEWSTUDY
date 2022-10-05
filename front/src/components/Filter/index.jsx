@@ -6,7 +6,7 @@ import React from "react";
 export default function Filter({ clickHandler, filterCnt }) {
   return (
     <button
-      className={`subtitle-h3 ${filterCnt > 0 && "filter "}`}
+      className={`filter-btn ${filterCnt > 0 && "filter "}`}
       onClick={clickHandler}
     >
       <FontAwesomeIcon icon={faFilter} />
