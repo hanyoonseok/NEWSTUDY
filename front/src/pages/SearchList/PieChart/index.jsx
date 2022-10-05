@@ -23,12 +23,12 @@ export default function PieChart({ categoryCnt }) {
       endAngle={90}
       borderWidth={1}
       colors={[
-        "#C8F6AB",
-        "#D8E1FF",
-        "#EDEDED",
-        "#FFA1A1",
-        "#9EB3FF",
-        "#C8F6E0",
+        "#F6D3AB",
+        "#CDECCA",
+        "#E3E3E3",
+        "#FFAEAE",
+        "#C9A9FD",
+        "#D8E2FF",
       ]}
       borderColor={{
         from: "color",
