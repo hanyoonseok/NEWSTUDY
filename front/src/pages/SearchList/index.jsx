@@ -3,7 +3,6 @@ import "./style.scss";
 import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
 import {
   faCalendarDays,
   faCircle,
@@ -13,15 +12,14 @@ import Calendar from "react-calendar";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import axios from "axios";
-import { category } from "constants/category";
 
+import { category } from "constants/category";
 import NewsCard from "components/NewsCard";
 import HotNewsCard from "./HotNewsCard";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
 import LevelRange from "./LevelRange";
 import TopBtn from "components/TopBtn";
-import AnalysisChart from "./AnalysisChart";
 import PieChart from "./PieChart";
 
 function SearchList() {
@@ -274,7 +272,6 @@ function SearchList() {
         검색어 <b>{params.query}</b>(으)로 검색한 결과입니다.
       </h4>
       <div className="search-analysis">
-        {/* {categoryCnt && <AnalysisChart categoryCnt={categoryCnt} />} */}
         {categoryCnt && <PieChart categoryCnt={categoryCnt} />}
       </div>
       <div className="search-header">

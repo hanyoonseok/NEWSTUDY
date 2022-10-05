@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark as faBookmarkEmpty } from "@fortawesome/free-regular-svg-icons";
 import { useMediaQuery } from "react-responsive";
 import React, { useState, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -204,10 +205,17 @@ export default function NewsList() {
                           <FontAwesomeIcon icon={faCircle} />
                           {category[newsList[0].c_id].sub}
                         </div>
-                        <FontAwesomeIcon
-                          icon={faBookmark}
-                          className="hottest-article-bookmark"
-                        />
+                        {userScrapList.includes(newsList[0].n_id) ? (
+                          <FontAwesomeIcon
+                            icon={faBookmark}
+                            className="hottest-article-bookmark"
+                          />
+                        ) : (
+                          <FontAwesomeIcon
+                            icon={faBookmarkEmpty}
+                            className="hottest-article-bookmark"
+                          />
+                        )}
                       </div>
                     )}
                   </div>
