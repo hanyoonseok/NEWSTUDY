@@ -91,12 +91,10 @@
             border-radius: 6px;
             font-family: $kor-font;
             font-weight: 550;
+            margin: 0 6px 6px 0;
             b {
               color: $blue;
             }
-          }
-          .nation-info-tag + .nation-info-tag {
-            margin-left: 6px;
           }
         }
       }
