@@ -21,10 +21,14 @@ export default function NewsContent({ content, newsKeywords, isTranslated }) {
     return parsedContent;
   };
 
+  const renderContent = () => {
+    return content;
+  };
+
   return (
     <>
       {isTranslated ? (
-        <p className="newsdetail-content-body">{content}</p>
+        <>{renderContent()}</>
       ) : (
         content.split("@@div").map((e, i) =>
           e.substring(0, 3) === "img" ? (

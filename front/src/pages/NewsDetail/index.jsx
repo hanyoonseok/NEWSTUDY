@@ -26,7 +26,8 @@ export default function NewsDetail() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTranslated, setIsTranslated] = useState(false);
   const [engContent, setEngContent] = useState("");
-  const [korContent, setKorContent] = useState("");
+  const [korContent, setKorContent] = useState([]);
+  const [isAlertOpen, setIsAlertOpen] = useState("");
   const userState = useSelector((state) => state.user);
 
   const isMobile = useMediaQuery({
@@ -108,12 +109,69 @@ export default function NewsDetail() {
     if (isTranslated) {
       setIsTranslated(false);
     } else {
-      if (korContent === "") {
-        const transResponse = await axios.post("/translate", {
-          input: engContent,
-        });
-        console.log(transResponse);
-        setKorContent(transResponse.data.message.result.translatedText);
+      if (korContent.length === 0) {
+        const korArchitect = [];
+
+        const splitDetail = newsDetail.content.split("@@div");
+        for (let i = 0; i < splitDetail.length; i++) {
+          if (splitDetail[i] !== "") {
+            if (splitDetail[i].substring(0, 3) === "img") {
+              korArchitect.push(
+                <div className="newsdetail-content-img-wrapper" key={i}>
+                  <img
+                    src={splitDetail[i].substring(
+                      splitDetail[i].length - (splitDetail[i].length - 3),
+                    )}
+                    alt="기사 본문 이미지"
+                    className="newsdetail-content-img"
+                  />
+                </div>,
+              );
+            } else if (splitDetail[i].substring(0, 8) === "subtitle") {
+              const kor = await axios.post("/translate", {
+                input: splitDetail[i].substring(
+                  splitDetail[i].length - (splitDetail[i].length - 8),
+                ),
+              });
+
+              if (kor.data.errorCode === "010") {
+                setIsAlertOpen(
+                  "일일 쿼리 한도를 초과해서 해석이 불가합니다 ㅜㅜ",
+                );
+                setTimeout(() => {
+                  setIsAlertOpen("");
+                }, 1200);
+                return;
+              }
+
+              korArchitect.push(
+                <h3 className="newsdetail-content-subtitle" key={i}>
+                  <b>“</b> {kor.data.message.result.translatedText} <b>”</b>
+                </h3>,
+              );
+            } else {
+              const kor = await axios.post("/translate", {
+                input: splitDetail[i],
+              });
+              if (kor.data.errorCode === "010") {
+                setIsAlertOpen(
+                  "일일 쿼리 한도를 초과해서 해석이 불가합니다 ㅜㅜ",
+                );
+                setTimeout(() => {
+                  setIsAlertOpen("");
+                }, 1200);
+                return;
+              }
+              korArchitect.push(
+                <p className="newsdetail-content-body" key={i}>
+                  {kor.data.message.result.translatedText}
+                </p>,
+              );
+            }
+          }
+        }
+
+        setKorContent(korArchitect);
         setIsTranslated(true);
       } else setIsTranslated(true);
     }
@@ -232,6 +290,10 @@ export default function NewsDetail() {
           text={newBadgeInfo.name}
           setStatus={setNewBadgeInfo}
         />
+      )}
+
+      {isAlertOpen !== "" && (
+        <Modal text={isAlertOpen} setStatus={setIsAlertOpen} />
       )}
 
       {isModalOpen && (
