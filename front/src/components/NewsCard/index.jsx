@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark as faBookmarkone } from "@fortawesome/free-regular-svg-icons";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { category } from "constants/category";
 import { useNavigate } from "react-router-dom";
 
@@ -10,10 +10,22 @@ import { intToLevel } from "constants";
 import DefaultThumb from "assets/default-thumb.png";
 
 export default function NewsCard({ news, stretch, query, isScrap }) {
+  news.content = news.content
+    .replaceAll(/@@divsubtitle/g, "")
+    .replaceAll(/@@divimg/g, "")
+    .replaceAll(/@@div/g, "");
+  const [queryIdx, setQueryIdx] = useState(-1);
   const navigate = useNavigate();
   const onLinkClick = () => {
     navigate(`/news/${news.n_id}`);
   };
+
+  useEffect(() => {
+    if (news) {
+      setQueryIdx(news.content.toUpperCase().indexOf(query.toUpperCase()));
+    }
+  }, [news]);
+
   return (
     <div
       className={`newscard-container ${stretch ? "stretch" : ""}`}
@@ -51,11 +63,15 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
         )}
         {query ? (
           <h3 className="newscard-body">
-            {news.content.includes(query) ? (
+            {queryIdx >= 0 ? (
               <>
-                {news.content.split(query)[0]}
-                <b>{query}</b>
-                {news.content.split(query)[1]}
+                <b>
+                  {news.content.substring(queryIdx, queryIdx + query.length)}
+                </b>
+                {news.content.substring(
+                  queryIdx + query.length,
+                  news.content.length,
+                )}
               </>
             ) : (
               news.content
