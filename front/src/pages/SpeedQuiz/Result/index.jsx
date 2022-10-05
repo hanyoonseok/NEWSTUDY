@@ -12,7 +12,6 @@ import BadgeModal from "components/BadgeModal";
 export default function Result({ answer, takenTime, userState }) {
   const [selectedWord, setSelectedWord] = useState(null);
   const [newBadgeInfo, setNewBadgeInfo] = useState(null);
-
   const onResultColClick = useCallback((word) => {
     setSelectedWord(word);
   }, []);

@@ -61,7 +61,7 @@ export default function SpeedQuiz() {
         },
       ]);
     }
-  }, [questions, answer]);
+  }, [questions, answer, index]);
 
   const onNextClick = useCallback(() => {
     addValueToAnswer();
@@ -81,7 +81,7 @@ export default function SpeedQuiz() {
     setTimer(
       setTimeout(() => {
         if (index >= 10) return;
-        onNextClick(10);
+        onNextClick();
       }, 10000),
     );
 
