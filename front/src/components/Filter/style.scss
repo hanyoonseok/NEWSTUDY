@@ -2,10 +2,11 @@
 
 .filter-btn {
   background-color: $light-blue;
-  font-size: rem(18);
-  font-family: $kor-font;
-  padding: rem(4) rem(14);
+  font-size: rem(16);
+  padding: rem(7) rem(14);
   border-radius: 12px;
+  font-family: $eng-font;
+  font-weight: 600;
   transition: 0.3s ease;
   &:hover {
     background-color: darken($light-blue, 10%);
@@ -13,5 +14,14 @@
   @include FLEX-ALIGN-CENTER;
   svg {
     color: $blue;
+  }
+  > p {
+    @include FLEX-CENTER;
+    background-color: $blue;
+    width: rem(20);
+    height: rem(20);
+    font-size: rem(13);
+    border-radius: 20px;
+    color: white;
   }
 }

@@ -226,11 +226,10 @@
       }
 
       .hint-card-desc {
-        font-family: $eng-font;
         word-break: keep-all;
         font-weight: 500;
         padding: 10px;
-        font-size: rem(17);
+        font-size: rem(15);
         line-height: rem(22);
 
         @include FLEX-COLUMN;
@@ -244,8 +243,8 @@
         }
 
         .hint-card-desc-row {
-          font-size: rem(21);
-          font-weight: 500;
+          font-family: $eng-font;
+          font-size: rem(19);
           line-height: 1.2;
           display: flex;
           b {
