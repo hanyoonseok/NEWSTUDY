@@ -21,7 +21,7 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
   };
 
   useEffect(() => {
-    if (news) {
+    if (news && query) {
       setQueryIdx(news.content.toUpperCase().indexOf(query.toUpperCase()));
     }
   }, [news]);
