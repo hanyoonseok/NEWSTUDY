@@ -5,7 +5,9 @@
   .dark-toggle > div {
     color: $white;
   }
-
+  .loading {
+    background-image: url("../assets/dark-loading.gif");
+  }
   // 모바일뷰 하단 헤더
   .mobileHeader-wrapper {
     background-color: $dark-grey;

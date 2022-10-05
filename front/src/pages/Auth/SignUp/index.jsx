@@ -69,6 +69,7 @@ export default function SignUp({ setIsEmailModal }) {
       return;
     } else {
       setIsCorrectEmail(false);
+      setIsEmailModal(true);
       await axios
         .post(`/user/mail`, {
           email: Email,
@@ -77,14 +78,13 @@ export default function SignUp({ setIsEmailModal }) {
           console.log("res", res);
           setReceiveAuthKey(res.data.data.tempPassword); // 여기서 넘어오는 key를 receiveAuthKey에 저장
           setIsDuplicateEmail(false);
-          setIsEmailModal(true);
           console.log("AuthKey", AuthKey);
         })
         .catch((error) => {
           // 중복검사 했는데 중복 이메일일 경우
           console.log("error", error);
           setIsDuplicateEmail(true);
-          setIsEmailModal(false);
+          // setIsEmailModal(false);
         });
     }
   };
