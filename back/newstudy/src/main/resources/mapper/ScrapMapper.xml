@@ -9,7 +9,7 @@
                `level`,
                n_id
         FROM `news_scrap`
-        LEFT JOIN `NEWS`
+        LEFT JOIN `news`
         USING (n_id)
         WHERE u_id = #{u_id}
     </select>

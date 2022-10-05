@@ -6,17 +6,17 @@
 
     <select id="selectVocabulary" parameterType="int" resultType="vocabularyResponseDto">
         SELECT v_id, eng, kor, done
-        FROM `USER_VOCA`
+        FROM `user_voca`
         WHERE u_id = #{u_id}
     </select>
 
     <insert id="insertVocabulary" parameterType="vocabularyRequestDto">
-        INSERT INTO `USER_VOCA`(u_id, eng, kor)
+        INSERT INTO `user_voca`(u_id, eng, kor)
         VALUES (#{u_id}, #{eng}, #{kor})
     </insert>
 
     <update id="updateVocabulary" parameterType="vocabularyRequestDto">
-        UPDATE `USER_VOCA`
+        UPDATE `user_voca`
         SET done = !done
         where u_id = #{u_id} and v_id = #{v_id}
     </update>
