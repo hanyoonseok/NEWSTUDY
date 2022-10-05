@@ -37,20 +37,14 @@
             AND c_id IN
             <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
         </if>
-        <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
-            AND (
+        <if test="(titlekeyword != null and titlekeyword != '') and (contentkeyword != null and contentkeyword != '')">
+            AND match(title, content) AGAINST (#{titlekeyword})
         </if>
-        <if test="titlekeyword != null and titlekeyword != ''">
-            title like '%${titlekeyword}%'
+        <if test="titlekeyword != null and titlekeyword != '' and (contentkeyword == null or contentkeyword == '')">
+            AND match(title) AGAINST (#{titlekeyword})
         </if>
-        <if test="titlekeyword != null and titlekeyword != '' and contentkeyword != null and contentkeyword != ''">
-            OR
-        </if>
-        <if test="contentkeyword != null and contentkeyword != ''">
-            content like '%${contentkeyword}%'
-        </if>
-        <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
-            )
+        <if test="contentkeyword != null and contentkeyword != '' and (titlekeyword == null or titlekeyword == '')">
+            AND match(content) AGAINST (#{contentkeyword})
         </if>
         and level between #{startlevel} and #{endlevel}
         ORDER BY `date` DESC, cnt DESC
@@ -67,20 +61,14 @@
             AND c_id IN
             <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
         </if>
-        <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
-            AND (
+        <if test="(titlekeyword != null and titlekeyword != '') and (contentkeyword != null and contentkeyword != '')">
+            AND match(title, content) AGAINST (#{titlekeyword})
         </if>
-        <if test="titlekeyword != null and titlekeyword != ''">
-            title like '%${titlekeyword}%'
+        <if test="titlekeyword != null and titlekeyword != '' and (contentkeyword == null or contentkeyword == '')">
+            AND match(title) AGAINST (#{titlekeyword})
         </if>
-        <if test="titlekeyword != null and titlekeyword != '' and contentkeyword != null and contentkeyword != ''">
-            OR
-        </if>
-        <if test="contentkeyword != null and contentkeyword != ''">
-            content like '%${contentkeyword}%'
-        </if>
-        <if test="(titlekeyword != null and titlekeyword != '') or (contentkeyword != null and contentkeyword != '')">
-            )
+        <if test="contentkeyword != null and contentkeyword != '' and (titlekeyword == null or titlekeyword == '')">
+            AND match(content) AGAINST (#{contentkeyword})
         </if>
         and level between #{startlevel} and #{endlevel}
     </select>
@@ -168,11 +156,7 @@
         SELECT count(distinct n_id)
         FROM `news`
         WHERE c_id IN <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
-        AND (
-        title like '%${search}%'
-        OR
-        content like '%${search}%'
-        )
+        AND match(title, content) AGAINST (#{search})
         AND level between 1 and 6
     </select>
 </mapper>
