@@ -156,7 +156,6 @@ function Landing() {
     };
     getBadge();
   }, []);
-
   // 워드 클라우드 데이터 가져오는 함수
   const getWordCloud = useCallback(async () => {
     axios.defaults.headers.common[

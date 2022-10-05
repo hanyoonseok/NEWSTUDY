@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { intToLevel } from "constants";
+import { category } from "constants/category";
 import "./style.scss";
 
 export default function MyArticle() {
@@ -25,6 +26,8 @@ export default function MyArticle() {
       })
       .then((res) => {
         setUserArticles(res.data);
+
+        console.log("목록", res.data);
       });
   };
 
@@ -44,6 +47,7 @@ export default function MyArticle() {
               <img src={article.thumbnail} alt="기사 이미지"></img>
             </div>
             <p>{article.title}</p>
+            <div className="">{article.c_id} </div>
           </Link>
         ))}
     </div>

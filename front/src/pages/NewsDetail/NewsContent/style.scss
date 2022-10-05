@@ -14,7 +14,7 @@
 .newsdetail-content-subtitle {
   font-family: $eng-title-font;
 
-  filter: $drop-shadow;
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
   margin: 20px 0;
   b {
     color: $blue;

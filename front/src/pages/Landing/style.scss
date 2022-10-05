@@ -218,6 +218,7 @@
       @include FLEX-CENTER;
       @media (max-width: 480px) {
         @include FLEX-COLUMN;
+        flex-direction: column-reverse;
         width: 100%;
       }
       .daily-left {

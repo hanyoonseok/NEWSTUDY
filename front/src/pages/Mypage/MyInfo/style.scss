@@ -179,6 +179,8 @@
         @include FLEX-CENTER;
         flex-direction: column;
         .main-category {
+          background-color: darken($color: $lightx2-blue, $amount: 5);
+          border-radius: 5px;
           @include FLEX-CENTER;
           padding: 3px;
           > i {
@@ -188,7 +190,6 @@
           border-bottom: 2px solid $light-blue;
         }
         p {
-          color: $blue;
           font-weight: bold;
         }
         > span {

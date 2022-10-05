@@ -8,6 +8,9 @@
       margin-right: 2%;
       cursor: pointer;
     }
+    .word {
+      font-family: $eng-font;
+    }
 
     .blue {
       background-color: $soft-blue;
@@ -29,6 +32,7 @@
       }
 
       .word {
+        font-family: $eng-font;
         width: 40%;
         font-size: rem(20);
       }
