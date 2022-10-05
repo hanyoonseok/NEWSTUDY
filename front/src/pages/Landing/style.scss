@@ -165,11 +165,16 @@
         }
         .hottopic-title {
           @include ELLIPSIS-LINE(2);
-          padding: 10px;
           cursor: pointer;
           color: $dark-grey;
           margin-top: 10px;
           width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          word-break: break-all;
           @media (max-width: 1000px) {
             text-align: center;
           }
