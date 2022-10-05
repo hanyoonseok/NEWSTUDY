@@ -34,6 +34,7 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
   useEffect(() => {
     setFocus(markers[selectedIdx].coordinates);
     setDetails(markerTooltipRenderer(markers[selectedIdx]));
+    getNationKeywords(markers[selectedIdx].c_id);
     return () => {};
   }, [selectedIdx]);
 
