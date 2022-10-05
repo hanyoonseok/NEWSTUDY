@@ -4,17 +4,18 @@ import { faBookmark as faBookmarkEmpty } from "@fortawesome/free-regular-svg-ico
 import { useMediaQuery } from "react-responsive";
 import React, { useState, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import moment from "moment";
+
 import "./style.scss";
 import LevelContainer from "./LevelContainer";
 import Filter from "components/Filter";
 import FilterModal from "components/FilterModal";
 import { category } from "constants/category";
 import { intToLevel } from "constants";
-import { useNavigate } from "react-router-dom";
-
 import NewsCard from "components/NewsCard";
 import DefaultThumb from "assets/default-thumb.png";
-import axios from "axios";
 import TopBtn from "components/TopBtn";
 
 export default function NewsList() {
@@ -85,6 +86,8 @@ export default function NewsList() {
           startlevel: selectedLevel,
           endlevel: selectedLevel,
           page: page,
+          startdate: moment().subtract(3, "months").format("YYYY-MM-DD"),
+          enddate: moment().format("YYYY-MM-DD"),
         };
       } else {
         // cidArray가 있으면
