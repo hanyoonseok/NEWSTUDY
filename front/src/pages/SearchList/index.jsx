@@ -7,6 +7,7 @@ import {
   faCalendarDays,
   faCircle,
   faEllipsis,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import Calendar from "react-calendar";
 import { useSelector } from "react-redux";
@@ -21,6 +22,7 @@ import FilterModal from "components/FilterModal";
 import LevelRange from "./LevelRange";
 import TopBtn from "components/TopBtn";
 import PieChart from "./PieChart";
+import Modal from "components/Modal";
 
 function SearchList() {
   const isMobile = useMediaQuery({
@@ -46,6 +48,8 @@ function SearchList() {
     titlekeyword: params.query,
     contentkeyword: params.query,
   });
+  const [isAlert, setIsAlert] = useState(false);
+  const [dataZero, setDataZero] = useState(false);
 
   // 달력 관련
   const [activeSelectDate, setActiveSelectDate] = useState(false);
@@ -136,6 +140,18 @@ function SearchList() {
     ] = `Bearer ${user.accessToken}`;
     const newsListResponse = await axios.post(`/news`, data);
     const result = newsListResponse.data;
+    console.log("뉴스 결과아아아", result.newsList);
+    if (result.newsList.length === 0) {
+      console.log("데이터 제로임ㅜ");
+      setDataZero(true);
+      return;
+    } else {
+      setDataZero(false);
+    }
+    console.log(
+      "카테고리 분석 결과 가져오앙",
+      newsListResponse.data.categoryCnt,
+    );
     setCategoryCnt(newsListResponse.data.categoryCnt);
     setNewsList([...newsList, ...result.newsList]);
     setTotalCnt(result.totalCnt);
@@ -242,9 +258,8 @@ function SearchList() {
       newCondition["contentkeyword"] = params.query;
       return newCondition;
     });
-    console.log("필터", filter);
-    getMoreNewsList(filter);
     getScrapList();
+    getMoreNewsList(filter);
   }, [params.query]);
 
   // more버튼을 눌렀을 때.
@@ -271,229 +286,245 @@ function SearchList() {
       <h4>
         검색어 <b>{params.query}</b>(으)로 검색한 결과입니다.
       </h4>
-      <div className="search-analysis">
-        {categoryCnt && <PieChart categoryCnt={categoryCnt} />}
-      </div>
-      <div className="search-header">
-        <div className="filter-title">KEY</div>
-        <div className="search-toggle">
-          <div>제목</div>
-          <input
-            type="checkbox"
-            id="Title"
-            checked={activeTitleBtn}
-            onChange={(e) => clickTitleToggle(e.target.checked)}
-          />
-          <label htmlFor="Title"></label>
-        </div>
-        <div className="search-toggle">
-          <div>본문</div>
-          <input
-            type="checkbox"
-            id="Content"
-            checked={activeContentBtn}
-            onChange={(e) => clickContentToggle(e.target.checked)}
-          />
-          <label htmlFor="Content"></label>
-        </div>
-        <div className="search-dates-container">
-          {/* 많이 검색하는 날짜 먼저 보여준 후 직접 입력하게 한다. */}
-          <div className="search-dates">
-            <div className="filter-title">TIME</div>
-            <label
-              className="date-btn"
-              onChange={(e) => selectDate(e.target.checked)}
-            >
-              <input type="radio" className="date-btn" name="date" />
-              <i>
-                {!isMobile && <FontAwesomeIcon icon={faCircle} />}
-                <span>&nbsp; 전체</span>
-              </i>
-            </label>
-            <label
-              className="date-btn"
-              onChange={(e) => selectDate(e.target.checked, "day")}
-            >
-              <input type="radio" className="date-btn" name="date" />
-              <i>
-                {!isMobile && <FontAwesomeIcon icon={faCircle} />}
-                <span>&nbsp; 1일</span>
-              </i>
-            </label>
-            <label
-              className="date-btn"
-              onChange={(e) => selectDate(e.target.checked, "week")}
-            >
-              <input type="radio" className="date-btn" name="date" />
-              <i>
-                {!isMobile && <FontAwesomeIcon icon={faCircle} />}
-                <span>&nbsp; 1주</span>
-              </i>
-            </label>
-            <label
-              className="date-btn"
-              onChange={(e) => selectDate(e.target.checked, "month")}
-            >
-              <input type="radio" className="date-btn" name="date" />
-              <i>
-                {!isMobile && <FontAwesomeIcon icon={faCircle} />}
-                <span>&nbsp; 1개월</span>
-              </i>
-            </label>
-            <label
-              className="date-btn"
-              onChange={(e) => selectDate(e.target.checked, "year")}
-            >
-              <input type="radio" className="date-btn" name="date" />
-              <i>
-                {!isMobile && <FontAwesomeIcon icon={faCircle} />}
-                <span>&nbsp; 1년</span>
-              </i>
-            </label>
-            <label
-              className="date-btn"
-              onChange={(e) => {
-                showSelectDate(e.target.checked);
-              }}
-            >
-              <input type="radio" className="date-btn" name="date" />
-
-              {isMobile ? (
-                <>
-                  <i>
-                    <FontAwesomeIcon icon={faEllipsis} />
-                  </i>
-                </>
-              ) : (
-                <i>
-                  <FontAwesomeIcon icon={faCircle} />
-                  <span>&nbsp; 직접입력</span>
-                </i>
-              )}
-            </label>
+      <>
+        {dataZero ? (
+          <div>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            요청하신 {params.query}에 대한 검색 결과가 없습니다.
           </div>
-
-          {activeSelectDate && (
-            <div className="user-select-date">
-              <div className="search-date">
-                <div className="date-icon" onClick={onStartCalendar}>
-                  <i>
-                    <FontAwesomeIcon icon={faCalendarDays} />
-                  </i>
-                </div>
-                <div>
-                  {!isMobile ? (
-                    <div className="date">
-                      {moment(startDay).format("YYYY년 MM월 DD일")}
-                    </div>
-                  ) : (
-                    <div className="date">
-                      {moment(startDay).format("YY.MM.DD")}
-                    </div>
-                  )}
-
-                  <div
-                    className={`calendar ${
-                      activeStartDate ? "visible" : "hidden"
-                    }`}
-                  >
-                    <Calendar onChange={setStartDay} value={startDay} />
-                  </div>
-                </div>
+        ) : (
+          <>
+            <div className="search-analysis">
+              {categoryCnt && <PieChart categoryCnt={categoryCnt} />}
+            </div>
+            <div className="search-header">
+              <div className="filter-title">KEY</div>
+              <div className="search-toggle">
+                <div>제목</div>
+                <input
+                  type="checkbox"
+                  id="Title"
+                  checked={activeTitleBtn}
+                  onChange={(e) => clickTitleToggle(e.target.checked)}
+                />
+                <label htmlFor="Title"></label>
               </div>
+              <div className="search-toggle">
+                <div>본문</div>
+                <input
+                  type="checkbox"
+                  id="Content"
+                  checked={activeContentBtn}
+                  onChange={(e) => clickContentToggle(e.target.checked)}
+                />
+                <label htmlFor="Content"></label>
+              </div>
+              <div className="search-dates-container">
+                {/* 많이 검색하는 날짜 먼저 보여준 후 직접 입력하게 한다. */}
+                <div className="search-dates">
+                  <div className="filter-title">TIME</div>
+                  <label
+                    className="date-btn"
+                    onChange={(e) => selectDate(e.target.checked)}
+                  >
+                    <input type="radio" className="date-btn" name="date" />
+                    <i>
+                      {!isMobile && <FontAwesomeIcon icon={faCircle} />}
+                      <span>&nbsp; 전체</span>
+                    </i>
+                  </label>
+                  <label
+                    className="date-btn"
+                    onChange={(e) => selectDate(e.target.checked, "day")}
+                  >
+                    <input type="radio" className="date-btn" name="date" />
+                    <i>
+                      {!isMobile && <FontAwesomeIcon icon={faCircle} />}
+                      <span>&nbsp; 1일</span>
+                    </i>
+                  </label>
+                  <label
+                    className="date-btn"
+                    onChange={(e) => selectDate(e.target.checked, "week")}
+                  >
+                    <input type="radio" className="date-btn" name="date" />
+                    <i>
+                      {!isMobile && <FontAwesomeIcon icon={faCircle} />}
+                      <span>&nbsp; 1주</span>
+                    </i>
+                  </label>
+                  <label
+                    className="date-btn"
+                    onChange={(e) => selectDate(e.target.checked, "month")}
+                  >
+                    <input type="radio" className="date-btn" name="date" />
+                    <i>
+                      {!isMobile && <FontAwesomeIcon icon={faCircle} />}
+                      <span>&nbsp; 1개월</span>
+                    </i>
+                  </label>
+                  <label
+                    className="date-btn"
+                    onChange={(e) => selectDate(e.target.checked, "year")}
+                  >
+                    <input type="radio" className="date-btn" name="date" />
+                    <i>
+                      {!isMobile && <FontAwesomeIcon icon={faCircle} />}
+                      <span>&nbsp; 1년</span>
+                    </i>
+                  </label>
+                  <label
+                    className="date-btn"
+                    onChange={(e) => {
+                      showSelectDate(e.target.checked);
+                    }}
+                  >
+                    <input type="radio" className="date-btn" name="date" />
 
-              <div className="search-separator">-</div>
-
-              <div className="search-date">
-                <div className="date-icon" onClick={onEndCalendar}>
-                  <i>
-                    <FontAwesomeIcon icon={faCalendarDays} />
-                  </i>
+                    {isMobile ? (
+                      <>
+                        <i>
+                          <FontAwesomeIcon icon={faEllipsis} />
+                        </i>
+                      </>
+                    ) : (
+                      <i>
+                        <FontAwesomeIcon icon={faCircle} />
+                        <span>&nbsp; 직접입력</span>
+                      </i>
+                    )}
+                  </label>
                 </div>
-                {!isMobile ? (
-                  <div className="date">
-                    {moment(startDay).format("YYYY년 MM월 DD일")}
-                  </div>
-                ) : (
-                  <div className="date">
-                    {moment(startDay).format("YY.MM.DD")}
+
+                {activeSelectDate && (
+                  <div className="user-select-date">
+                    <div className="search-date">
+                      <div className="date-icon" onClick={onStartCalendar}>
+                        <i>
+                          <FontAwesomeIcon icon={faCalendarDays} />
+                        </i>
+                      </div>
+                      <div>
+                        {!isMobile ? (
+                          <div className="date">
+                            {moment(startDay).format("YYYY년 MM월 DD일")}
+                          </div>
+                        ) : (
+                          <div className="date">
+                            {moment(startDay).format("YY.MM.DD")}
+                          </div>
+                        )}
+
+                        <div
+                          className={`calendar ${
+                            activeStartDate ? "visible" : "hidden"
+                          }`}
+                        >
+                          <Calendar onChange={setStartDay} value={startDay} />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="search-separator">-</div>
+
+                    <div className="search-date">
+                      <div className="date-icon" onClick={onEndCalendar}>
+                        <i>
+                          <FontAwesomeIcon icon={faCalendarDays} />
+                        </i>
+                      </div>
+                      {!isMobile ? (
+                        <div className="date">
+                          {moment(startDay).format("YYYY년 MM월 DD일")}
+                        </div>
+                      ) : (
+                        <div className="date">
+                          {moment(startDay).format("YY.MM.DD")}
+                        </div>
+                      )}
+
+                      <div
+                        className={`calendar ${
+                          activeEndDate ? "visible" : "hidden"
+                        }`}
+                      >
+                        <Calendar onChange={setEndDay} value={endDay} />
+                      </div>
+                    </div>
+                    <button
+                      className="show-result"
+                      onClick={setFilterSeletedDate}
+                    >
+                      완료
+                    </button>
                   </div>
                 )}
-
-                <div
-                  className={`calendar ${activeEndDate ? "visible" : "hidden"}`}
-                >
-                  <Calendar onChange={setEndDay} value={endDay} />
-                </div>
               </div>
-              <button className="show-result" onClick={setFilterSeletedDate}>
-                완료
-              </button>
             </div>
-          )}
-        </div>
-      </div>
-      <div className="search-level-container">
-        <div className="filter-title">LEVEL</div>
-        <div className="level-range">
-          <LevelRange getSelectedLevel={getSelectedLevel} />
-        </div>
-      </div>
-      {newsList && (
-        <>
-          <div className="search-result">
-            <span>검색 결과: {totalCnt}건 </span>
-            <div onClick={() => setIsFilterModal(true)}>
-              <Filter />
+            <div className="search-level-container">
+              <div className="filter-title">LEVEL</div>
+              <div className="level-range">
+                <LevelRange getSelectedLevel={getSelectedLevel} />
+              </div>
             </div>
-          </div>
-          <div className="search-top-news">
-            {newsList &&
-              newsList.slice(0, 3).map((news, i) => (
-                <div className="top-news" key={i}>
-                  <HotNewsCard
-                    news={news}
-                    isMobile={isMobile}
-                    query={params.query}
-                    isScrap={scrapList.includes(news.n_id)}
-                  ></HotNewsCard>
+            {newsList && (
+              <>
+                <div className="search-result">
+                  <span>검색 결과: {totalCnt}건 </span>
+                  <div onClick={() => setIsFilterModal(true)}>
+                    <Filter />
+                  </div>
                 </div>
-              ))}
-          </div>
+                <div className="search-top-news">
+                  {newsList &&
+                    newsList.slice(0, 3).map((news, i) => (
+                      <div className="top-news" key={i}>
+                        <HotNewsCard
+                          news={news}
+                          isMobile={isMobile}
+                          query={params.query}
+                          isScrap={scrapList.includes(news.n_id)}
+                        ></HotNewsCard>
+                      </div>
+                    ))}
+                </div>
 
-          <div className="search-newslist">
-            {newsList &&
-              newsList.slice(3).map((e, i) => (
-                <div className="news-result" key={i}>
-                  <NewsCard
-                    news={e}
-                    stretch={!isMobile}
-                    query={params.query}
-                    isScrap={scrapList.includes(e.n_id)}
-                  />
+                <div className="search-newslist">
+                  {newsList &&
+                    newsList.slice(3).map((e, i) => (
+                      <div className="news-result" key={i}>
+                        <NewsCard
+                          news={e}
+                          stretch={!isMobile}
+                          query={params.query}
+                          isScrap={scrapList.includes(e.n_id)}
+                        />
+                      </div>
+                    ))}
                 </div>
-              ))}
-          </div>
-          {isExistMoreNews && (
-            <div
-              className="newslist-morebtn-container"
-              onClick={() => setPage((page) => page + 1)}
-            >
-              <button className="newslist-morebtn">더보기</button>
-            </div>
-          )}
-        </>
-      )}
-      <TopBtn></TopBtn>
-      {isFilterModal && (
-        <FilterModal
-          text={"수정하기"}
-          closeHandler={onCloseClick}
-          sendApi={doCategoryFilter}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-        />
-      )}
+                {isExistMoreNews && (
+                  <div
+                    className="newslist-morebtn-container"
+                    onClick={() => setPage((page) => page + 1)}
+                  >
+                    <button className="newslist-morebtn">더보기</button>
+                  </div>
+                )}
+              </>
+            )}
+            <TopBtn></TopBtn>
+            {isFilterModal && (
+              <FilterModal
+                text={"수정하기"}
+                closeHandler={onCloseClick}
+                sendApi={doCategoryFilter}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+              />
+            )}
+          </>
+        )}
+      </>
     </div>
   );
 }

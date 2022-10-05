@@ -50,14 +50,15 @@ export default function NewsDetail() {
       setNewsKeywords(newsKeywordsResponse.data.map((e) => e.toUpperCase()));
       console.log("키워드 리스트 : ", newsKeywordsResponse);
 
-      const relatedNewsResponse = await axios.get(`/news/related/${newsId}`);
-      setRelatedNews(relatedNewsResponse.data);
-      console.log("관련 기사 : ", relatedNewsResponse);
-
       const scrapListResponse = await axios.get("/scrap");
+      console.log("스크랩 목록", scrapListResponse.data);
       const scrapListNidArr = scrapListResponse.data.map((e) => e.n_id);
       setScrapList(scrapListNidArr);
       setIsScrapped(scrapListNidArr.includes(parseInt(newsId)));
+
+      const relatedNewsResponse = await axios.get(`/news/related/${newsId}`);
+      setRelatedNews(relatedNewsResponse.data);
+      console.log("관련 기사 : ", relatedNewsResponse);
 
       if (!window.scrollY) return;
       window.scrollTo({
