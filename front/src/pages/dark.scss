@@ -5,7 +5,9 @@
   .dark-toggle > div {
     color: $white;
   }
-
+  .loading {
+    background-image: url("../assets/dark-loading.gif");
+  }
   // 모바일뷰 하단 헤더
   .mobileHeader-wrapper {
     background-color: $dark-grey;
@@ -330,6 +332,11 @@
     }
   }
   .searchlist-container {
+    .searchlist-not {
+      .icon {
+        color: $white;
+      }
+    }
     @media (max-width: 480px) {
       background-color: transparent;
     }
@@ -344,6 +351,14 @@
     }
     .newslist-morebtn-container .newslist-morebtn {
       @include DARK-BTN;
+    }
+    .search-analysis {
+      > div > div > svg > g > g > g > text {
+        fill: $white !important;
+      }
+      > div > div > svg > g > g:nth-child(3) > g > text {
+        fill: $default-grey !important;
+      }
     }
   }
   .search-list-mobile.visible {
