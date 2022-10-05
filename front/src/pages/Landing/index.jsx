@@ -186,6 +186,7 @@ function Landing() {
         per_page: 10,
         page: 1,
         titlekeyword: selectedKeyword,
+        contentkeyword: selectedKeyword,
       };
       console.log("filter", filter);
       axios.defaults.headers.common[
