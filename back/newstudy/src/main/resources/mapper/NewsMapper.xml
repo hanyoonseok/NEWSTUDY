@@ -119,31 +119,45 @@
                thumbnail
         FROM `news`
         WHERE n_id in (SELECT recommend FROM `ref_news` WHERE n_id = #{n_id})
-        ORDER BY cnt DESC LIMIT 0, 6;
+        ORDER BY cnt DESC LIMIT 0, 6
     </select>
     <select id="selectRecommendNewsList" parameterType="newsRequestDto" resultType="newsResponseDto">
-        SELECT n_id,
-        c_id,
-        title,
-        content,
-        origin,
-        url,
-        `level`,
-        cnt,
-        `date`,
-        thumbnail
-        FROM `news`
-        WHERE 1 = 1
-        <if test="categoryid != null">
-            AND c_id IN
-            <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
+        SELECT * FROM (
+            <if test="categoryid != null">
+                (SELECT n_id,
+                        c_id,
+                        title,
+                        content,
+                        origin,
+                        url,
+                        `level`,
+                        cnt,
+                        `date`,
+                        thumbnail
+                 FROM `news`
+                 WHERE c_id IN
+                     <foreach collection="categoryid" item="arr" index="index"  open="(" close=")" separator=",">#{arr}</foreach>
+                 AND `level` = #{startlevel}
+                 ORDER BY `date` DESC, cnt DESC
+                 LIMIT 0, 10 )
+            UNION
         </if>
-        <if test="categoryid == null">
-            AND `date` BETWEEN DATE(DATE_SUB(now(), INTERVAL 30 DAY)) AND now()
-        </if>
-        AND `level` = #{startlevel}
-        ORDER BY `date` DESC, cnt DESC
-        LIMIT 0, 10
+                (SELECT n_id,
+                        c_id,
+                        title,
+                        content,
+                        origin,
+                        url,
+                        `level`,
+                        cnt,
+                        `date`,
+                        thumbnail
+                  FROM `news`
+                  WHERE `date` BETWEEN DATE(DATE_SUB(now(), INTERVAL 30 DAY)) AND now()
+                  AND `level` = #{startlevel}
+                  ORDER BY `date` DESC, cnt DESC
+                  LIMIT 0, 10 )
+        ) a limit 0, 10
     </select>
     <update id="updateViewCnt" parameterType="int">
         UPDATE `news`
