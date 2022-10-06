@@ -90,8 +90,8 @@
                `date`,
                thumbnail
         FROM `news`
-        WHERE `date` BETWEEN DATE(DATE_SUB(now(), INTERVAL 1 DAY)) AND now()
-        ORDER BY cnt DESC
+        WHERE `date` BETWEEN DATE(DATE_SUB(now(), INTERVAL 2 DAY)) AND now()
+        ORDER BY `date` DESC, cnt DESC
             LIMIT 0, 10
     </select>
     <select id="selectRelatedNewsList" parameterType="int" resultType="newsResponseDto">
