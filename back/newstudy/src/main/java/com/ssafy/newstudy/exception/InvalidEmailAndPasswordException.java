@@ -2,6 +2,7 @@ package com.ssafy.newstudy.exception;
 
 public class InvalidEmailAndPasswordException extends RuntimeException{
     public InvalidEmailAndPasswordException() {
+
     }
 
     public InvalidEmailAndPasswordException(String message) {
