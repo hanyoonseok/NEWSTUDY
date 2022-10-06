@@ -73,7 +73,7 @@ export default function Sidebar({ isDark, setIsDark }) {
   };
   const onSubmitSearch = (e) => {
     if (e.key === "Enter") {
-      navigate(`/search/${searchQuery}`);
+      window.location.href = `/search/${searchQuery}`;
       setActiveSearch(false);
     }
   };

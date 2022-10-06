@@ -76,9 +76,6 @@ export default function NewsDetail() {
 
   const onWordDrugClick = useCallback(
     async (word) => {
-      if (isMobile) return;
-
-      setIsLoading(true);
       if (vocaSet[word]) {
         setSelectedWord({ eng: word, kor: vocaSet[word] });
         setIsLoading(false);
@@ -91,7 +88,6 @@ export default function NewsDetail() {
             const kor = res.data.message.result.translatedText;
             setVocaSet({ ...vocaSet, [word]: kor });
             setSelectedWord({ eng: word, kor });
-            setIsLoading(false);
           });
       }
     },
@@ -342,22 +338,18 @@ export default function NewsDetail() {
                     />
                   )}
                 </div>
-                {isLoading ? (
-                  <Loading />
-                ) : (
-                  selectedWord && (
-                    <div className="news-voca-container">
-                      <h3 className="news-subtitle change">MEAN ?</h3>
-                      <label className="news-selectedword-kor">
-                        <FontAwesomeIcon
-                          icon={faPlus}
-                          className="selectedword-addbtn"
-                          onClick={onAddWordClick}
-                        />
-                        &nbsp;{selectedWord.kor}
-                      </label>
-                    </div>
-                  )
+                {selectedWord && (
+                  <div className="news-voca-container">
+                    <h3 className="news-subtitle change">MEAN ?</h3>
+                    <label className="news-selectedword-kor">
+                      {selectedWord.kor} &nbsp;
+                      <FontAwesomeIcon
+                        icon={faPlus}
+                        className="selectedword-addbtn"
+                        onClick={onAddWordClick}
+                      />
+                    </label>
+                  </div>
                 )}
                 {isMobile && <h3 className="news-subtitle change">ARTICLE</h3>}
                 {newsDetail.thumbnail && (

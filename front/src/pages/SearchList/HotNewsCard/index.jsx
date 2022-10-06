@@ -5,14 +5,22 @@ import "./style.scss";
 import { category } from "constants/category";
 import { Link } from "react-router-dom";
 
-import React from "react";
+import React, { useEffect } from "react";
 import DefaultThumb from "assets/default-thumb.png";
+import { useState } from "react";
 
 function HotNewsCard({ news, isMobile, query, isScrap }) {
   const level_value = [null, "A1", "A2", "B1", "B2", "C1", "C2"];
+  const [queryTitleIdx, setQueryTitleIdx] = useState(-1);
+
+  useEffect(() => {
+    if (news && query) {
+      setQueryTitleIdx(news.title.toUpperCase().indexOf(query.toUpperCase()));
+    }
+  }, [news]);
 
   return (
-    <div className="hottest-article">
+    <Link to={`/news/${news.n_id}`} className="hottest-article">
       <i
         className={`hottest-article-level ${
           level_value[news.level].includes("A")
@@ -24,25 +32,29 @@ function HotNewsCard({ news, isMobile, query, isScrap }) {
       >
         {level_value[news.level]}
       </i>
-      <Link to={`/news/${news.n_id}`}>
-        <span className="hottest-article-img">
-          <img
-            src={news.thumbnail ? news.thumbnail : DefaultThumb}
-            alt="article"
-          ></img>
-        </span>
-      </Link>
+      <span className="hottest-article-img">
+        <img
+          src={news.thumbnail ? news.thumbnail : DefaultThumb}
+          alt="article"
+        ></img>
+      </span>
       <h1 className="hottest-article-title">
-        {news.title.includes(query) ? (
+        {queryTitleIdx >= 0 ? (
           <>
-            <Link to={`/news/${news.n_id}`}>
-              {news.title.split(query)[0]}
-              <b>{query}</b>
-              {news.title.split(query)[1]}
-            </Link>
+            {news.title.substring(0, queryTitleIdx)}
+            <b>
+              {news.title.substring(
+                queryTitleIdx,
+                queryTitleIdx + query.length,
+              )}
+            </b>
+            {news.title.substring(
+              queryTitleIdx + query.length,
+              news.title.length,
+            )}
           </>
         ) : (
-          <Link to={`/news/${news.n_id}`}>{news.title}</Link>
+          news.title
         )}
       </h1>
       {!isMobile && (
@@ -82,7 +94,7 @@ function HotNewsCard({ news, isMobile, query, isScrap }) {
           </div>
         </div>
       )}
-    </div>
+    </Link>
   );
 }
 

@@ -82,9 +82,9 @@ export default function NationsNewsList() {
       const nationsNewsResponse = await axios.post("/news", {
         categoryid: [selectedIdx + idxGap],
         page: 1,
-        // per_page: 10,
-        // startdate: moment().subtract(1, "months").format("YYYY-MM-DD"),
-        // enddate: moment().format("YYYY-MM-DD"),
+        per_page: 10,
+        startdate: moment().subtract(6, "months").format("YYYY-MM-DD"),
+        enddate: moment().format("YYYY-MM-DD"),
       });
       setNationsNews(nationsNewsResponse.data.newsList);
       setHasMoreNews(nationsNewsResponse.data.newsList.length === 30);
@@ -100,9 +100,9 @@ export default function NationsNewsList() {
     const moreNewsResponse = await axios.post("/news", {
       categoryid: [selectedIdx + idxGap],
       page: dataIdx,
-      // per_page: 10,
-      // startdate: moment().subtract(3, "months").format("YYYY-MM-DD"),
-      // enddate: moment().format("YYYY-MM-DD"),
+      per_page: 10,
+      startdate: moment().subtract(6, "months").format("YYYY-MM-DD"),
+      enddate: moment().format("YYYY-MM-DD"),
     });
     setNationsNews(nationsNews.concat(moreNewsResponse.data.newsList));
     setHasMoreNews(moreNewsResponse.data.newsList.length === 30);

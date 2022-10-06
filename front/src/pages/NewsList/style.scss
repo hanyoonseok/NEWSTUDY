@@ -203,3 +203,9 @@
     }
   }
 }
+
+.loader-wrapper {
+  height: 100vh;
+  @include FLEX-COLUMN;
+  justify-content: center;
+}
