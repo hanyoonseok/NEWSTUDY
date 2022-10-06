@@ -16,7 +16,7 @@
             WHERE eng NOT IN (SELECT eng
                 FROM ref_word
                 WHERE eng LIKE '% %' OR eng LIKE '%(%' OR eng LIKE '%-%')
-                AND CHAR_LENGTH(eng) <![CDATA[ <= ]]> 10
+                AND CHAR_LENGTH(eng) <![CDATA[ <= ]]> 8
             ) AS randwords
         WHERE randwords.a <![CDATA[ <= ]]> 10
     </select>
