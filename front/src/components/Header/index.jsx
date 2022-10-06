@@ -63,12 +63,9 @@ export default function Header({ isDark, setIsDark }) {
     setSearchResults([]);
     searchInput.current.value = "";
     setActiveSearch(true);
-    console.log(searchInput.current);
     setTimeout(() => {
       searchInput.current.focus();
     }, 500);
-
-    console.log(searchInput);
   };
 
   const closeSearchBar = () => {

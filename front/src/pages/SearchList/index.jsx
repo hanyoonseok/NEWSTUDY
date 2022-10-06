@@ -93,13 +93,10 @@ function SearchList() {
         date = dateFormat(new Date().setDate(day - 1));
       } else if (filter === "week") {
         date = dateFormat(new Date().setDate(day - 7));
-        console.log(date);
       } else if (filter === "month") {
         date = dateFormat(new Date().setMonth(month - 1));
-        console.log(date);
       } else if (filter === "year") {
         date = dateFormat(new Date().setYear(year - 1));
-        console.log(date);
       }
       setInitialization();
       setFilter((current) => {
@@ -108,7 +105,6 @@ function SearchList() {
         newCondition["enddate"] = dateFormat(new Date());
         return newCondition;
       });
-      console.log(filter);
     }
     setActiveSelectDate(false);
   };
@@ -141,14 +137,11 @@ function SearchList() {
 
   // 뉴스리스트 가져오는 함수들
   const getMoreNewsList = async (data) => {
-    console.log("flag", flag);
-    console.log("필터필터", data);
     axios.defaults.headers.common[
       "Authorization"
     ] = `Bearer ${user.accessToken}`;
     const newsListResponse = await axios.post(`/news`, data);
     const result = newsListResponse.data;
-    console.log("뉴스리스트", result);
 
     setDataZero(false);
     setNewsList([...newsList, ...result.newsList]);
@@ -184,7 +177,6 @@ function SearchList() {
       }
       // 여기서는 titlekeyword를 빼야하는데..
       const { titlekeyword, ...data } = filter;
-      console.log(data);
       setInitialization();
       setFilter(data);
     }
@@ -192,7 +184,6 @@ function SearchList() {
   };
 
   const getSelectedLevel = (startLevel, endLevel) => {
-    console.log("선택된 레벨 시작 " + startLevel + "끝 : " + endLevel);
     setInitialization();
     setFilter((current) => {
       let newCondition = { ...current };
@@ -215,7 +206,6 @@ function SearchList() {
       }
       // contentkeyword를 빼주자.
       const { contentkeyword, ...data } = filter;
-      console.log(data);
       setInitialization();
       setFilter(data);
     }
@@ -227,7 +217,6 @@ function SearchList() {
       categories.push(category[i]);
     });
     setSelectedCategory(categories);
-    console.log(category);
     setInitialization();
     setFilter((current) => {
       let newCondition = { ...current };
@@ -248,27 +237,6 @@ function SearchList() {
     setScrapList(scrapListResponse.data.map((e) => e.n_id));
   };
 
-  // search query가 변했을 때. scroll을 맨위로 올려준다.
-  // useEffect(() => {
-  //   // setFlag(true);
-  //   setIsLoading(true);
-  //   setIsChartLoading(true);
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: "smooth",
-  //   });
-  //   setInitialization();
-  //   setFilter((current) => {
-  //     let newCondition = { ...current };
-  //     newCondition["titlekeyword"] = params.query;
-  //     newCondition["contentkeyword"] = params.query;
-  //     return newCondition;
-  //   });
-  //   getScrapList();
-  //   getCategoryChart(filter);
-  //   getMoreNewsList(filter);
-  // }, [params.query]);
-
   // 키워드별 카테고리 언급량
   const getCategoryChart = useCallback(async (data) => {
     axios.defaults.headers.common[
@@ -281,7 +249,6 @@ function SearchList() {
 
   // more버튼을 눌렀을 때.
   useEffect(() => {
-    console.log("더보기 눌렀다");
     setFilter((current) => {
       let newCondition = { ...current };
       newCondition["page"] = page;
@@ -291,7 +258,6 @@ function SearchList() {
 
   // 필터를 변경했을 때.
   useEffect(() => {
-    console.log("filter 찍어봐라", filter);
     getMoreNewsList(filter);
     getScrapList();
   }, [filter]);

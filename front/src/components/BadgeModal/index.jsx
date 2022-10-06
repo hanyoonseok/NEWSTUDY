@@ -18,8 +18,6 @@ import MyVoca100 from "assets/100word_add.png";
 import MyVoca500 from "assets/500word_add.png";
 
 export default function BadgeModal({ index, text, setStatus }) {
-  console.log("index", index);
-  console.log("text", text);
   const badgeImg = [
     null,
     Attendance1,

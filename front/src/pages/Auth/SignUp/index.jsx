@@ -49,7 +49,6 @@ export default function SignUp({ setIsEmailModal }) {
     }
   };
   const onConfirmPwKeyup = (e) => {
-    console.log(Password, ConfirmPw);
     //비밀번호 일치 검사
     if (Password !== ConfirmPw) {
       setIsConfirmed(false);
@@ -60,10 +59,8 @@ export default function SignUp({ setIsEmailModal }) {
   };
   const onClickAuthEmail = async (e) => {
     // e.preventDefault();
-    console.log("이메일 인증 클릭함", Email);
     var reg_email =
       /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-    console.log(reg_email.test(Email));
     if (Email.length === 0 || reg_email.test(Email) === false) {
       setIsCorrectEmail(true);
       return;
@@ -75,14 +72,11 @@ export default function SignUp({ setIsEmailModal }) {
           email: Email,
         })
         .then((res) => {
-          console.log("res", res);
           setReceiveAuthKey(res.data.data.tempPassword); // 여기서 넘어오는 key를 receiveAuthKey에 저장
           setIsDuplicateEmail(false);
-          console.log("AuthKey", AuthKey);
         })
         .catch((error) => {
           // 중복검사 했는데 중복 이메일일 경우
-          console.log("error", error);
           setIsDuplicateEmail(true);
           // setIsEmailModal(false);
         });
@@ -98,7 +92,6 @@ export default function SignUp({ setIsEmailModal }) {
         level: 1,
       };
       dispatch(signupUser(user)).then((res) => {
-        console.log("회원가입 성공 ", res);
         //회원가입 성공하면 바로 로그인처리
         dispatch(loginUser(user)).then((res) => {
           //로그인끝나면 레벨테스트로 이동

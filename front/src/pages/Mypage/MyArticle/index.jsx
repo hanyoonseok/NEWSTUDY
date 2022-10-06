@@ -26,8 +26,6 @@ export default function MyArticle() {
       })
       .then((res) => {
         setUserArticles(res.data);
-
-        console.log("목록", res.data);
       });
   };
 

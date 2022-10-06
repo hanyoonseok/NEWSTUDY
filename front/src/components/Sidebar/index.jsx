@@ -41,7 +41,6 @@ export default function Sidebar({ isDark, setIsDark }) {
       sidebar.current.style.left = "0px";
       sidebar.current.style.opacity = "1";
       setIsMobileMenuOpen(true);
-      console.log(isMobileMenuOpen);
     } else {
       sidebar.current.style.left = "65px";
       sidebar.current.style.opacity = "1";
@@ -49,7 +48,6 @@ export default function Sidebar({ isDark, setIsDark }) {
   };
 
   const outHandler = () => {
-    console.log("isMobile????", isMobile);
     if (isMobile) {
       sidebar.current.style.left = "-320px";
       sidebar.current.style.opacity = "0";
@@ -74,7 +72,6 @@ export default function Sidebar({ isDark, setIsDark }) {
     setSearchQuery(e.target.value);
   };
   const onSubmitSearch = (e) => {
-    console.log("검색해라");
     if (e.key === "Enter") {
       navigate(`/search/${searchQuery}`);
       setActiveSearch(false);
@@ -100,7 +97,6 @@ export default function Sidebar({ isDark, setIsDark }) {
       if (result && result.length > 5) {
         result.splice(0, 5);
       }
-      console.log("검색결과는 여깄어", result);
       if (result && result.length === 0) {
         setSearchResults(null);
       }
