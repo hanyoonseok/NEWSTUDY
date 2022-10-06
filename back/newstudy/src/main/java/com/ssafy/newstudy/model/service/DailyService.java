@@ -34,7 +34,7 @@ public class DailyService {
 
     /**
      * daily world 카테고리 통합 - 워드클라우드용
-     * @param c_id
+     * @param
      * @return
      */
     public List<DailyResponseDto> getDailyWorldKeyword(){
