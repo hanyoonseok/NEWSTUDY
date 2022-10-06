@@ -34,17 +34,17 @@ export default function TextToSpeech({
     if (textIdx >= texts.length) return;
 
     texts.forEach((e) => {
+      console.log(e);
       const utterThis = new SpeechSynthesisUtterance(e);
 
       utterThis.lang = "en-US"; //언어설정
       utterThis.pitch = 1; //피치
-      utterThis.rate = 1; //속도
+      utterThis.rate = 0.85; //속도
       synth.speak(utterThis);
     });
   }, [texts]);
 
   const speechPause = () => {
-    console.log(synth.pending);
     //일시정지
     synth.pause();
   };
@@ -60,18 +60,33 @@ export default function TextToSpeech({
   };
 
   const makeTexts = () => {
-    const parseArr = news.content.split(" ");
-    let curText = "";
-    const arr = [];
+    const dividorParsedArr = news.content.split("@@div");
+    const dividedContent = [];
 
-    parseArr.forEach((e) => {
-      if (e.length + curText.length < 250) curText += e + " ";
-      else {
-        arr.push(curText);
-        curText = e + " ";
+    dividorParsedArr.forEach((e, i) => {
+      if (e.substring(0, 8) === "subtitle") {
+        dividedContent.push(e.substring(e.length - (e.length - 8)));
+      } else if (e.substring(0, 3) !== "img" && e !== "") {
+        dividedContent.push(e);
       }
     });
-    arr.push(curText);
+
+    const arr = [];
+
+    dividedContent.forEach((de) => {
+      const wordDividor = de.split(" ");
+      let curText = "";
+
+      wordDividor.forEach((e) => {
+        if (e.length + curText.length < 150) curText += e + " ";
+        else {
+          arr.push(curText);
+          curText = e + " ";
+        }
+      });
+      arr.push(curText);
+    });
+
     setTexts(arr);
   };
 

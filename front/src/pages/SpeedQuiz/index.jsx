@@ -97,7 +97,6 @@ export default function SpeedQuiz() {
       };
       const questionResponse = await axios.get("/word/game", headers);
       setQuestions(questionResponse.data);
-      console.log(questionResponse.data);
     };
 
     fetchData();

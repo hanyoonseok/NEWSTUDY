@@ -13,6 +13,7 @@
   .newsdetail-content-div {
     @include FLEX-COLUMN;
     width: 100%;
+    min-height: 100vh;
     font-family: $eng-font;
 
     .news-subtitle {

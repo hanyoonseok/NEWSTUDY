@@ -10,7 +10,6 @@ import WordModal from "../WordModal";
 import BadgeModal from "components/BadgeModal";
 
 export default function Result({ answer, takenTime, userState }) {
-  console.log("answer", answer);
   const [selectedWord, setSelectedWord] = useState(null);
   const [newBadgeInfo, setNewBadgeInfo] = useState(null);
   const onResultColClick = useCallback((word) => {
@@ -43,7 +42,6 @@ export default function Result({ answer, takenTime, userState }) {
     };
     const isAllCorrect = answer.filter((e) => e.correct).length === 10;
 
-    console.log("taken :", takenTime);
     isAllCorrect && fetchData();
   }, [answer, takenTime]);
 

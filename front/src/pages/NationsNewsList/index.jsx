@@ -86,7 +86,6 @@ export default function NationsNewsList() {
         // startdate: moment().subtract(1, "months").format("YYYY-MM-DD"),
         // enddate: moment().format("YYYY-MM-DD"),
       });
-      console.log(nationsNewsResponse);
       setNationsNews(nationsNewsResponse.data.newsList);
       setHasMoreNews(nationsNewsResponse.data.newsList.length === 30);
       setDataIdx(2);

@@ -35,7 +35,11 @@ export default function Question({
       if (e.key === "Enter") {
         if (idx === inputHTML.current.length - 1) onNextClick();
         else inputHTML.current[idx + 1].focus();
-      } else if (e.key === "Backspace" && idx !== 0) {
+      } else if (
+        e.key === "Backspace" &&
+        idx !== 0 &&
+        inputHTML.current[idx].value.length === 0
+      ) {
         inputHTML.current[idx - 1].focus();
       }
     },

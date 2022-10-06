@@ -57,7 +57,6 @@ export default function NewsList() {
     });
     setCidArray(cidArray);
     setSelectedCategory(categories);
-    console.log(category);
   };
 
   const onLevelClick = useCallback(
@@ -103,7 +102,7 @@ export default function NewsList() {
         };
       }
 
-      await axios.post(`/news`, data).then((res) => {
+      await axios.post(`/news/level`, data).then((res) => {
         const result = res.data;
         setNewsList([...newsList, ...result.newsList]);
 

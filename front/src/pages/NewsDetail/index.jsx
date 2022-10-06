@@ -10,7 +10,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
 import NewsCard from "components/NewsCard";
 import TextToSpeech from "./TextToSpeech";
-import { intToLevel } from "constants";
+import { intToLevel, constTrans } from "constants";
 import BadgeModal from "components/BadgeModal";
 import Modal from "components/Modal";
 import NewsContent from "./NewsContent";
@@ -35,6 +35,7 @@ export default function NewsDetail() {
   const [vocaSet, setVocaSet] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const userState = useSelector((state) => state.user);
+  const constNID = "230291";
 
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
@@ -51,21 +52,17 @@ export default function NewsDetail() {
       ).format("ddd, MMMM, DD, YYYY");
       setNewsDetail(newsDetailResponse.data);
       setEngContent(newsDetailResponse.data.content);
-      console.log("뉴스 상세 : ", newsDetailResponse);
 
       const newsKeywordsResponse = await axios.get(`/news/keyword/${newsId}`);
       setNewsKeywords(newsKeywordsResponse.data);
-      console.log("키워드 리스트 : ", newsKeywordsResponse);
 
       const scrapListResponse = await axios.get("/scrap");
-      console.log("스크랩 목록", scrapListResponse.data);
       const scrapListNidArr = scrapListResponse.data.map((e) => e.n_id);
       setScrapList(scrapListNidArr);
       setIsScrapped(scrapListNidArr.includes(parseInt(newsId)));
 
       const relatedNewsResponse = await axios.get(`/news/related/${newsId}`);
       setRelatedNews(relatedNewsResponse.data);
-      console.log("관련 기사 : ", relatedNewsResponse);
 
       if (!window.scrollY) return;
       window.scrollTo({
@@ -102,8 +99,6 @@ export default function NewsDetail() {
   );
 
   const onWordDrugEmptyClick = useCallback(() => {
-    console.log(selectedWord);
-    console.log("hi");
     setSelectedWord(null);
   }, []);
 
@@ -164,6 +159,40 @@ export default function NewsDetail() {
     if (isTranslated) {
       setIsTranslated(false);
     } else {
+      /// for 발표
+      if (newsId === constNID) {
+        const korArchitect = [];
+        constTrans.forEach((e, i) => {
+          if (e.tag === "p") {
+            korArchitect.push(
+              <p className="newsdetail-content-body" key={i}>
+                {e.kor}
+              </p>,
+            );
+          } else if (e.tag === "img") {
+            korArchitect.push(
+              <div className="newsdetail-content-img-wrapper" key={i}>
+                <img
+                  src={e.kor}
+                  alt="기사 본문 이미지"
+                  className="newsdetail-content-img"
+                />
+              </div>,
+            );
+          } else if (e.tag === "h3") {
+            korArchitect.push(
+              <h3 className="newsdetail-content-subtitle" key={i}>
+                <b>“</b> {e.kor} <b>”</b>
+              </h3>,
+            );
+          }
+        });
+        setIsTranslated(true);
+        setKorContent(korArchitect);
+        return;
+      }
+      ///
+
       if (korContent.length === 0) {
         const korArchitect = [];
 
@@ -204,6 +233,12 @@ export default function NewsDetail() {
                   setIsAlertOpen("");
                 }, 1200);
                 return;
+              } else if (kor.data.errorCode === "-10001") {
+                setIsAlertOpen("해석이 불가한 구문이 포함되어 있습니다");
+                setTimeout(() => {
+                  setIsAlertOpen("");
+                }, 1200);
+                return;
               }
 
               korArchitect.push(
@@ -223,6 +258,12 @@ export default function NewsDetail() {
                   setIsAlertOpen("");
                 }, 1200);
                 return;
+              } else if (kor.data.errorCode === "-10001") {
+                setIsAlertOpen("해석이 불가한 구문이 포함되어 있습니다");
+                setTimeout(() => {
+                  setIsAlertOpen("");
+                }, 1200);
+                return;
               }
               korArchitect.push(
                 <p className="newsdetail-content-body" key={i}>
@@ -234,8 +275,8 @@ export default function NewsDetail() {
         }
 
         setKorContent(korArchitect);
-        setIsTranslated(true);
       } else setIsTranslated(true);
+      setIsTranslated(true);
     }
   }, [engContent, korContent, isTranslated]);
 

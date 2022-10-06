@@ -37,7 +37,6 @@ export default function CrossWord() {
           crossResponse = await axios.get("/word/game?type=cross", headers);
           continue;
         } else {
-          console.log(crossResponse);
           setWordArr(crossResponse.data);
           setMaxR(isValid[0]);
           setMaxC(isValid[1]);

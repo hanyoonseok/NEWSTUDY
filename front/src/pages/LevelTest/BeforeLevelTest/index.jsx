@@ -44,7 +44,6 @@ function BeforeLevelTest({ getLeveltestState }) {
           },
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data.length > 0) {
             setBadgeContent({
               text: res.data[0].name,
