@@ -114,15 +114,7 @@ export default function NewsList() {
         setTotalNews(result.totalCnt);
         setIsLoading(false);
       });
-    };
-    fetchData();
-  }, [selectedLevel, page, cidArray]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${user.accessToken}`;
       const userScrapResponse = await axios.get(`/scrap`);
       setUserScrapList(
         userScrapResponse.data.map((news) => {
@@ -131,7 +123,7 @@ export default function NewsList() {
       );
     };
     fetchData();
-  }, []);
+  }, [selectedLevel, page, cidArray]);
 
   return (
     <section className="newslist-container">
@@ -149,25 +141,27 @@ export default function NewsList() {
         selectedLevel={selectedLevel}
       />
       <article className="newslist-body-container">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <>
-            <div className="newslist-top-area">
-              <h3 className="hottest-article-depth">
-                {intToLevel[selectedLevel]} Level {totalNews}건
-              </h3>
-              {!isMobile && (
-                <div
-                  onClick={() => {
-                    setIsFilterModal(true);
-                  }}
-                >
-                  <Filter />
-                </div>
-              )}
+        <>
+          <div className="newslist-top-area">
+            <h3 className="hottest-article-depth">
+              {intToLevel[selectedLevel]} Level {totalNews}건
+            </h3>
+            {!isMobile && (
+              <div
+                onClick={() => {
+                  setIsFilterModal(true);
+                }}
+              >
+                <Filter />
+              </div>
+            )}
+          </div>
+          {isLoading ? (
+            <div className="loader-wrapper" height={"100%"}>
+              <Loading />
             </div>
-            {newsList && (
+          ) : (
+            newsList && (
               <>
                 <div className="newslist-mid-area">
                   {newsList.length > 0 && (
@@ -263,9 +257,9 @@ export default function NewsList() {
                   </div>
                 )}
               </>
-            )}
-          </>
-        )}
+            )
+          )}
+        </>
       </article>
       {isFilterModal && (
         <FilterModal

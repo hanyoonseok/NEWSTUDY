@@ -6,6 +6,7 @@ import com.ssafy.newstudy.model.dto.NewsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -39,6 +40,14 @@ public class NewsService {
     public Integer getSearchListTotalCnt(NewsRequestDto newsRequestDto){
         return newsDao.selectNewsListCnt(newsRequestDto);
     }
+    /**
+     * 해당 레벨의 뉴스 카운트를 리턴
+     * @param newsRequestDto
+     * @return total_cnt
+     */
+    public Integer getSearchLevelListTotalCnt(NewsRequestDto newsRequestDto){
+        return newsDao.selectLevelListTotalCnt(newsRequestDto);
+    }
 
     /**
      * 뉴스 id를 받아서 해당 뉴스의 keyword를 리턴
@@ -71,8 +80,8 @@ public class NewsService {
      * @param
      * @return 뉴스 리스트
      */
-    public List<NewsResponseDto> getNewsRecommend() {
-        return newsDao.selectRecommendNewsList();
+    public List<NewsResponseDto> getNewsRecommend(NewsRequestDto newsRequestDto) {
+        return newsDao.selectRecommendNewsList(newsRequestDto);
     }
 
     /**
@@ -81,5 +90,14 @@ public class NewsService {
      */
     public void updateViewCnt(Integer n_id){
         newsDao.updateViewCnt(n_id);
+    }
+
+    /**
+     * categoryid로 title 또는 content를 센다
+     * @param map
+     * @return
+     */
+    public Integer selectNewsCountByCategory(HashMap map){
+        return newsDao.selectNewsCountByCategory(map);
     }
 }

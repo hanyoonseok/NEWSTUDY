@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -9,6 +9,7 @@ import "./style.scss";
 import InGame from "./InGame";
 import MyCrossWord from "./MyCrossWord";
 import AnsCrossWord from "./AnsCrossWord";
+import { useCallback } from "react";
 
 export default function CrossWord() {
   const boundR = 15;
@@ -71,8 +72,18 @@ export default function CrossWord() {
     return [tempR, tempC];
   };
 
+  const crosswordContainer = useRef();
+  useEffect(() => {
+    if (!inGame) {
+      crosswordContainer.current.style.height = "100%";
+    }
+  }, [inGame]);
+
   return (
-    <div className={`crossword-container ${!inGame && "col"}`}>
+    <div
+      className={`crossword-container ${!inGame && "col"}`}
+      ref={crosswordContainer}
+    >
       {inGame ? (
         <InGame
           maxR={maxR}

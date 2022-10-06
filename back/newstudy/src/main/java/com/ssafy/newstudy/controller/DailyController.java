@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "Daily Content API")
@@ -31,7 +32,27 @@ public class DailyController {
                                                                             defaultValue = "0") @PathVariable(required = false) Integer c_id){
         if(c_id == null) c_id = 0;
         //데일리 키워드 리스트
-        List<DailyResponseDto> responseArray = dailyService.getDailyKeyword(c_id);
+        List<DailyResponseDto> responseArray = new ArrayList<>();
+        if(c_id == 67){
+            //world일 때
+            responseArray = dailyService.getDailyWorldKeyword();
+        }else{
+            responseArray = dailyService.getDailyKeyword(c_id);
+        }
+        return new ResponseEntity<List<DailyResponseDto>>(responseArray, HttpStatus.OK);
+    }
+
+    @GetMapping("/world/{c_id}")
+    @ApiOperation(value="월드 카테고리 1개 당 최근 5개 키워드(날짜가 같으면 cnt순)", notes="월드 소분류별 daily_word를 5개 가져온다. 최근 키워드를 우선으로 가져오고, 없는 경우 이전 날짜에서 가져온다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message="성공", response = List.class),
+            @ApiResponse(code = 401, message="로그인정보 없음"),
+            @ApiResponse(code = 500, message="서버오류")
+    })
+    public ResponseEntity<List<DailyResponseDto>> getWorldKeyword(@ApiParam(value="월드 소분류 카테고리 넘버") @PathVariable Integer c_id){
+        System.out.println(c_id);
+        List<DailyResponseDto> responseArray = dailyService.getWorldKeyword(c_id);
+        System.out.println(responseArray.size());
         return new ResponseEntity<List<DailyResponseDto>>(responseArray, HttpStatus.OK);
     }
 }

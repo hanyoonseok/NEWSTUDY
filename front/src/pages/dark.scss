@@ -36,7 +36,7 @@
       border-color: $white;
     }
     .newscard-container:hover {
-      background-color: lighten($color: $dark-mode-bg, $amount: 10);
+      // background-color: lighten($color: $dark-mode-bg, $amount: 10);
     }
   }
 
@@ -103,7 +103,7 @@
       color: $white;
     }
     .newscard-container:hover {
-      background-color: lighten($color: $dark-mode-bg, $amount: 20);
+      // background-color: lighten($color: $dark-mode-bg, $amount: 20);
     }
     .newscard-container
       .newscard-contents-container
@@ -208,7 +208,7 @@
           background-color: lighten($color: $dark-mode-black, $amount: 30);
           border: 0;
           p {
-            color: $light-blue;
+            color: black; //$default-grey;
           }
         }
       }
@@ -340,7 +340,7 @@
     @media (max-width: 480px) {
       background-color: transparent;
     }
-    .hottest-article .hottest-article-title > a {
+    .hottest-article .hottest-article-title {
       color: $white;
     }
     .search-dates .search-date .date-icon {

@@ -175,7 +175,7 @@
       width: 100%;
       margin-top: rem(30);
       .newslist-morebtn {
-        // width: rem(175);
+        width: rem(175);
         height: rem(42);
         border-radius: 15px;
         @include FLEX-CENTER;
@@ -202,4 +202,10 @@
       }
     }
   }
+}
+
+.loader-wrapper {
+  height: 100vh;
+  @include FLEX-COLUMN;
+  justify-content: center;
 }

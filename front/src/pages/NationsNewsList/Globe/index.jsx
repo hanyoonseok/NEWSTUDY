@@ -25,7 +25,7 @@ const options = {
 };
 
 export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
-  const [event, setEvent] = useState(null);
+  // const [event, setEvent] = useState(null);
   const [details, setDetails] = useState(null);
   const [focus, setFocus] = useState([37.541, 126.986]);
   const [hashtags, setHashTags] = useState([]);
@@ -39,22 +39,22 @@ export default function Globe({ markers, selectedIdx, setSelectedIdx }) {
   }, [selectedIdx]);
 
   const onClickMarker = (marker, markerObject, event) => {
-    setEvent({
-      type: "CLICK",
-      marker,
-      markerObjectID: markerObject.uuid,
-      pointerEventPosition: { x: event.clientX, y: event.clientY },
-    });
-    setDetails(markerTooltipRenderer(marker));
+    // setEvent({
+    //   type: "CLICK",
+    //   marker,
+    //   markerObjectID: markerObject.uuid,
+    //   pointerEventPosition: { x: event.clientX, y: event.clientY },
+    // });
+    // setDetails(markerTooltipRenderer(marker));
     setSelectedIdx(marker.id);
-    getNationKeywords(marker.c_id);
+    // getNationKeywords(marker.c_id);
   };
 
   const onDefocus = (previousFocus) => {
-    setEvent({
-      type: "DEFOCUS",
-      previousFocus,
-    });
+    // setEvent({
+    //   type: "DEFOCUS",
+    //   previousFocus,
+    // });
     setDetails(null);
   };
 

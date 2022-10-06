@@ -15,6 +15,7 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
     .replaceAll(/@@divimg/g, "")
     .replaceAll(/@@div/g, "");
   const [queryIdx, setQueryIdx] = useState(-1);
+  const [queryTitleIdx, setQueryTitleIdx] = useState(-1);
   const navigate = useNavigate();
   const onLinkClick = () => {
     navigate(`/news/${news.n_id}`);
@@ -23,6 +24,7 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
   useEffect(() => {
     if (news && query) {
       setQueryIdx(news.content.toUpperCase().indexOf(query.toUpperCase()));
+      setQueryTitleIdx(news.title.toUpperCase().indexOf(query.toUpperCase()));
     }
   }, [news]);
 
@@ -46,16 +48,18 @@ export default function NewsCard({ news, stretch, query, isScrap }) {
         </i>
       </div>
       <div className="newscard-contents-container">
-        {query ? (
+        {queryTitleIdx >= 0 ? (
           <h1 className="newscard-title">
-            {news.title.includes(query) ? (
-              <>
-                {news.title.split(query)[0]}
-                <b>{query}</b>
-                {news.title.split(query)[1]}
-              </>
-            ) : (
-              news.title
+            {news.title.substring(0, queryTitleIdx)}
+            <b>
+              {news.title.substring(
+                queryTitleIdx,
+                queryTitleIdx + query.length,
+              )}
+            </b>
+            {news.title.substring(
+              queryTitleIdx + query.length,
+              news.title.length,
             )}
           </h1>
         ) : (

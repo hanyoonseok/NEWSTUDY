@@ -10,11 +10,10 @@
     width: 100%;
     height: rem(300);
   }
-  a {
+
+  .hottest-article-img {
     width: 100%;
     height: 60%;
-  }
-  .hottest-article-img {
     @media (max-width: 480px) {
       height: 75%;
     }

@@ -3,18 +3,50 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.newstudy.model.dao.DailyDao">
-    <select id="selectDailyKeyword" parameterType="int" resultType="dailyResponseDto">
+    <select id="selectDailyKeyword" parameterType="map" resultType="dailyResponseDto">
         SELECT c_id,
                eng,
                kor,
                cnt
-        FROM `DAILY_WORD`
-        WHERE 1 = 1
-            <if test="c_id != null and c_id != 0">
-                AND c_id = #{c_id}
-            </if>
-          AND date(`date`) = date(now() - INTERVAL 1 DAY)
-        order by cnt desc
+        FROM `daily_word`
+        WHERE c_id = #{c_id}
+          AND date(`date`) = #{date}
+        order by `date` desc, cnt desc
+        limit 0, 50
+    </select>
+    <select id="selectWorldKeyword" parameterType="int" resultType="dailyResponseDto">
+        SELECT c_id,
+            eng,
+            kor,
+            cnt
+        FROM `daily_word`
+        WHERE c_id = #{c_id}
+        order by `date` desc, cnt desc
+        limit 0, 5
+    </select>
+    <select id="findDailyKeywordLastDate" parameterType="int" resultType="string">
+        SELECT date(`date`)
+          FROM `daily_word`
+         WHERE c_id = #{c_id}
+         ORDER BY `date` desc
+         LIMIT 0, 1
+    </select>
+    <select id="findDailyWorldKeywordLastDate" parameterType="int" resultType="string">
+        SELECT date(`date`)
+        FROM `daily_word`
+        WHERE c_id between 67 and 97
+        ORDER BY `date` desc
+        LIMIT 0, 1
+    </select>
+    <select id="selectDailyWorldKeyword" parameterType="string" resultType="dailyResponseDto">
+        SELECT c_id,
+               eng,
+               kor,
+               cnt
+        FROM `daily_word`
+        WHERE date(`date`) = #{date}
+          AND c_id between 67 and 97
+        order by `date` desc, cnt desc
         limit 0, 50
     </select>
 </mapper>

@@ -4,6 +4,7 @@
   position: fixed;
   top: rem(50);
   left: rem(30);
+  z-index: 10001;
   @include FLEX-CENTER;
   width: rem(130);
   margin: 0 5px;
