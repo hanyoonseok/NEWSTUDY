@@ -12,10 +12,7 @@ const CHANGE_LEVEL = "uset/CHANGE_LEVEL";
 
 /*********************** 액션 생성함수 만들기 ***********************/
 export const signupUser = async (data) => {
-  console.log("signupuser");
-  const request = await axios
-    .post(`/user/signup`, data)
-    .then((res) => console.log(res));
+  const request = await axios.post(`/user/signup`, data);
   return {
     type: SIGNUP_USER,
     payload: request,
@@ -23,13 +20,10 @@ export const signupUser = async (data) => {
 };
 
 export const loginUser = async (data) => {
-  console.log("loginUser");
   let accessToken = null;
   // 로그인 처리
   await axios.post(`/auth/login`, data).then((res) => {
-    console.log("로그인 시 ", res);
     accessToken = loginSuccess(res);
-    console.log("로그인", res);
   });
   // 회원정보 조회
   return getUser(accessToken);
@@ -65,7 +59,6 @@ export const getUser = async (token) => {
 };
 
 export const loginSuccess = (res) => {
-  console.log("loginSuccess");
   const { accessToken } = res.data;
   // API 요청하는 콜마다 헤더에 accessToken 담아 보내도록 설정
   axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
@@ -75,7 +68,6 @@ export const loginSuccess = (res) => {
 };
 
 export const logoutUser = async () => {
-  console.log("logoutUser");
   const request = await axios.create({
     transformRequest: (data, headers) => {
       // or just the auth header
@@ -91,14 +83,11 @@ export const logoutUser = async () => {
 };
 
 export const changeLevel = async (level, token) => {
-  console.log("changeLevel");
-  const request = await axios
-    .put(`/user/level/${level}`, null, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res) => console.log(res));
+  const request = await axios.put(`/user/level/${level}`, null, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   return {
     type: CHANGE_LEVEL,
     payload: level,

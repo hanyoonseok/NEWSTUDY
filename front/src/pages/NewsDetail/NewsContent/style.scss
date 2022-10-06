@@ -1,20 +1,14 @@
 @import "variables.scss";
 .newsdetail-content-img-wrapper {
   width: 100%;
-  margin-top: rem(40);
+  margin: 20px 0;
   @include FLEX-CENTER;
   > img {
-    width: 100%;
+    border-radius: 15px;
+    height: 100%;
   }
 }
 
-.newsdetail-content-img-wrapper {
-  > img {
-    border-radius: 15px;
-    max-width: 100%;
-  }
-  margin: 20px 0;
-}
 .newsdetail-content-subtitle {
   font-family: $eng-title-font;
 

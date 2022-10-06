@@ -26,7 +26,6 @@ function DoLevelTest({ getResult, user, setLevelAvg }) {
 
   const showResult = () => {
     getResult(true);
-    console.log(checkedList);
     let sum = 0;
     let level = 0;
     checkedList.forEach((check) => {
@@ -52,7 +51,6 @@ function DoLevelTest({ getResult, user, setLevelAvg }) {
       level = 6;
     }
     dispatch(changeLevel(level, user.accessToken)).then(async (res) => {
-      console.log(res);
       // 회원 배지 목록 가져오기
       await axios
         .get(`/badge`, {
@@ -61,15 +59,11 @@ function DoLevelTest({ getResult, user, setLevelAvg }) {
           },
         })
         .then(({ data }) => {
-          console.log(data);
           if (level === 1 || level === 2) {
-            console.log("A 등급 레벨 획득");
             checkBadge(data, 4);
           } else if (level === 3 || level === 4) {
-            console.log("B 등급 레벨 획득");
             checkBadge(data, 5);
           } else {
-            console.log("C 등급 레벨 획득");
             checkBadge(data, 6);
           }
         });
@@ -79,7 +73,6 @@ function DoLevelTest({ getResult, user, setLevelAvg }) {
   //가져온 배지중에 현재 획득한 배지 레벨의 배지가 없을 경우 추가해주기
   const checkBadge = async (array, badgeId) => {
     let flag = false;
-    console.log("현재 사용자가 획득해야할 배지 번ㄴ호는? ", badgeId);
     array.forEach((element) => {
       if (element.b_id === badgeId) {
         flag = true; // 배지가 이미 있으면 true
@@ -87,19 +80,17 @@ function DoLevelTest({ getResult, user, setLevelAvg }) {
     });
     //배지가 없을 경우에만 배지 update
     if (!flag) {
-      await axios
-        .post(
-          `/badge`,
-          {
-            b_id: badgeId,
+      await axios.post(
+        `/badge`,
+        {
+          b_id: badgeId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userInfo.accessToken}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${userInfo.accessToken}`,
-            },
-          },
-        )
-        .then((res) => console.log("배지 업데이트", res));
+        },
+      );
     }
   };
 

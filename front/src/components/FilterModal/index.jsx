@@ -28,17 +28,12 @@ export default function FilterModal({
     }),
   );
 
-  useEffect(() => {
-    console.log(selectedCategory, cidArray);
-  }, []);
-
   const addCheckList = (id) => {
     if (cidArray.includes(id)) {
       setCidArray(cidArray.filter((item) => item !== id));
     } else {
       setCidArray([...cidArray, id]);
     }
-    console.log("체크된 값", cidArray);
   };
   const mainCategory = ["life", "news", "sports", "tech", "world", "other"]; //대분류 카테고리
   const icon = [
@@ -56,7 +51,10 @@ export default function FilterModal({
 
   return (
     <div className="filter-outside-area" onClick={closeHandler}>
-      <div className="filter-modal-container" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="filter-modal-container"
+        onClick={(e) => e.stopPropagation()}
+      >
         <h1 className="filter-modal-title">Category</h1>
         <div className="category-area">
           <article className="main-category-container">

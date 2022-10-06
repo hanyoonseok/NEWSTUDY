@@ -28,11 +28,9 @@ export default function SignIn() {
     };
     dispatch(loginUser(user))
       .then((res) => {
-        console.log("로그인 성공 ");
         window.location.replace("/landing");
       })
       .catch((error) => {
-        console.log(error);
         setIsCorrect(false);
       });
   };

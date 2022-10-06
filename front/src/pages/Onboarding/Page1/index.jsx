@@ -1,12 +1,7 @@
 import "./style.scss";
-import NEWSTUDY from "assets/NEWSTUDY.jpg";
 import React from "react";
-import { useEffect } from "react";
 
 export default function Page1({ activePage }) {
-  useEffect(() => {
-    if (activePage) console.log("찍을꾸암" + activePage);
-  }, [activePage]);
   return (
     <div className="page-div">
       <div className="background-div"></div>

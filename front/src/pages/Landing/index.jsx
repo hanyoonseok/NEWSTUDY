@@ -124,7 +124,6 @@ function Landing() {
 
         // 사용자 맞춤 기사
         const fitNewsResponse = await axios.get(`/news/recommend`);
-        console.log(fitNewsResponse.data);
         setUserFitNews(fitNewsResponse.data);
         // 핫토픽 기사
         const hotNewsResponse = await axios.get(`/news/hot`);
@@ -158,8 +157,9 @@ function Landing() {
 
     const getScrapList = async () => {
       const scrapListResponse = await axios.get("/scrap");
-      console.log(scrapListResponse);
-      setScrapList(scrapListResponse.data.map((e) => e.n_id));
+      setScrapList(
+        scrapListResponse.data && scrapListResponse.data.map((e) => e.n_id),
+      );
     };
     getBadge();
     getScrapList();
@@ -173,7 +173,6 @@ function Landing() {
       `/daily/${categoryNumber[activeId]}`,
     );
 
-    console.log(wordCloudResponse.data);
     setWordRanking(wordCloudResponse.data);
     setSelectedKeyword(
       wordCloudResponse.data.length > 0 ? wordCloudResponse.data[0].eng : "",
@@ -181,28 +180,22 @@ function Landing() {
   }, [activeId]);
 
   useEffect(() => {
-    console.log("activeID", activeId);
     getWordCloud();
   }, [activeId]);
 
   // 현재 선택한 키워드에 대한 기사 4개 가져오기
   const getSelectedKeywordArticle = async () => {
     if (selectedKeyword) {
-      console.log("selectedKeyword", selectedKeyword);
       const filter = {
         per_page: 10,
         page: 1,
         titlekeyword: selectedKeyword,
       };
-      console.log("filter", filter);
       axios.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${user.accessToken}`;
       const keywordArticleResponse = await axios.post("/news", filter);
-      console.log(
-        "가져온 기사덜",
-        keywordArticleResponse.data.newsList.slice(0, 4),
-      );
+
       setKeywordArticle(keywordArticleResponse.data.newsList.slice(0, 4));
     }
   };

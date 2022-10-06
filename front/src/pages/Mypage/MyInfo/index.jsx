@@ -75,10 +75,6 @@ export default function MyInfo({
         setUserImage(reader.result);
         formData.append("file", profileImg);
 
-        for (let key of formData.keys()) {
-          console.log(key, ":", formData.get(key));
-        }
-
         // 유저 이미지 변경 api 전송
         await axios
           .post("/user/avatar", formData, {
@@ -87,11 +83,8 @@ export default function MyInfo({
               "Content-Type": "multipart/form-data",
             },
           })
-          .then((res) => {
-            console.log("이미지 변경완?", res);
-            dispatch(getUser(user.accessToken)).then((res) =>
-              console.log("스토어 업데이트 까지 완", res),
-            );
+          .then(() => {
+            dispatch(getUser(user.accessToken));
           });
       }
     };
@@ -116,11 +109,9 @@ export default function MyInfo({
   };
 
   const modifyCategory = async (checkList) => {
-    console.log("넘어온 체크 리스트", checkList);
     const data = checkList.map((element) => {
       return { c_id: element };
     });
-    console.log("보낼 데이터 최종", data);
     await axios
       .post("/category", data, {
         headers: {
@@ -128,7 +119,6 @@ export default function MyInfo({
         },
       })
       .then((res) => {
-        console.log(res);
         getCategory();
       });
   };
