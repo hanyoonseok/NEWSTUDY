@@ -159,4 +159,9 @@
         AND match(title, content) AGAINST (#{search})
         AND level between 1 and 6
     </select>
+    <select id="selectLevelListTotalCnt" parameterType="newsRequestDto" resultType="int">
+        SELECT cnt
+        FROM `level_count`
+        WHERE `level` = #{startlevel}
+    </select>
 </mapper>

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(value = "Daily Content API")
@@ -31,7 +32,13 @@ public class DailyController {
                                                                             defaultValue = "0") @PathVariable(required = false) Integer c_id){
         if(c_id == null) c_id = 0;
         //데일리 키워드 리스트
-        List<DailyResponseDto> responseArray = dailyService.getDailyKeyword(c_id);
+        List<DailyResponseDto> responseArray = new ArrayList<>();
+        if(c_id == 67){
+            //world일 때
+            responseArray = dailyService.getDailyWorldKeyword();
+        }else{
+            responseArray = dailyService.getDailyKeyword(c_id);
+        }
         return new ResponseEntity<List<DailyResponseDto>>(responseArray, HttpStatus.OK);
     }
 

@@ -40,6 +40,14 @@ public class NewsService {
     public Integer getSearchListTotalCnt(NewsRequestDto newsRequestDto){
         return newsDao.selectNewsListCnt(newsRequestDto);
     }
+    /**
+     * 해당 레벨의 뉴스 카운트를 리턴
+     * @param newsRequestDto
+     * @return total_cnt
+     */
+    public Integer getSearchLevelListTotalCnt(NewsRequestDto newsRequestDto){
+        return newsDao.selectLevelListTotalCnt(newsRequestDto);
+    }
 
     /**
      * 뉴스 id를 받아서 해당 뉴스의 keyword를 리턴
