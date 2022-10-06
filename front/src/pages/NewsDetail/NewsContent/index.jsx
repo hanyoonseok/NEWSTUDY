@@ -7,16 +7,22 @@ export default function NewsContent({
   newsKeywords,
   isTranslated,
   thumbnail,
+  onWordDrugClick,
 }) {
+  const upperNewsKeywords = newsKeywords.map((e) => e.toUpperCase());
   const highlightKeywords = (string) => {
     const parsedContent = [];
     string = string.replace(/(?:\r\n|\r|\n)/g, "\n\n"); //줄바꿈을 문자열에 적용
 
     //키워드에 포함된 단어에 하이라이팅
     string.split(" ").forEach((element, i) => {
-      if (newsKeywords.includes(element.toUpperCase())) {
+      if (upperNewsKeywords.includes(element.toUpperCase())) {
         parsedContent.push(
-          <b className="newsdetail-content-keyword" key={i}>{`${element} `}</b>,
+          <b
+            className="newsdetail-content-keyword"
+            key={i}
+            onClick={() => onWordDrugClick(element)}
+          >{`${element} `}</b>,
         );
       } else {
         parsedContent.push(`${element} `);
@@ -48,7 +54,9 @@ export default function NewsContent({
             )
           ) : e.substring(0, 8) === "subtitle" ? (
             <h3 className="newsdetail-content-subtitle" key={i}>
-              <b>“</b> {e.substring(e.length - (e.length - 8))} <b>”</b>
+              <b>“</b>{" "}
+              {highlightKeywords(e.substring(e.length - (e.length - 8)))}{" "}
+              <b>”</b>
             </h3>
           ) : (
             <p className="newsdetail-content-body" key={i}>

@@ -35,7 +35,7 @@ export default function NewsDetail() {
   const [vocaSet, setVocaSet] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const userState = useSelector((state) => state.user);
-  const constNID = "230291";
+  const constNID = "204180";
 
   const isMobile = useMediaQuery({
     query: "(max-width:480px)",
@@ -85,18 +85,34 @@ export default function NewsDetail() {
             input: word,
           })
           .then((res) => {
+            if (res.data.errorCode === "010") {
+              setIsAlertOpen(
+                "일일 쿼리 한도를 초과해서 해석이 불가합니다 ㅜㅜ",
+              );
+              setTimeout(() => {
+                setIsAlertOpen("");
+              }, 1200);
+              return null;
+            } else if (res.data.errorCode === "-10001") {
+              setIsAlertOpen("해석이 불가한 구문이 포함되어 있습니다");
+              setTimeout(() => {
+                setIsAlertOpen("");
+              }, 1200);
+              return null;
+            }
+
             const kor = res.data.message.result.translatedText;
             setVocaSet({ ...vocaSet, [word]: kor });
             setSelectedWord({ eng: word, kor });
           });
       }
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     },
     [isMobile, vocaSet],
   );
-
-  const onWordDrugEmptyClick = useCallback(() => {
-    setSelectedWord(null);
-  }, []);
 
   const onAddWordClick = useCallback(async () => {
     const headers = {
@@ -215,55 +231,41 @@ export default function NewsDetail() {
                 );
               }
             } else if (splitDetail[i].substring(0, 8) === "subtitle") {
-              const kor = await axios.post("/translate", {
-                input: splitDetail[i].substring(
+              const subtitle = getTranslated(
+                splitDetail[i].substring(
                   splitDetail[i].length - (splitDetail[i].length - 8),
                 ),
-              });
-
-              if (kor.data.errorCode === "010") {
-                setIsAlertOpen(
-                  "일일 쿼리 한도를 초과해서 해석이 불가합니다 ㅜㅜ",
-                );
-                setTimeout(() => {
-                  setIsAlertOpen("");
-                }, 1200);
-                return;
-              } else if (kor.data.errorCode === "-10001") {
-                setIsAlertOpen("해석이 불가한 구문이 포함되어 있습니다");
-                setTimeout(() => {
-                  setIsAlertOpen("");
-                }, 1200);
-                return;
-              }
+              );
 
               korArchitect.push(
                 <h3 className="newsdetail-content-subtitle" key={i}>
-                  <b>“</b> {kor.data.message.result.translatedText} <b>”</b>
+                  <b>“</b> {subtitle} <b>”</b>
                 </h3>,
               );
             } else {
-              const kor = await axios.post("/translate", {
-                input: splitDetail[i],
+              const dotDivide = splitDetail[i].split(".");
+              let curString = "";
+              let completeString = "";
+
+              dotDivide.forEach(async (e, i) => {
+                if (curString.length + e.length < 250) curString += e + ".";
+                else {
+                  const translated = getTranslated(curString);
+                  if (!translated) return;
+                  completeString += translated;
+                  curString = e + ".";
+                }
               });
-              if (kor.data.errorCode === "010") {
-                setIsAlertOpen(
-                  "일일 쿼리 한도를 초과해서 해석이 불가합니다 ㅜㅜ",
-                );
-                setTimeout(() => {
-                  setIsAlertOpen("");
-                }, 1200);
-                return;
-              } else if (kor.data.errorCode === "-10001") {
-                setIsAlertOpen("해석이 불가한 구문이 포함되어 있습니다");
-                setTimeout(() => {
-                  setIsAlertOpen("");
-                }, 1200);
-                return;
+
+              if (curString !== "") {
+                const translated = getTranslated(curString);
+                if (!translated) return;
+                completeString += translated;
               }
+
               korArchitect.push(
                 <p className="newsdetail-content-body" key={i}>
-                  {kor.data.message.result.translatedText}
+                  {completeString.replace(/(?:\r\n|\r|\n)/g, "\n\n")}
                 </p>,
               );
             }
@@ -275,6 +277,30 @@ export default function NewsDetail() {
       setIsTranslated(true);
     }
   }, [engContent, korContent, isTranslated]);
+
+  const getTranslated = (string) => {
+    axios
+      .post("/translate", {
+        input: string,
+      })
+      .then((res) => {
+        if (res.data.errorCode === "010") {
+          setIsAlertOpen("일일 쿼리 한도를 초과해서 해석이 불가합니다 ㅜㅜ");
+          setTimeout(() => {
+            setIsAlertOpen("");
+          }, 1200);
+          return null;
+        } else if (res.data.errorCode === "-10001") {
+          setIsAlertOpen("해석이 불가한 구문이 포함되어 있습니다");
+          setTimeout(() => {
+            setIsAlertOpen("");
+          }, 1200);
+          return null;
+        }
+
+        return res.data.message.result.translatedText;
+      });
+  };
 
   return (
     <div className="newsdetail-container">
@@ -321,7 +347,6 @@ export default function NewsDetail() {
                             word={e}
                             selectedWord={selectedWord}
                             onWordDrugClick={onWordDrugClick}
-                            onWordDrugEmptyClick={onWordDrugEmptyClick}
                             onAddWordClick={onAddWordClick}
                             key={i}
                           />
@@ -367,6 +392,7 @@ export default function NewsDetail() {
                     newsKeywords={newsKeywords}
                     isTranslated={isTranslated}
                     thumbnail={newsDetail.thumbnail}
+                    onWordDrugClick={onWordDrugClick}
                   />
                 </div>
                 <footer className="newsdetail-content-footer">
