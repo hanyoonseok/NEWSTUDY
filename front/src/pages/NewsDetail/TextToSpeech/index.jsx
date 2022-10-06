@@ -34,12 +34,12 @@ export default function TextToSpeech({
     if (textIdx >= texts.length) return;
 
     texts.forEach((e) => {
-      console.log(e);
       const utterThis = new SpeechSynthesisUtterance(e);
 
       utterThis.lang = "en-US"; //언어설정
       utterThis.pitch = 1; //피치
       utterThis.rate = 0.85; //속도
+      utterThis.volume = 0.7;
       synth.speak(utterThis);
     });
   }, [texts]);

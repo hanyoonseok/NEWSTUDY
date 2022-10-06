@@ -249,11 +249,13 @@ export default function NewsList() {
                   ))}
                 </div>
                 {isExistMoreNews && (
-                  <div
-                    className="newslist-morebtn-container"
-                    onClick={() => setPage(page + 1)}
-                  >
-                    <button className="newslist-morebtn">더보기</button>
+                  <div className="newslist-morebtn-container">
+                    <button
+                      className="newslist-morebtn"
+                      onClick={() => setPage(page + 1)}
+                    >
+                      더보기
+                    </button>
                   </div>
                 )}
               </>

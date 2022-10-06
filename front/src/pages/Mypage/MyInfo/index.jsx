@@ -127,33 +127,30 @@ export default function MyInfo({
     <>
       <div className="left-box">
         <div className="info-box">
-          <div className="profile-img">
-            <div className="level-box">{level(user.level)}</div>
-            <div className="img-box">
-              <img src={userImage} alt="사용자 프로필 지구본"></img>
-              <div
-                className="img-hover"
-                onClick={() => {
-                  fileInput.current.click();
-                }}
-              >
-                이미지 수정
-              </div>
-              <input
-                type="file"
-                style={{ display: "none" }}
-                accept="image/jpg,impge/png,image/jpeg"
-                name="profile_img"
-                onChange={onChange}
-                ref={fileInput}
-              />
+          <div className="level-box">{level(user.level)}</div>
+          <div className="img-box">
+            <img src={userImage} alt="사용자 프로필 지구본"></img>
+            <div
+              className="img-hover"
+              onClick={() => {
+                fileInput.current.click();
+              }}
+            >
+              이미지 수정
             </div>
-            <p className="name">{user.nickname}</p>
-            <p className="email">
-              <FontAwesomeIcon icon={faEnvelope} />
-              &nbsp;{user.email}
-            </p>
+            <input
+              type="file"
+              style={{ display: "none" }}
+              accept="image/jpg,impge/png,image/jpeg"
+              name="profile_img"
+              onChange={onChange}
+              ref={fileInput}
+            />
           </div>
+          <p className="name">{user.nickname}</p>
+          <p className="email">
+            <FontAwesomeIcon icon={faEnvelope} /> &nbsp;{user.email}
+          </p>
         </div>
         <div className="current">
           {myRecord.map((item, index) => (

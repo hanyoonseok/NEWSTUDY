@@ -12,78 +12,75 @@
     font-size: rem(18);
     text-align: center;
 
-    .profile-img {
-      background-color: #fff;
-      border-radius: 35px;
-      height: 70%;
+    .level-box {
+      position: absolute;
+      left: 60px;
+      top: 20px;
+      width: rem(62);
+      height: rem(65);
+      z-index: 10;
+
+      > img {
+        width: 100%;
+        height: 100%;
+      }
+      @media (max-width: 480px) {
+        left: 120px;
+        top: 25px;
+      }
+    }
+
+    .img-box {
+      width: rem(170);
+      height: rem(170);
+      transform: translateY(10%);
+      margin: auto;
+      position: relative;
+      transition: all 1s;
+      border-radius: 50%;
       box-shadow: $light-shadow;
+      cursor: pointer;
 
-      .level-box {
-        position: absolute;
-        left: 80px;
-        top: 20px;
-        width: rem(62);
-        height: rem(65);
-        z-index: 10;
-
-        > img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-
-      .img-box {
-        width: rem(170);
-        height: rem(170);
-        transform: translateY(10%);
-        margin: auto;
-        position: relative;
-        transition: all 1s;
+      img {
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
-        box-shadow: $light-shadow;
-        cursor: pointer;
-
-        img {
-          width: 100%;
-          height: 100%;
-          border-radius: 50%;
-        }
-
-        .img-hover {
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          color: $white;
-          opacity: 0;
-          font-size: rem(16);
-          @include FLEX-CENTER;
-          border-radius: 50%;
-          background-color: darken(rgba(0, 0, 0, 0.447), 10%);
-        }
-        &:hover {
-          .img-hover {
-            opacity: 1;
-          }
-        }
       }
 
-      .name {
-        font-size: rem(24);
-        font-family: $kor-font;
-        font-weight: bold;
-        margin-top: 6%;
-      }
-
-      .email {
-        border-radius: 10px;
-        font-family: $eng-font;
+      .img-hover {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: $white;
+        opacity: 0;
         font-size: rem(16);
-        .fa-envelope {
-          color: #3f414b;
+        @include FLEX-CENTER;
+        border-radius: 50%;
+        background-color: darken(rgba(0, 0, 0, 0.447), 10%);
+      }
+      &:hover {
+        .img-hover {
+          opacity: 1;
         }
+      }
+    }
+
+    .name {
+      font-size: rem(24);
+      font-family: $kor-font;
+      font-weight: bold;
+      margin-top: rem(24);
+    }
+
+    .email {
+      border-radius: 10px;
+      font-family: $eng-font;
+      font-size: rem(16);
+      .fa-envelope {
+        color: #3f414b;
       }
     }
   }
@@ -201,7 +198,7 @@
     }
   }
 }
-@media only screen and (max-width: 480px) {
+@media (max-width: 480px) {
   .left-box {
     width: 100%;
     height: auto;
@@ -209,7 +206,8 @@
 
     .info-box {
       height: 26%;
-      margin-bottom: rem(60);
+      position: relative;
+      margin-bottom: rem(20);
 
       .profile-img {
         height: 130px;
@@ -217,7 +215,7 @@
         .level-box {
           width: rem(45);
           height: rem(45);
-          left: 120px;
+          left: 160px;
           top: 30px;
         }
 
@@ -229,7 +227,7 @@
       }
 
       .name {
-        margin-top: 4%;
+        margin-top: rem(30);
         font-size: rem(22);
       }
       .email {

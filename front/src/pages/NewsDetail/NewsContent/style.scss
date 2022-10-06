@@ -22,8 +22,8 @@
   font-size: rem(18.5);
   padding: 20px 0;
   white-space: pre-line;
-
-  .newsdetail-content-keyword {
-    color: $soft-blue;
-  }
+}
+.newsdetail-content-keyword {
+  color: $soft-blue;
+  cursor: pointer;
 }
