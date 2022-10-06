@@ -18,4 +18,5 @@ public interface NewsDao {
     List<NewsResponseDto> selectRecommendNewsList(NewsRequestDto newsRequestDto);
     void updateViewCnt(Integer n_id);
     Integer selectNewsCountByCategory(HashMap map);
+    Integer selectLevelListTotalCnt(NewsRequestDto newsRequestDto);
 }
