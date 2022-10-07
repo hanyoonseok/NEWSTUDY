@@ -31,7 +31,7 @@ export default function NewsDetail() {
   const [isTranslated, setIsTranslated] = useState(false);
   const [engContent, setEngContent] = useState("");
   const [korContent, setKorContent] = useState([]);
-  const [isAlertOpen, setIsAlertOpen] = useState("");
+  const [isAlertOpen, setIsAlertOpen] = useState(null);
   const [vocaSet, setVocaSet] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const userState = useSelector((state) => state.user);
@@ -89,15 +89,11 @@ export default function NewsDetail() {
               setIsAlertOpen(
                 "일일 쿼리 한도를 초과해서 해석이 불가합니다 ㅜㅜ",
               );
-              setTimeout(() => {
-                setIsAlertOpen("");
-              }, 1200);
+
               return null;
             } else if (res.data.errorCode === "-10001") {
               setIsAlertOpen("해석이 불가한 구문이 포함되어 있습니다");
-              setTimeout(() => {
-                setIsAlertOpen("");
-              }, 1200);
+
               return null;
             }
 
@@ -124,22 +120,16 @@ export default function NewsDetail() {
       .post("/vocaburary", { eng: selectedWord.eng }, headers)
       .then(() => {
         setIsModalOpen("단어장에 추가 완료");
-        setTimeout(() => {
-          setIsModalOpen("");
 
-          axios.get("/badge/new", headers).then((res) => {
-            if (res.data.length > 0) {
-              setNewBadgeInfo(res.data[0]);
-            }
-          });
-        }, 1200);
+        axios.get("/badge/new", headers).then((res) => {
+          if (res.data.length > 0) {
+            setNewBadgeInfo(res.data[0]);
+          }
+        });
       })
       .catch((err) => {
         if (err.response.status === 400) {
           setIsModalOpen("이미 추가된 단어입니다");
-          setTimeout(() => {
-            setIsModalOpen("");
-          }, 1200);
         }
       });
   }, [selectedWord]);
@@ -155,13 +145,9 @@ export default function NewsDetail() {
     if (!isScrapped) {
       setIsModalOpen("스크랩 되었습니다!");
 
-      setTimeout(async () => {
-        setIsModalOpen("");
-
-        axios.get("/badge/new").then((res) => {
-          res.data.length > 0 && setNewBadgeInfo(res.data[0]);
-        });
-      }, 1200);
+      axios.get("/badge/new").then((res) => {
+        res.data.length > 0 && setNewBadgeInfo(res.data[0]);
+      });
     }
 
     setIsScrapped((prev) => !prev);
@@ -286,15 +272,11 @@ export default function NewsDetail() {
       .then((res) => {
         if (res.data.errorCode === "010") {
           setIsAlertOpen("일일 쿼리 한도를 초과해서 해석이 불가합니다 ㅜㅜ");
-          setTimeout(() => {
-            setIsAlertOpen("");
-          }, 1200);
+
           return null;
         } else if (res.data.errorCode === "-10001") {
           setIsAlertOpen("해석이 불가한 구문이 포함되어 있습니다");
-          setTimeout(() => {
-            setIsAlertOpen("");
-          }, 1200);
+
           return null;
         }
 
@@ -426,13 +408,9 @@ export default function NewsDetail() {
         />
       )}
 
-      {isAlertOpen !== "" && (
-        <Modal text={isAlertOpen} setStatus={setIsAlertOpen} />
-      )}
+      {isAlertOpen && <Modal text={isAlertOpen} setStatus={setIsAlertOpen} />}
 
-      {isModalOpen !== "" && (
-        <Modal text={isModalOpen} setStatus={setIsModalOpen} />
-      )}
+      {isAlertOpen && <Modal text={isModalOpen} setStatus={setIsModalOpen} />}
     </div>
   );
 }
