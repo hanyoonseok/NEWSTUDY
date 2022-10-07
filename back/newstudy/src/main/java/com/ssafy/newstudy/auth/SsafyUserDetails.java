@@ -22,7 +22,8 @@ public class SsafyUserDetails implements UserDetails {
     boolean credentialNonExpired;
     boolean enabled = false;
     List<? extends GrantedAuthority> roles = new ArrayList<>();
-    
+
+
     public SsafyUserDetails(UserDto userDto) {
     		super();
     		this.userDto = userDto;
