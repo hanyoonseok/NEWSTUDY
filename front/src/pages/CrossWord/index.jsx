@@ -4,12 +4,12 @@ import { faAnglesRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useMediaQuery } from "react-responsive";
 
 import "./style.scss";
 import InGame from "./InGame";
 import MyCrossWord from "./MyCrossWord";
 import AnsCrossWord from "./AnsCrossWord";
-import { useCallback } from "react";
 
 export default function CrossWord() {
   const boundR = 15;
@@ -19,6 +19,9 @@ export default function CrossWord() {
   const [inGame, setInGame] = useState(true);
   const [wordArr, setWordArr] = useState([]);
   const userState = useSelector((state) => state.user);
+  const isMobile = useMediaQuery({
+    query: "(max-width:480px)",
+  });
 
   const crosswordInputs = document.querySelectorAll(".crossword-input");
 
@@ -74,7 +77,7 @@ export default function CrossWord() {
 
   const crosswordContainer = useRef();
   useEffect(() => {
-    if (!inGame) {
+    if (!inGame && isMobile) {
       crosswordContainer.current.style.height = "100%";
     }
   }, [inGame]);
