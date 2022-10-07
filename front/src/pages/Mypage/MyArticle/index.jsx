@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { intToLevel } from "constants";
 import { category } from "constants/category";
 import "./style.scss";
+import DefaultThumb from "assets/default-thumb.png";
 
 export default function MyArticle() {
   const [user, setUser] = useState(useSelector((state) => state.user));
@@ -42,7 +43,10 @@ export default function MyArticle() {
               {intToLevel[article.level]}
             </span>
             <div className="img-box">
-              <img src={article.thumbnail} alt="기사 이미지"></img>
+              <img
+                src={article.thumbnail ? article.thumbnail : DefaultThumb}
+                alt="기사 이미지"
+              ></img>
             </div>
             <p>{article.title}</p>
             <div className="">{article.c_id} </div>

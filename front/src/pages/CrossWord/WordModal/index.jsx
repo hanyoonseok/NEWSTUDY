@@ -30,23 +30,17 @@ export default function WordModal({ wordInfo, setSelectedWord }) {
       .then(() => {
         setModalText("단어장에 추가 완료");
         setIsModalOpen(true);
-        setTimeout(() => {
-          setIsModalOpen(false);
 
-          axios.get("/badge/new", headers).then((res) => {
-            if (res.data.length > 0) {
-              setNewBadgeInfo(res.data[0]);
-            }
-          });
-        }, 1200);
+        axios.get("/badge/new", headers).then((res) => {
+          if (res.data.length > 0) {
+            setNewBadgeInfo(res.data[0]);
+          }
+        });
       })
       .catch((err) => {
         if (err.response.status === 400) {
           setModalText("이미 추가된 단어입니다");
           setIsModalOpen(true);
-          setTimeout(() => {
-            setIsModalOpen(false);
-          }, 1200);
         }
       });
   }, []);
