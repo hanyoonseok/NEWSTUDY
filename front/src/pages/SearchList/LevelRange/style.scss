@@ -27,6 +27,7 @@
     rgba(219, 188, 255, 1) 72%,
     rgba(219, 188, 255, 1) 100%
   );
+  opacity: 0.3;
   height: 16px;
   border-radius: 6px;
 }
@@ -35,7 +36,15 @@
   left: 0;
   height: 16px;
   border-radius: 6px;
-  background-color: $soft-blue;
+  background: linear-gradient(
+    90deg,
+    rgba(218, 255, 186, 1) 0%,
+    rgba(188, 220, 177, 1) 18%,
+    rgba(150, 178, 255, 1) 44%,
+    rgba(150, 178, 255, 1) 57%,
+    rgba(219, 188, 255, 1) 72%,
+    rgba(219, 188, 255, 1) 100%
+  );
 }
 .rc-slider-handle {
   position: absolute;
@@ -55,14 +64,14 @@
   }
 }
 .rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
-  border-color: $soft-blue;
+  border-color: $white;
   box-shadow: 0 0 0 5px $soft-blue;
 }
 .rc-slider-handle:focus {
   outline: none;
 }
 .rc-slider-handle-click-focused:focus {
-  border-color: $soft-blue;
+  border-color: $white;
   box-shadow: unset;
 }
 .rc-slider-handle:hover {
@@ -121,7 +130,7 @@
   vertical-align: middle;
 }
 .rc-slider-dot-active {
-  border-color: $soft-blue;
+  border-color: $white;
 }
 .rc-slider-dot-reverse {
   margin-right: -4px;

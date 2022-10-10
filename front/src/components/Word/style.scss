@@ -1,25 +1,53 @@
 @import "variables.scss";
 
 .voca-box {
-  > div {
+  .voca {
+    width: 100%;
+    border-radius: 20px;
+    background-color: white;
+    margin: 15px 0;
+    padding: 0 10px;
+    filter: $drop-shadow;
     @include FLEX-BETWEEN;
-    border-bottom: 1px solid $soft-grey;
-
-    > div {
-      width: 35%;
+    transition: all 300ms ease;
+    &:hover {
+      transform: scale(1.03);
+      background-color: $lightx2-blue;
+    }
+    .word-index {
+      background-color: $dark-grey;
+      width: 25px;
+      height: 25px;
+      border-radius: 25px;
+      color: $white;
+      @include FLEX-CENTER;
+      margin-right: 10px;
     }
     .word {
+      padding: 10px 0;
+      > p {
+        text-align: center;
+        background-color: #e8eeff;
+        color: $dark-grey;
+        border-radius: 10px;
+        padding: 10px 0;
+      }
       height: 100%;
       font-family: $eng-font;
-      font-size: rem(24);
+
+      font-size: rem(20);
       font-weight: bold;
+      &.word-daily {
+        width: 28%;
+        word-break: break-all;
+      }
     }
 
     .mean {
       padding: 1% 1% 1% 3%;
-      width: 65%;
-      border-left: 1px solid #ff9f9f;
+      width: 75%;
       min-height: rem(50);
+      font-family: $kor-font;
       @include FLEX-ALIGN-CENTER;
 
       > div {
@@ -61,6 +89,18 @@
 
       .green {
         background-color: #b6ffaa;
+      }
+    }
+
+    .word-plus {
+      width: 25px;
+      height: 25px;
+      border-radius: 25px;
+      background-color: $dark-grey;
+      @include FLEX-CENTER;
+
+      > svg {
+        color: white;
       }
     }
   }
