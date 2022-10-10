@@ -81,14 +81,14 @@ export default function NationsNewsList() {
     // selectedIdx가 바뀔 때마다 해당 국가의 뉴스 리스트를 받아온다
     const fetchData = async () => {
       const nationsNewsResponse = await axios.post("/news", {
+        per_page: perPage,
         categoryid: [selectedIdx + idxGap],
         page: 1,
-        per_page: perPage,
         startdate: moment().subtract(6, "months").format("YYYY-MM-DD"),
         enddate: moment().format("YYYY-MM-DD"),
       });
       setNationsNews(nationsNewsResponse.data.newsList);
-      setHasMoreNews(nationsNewsResponse.data.newsList.length === perPage);
+      setHasMoreNews(nationsNewsResponse.data.totalCnt > perPage);
       setDataIdx(2);
       setIsLoading(false);
     };
@@ -99,14 +99,15 @@ export default function NationsNewsList() {
 
   const onMoreClick = useCallback(async () => {
     const moreNewsResponse = await axios.post("/news", {
+      per_page: perPage,
       categoryid: [selectedIdx + idxGap],
       page: dataIdx,
-      per_page: perPage,
       startdate: moment().subtract(6, "months").format("YYYY-MM-DD"),
       enddate: moment().format("YYYY-MM-DD"),
     });
+    console.log(moreNewsResponse);
     setNationsNews(nationsNews.concat(moreNewsResponse.data.newsList));
-    setHasMoreNews(moreNewsResponse.data.newsList.length === perPage);
+    setHasMoreNews(moreNewsResponse.data.totalCnt > perPage * dataIdx);
     setDataIdx((prev) => prev + 1);
   }, [dataIdx, nationsNews, selectedIdx]);
 
