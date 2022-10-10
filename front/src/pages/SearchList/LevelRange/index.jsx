@@ -6,6 +6,7 @@ export default function LevelRange({ getSelectedLevel }) {
     min: 1,
     max: 6,
     step: 1,
+    defaultValue: [1, 6],
     marks: {
       1: "A1",
       2: "A2",

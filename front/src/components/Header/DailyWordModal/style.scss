@@ -27,18 +27,10 @@
       h2 {
         position: relative;
         width: 96%;
-        font-family: $eng-title-font;
 
-        span::after {
-          content: "";
-          display: block;
-          width: rem(100);
-          height: rem(20);
-          background-color: $soft-blue;
-          opacity: 0.3;
-          position: absolute;
-          right: rem(145);
-          top: rem(8);
+        font-family: $eng-title-font;
+        b {
+          color: $blue;
         }
       }
       .close {
@@ -51,10 +43,21 @@
         }
       }
     }
+    .daily-word-desc {
+      margin: 10px auto;
+
+      font-family: $kor-font;
+      font-size: rem(15);
+      color: $grey;
+      > img {
+        width: 13px;
+        height: 13px;
+      }
+    }
 
     .voca-box {
       width: 100%;
-      margin-top: rem(30);
+      margin-top: rem(10);
       height: 100%;
       overflow-y: auto;
       padding: 0 rem(10);

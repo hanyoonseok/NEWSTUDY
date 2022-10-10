@@ -50,13 +50,22 @@ export default function DailyWordModal({ close }) {
       >
         <div className="modal-header">
           <h2>
-            DAILY <span>WORD</span>
+            DAILY <b>WORD</b>
           </h2>
+
           <button className="close" onClick={close}>
             <FontAwesomeIcon icon={faXmark} />
           </button>
         </div>
-        {vocas && <Word vocas={vocas} />}
+        <p className="daily-word-desc">
+          당일 수집된 전체 기사의 최다 빈출 단어입니다.
+          <img
+            className="check-img"
+            src={require("assets/check.png")}
+            alt="check"
+          ></img>
+        </p>
+        {vocas && <Word vocas={vocas} isDaily={true} />}
       </div>
     </div>
   );
