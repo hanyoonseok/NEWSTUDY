@@ -157,6 +157,7 @@
     }
   }
   .search-newslist {
+    min-height: 100vh;
     .news-result {
       margin: 15px 0;
       @media (max-width: 480px) {
