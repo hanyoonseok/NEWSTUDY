@@ -3,6 +3,9 @@
 .voca-box {
   transition: all 300ms ease;
   .voca {
+    &.voca-myvoca {
+      padding: 6px 15px;
+    }
     .memorize {
       width: rem(22);
       height: rem(22);
@@ -11,9 +14,10 @@
       transition: all 300ms ease;
     }
 
-    .word {
-      font-family: $eng-font;
-      padding: 20px 0;
+    .word-myvoca {
+      width: 17%;
+      margin-left: 10px;
+      word-break: break-all;
     }
     .blue {
       background-color: $soft-blue;

@@ -95,7 +95,7 @@
       .daily-left .key-ranking {
         &.active,
         &:hover {
-          background-color: lighten($color: $dark-mode-bg, $amount: 20);
+          background-color: lighten($color: $dark-mode-bg, $amount: 5);
         }
       }
     }
@@ -205,10 +205,14 @@
           color: $white;
         }
         .list .category-item {
-          background-color: lighten($color: $dark-mode-black, $amount: 30);
+          background-color: lighten($color: #1a1b1f, $amount: 5);
           border: 0;
           p {
-            color: black; //$default-grey;
+            color: white; //$default-grey;
+          }
+          .main-category {
+            background-color: lighten($color: #1a1b1f, $amount: 15);
+            border: 0;
           }
         }
       }
@@ -253,6 +257,20 @@
 
       .content {
         background-color: $dark-mode-bg;
+        .voca-box {
+          .voca {
+            background-color: lighten($color: #1a1b1f, $amount: 5);
+            .word-index {
+              background-color: $blue;
+            }
+            .word {
+              > p {
+                background-color: lighten($color: #1a1b1f, $amount: 15);
+                color: white;
+              }
+            }
+          }
+        }
 
         .article-box > a {
           &:hover {
@@ -316,6 +334,7 @@
       color: $white;
     }
   }
+
   //검색 결과
   .search-list.visible {
     background-color: $dark-mode-bg;
@@ -374,6 +393,21 @@
 
     .modal-header .close {
       color: $white;
+    }
+    .voca {
+      background-color: lighten($color: #1a1b1f, $amount: 5);
+      .word-index {
+        background-color: $soft-blue;
+      }
+      .word {
+        > p {
+          background-color: lighten($color: #1a1b1f, $amount: 15);
+          color: white;
+        }
+      }
+      .word-plus {
+        background-color: $blue;
+      }
     }
   }
 
@@ -442,10 +476,10 @@
             color: $white;
           }
           &:hover {
-            background-color: lighten($color: $dark-mode-bg, $amount: 20);
+            background-color: lighten($color: $dark-mode-bg, $amount: 7);
           }
           &.active {
-            background-color: lighten($color: $dark-mode-bg, $amount: 20);
+            background-color: lighten($color: $dark-mode-bg, $amount: 10);
           }
         }
 
@@ -458,7 +492,8 @@
             b {
               color: $dark-grey;
             }
-            color: $dark-grey;
+            color: $white;
+            background-color: rgba($color: $soft-blue, $alpha: 0.3);
           }
         }
       }
