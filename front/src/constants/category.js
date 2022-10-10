@@ -40,7 +40,7 @@ export const category = [
   { c_id: 38, main: "other", sub: "law" },
   { c_id: 39, main: "other", sub: "science" },
   { c_id: 40, main: "sport", sub: "gaelic-games" },
-  { c_id: 41, main: "sports", sub: "american-football" },
+  { c_id: 41, main: "sports", sub: "" },
   { c_id: 42, main: "sports", sub: "athletics" },
   { c_id: 43, main: "sports", sub: "baseball" },
   { c_id: 44, main: "sports", sub: "basketball" },
