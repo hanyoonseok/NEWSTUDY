@@ -24,6 +24,7 @@ import ArticleInside from "./ArticleInside";
 import TopBtn from "components/TopBtn";
 import UserfitArticle from "./UserfitArticle";
 import NewsCard from "components/NewsCard";
+import DefaultThumb from "assets/default-thumb.png";
 
 function SectionTitle({ sectionTitle }) {
   const user = useSelector((state) => state.user);
@@ -248,7 +249,14 @@ function Landing() {
               >
                 <>
                   <div className="hottopic-img">
-                    <img src={hotNews[0].thumbnail} alt="article"></img>
+                    <img
+                      src={
+                        hotNews[0].thumbnail
+                          ? hotNews[0].thumbnail
+                          : DefaultThumb
+                      }
+                      alt="article"
+                    ></img>
                     <span
                       className={`article-level ${
                         level_value[hotNews[0].level].includes("A")
