@@ -19,6 +19,7 @@ export default function NationsNewsList() {
   const [hasMoreNews, setHasMoreNews] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const userState = useSelector((state) => state.user);
+  const perPage = 10;
   const hexValues = [
     0,
     1,
@@ -82,12 +83,12 @@ export default function NationsNewsList() {
       const nationsNewsResponse = await axios.post("/news", {
         categoryid: [selectedIdx + idxGap],
         page: 1,
-        per_page: 10,
+        per_page: perPage,
         startdate: moment().subtract(6, "months").format("YYYY-MM-DD"),
         enddate: moment().format("YYYY-MM-DD"),
       });
       setNationsNews(nationsNewsResponse.data.newsList);
-      setHasMoreNews(nationsNewsResponse.data.newsList.length === 30);
+      setHasMoreNews(nationsNewsResponse.data.newsList.length === perPage);
       setDataIdx(2);
       setIsLoading(false);
     };
@@ -100,12 +101,12 @@ export default function NationsNewsList() {
     const moreNewsResponse = await axios.post("/news", {
       categoryid: [selectedIdx + idxGap],
       page: dataIdx,
-      per_page: 10,
+      per_page: perPage,
       startdate: moment().subtract(6, "months").format("YYYY-MM-DD"),
       enddate: moment().format("YYYY-MM-DD"),
     });
     setNationsNews(nationsNews.concat(moreNewsResponse.data.newsList));
-    setHasMoreNews(moreNewsResponse.data.newsList.length === 30);
+    setHasMoreNews(moreNewsResponse.data.newsList.length === perPage);
     setDataIdx((prev) => prev + 1);
   }, [dataIdx, nationsNews, selectedIdx]);
 

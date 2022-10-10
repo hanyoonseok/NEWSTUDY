@@ -79,17 +79,22 @@ export default function FilterModal({
           </article>
           {subCategory.length > 0 && (
             <article className="sub-category-container">
-              {subCategory.map((sub) => (
-                <label className="sub-category-name" key={sub.c_id}>
-                  <input
-                    type="checkbox"
-                    name={sub.c_id}
-                    checked={cidArray.includes(sub.c_id)}
-                    onChange={(e) => addCheckList(sub.c_id)}
-                  />
-                  <span>{sub.sub.replace(/^./, sub.sub[0].toUpperCase())}</span>
-                </label>
-              ))}
+              {subCategory.map(
+                (sub) =>
+                  sub.sub !== "" && (
+                    <label className="sub-category-name" key={sub.c_id}>
+                      <input
+                        type="checkbox"
+                        name={sub.c_id}
+                        checked={cidArray.includes(sub.c_id)}
+                        onChange={(e) => addCheckList(sub.c_id)}
+                      />
+                      <span>
+                        {sub.sub.replace(/^./, sub.sub[0].toUpperCase())}
+                      </span>
+                    </label>
+                  ),
+              )}
             </article>
           )}
         </div>
