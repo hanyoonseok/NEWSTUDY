@@ -29,7 +29,6 @@ public class SsafyUserDetails implements UserDetails {
     		this.userDto = userDto;
 		List<? extends GrantedAuthority> authorities = userDto.getAuthorities().stream().map(auth -> new SimpleGrantedAuthority(auth.getAuthName()))
 				.collect(Collectors.toList());
-
 		this.roles = authorities;
 	}
     
