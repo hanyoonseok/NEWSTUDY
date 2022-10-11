@@ -117,6 +117,12 @@
             margin-right: 15px;
             margin-top: 10px;
             position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+
+            &:hover {
+              background-color: darken($light-blue, 10%);
+            }
 
             .word-drug-empty {
               position: fixed;
