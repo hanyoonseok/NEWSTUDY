@@ -128,6 +128,7 @@ function Landing() {
         setUserFitNews(fitNewsResponse.data);
         // 핫토픽 기사
         const hotNewsResponse = await axios.get(`/news/hot`);
+        console.log(hotNewsResponse.data);
         setHotNews(hotNewsResponse.data);
         // 데일리 워드클라우드
         getWordCloud();

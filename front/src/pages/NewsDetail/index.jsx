@@ -118,18 +118,25 @@ export default function NewsDetail() {
     };
     await axios
       .post("/vocaburary", { eng: selectedWord.eng }, headers)
-      .then(() => {
+      .then((res) => {
+        console.log("res", res);
         setIsModalOpen("단어장에 추가 완료");
+        setTimeout(() => {
+          setIsModalOpen("");
 
-        axios.get("/badge/new", headers).then((res) => {
-          if (res.data.length > 0) {
-            setNewBadgeInfo(res.data[0]);
-          }
-        });
+          axios.get("/badge/new", headers).then((res) => {
+            if (res.data.length > 0) {
+              setNewBadgeInfo(res.data[0]);
+            }
+          });
+        }, 1200);
       })
       .catch((err) => {
         if (err.response.status === 400) {
           setIsModalOpen("이미 추가된 단어입니다");
+          setTimeout(() => {
+            setIsModalOpen("");
+          }, 1200);
         }
       });
   }, [selectedWord]);
@@ -410,7 +417,7 @@ export default function NewsDetail() {
 
       {isAlertOpen && <Modal text={isAlertOpen} setStatus={setIsAlertOpen} />}
 
-      {isAlertOpen && <Modal text={isModalOpen} setStatus={setIsModalOpen} />}
+      {isModalOpen && <Modal text={isModalOpen} setStatus={setIsModalOpen} />}
     </div>
   );
 }
