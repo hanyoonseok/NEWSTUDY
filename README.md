@@ -1,8 +1,7 @@
-# NEWSTUDY
-<img src="https://user-images.githubusercontent.com/33210124/194225351-e01b3594-e29f-4468-97c2-1aa81249958c.png" width="50%"><br>
+<img src="https://user-images.githubusercontent.com/33210124/195239245-f6c6dd95-5454-454a-8954-a2e9d7c5d184.png"><br>
+# 📰 NEWSTUDY
 
-## ✨ [UCC]() 
-
+## ✨ [UCC](https://www.youtube.com/watch?v=7CpzMz1BLAw&ab_channel=yoonseokhan) 
 
 ## ✨ Overview
 
