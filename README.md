@@ -34,8 +34,8 @@
 - `프로필 이미지 변경`
 - 내가 `스크랩한 기사, 나만의 단어장, 내가 획득한 뱃지, 내 관심 카테고리` 표현
 <div>
-<img src="https://user-images.githubusercontent.com/33210124/194191629-3cabb9b6-d726-4bb8-b807-03156878b59b.gif" width="75%">
-<img src="https://user-images.githubusercontent.com/33210124/194192101-3d650a54-8d32-408c-b199-e2f19cf2c5f4.gif" width="20%">
+<img src="https://user-images.githubusercontent.com/33210124/195591883-974fd700-addd-4a32-8e80-ae4da2d5f99d.gif" width="20%">
+<img src="https://user-images.githubusercontent.com/33210124/195591865-c16d131c-3ada-4bd9-8221-69b4e520de00.gif" width="75%">
 </div>
 
 ### 배지 획득
@@ -127,8 +127,8 @@
 - 사용자가 오늘 하루 알면 좋은 10개의 단어
 - 오늘 발행된 기사 중 `최다 빈출`된 단어 상위 10개를 뽑아 제공
 <div>
-<img src="https://user-images.githubusercontent.com/33210124/193840884-2910c640-0eaf-4489-b690-e5dc54777ffa.gif" width="75%">
-<img src="https://user-images.githubusercontent.com/33210124/193840779-516b476d-7a6c-485b-84aa-e40b121b0fae.gif" width="20%">
+<img src="https://user-images.githubusercontent.com/33210124/195591727-7c3dceac-528e-4afa-a24e-22a886fccfbf.gif" width="75%">
+<img src="https://user-images.githubusercontent.com/33210124/195591721-2a824603-5c87-4b8e-b944-53c367105376.gif" width="20%">
 </div>
 
 ## ✨ 주요 기능
