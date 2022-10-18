@@ -2,6 +2,8 @@
 # coding: utf-8
 
 
+# TF-IDF calculation with spark
+
 import findspark
 findspark.init()
 import pandas as pd
@@ -87,7 +89,7 @@ def removeStopwords(stop_words, dataframe):
 
     index_list = dataframe.index.to_list()
     for i in index_list:
-        strr = dataframe.loc[i]["content"].lower().replace("subtitle", "").replace("@@div", "다빈").replace("\n", "다빈").replace("img", "다빈").split("다빈")
+        strr = dataframe.loc[i]["content"].lower().replace("subtitle", "").replace("@@div", "구분자").replace("\n", "구분자").replace("img", "구분자").split("구분자")
 
         words = []
         for s in strr :

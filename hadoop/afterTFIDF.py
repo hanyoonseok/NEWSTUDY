@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+
+# after TF-IDF calculation
+
 from datetime import datetime
 import os
 import pandas as pd
@@ -20,12 +23,12 @@ def makePibot(input_df):
     table = table[table.columns.to_list()[::-1]] # 역순으로 정렬
     return table
 
+
 def connectMysql():
-#     db_connection_str = 'mysql+pymysql://newstudy:dhdwhf7xladb!@localhost/newstudy' # 로컬
-    db_connection_str = 'mysql+pymysql://newstudy:gksdbstjr555!mysql@j7b207.p.ssafy.io/newstudy' # 서버
+    db_connection_str = 'mysql+pymysql://newstudy:[NEWSTUDY_PW]@j7b207.p.ssafy.io/newstudy'
     db_connection = create_engine(db_connection_str)
-#     conn = db_connection.connect()
     return db_connection
+
 
 def getKeyword(db_connection, table) :
     
@@ -53,6 +56,7 @@ def getKeyword(db_connection, table) :
     # keyword db에 넣기
     keyword_df.to_sql(name='keyword', con=db_connection, if_exists='append',index=False)  
 
+    
 def getRecommandNews(db_connection, table) :
     
     # 관련 기사 테이블 생성
