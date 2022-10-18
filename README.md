@@ -5,7 +5,10 @@
 
 ## ✨ Overview
 
-난이도에 맞는 해외 뉴스 기사를 통해 영어를 공부할 수 있는 웹 서비스
+> 난이도에 맞는 해외 뉴스 기사를 통해 영어를 공부할 수 있는 웹 서비스
+##### 🏆 삼성 청년 SW 아카데미 2학기 특화 프로젝트 대전 2반 최우수상
+
+
 
 ## ✨ NEWSTUDY의 모토
 
@@ -166,7 +169,10 @@
 - Mybatis `2.2.2`
 - Swagger
 - Spring Security `2.4.5`
-
+- Python `3.7.10`
+- Jupyter notebook `6.4.12` 
+- spark `3.2.1`
+- Scala `2.12.15`
 
 **🦊 Frontend**
 - lang: HTML5, CSS3, JAVASCRIPT, Node.js `16.16.0`
