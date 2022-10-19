@@ -1,12 +1,13 @@
 <img src="https://user-images.githubusercontent.com/33210124/195239245-f6c6dd95-5454-454a-8954-a2e9d7c5d184.png"><br>
 # 📰 NEWSTUDY
-
-## ✨ [UCC](https://www.youtube.com/watch?v=7CpzMz1BLAw&ab_channel=yoonseokhan) 
+##### 🏆 삼성 청년 SW 아카데미 2학기 특화 프로젝트 대전 2반 최우수상
 
 ## ✨ Overview
 
 > 난이도에 맞는 해외 뉴스 기사를 통해 영어를 공부할 수 있는 웹 서비스
-##### 🏆 삼성 청년 SW 아카데미 2학기 특화 프로젝트 대전 2반 최우수상
+
+## ✨ [UCC](https://www.youtube.com/watch?v=7CpzMz1BLAw&ab_channel=yoonseokhan) 
+##### 🏆 삼성 청년 SW 아카데미 2학기 특화 프로젝트 UCC경진대회 입상
 
 
 
