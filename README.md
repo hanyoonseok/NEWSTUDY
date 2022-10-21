@@ -1,6 +1,6 @@
 <img src="https://user-images.githubusercontent.com/33210124/195239245-f6c6dd95-5454-454a-8954-a2e9d7c5d184.png"><br>
 # 📰 NEWSTUDY
-##### 🏆 삼성 청년 SW 아카데미 2학기 특화 프로젝트 대전 2반 최우수상
+##### 🏆 삼성 청년 SW 아카데미 2학기 특화 프로젝트 빅데이터 - 분산 도메인 대전 2반 최우수상
 
 ## ✨ Overview
 
